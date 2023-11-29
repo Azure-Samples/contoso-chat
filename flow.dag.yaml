@@ -2,16 +2,26 @@ inputs:
   chat_history:
     type: list
     default: []
+    is_chat_input: false
+    is_chat_history: true
   question:
     type: string
     default: What can you tell me about your jackets?
+    is_chat_input: true
+    is_chat_history: false
   customerId:
     type: string
     default: "2"
+    is_chat_input: false
+    is_chat_history: false
 outputs:
   answer:
     type: string
     reference: ${llm_response.output}
+    is_chat_output: true
+  context:
+    type: string
+    reference: ${retrieve_documentation.output}
 nodes:
 - name: question_embedding
   type: python
