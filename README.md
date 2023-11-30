@@ -1,12 +1,11 @@
-# End to End LLM App development
-
+# End to End LLM App development with Azure AI Studio and Prompt Flow
 
 ### Prerequisites
 
 - [Azure Subscription](https://azure.microsoft.com/free/)
 - [VS Code](https://code.visualstudio.com/download)
 
-## Getting Started
+## Setup the code and environment
 
 ### Clone the repo
 
@@ -61,16 +60,16 @@ To run the prompt flow, the connections need to be set up. These can be setup as
  - To setup local connections follow the instructions [here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html)
  - To setup json connection follow the insturctions [here](https://microsoft.github.io/promptflow/cloud/azureai/consume-connections-from-azure-ai.html)
 
-### Building a Prompt flow
+## Building a Prompt flow (TODO)
 
 Now that the environment, extensions, and connections have been installed we can open up the prompt flow and take a look at what it does.
 
 - Click on the flow.dag.yaml file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
 
 
-### Running the Evaluations (TODO)
+## Evaluating prompt flow results (TODO)
 
-
+Once the prompt flow is setup and working, its time to test it and evaluate the results. To do this we have included some evaluation prompt flows in this project that will use GPT-4 to test the prompt flow.
 
 
 
