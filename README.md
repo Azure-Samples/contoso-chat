@@ -68,35 +68,11 @@ Now that the environment, extensions, and connections have been installed we can
 - Click on the flow.dag.yaml file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
 
 
-- To learn how to build this flow from scratch, [check out the session and Microsoft Ignite.](https://ignite.microsoft.com/sessions/16ee2bd5-7cb8-4419-95f6-3cab36dfac93?source=sessions)
-
 ### Running the Evaluations (TODO)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-# Project
-
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
-
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
 
 ## Contributing
 
