@@ -6,7 +6,6 @@
 - Download [VS Code](https://code.visualstudio.com/download)
 - Create [AI Studio Resource](https://learn.microsoft.com/azure/ai-studio/how-to/create-azure-ai-resource)
 - Create an [AI Studio Project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects)
-- Install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) with the [Azure ML Extension](https://learn.microsoft.com/azure/machine-learning/how-to-configure-cli?view=azureml-api-2&tabs=public)
 
 ## Setup the code and environment
 
