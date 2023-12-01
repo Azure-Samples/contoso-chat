@@ -72,9 +72,11 @@ Now that the environment, extensions, and connections have been installed we can
 - Click on the flow.dag.yaml file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
 
 
-## Evaluating prompt flow results (TODO)
+## Evaluating prompt flow results
 
 Once the prompt flow is setup and working, its time to test it and evaluate the results. To do this we have included some evaluation prompt flows in this project that will use GPT-4 to test the prompt flow.
+
+Follow the instructions and steps in the notebook `evaluate-prompt-flow.ipynb` under the `eval` folder.
 
 
 
