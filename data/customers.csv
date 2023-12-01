@@ -1,0 +1,13 @@
+customerId,firstName,lastName,age,email,phone,address,membership
+1,John,Smith,35,johnsmith@example.com,555-123-4567,"123 Main St,  Anytown USA, 12345",
+2,Jane,Doe,28,janedoe@example.com,555-987-6543,"456 Oak St, Another City USA, 67890",Gold
+3,Michael,Johnson,45,michaelj@example.com,555-555-1212,"789 Elm St,  Smallville USA, 34567",
+4,Sarah,Lee,38,sarahlee@example.com,555-867-5309,"321 Maple St, Bigtown USA, 90123",Platinum
+5,David,Kim,42,davidkim@example.com,555-555-5555,"654 Pine St,  Suburbia USA, 23456",Gold
+6,Emily,Rodriguez,29,emilyr@example.com,555-111-2222,"987 Oak Ave,  Cityville USA, 56789",
+7,Jason,Brown,50,jasonbrown@example.com,555-222-3333,"456 Cedar Rd, Anytown USA, 12345",
+8,Melissa,Davis,31,melissad@example.com,555-333-4444,"789 Ash St, Another City USA, 67890",Gold
+9,Daniel,Wilson,47,danielw@example.com,555-444-5555,"321 Birch Ln,  Smallville USA, 34567",
+10,Amanda,Perez,26,amandap@example.com,555-123-4567,"654 Pine St,  Suburbia USA, 23456",Gold
+11,Robert,Johnson,36,robertj@example.com,555-555-1212,"123 Main St,  Anytown USA, 12345",
+12,Karen,Williams,29,karenw@example.com,555-987-6543,"456 Oak St, Another City USA, 67890",Gold

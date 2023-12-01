@@ -1,14 +1,77 @@
-# Project
+# End to End LLM App development with Azure AI Studio and Prompt Flow
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+### Prerequisites
 
-As the maintainer of this project, please make a few updates:
+- [Azure Subscription](https://azure.microsoft.com/free/)
+- [VS Code](https://code.visualstudio.com/download)
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Setup the code and environment
+
+### Clone the repo
+
+```bash
+git clone https://github.com/azure/contoso-chat
+```
+
+### Open the repo in VS Code
+
+```bash
+cd contoso-chat
+code .
+```
+
+### Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
+
+- Open the VS Code Extensions tab
+- Search for "Prompt Flow"
+- Install the extension
+
+### Create a new python environment
+- [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage python environments.
+
+#### Using anaconda
+
+```bash
+conda create -n contoso-chat python=3.9
+conda activate contoso-chat
+pip install -r requirements.txt
+```
+
+#### Using venv
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Create data resources to be used in the prompt flow (TODO- finish this)
+
+- Azure AI Search - [Create an Azure Cognitive Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+
+
+- Azure Open AI Connection - [Create an Azure Open AI Connection](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+
+- Azure Cosmos DB - [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+
+### Setup the Connections (TODO - Update this)
+To run the prompt flow, the connections need to be set up. These can be setup as local connections or with the json confirguration connected to your workspace.
+
+ - To setup local connections follow the instructions [here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html)
+ - To setup json connection follow the insturctions [here](https://microsoft.github.io/promptflow/cloud/azureai/consume-connections-from-azure-ai.html)
+
+## Building a Prompt flow (TODO)
+
+Now that the environment, extensions, and connections have been installed we can open up the prompt flow and take a look at what it does.
+
+- Click on the flow.dag.yaml file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
+
+
+## Evaluating prompt flow results (TODO)
+
+Once the prompt flow is setup and working, its time to test it and evaluate the results. To do this we have included some evaluation prompt flows in this project that will use GPT-4 to test the prompt flow.
+
+
 
 ## Contributing
 
