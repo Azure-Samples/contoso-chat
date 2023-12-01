@@ -2,8 +2,11 @@
 
 ### Prerequisites
 
-- [Azure Subscription](https://azure.microsoft.com/free/)
-- [VS Code](https://code.visualstudio.com/download)
+- Signup for an [Azure Subscription](https://azure.microsoft.com/free/)
+- Download [VS Code](https://code.visualstudio.com/download)
+- Create [AI Studio Resource](https://learn.microsoft.com/azure/ai-studio/how-to/create-azure-ai-resource)
+- Create an [AI Studio Project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects)
+- Install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) with the [Azure ML Extension](https://learn.microsoft.com/azure/machine-learning/how-to-configure-cli?view=azureml-api-2&tabs=public)
 
 ## Setup the code and environment
 
@@ -26,7 +29,7 @@ code .
 - Search for "Prompt Flow"
 - Install the extension
 
-### Create a new python environment
+### Create a new local python environment
 - [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage python environments.
 
 #### Using anaconda
@@ -44,6 +47,9 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+### Create the prompt flow runtime
+
+Follow the instructions and steps in the notebook `create-runtime.ipynb` under the `runtime` folder.
 
 ### Create data resources to be used in the prompt flow (TODO- finish this)
 
