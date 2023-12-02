@@ -29,7 +29,7 @@ nodes:
     type: package
     tool: promptflow.tools.embedding.embedding
   inputs:
-    connection: isis-aoai
+    connection: aoai-connection
     deployment_name: text-embedding-ada-002
     input: ${inputs.question}
 - name: retrieve_documentation
@@ -68,5 +68,5 @@ nodes:
     deployment_name: gpt-35-turbo
     prompt_text: ${customer_prompt.output}
     question: ${inputs.question}
-  connection: isis-aoai
+  connection: aoai-connection
   api: chat
