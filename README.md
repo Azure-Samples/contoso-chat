@@ -53,14 +53,17 @@ Follow the instructions and steps in the notebook `create-runtime.ipynb` under t
 ## Create Azure resources and populate with sample data
 ### 1.  Azure AI Search service named `contoso-search`
 - Follow these instructions to [create an Azure AI Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure AI Search service created in the previous step.
 - Now that the resource is created in Azure, use the notebook code and instructions `create-azure-search.ipynb` under the `data\product_info` folder to create the index and populate with the sample data.
 
 ### 2.  Create Azure Open AI resource and deploy the models 
 - Follow these instructions to [create an Azure Open AI resource](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure Open AI resource created in the previous step.
 - Now that the service is created use Azure AI Studio to deploy the following models to be used in the prompt flow: `GPT-4`, `GPT-3.5 Turbo`, and the embedding model `text-embedding-ada-002`. Follow these instructions to [deploy the models.](https://learn.microsoft.com/en-us/azure/ai-studio/tutorials/deploy-copilot-ai-studio#deploy-a-chat-model)
 
 ### 3.  Create and populate the Azure Cosmos DB customer database 
 - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure Cosmos DB resource created in the previous step.
 - Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data\customer_info` folder to create the database, container and populate with the sample data.
 
 ## Setup the connections locally and in Azure AI Studio
@@ -76,7 +79,7 @@ To run the prompt flow, the connections need to be set up both locally and in th
 ### 2. Create the local connections
 To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
-## Building Prompt flow
+## Building a prompt flow
 
 Now that the environment, resources and connections have been configured we can open up the prompt flow and take a look at how it works. 
 
@@ -107,7 +110,9 @@ The prompt flow is made up of the following nodes:
 
 - *outputs* - This node is used to end the flow and return the response to the customer.
 
-### 2. Run the prompt flow (TODO: update this section)
+### 2. Run the prompt flow
+
+Now that we have the prompt flow open in the visual editor, we can run the flow and see the results. To run the flow, click on the `Run` play button at the top. For more details on running the prompt flow, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/init-and-test-a-flow.html#test-a-flow).
 
 ## Evaluating prompt flow results
 
