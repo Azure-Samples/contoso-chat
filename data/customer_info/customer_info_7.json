@@ -1,0 +1,48 @@
+{
+  "id": "7",
+  "firstName": "Jason",
+  "lastName": "Brown",
+  "age": 50,
+  "email": "jasonbrown@example.com",
+  "phone": "555-222-3333",
+  "address": "456 Cedar Rd, Anytown USA, 12345",
+  "membership": "Base",
+  "orders": [
+    {
+      "id": 36,
+      "productId": 10,
+      "quantity": 2,
+      "total": 150.0,
+      "date": "3/25/2023",
+      "name": "TrailBlaze Hiking Pants",
+      "unitprice": 75.0,
+      "category": "Hiking Clothing",
+      "brand": "MountainStyle",
+      "description": "Meet the TrailBlaze Hiking Pants from MountainStyle, the stylish khaki champions of the trails. These are not just pants; they're your passport to outdoor adventure. Crafted from high-quality nylon fabric, these dapper troopers are lightweight and fast-drying, with a water-resistant armor that laughs off light rain. Their breathable design whisks away sweat while their articulated knees grant you the flexibility of a mountain goat. Zippered pockets guard your essentials, making them a hiker's best ally. Designed with durability for all your trekking trials, these pants come with a comfortable, ergonomic fit that will make you forget you're wearing them. Sneak a peek, and you are sure to be tempted by the sleek allure that is the TrailBlaze Hiking Pants. Your outdoors wardrobe wouldn't be quite complete without them."
+    },
+    {
+      "id": 8,
+      "productId": 2,
+      "quantity": 1,
+      "total": 90.0,
+      "date": "3/20/2023",
+      "name": "Adventurer Pro Backpack",
+      "unitprice": 90.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Venture into the wilderness with the HikeMate's Adventurer Pro Backpack! Uniquely designed with ergonomic comfort in mind, this backpack ensures a steadfast journey no matter the mileage. It boasts a generous 40L capacity wrapped up in durable nylon fabric ensuring its long-lasting performance on even the most rugged pursuits. It's meticulously fashioned with multiple compartments and pockets for organized storage, hydration system compatibility, and adjustable padded shoulder straps all in a lightweight construction. The added features of a sternum strap and hip belt enhance stability without compromising on comfort. The Adventurer Pro Backpack also prioritizes your safety with its reflective accents for when night falls. This buoyant beauty does more than carry your essentials; it carries the promise of a stress-free adventure!"
+    },
+    {
+      "id": 27,
+      "productId": 7,
+      "quantity": 2,
+      "total": 200.0,
+      "date": "3/10/2023",
+      "name": "CozyNights Sleeping Bag",
+      "unitprice": 100.0,
+      "category": "Sleeping Bags",
+      "brand": "CozyNights",
+      "description": "Embrace the great outdoors in any season with the lightweight CozyNights Sleeping Bag! This durable three-season bag is superbly designed to give hikers, campers, and backpackers comfort and warmth during spring, summer, and fall. With a compact design that folds down into a convenient stuff sack, you can whisk it away on any adventure without a hitch. The sleeping bag takes comfort seriously, featuring a handy hood, ample room and padding, and a reliable temperature rating. Crafted from high-quality polyester, it ensures long-lasting use and can even be zipped together with another bag for shared comfort. Whether you're gazing at stars or catching a quick nap between trails, the CozyNights Sleeping Bag makes it a treat. Don't just sleep\u2014 dream with CozyNights."
+    }
+  ]
+}

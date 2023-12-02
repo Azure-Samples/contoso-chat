@@ -1,0 +1,48 @@
+{
+  "id": "2",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "age": 28,
+  "email": "janedoe@example.com",
+  "phone": "555-987-6543",
+  "address": "456 Oak St, Another City USA, 67890",
+  "membership": "Gold",
+  "orders": [
+    {
+      "id": 23,
+      "productId": 6,
+      "quantity": 1,
+      "total": 80.0,
+      "date": "1/30/2023",
+      "name": "EcoFire Camping Stove",
+      "unitprice": 80.0,
+      "category": "Camping Stoves",
+      "brand": "EcoFire",
+      "description": "Introducing EcoFire's Camping Stove, your ultimate companion for every outdoor adventure! This portable wonder is precision-engineered with a lightweight and compact design, perfect for capturing that spirit of wanderlust. Made from high-quality stainless steel, it promises durability and steadfast performance. This stove is not only fuel-efficient but also offers an easy, intuitive operation that ensures hassle-free cooking. Plus, it's flexible, accommodating a variety of cooking methods whether you're boiling, grilling, or simmering under the starry sky. Its stable construction, quick setup, and adjustable flame control make cooking a breeze, while safety features protect you from any potential mishaps. And did we mention it also includes an effective wind protector and a carry case for easy transportation? But that's not all! The EcoFire Camping Stove is eco-friendly, designed to minimize environmental impact. So get ready to enhance your camping experience and enjoy delicious outdoor feasts with this unique, versatile stove!"
+    },
+    {
+      "id": 15,
+      "productId": 4,
+      "quantity": 1,
+      "total": 140.0,
+      "date": "1/20/2023",
+      "name": "TrekReady Hiking Boots",
+      "unitprice": 140.0,
+      "category": "Hiking Footwear",
+      "brand": "TrekReady",
+      "description": "Introducing the TrekReady Hiking Boots - stepping up your hiking game, one footprint at a time! Crafted from leather, these stylistic Trailmates are made to last. TrekReady infuses durability with its reinforced stitching and toe protection, making sure your journey is never stopped short. Comfort? They have that covered too! The boots are a haven with their breathable materials, cushioned insole, with padded collar and tongue; all nestled neatly within their lightweight design. As they say, it's what's inside that counts - so inside you'll find a moisture-wicking lining that quarantines stank and keeps your feet fresh as that mountaintop breeze. Remember the fear of slippery surfaces? With these boots, you can finally tell it to 'take a hike'! Their shock-absorbing midsoles and excellent traction capabilities promise stability at your every step. Beautifully finished in a traditional lace-up system, every adventurer deserves a pair of TrekReady Hiking Boots. Hike more, worry less!"
+    },
+    {
+      "id": 6,
+      "productId": 2,
+      "quantity": 1,
+      "total": 90.0,
+      "date": "1/10/2023",
+      "name": "Adventurer Pro Backpack",
+      "unitprice": 90.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Venture into the wilderness with the HikeMate's Adventurer Pro Backpack! Uniquely designed with ergonomic comfort in mind, this backpack ensures a steadfast journey no matter the mileage. It boasts a generous 40L capacity wrapped up in durable nylon fabric ensuring its long-lasting performance on even the most rugged pursuits. It's meticulously fashioned with multiple compartments and pockets for organized storage, hydration system compatibility, and adjustable padded shoulder straps all in a lightweight construction. The added features of a sternum strap and hip belt enhance stability without compromising on comfort. The Adventurer Pro Backpack also prioritizes your safety with its reflective accents for when night falls. This buoyant beauty does more than carry your essentials; it carries the promise of a stress-free adventure!"
+    }
+  ]
+}

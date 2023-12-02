@@ -1,0 +1,48 @@
+{
+  "id": "5",
+  "firstName": "David",
+  "lastName": "Kim",
+  "age": 42,
+  "email": "davidkim@example.com",
+  "phone": "555-555-5555",
+  "address": "654 Pine St,  Suburbia USA, 23456",
+  "membership": "Gold",
+  "orders": [
+    {
+      "id": 33,
+      "productId": 9,
+      "quantity": 2,
+      "total": 240.0,
+      "date": "3/20/2023",
+      "name": "SummitClimber Backpack",
+      "unitprice": 120.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Adventure waits for no one! Introducing the HikeMate SummitClimber Backpack, your reliable partner for every exhilarating journey. With a generous 60-liter capacity and multiple compartments and pockets, packing is a breeze. Every feature points to comfort and convenience; the ergonomic design and adjustable hip belt ensure a pleasantly personalized fit, while padded shoulder straps protect you from the burden of carrying. Venturing into wet weather? Fear not! The integrated rain cover has your back, literally. Stay hydrated thanks to the backpack's hydration system compatibility. Travelling during twilight? Reflective accents keep you visible in low-light conditions. The SummitClimber Backpack isn't merely a carrier; it's a wearable base camp constructed from ruggedly durable nylon and thoughtfully designed for the great outdoors adventurer, promising to withstand tough conditions and provide years of service. So, set off on that quest - the wild beckons! The SummitClimber Backpack - your hearty companion on every expedition!"
+    },
+    {
+      "id": 16,
+      "productId": 4,
+      "quantity": 2,
+      "total": 280.0,
+      "date": "2/25/2023",
+      "name": "TrekReady Hiking Boots",
+      "unitprice": 140.0,
+      "category": "Hiking Footwear",
+      "brand": "TrekReady",
+      "description": "Introducing the TrekReady Hiking Boots - stepping up your hiking game, one footprint at a time! Crafted from leather, these stylistic Trailmates are made to last. TrekReady infuses durability with its reinforced stitching and toe protection, making sure your journey is never stopped short. Comfort? They have that covered too! The boots are a haven with their breathable materials, cushioned insole, with padded collar and tongue; all nestled neatly within their lightweight design. As they say, it's what's inside that counts - so inside you'll find a moisture-wicking lining that quarantines stank and keeps your feet fresh as that mountaintop breeze. Remember the fear of slippery surfaces? With these boots, you can finally tell it to 'take a hike'! Their shock-absorbing midsoles and excellent traction capabilities promise stability at your every step. Beautifully finished in a traditional lace-up system, every adventurer deserves a pair of TrekReady Hiking Boots. Hike more, worry less!"
+    },
+    {
+      "id": 7,
+      "productId": 2,
+      "quantity": 2,
+      "total": 180.0,
+      "date": "2/15/2023",
+      "name": "Adventurer Pro Backpack",
+      "unitprice": 90.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Venture into the wilderness with the HikeMate's Adventurer Pro Backpack! Uniquely designed with ergonomic comfort in mind, this backpack ensures a steadfast journey no matter the mileage. It boasts a generous 40L capacity wrapped up in durable nylon fabric ensuring its long-lasting performance on even the most rugged pursuits. It's meticulously fashioned with multiple compartments and pockets for organized storage, hydration system compatibility, and adjustable padded shoulder straps all in a lightweight construction. The added features of a sternum strap and hip belt enhance stability without compromising on comfort. The Adventurer Pro Backpack also prioritizes your safety with its reflective accents for when night falls. This buoyant beauty does more than carry your essentials; it carries the promise of a stress-free adventure!"
+    }
+  ]
+}

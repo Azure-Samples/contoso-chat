@@ -1,0 +1,48 @@
+{
+  "id": "6",
+  "firstName": "Emily",
+  "lastName": "Rodriguez",
+  "age": 29,
+  "email": "emilyr@example.com",
+  "phone": "555-111-2222",
+  "address": "987 Oak Ave,  Cityville USA, 56789",
+  "membership": "nan",
+  "orders": [
+    {
+      "id": 39,
+      "productId": 11,
+      "quantity": 2,
+      "total": 220.0,
+      "date": "3/30/2023",
+      "name": "TrailWalker Hiking Shoes",
+      "unitprice": 110.0,
+      "category": "Hiking Footwear",
+      "brand": "TrekReady",
+      "description": "Meet the TrekReady TrailWalker Hiking Shoes, the ideal companion for all your outdoor adventures. Constructed with synthetic leather and breathable mesh, these shoes are tough as nails yet surprisingly airy. Their cushioned insoles offer fabulous comfort for long hikes, while the supportive midsoles and traction outsoles with multidirectional lugs ensure stability and excellent grip. A quick-lace system, padded collar and tongue, and reflective accents make these shoes a dream to wear. From combating rough terrain with the reinforced toe cap and heel, to keeping off trail debris with the protective mudguard, the TrailWalker Hiking Shoes have you covered. These waterproof warriors are made to endure all weather conditions. But they're not just about being rugged, they're light as a feather too, minimizing fatigue during epic hikes. Each pair can be customized for a perfect fit with removable insoles and availability in multiple sizes and widths. Navigate hikes comfortably and confidently with the TrailWalker Hiking Shoes. Adventure, here you come!"
+    },
+    {
+      "id": 3,
+      "productId": 1,
+      "quantity": 3,
+      "total": 750.0,
+      "date": "3/18/2023",
+      "name": "TrailMaster X4 Tent",
+      "unitprice": 250.0,
+      "category": "Tents",
+      "brand": "OutdoorLiving",
+      "description": "Unveiling the TrailMaster X4 Tent from OutdoorLiving, your home away from home for your next camping adventure. Crafted from durable polyester, this tent boasts a spacious interior perfect for four occupants. It ensures your dryness under drizzly skies thanks to its water-resistant construction, and the accompanying rainfly adds an extra layer of weather protection. It offers refreshing airflow and bug defence, courtesy of its mesh panels. Accessibility is not an issue with its multiple doors and interior pockets that keep small items tidy. Reflective guy lines grant better visibility at night, and the freestanding design simplifies setup and relocation. With the included carry bag, transporting this convenient abode becomes a breeze. Be it an overnight getaway or a week-long nature escapade, the TrailMaster X4 Tent provides comfort, convenience, and concord with the great outdoors. Comes with a two-year limited warranty to ensure customer satisfaction."
+    },
+    {
+      "id": 12,
+      "productId": 3,
+      "quantity": 2,
+      "total": 240.0,
+      "date": "2/20/2023",
+      "name": "Summit Breeze Jacket",
+      "unitprice": 120.0,
+      "category": "Hiking Clothing",
+      "brand": "MountainStyle",
+      "description": "Discover the joy of hiking with MountainStyle's Summit Breeze Jacket. This lightweight jacket is your perfect companion for outdoor adventures. Sporting a trail-ready, windproof design and a water-resistant fabric, it's ready to withstand any weather. The breathable polyester material and adjustable cuffs keep you comfortable, whether you're ascending a mountain or strolling through a park. And its sleek black color adds style to function. The jacket features a full-zip front closure, adjustable hood, and secure zippered pockets. Experience the comfort of its inner lining and the convenience of its packable design. Crafted for night trekkers too, the jacket has reflective accents for enhanced visibility. Rugged yet chic, the Summit Breeze Jacket is more than a hiking essential, it's the gear that inspires you to reach new heights. Choose adventure, choose the Summit Breeze Jacket."
+    }
+  ]
+}

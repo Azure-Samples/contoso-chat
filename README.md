@@ -52,18 +52,23 @@ Follow the instructions and steps in the notebook `create-runtime.ipynb` under t
 
 ### Create data resources to be used in the prompt flow (TODO- finish this)
 
-- Azure AI Search - [Create an Azure Cognitive Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+1. Azure AI Search - [Create an Azure Cognitive Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
 
 
-- Azure Open AI Connection - [Create an Azure Open AI Connection](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+2. Azure Open AI Connection - [Create an Azure Open AI Connection](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
 
-- Azure Cosmos DB - [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+3. For the customer lookup we need to create and populate the Azure Cosmos DB customer database 
+    - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+    - Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data` folder to create the database, container and populate with the sample data.
 
 ### Setup the Connections (TODO - Update this)
 To run the prompt flow, the connections need to be set up. These can be setup as local connections or with the json confirguration connected to your workspace.
 
  - To setup local connections follow the instructions [here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html)
  - To setup json connection follow the insturctions [here](https://microsoft.github.io/promptflow/cloud/azureai/consume-connections-from-azure-ai.html)
+
+ - Cosmos DB Custom Connection
+ ![Alt text](consmodbconnection.png)
 
 ## Building a Prompt flow (TODO)
 

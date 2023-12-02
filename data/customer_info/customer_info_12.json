@@ -1,0 +1,24 @@
+{
+  "id": "12",
+  "firstName": "Karen",
+  "lastName": "Williams",
+  "age": 29,
+  "email": "karenw@example.com",
+  "phone": "555-987-6543",
+  "address": "456 Oak St, Another City USA, 67890",
+  "membership": "Gold",
+  "orders": [
+    {
+      "id": 14,
+      "productId": 3,
+      "quantity": 3,
+      "total": 360.0,
+      "date": "4/30/2023",
+      "name": "Summit Breeze Jacket",
+      "unitprice": 120.0,
+      "category": "Hiking Clothing",
+      "brand": "MountainStyle",
+      "description": "Discover the joy of hiking with MountainStyle's Summit Breeze Jacket. This lightweight jacket is your perfect companion for outdoor adventures. Sporting a trail-ready, windproof design and a water-resistant fabric, it's ready to withstand any weather. The breathable polyester material and adjustable cuffs keep you comfortable, whether you're ascending a mountain or strolling through a park. And its sleek black color adds style to function. The jacket features a full-zip front closure, adjustable hood, and secure zippered pockets. Experience the comfort of its inner lining and the convenience of its packable design. Crafted for night trekkers too, the jacket has reflective accents for enhanced visibility. Rugged yet chic, the Summit Breeze Jacket is more than a hiking essential, it's the gear that inspires you to reach new heights. Choose adventure, choose the Summit Breeze Jacket."
+    }
+  ]
+}
