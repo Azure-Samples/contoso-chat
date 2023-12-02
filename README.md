@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ```
 ### 5. Create the prompt flow runtime
 
-Follow the instructions and steps in the notebook `create-runtime.ipynb` under the `runtime` folder.
+Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
 ## Create Azure resources and populate with sample data
 ### 1.  Azure AI Search service named `contoso-search`
@@ -86,7 +86,7 @@ Now that the environment, resources and connections have been configured we can 
 ### 1. Open the prompt flow in VS Code and understand the steps
 The prompt flow is a DAG (directed acyclic graph) that is made up of nodes that are connected together to form a flow. Each node in the flow is a python function tool that can be edited and customized to fit your needs. 
 
-Click on the `flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
+Click on the `flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the prompt flow:
 
 ![Visual editor button](./images/visualeditorbutton.png)
 
@@ -100,7 +100,7 @@ The prompt flow is made up of the following nodes:
 
 - *question_embedding* - This node is used to embed the question text using the `text-embedding-ada-002` model. The embedding is used to find the most relevant documents from the AI Search index.
 
-- *retrieve_documents* - This node is used to retrieve the most relevant documents from the AI Search index with the question vector. The documents are used to personalize the conversation with the customer.
+- *retrieve_documents* - This node is used to retrieve the most relevant documents from the AI Search index with the question vector.
 
 - *customer_lookup* - This node is used to get the customer information from the Cosmos DB.
 
