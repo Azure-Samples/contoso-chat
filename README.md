@@ -1,6 +1,6 @@
 # End to End LLM App development with Azure AI Studio and Prompt Flow
 
-### Prerequisites
+## Prerequisites
 
 - Signup for an [Azure Subscription](https://azure.microsoft.com/free/)
 - Download [VS Code](https://code.visualstudio.com/download)
@@ -9,26 +9,26 @@
 
 ## Setup the code and environment
 
-### Clone the repo
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/azure/contoso-chat
 ```
 
-### Open the repo in VS Code
+### 2. Open the repo in VS Code
 
 ```bash
 cd contoso-chat
 code .
 ```
 
-### Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
+### 3. Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
 
 - Open the VS Code Extensions tab
 - Search for "Prompt Flow"
 - Install the extension
 
-### Create a new local python environment
+### 4. Create a new local python environment
 - [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage python environments.
 
 #### Using anaconda
@@ -46,35 +46,32 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
-### Create the prompt flow runtime
+### 5. Create the prompt flow runtime
 
 Follow the instructions and steps in the notebook `create-runtime.ipynb` under the `runtime` folder.
 
-### Create data resources to be used in the prompt flow (TODO- finish this)
+## Create Azure resources and populate with sample data
+### 1.  Azure AI Search 
+- [Create an Azure Cognitive Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
 
-1. Azure AI Search - [Create an Azure Cognitive Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+### 2.  Azure Open AI Connection 
+- [Create an Azure Open AI Connection](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
 
+### 3.  For the customer lookup we need to create and populate the Azure Cosmos DB customer database 
+- Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+- Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data` folder to create the database, container and populate with the sample data.
 
-2. Azure Open AI Connection - [Create an Azure Open AI Connection](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
-
-3. For the customer lookup we need to create and populate the Azure Cosmos DB customer database 
-    - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
-    - Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data` folder to create the database, container and populate with the sample data.
-
-### Setup the Connections locally and in Azure AI Studio
+## Setup the connections locally and in Azure AI Studio
 To run the prompt flow, the connections need to be set up both locally and in the Azure AI Studio. When setting up the connections in the Azure AI Studio, make sure to use the same names as the local connections. Follow the instructions below to setup the connections.
 
-#### Create the cloud connections in Azure AI Studio
-1. Create the Azure AI Search connection named `contoso-search`
-    - [Follow the instructions here to setup the Azure AI Search connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-ai-search#create-a-new-connection)
+### 1. Create the cloud connections in Azure AI Studio
+- Create the Azure AI Search connection named `contoso-search`. [Follow the instructions here to setup the Azure AI Search connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-ai-search#create-a-new-connection)
 
-2. Create Cosmos DB Custom connection named `contoso-cosmos`
-    - [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details)
+- Create Cosmos DB Custom connection named `contoso-cosmos`. [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details)
 
-3. Create Azure Open AI connection named `aoai-connection`
-   - [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
+- Create Azure Open AI connection named `aoai-connection`. [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
 
-#### Create the local connections
+### 2. Create the local connections
 To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
 ## Building a Prompt flow (TODO)
