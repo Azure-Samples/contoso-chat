@@ -53,14 +53,17 @@ Follow the instructions and steps in the notebook `create-runtime.ipynb` under t
 ## Create Azure resources and populate with sample data
 ### 1.  Azure AI Search service named `contoso-search`
 - Follow these instructions to [create an Azure AI Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure AI Search service created in the previous step.
 - Now that the resource is created in Azure, use the notebook code and instructions `create-azure-search.ipynb` under the `data\product_info` folder to create the index and populate with the sample data.
 
 ### 2.  Create Azure Open AI resource and deploy the models 
 - Follow these instructions to [create an Azure Open AI resource](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure Open AI resource created in the previous step.
 - Now that the service is created use Azure AI Studio to deploy the following models to be used in the prompt flow: `GPT-4`, `GPT-3.5 Turbo`, and the embedding model `text-embedding-ada-002`. Follow these instructions to [deploy the models.](https://learn.microsoft.com/en-us/azure/ai-studio/tutorials/deploy-copilot-ai-studio#deploy-a-chat-model)
 
 ### 3.  Create and populate the Azure Cosmos DB customer database 
 - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure Cosmos DB resource created in the previous step.
 - Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data\customer_info` folder to create the database, container and populate with the sample data.
 
 ## Setup the connections locally and in Azure AI Studio
