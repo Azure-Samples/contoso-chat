@@ -79,7 +79,7 @@ To run the prompt flow, the connections need to be set up both locally and in th
 ### 2. Create the local connections
 To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
-## Building Prompt flow
+## Building a prompt flow
 
 Now that the environment, resources and connections have been configured we can open up the prompt flow and take a look at how it works. 
 
@@ -110,7 +110,9 @@ The prompt flow is made up of the following nodes:
 
 - *outputs* - This node is used to end the flow and return the response to the customer.
 
-### 2. Run the prompt flow (TODO: update this section)
+### 2. Run the prompt flow
+
+Now that we have the prompt flow open in the visual editor, we can run the flow and see the results. To run the flow, click on the `Run` play button at the top. For more details on running the prompt flow, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/init-and-test-a-flow.html#test-a-flow).
 
 ## Evaluating prompt flow results
 
