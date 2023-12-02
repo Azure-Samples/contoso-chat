@@ -61,14 +61,21 @@ Follow the instructions and steps in the notebook `create-runtime.ipynb` under t
     - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
     - Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data` folder to create the database, container and populate with the sample data.
 
-### Setup the Connections (TODO - Update this)
-To run the prompt flow, the connections need to be set up. These can be setup as local connections or with the json confirguration connected to your workspace.
+### Setup the Connections locally and in Azure AI Studio
+To run the prompt flow, the connections need to be set up both locally and in the Azure AI Studio. When setting up the connections in the Azure AI Studio, make sure to use the same names as the local connections. Follow the instructions below to setup the connections.
 
- - To setup local connections follow the instructions [here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html)
- - To setup json connection follow the insturctions [here](https://microsoft.github.io/promptflow/cloud/azureai/consume-connections-from-azure-ai.html)
+#### Create the cloud connections in Azure AI Studio
+1. Create the Azure AI Search connection named `contoso-search`
+    - [Follow the instructions here to setup the Azure AI Search connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-ai-search#create-a-new-connection)
 
- - Cosmos DB Custom Connection
- ![Alt text](consmodbconnection.png)
+2. Create Cosmos DB Custom connection named `contoso-cosmos`
+    - [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details)
+
+3. Create Azure Open AI connection named `aoai-connection`
+   - [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
+
+#### Create the local connections
+To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
 ## Building a Prompt flow (TODO)
 
