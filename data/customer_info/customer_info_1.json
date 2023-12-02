@@ -1,0 +1,48 @@
+{
+  "id": "1",
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 35,
+  "email": "johnsmith@example.com",
+  "phone": "555-123-4567",
+  "address": "123 Main St,  Anytown USA, 12345",
+  "membership": "Base",
+  "orders": [
+    {
+      "id": 29,
+      "productId": 8,
+      "quantity": 2,
+      "total": 700.0,
+      "date": "2/10/2023",
+      "name": "Alpine Explorer Tent",
+      "unitprice": 350.0,
+      "category": "Tents",
+      "brand": "AlpineGear",
+      "description": "Welcome to the joy of camping with the Alpine Explorer Tent! This robust, 8-person, 3-season marvel is from the responsible hands of the AlpineGear brand. Promising an enviable setup that is as straightforward as counting sheep, your camping experience is transformed into a breezy pastime. Looking for privacy? The detachable divider provides separate spaces at a moment's notice. Love a tent that breathes? The numerous mesh windows and adjustable vents fend off any condensation dragon trying to dampen your adventure fun. The waterproof assurance keeps you worry-free during unexpected rain dances. With a built-in gear loft to stash away your outdoor essentials, the Alpine Explorer Tent emerges as a smooth balance of privacy, comfort, and convenience. Simply put, this tent isn't just a shelter - it's your second home in the heart of nature! Whether you're a seasoned camper or a nature-loving novice, this tent makes exploring the outdoors a joyous journey."
+    },
+    {
+      "id": 1,
+      "productId": 1,
+      "quantity": 2,
+      "total": 500.0,
+      "date": "1/5/2023",
+      "name": "TrailMaster X4 Tent",
+      "unitprice": 250.0,
+      "category": "Tents",
+      "brand": "OutdoorLiving",
+      "description": "Unveiling the TrailMaster X4 Tent from OutdoorLiving, your home away from home for your next camping adventure. Crafted from durable polyester, this tent boasts a spacious interior perfect for four occupants. It ensures your dryness under drizzly skies thanks to its water-resistant construction, and the accompanying rainfly adds an extra layer of weather protection. It offers refreshing airflow and bug defence, courtesy of its mesh panels. Accessibility is not an issue with its multiple doors and interior pockets that keep small items tidy. Reflective guy lines grant better visibility at night, and the freestanding design simplifies setup and relocation. With the included carry bag, transporting this convenient abode becomes a breeze. Be it an overnight getaway or a week-long nature escapade, the TrailMaster X4 Tent provides comfort, convenience, and concord with the great outdoors. Comes with a two-year limited warranty to ensure customer satisfaction."
+    },
+    {
+      "id": 19,
+      "productId": 5,
+      "quantity": 1,
+      "total": 60.0,
+      "date": "1/25/2023",
+      "name": "BaseCamp Folding Table",
+      "unitprice": 60.0,
+      "category": "Camping Tables",
+      "brand": "CampBuddy",
+      "description": "CampBuddy's BaseCamp Folding Table is an adventurer's best friend. Lightweight yet powerful, the table is a testament to fun-meets-function and will elevate any outing to new heights. Crafted from resilient, rust-resistant aluminum, the table boasts a generously sized 48 x 24 inches tabletop, perfect for meal times, games and more. The foldable design is a godsend for on-the-go explorers. Adjustable legs rise to the occasion to conquer uneven terrains and offer height versatility, while the built-in handle simplifies transportation. Additional features like non-slip feet, integrated cup holders and mesh pockets add a pinch of finesse. Quick to set up without the need for extra tools, this table is a silent yet indispensable sidekick during camping, picnics, and other outdoor events. Don't miss out on the opportunity to take your outdoor experiences to a new level with the BaseCamp Folding Table. Get yours today and embark on new adventures tomorrow!"
+    }
+  ]
+}

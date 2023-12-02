@@ -1,0 +1,48 @@
+{
+  "id": "10",
+  "firstName": "Amanda",
+  "lastName": "Perez",
+  "age": 26,
+  "email": "amandap@example.com",
+  "phone": "555-123-4567",
+  "address": "654 Pine St,  Suburbia USA, 23456",
+  "membership": "Gold",
+  "orders": [
+    {
+      "id": 5,
+      "productId": 1,
+      "quantity": 1,
+      "total": 250.0,
+      "date": "5/1/2023",
+      "name": "TrailMaster X4 Tent",
+      "unitprice": 250.0,
+      "category": "Tents",
+      "brand": "OutdoorLiving",
+      "description": "Unveiling the TrailMaster X4 Tent from OutdoorLiving, your home away from home for your next camping adventure. Crafted from durable polyester, this tent boasts a spacious interior perfect for four occupants. It ensures your dryness under drizzly skies thanks to its water-resistant construction, and the accompanying rainfly adds an extra layer of weather protection. It offers refreshing airflow and bug defence, courtesy of its mesh panels. Accessibility is not an issue with its multiple doors and interior pockets that keep small items tidy. Reflective guy lines grant better visibility at night, and the freestanding design simplifies setup and relocation. With the included carry bag, transporting this convenient abode becomes a breeze. Be it an overnight getaway or a week-long nature escapade, the TrailMaster X4 Tent provides comfort, convenience, and concord with the great outdoors. Comes with a two-year limited warranty to ensure customer satisfaction."
+    },
+    {
+      "id": 37,
+      "productId": 10,
+      "quantity": 1,
+      "total": 75.0,
+      "date": "4/30/2023",
+      "name": "TrailBlaze Hiking Pants",
+      "unitprice": 75.0,
+      "category": "Hiking Clothing",
+      "brand": "MountainStyle",
+      "description": "Meet the TrailBlaze Hiking Pants from MountainStyle, the stylish khaki champions of the trails. These are not just pants; they're your passport to outdoor adventure. Crafted from high-quality nylon fabric, these dapper troopers are lightweight and fast-drying, with a water-resistant armor that laughs off light rain. Their breathable design whisks away sweat while their articulated knees grant you the flexibility of a mountain goat. Zippered pockets guard your essentials, making them a hiker's best ally. Designed with durability for all your trekking trials, these pants come with a comfortable, ergonomic fit that will make you forget you're wearing them. Sneak a peek, and you are sure to be tempted by the sleek allure that is the TrailBlaze Hiking Pants. Your outdoors wardrobe wouldn't be quite complete without them."
+    },
+    {
+      "id": 28,
+      "productId": 7,
+      "quantity": 1,
+      "total": 100.0,
+      "date": "4/15/2023",
+      "name": "CozyNights Sleeping Bag",
+      "unitprice": 100.0,
+      "category": "Sleeping Bags",
+      "brand": "CozyNights",
+      "description": "Embrace the great outdoors in any season with the lightweight CozyNights Sleeping Bag! This durable three-season bag is superbly designed to give hikers, campers, and backpackers comfort and warmth during spring, summer, and fall. With a compact design that folds down into a convenient stuff sack, you can whisk it away on any adventure without a hitch. The sleeping bag takes comfort seriously, featuring a handy hood, ample room and padding, and a reliable temperature rating. Crafted from high-quality polyester, it ensures long-lasting use and can even be zipped together with another bag for shared comfort. Whether you're gazing at stars or catching a quick nap between trails, the CozyNights Sleeping Bag makes it a treat. Don't just sleep\u2014 dream with CozyNights."
+    }
+  ]
+}

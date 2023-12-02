@@ -1,0 +1,48 @@
+{
+  "id": "9",
+  "firstName": "Daniel",
+  "lastName": "Wilson",
+  "age": 47,
+  "email": "danielw@example.com",
+  "phone": "555-444-5555",
+  "address": "321 Birch Ln,  Smallville USA, 34567",
+  "membership": "Base",
+  "orders": [
+    {
+      "id": 40,
+      "productId": 11,
+      "quantity": 1,
+      "total": 110.0,
+      "date": "4/5/2023",
+      "name": "TrailWalker Hiking Shoes",
+      "unitprice": 110.0,
+      "category": "Hiking Footwear",
+      "brand": "TrekReady",
+      "description": "Meet the TrekReady TrailWalker Hiking Shoes, the ideal companion for all your outdoor adventures. Constructed with synthetic leather and breathable mesh, these shoes are tough as nails yet surprisingly airy. Their cushioned insoles offer fabulous comfort for long hikes, while the supportive midsoles and traction outsoles with multidirectional lugs ensure stability and excellent grip. A quick-lace system, padded collar and tongue, and reflective accents make these shoes a dream to wear. From combating rough terrain with the reinforced toe cap and heel, to keeping off trail debris with the protective mudguard, the TrailWalker Hiking Shoes have you covered. These waterproof warriors are made to endure all weather conditions. But they're not just about being rugged, they're light as a feather too, minimizing fatigue during epic hikes. Each pair can be customized for a perfect fit with removable insoles and availability in multiple sizes and widths. Navigate hikes comfortably and confidently with the TrailWalker Hiking Shoes. Adventure, here you come!"
+    },
+    {
+      "id": 9,
+      "productId": 2,
+      "quantity": 3,
+      "total": 270.0,
+      "date": "4/25/2023",
+      "name": "Adventurer Pro Backpack",
+      "unitprice": 90.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Venture into the wilderness with the HikeMate's Adventurer Pro Backpack! Uniquely designed with ergonomic comfort in mind, this backpack ensures a steadfast journey no matter the mileage. It boasts a generous 40L capacity wrapped up in durable nylon fabric ensuring its long-lasting performance on even the most rugged pursuits. It's meticulously fashioned with multiple compartments and pockets for organized storage, hydration system compatibility, and adjustable padded shoulder straps all in a lightweight construction. The added features of a sternum strap and hip belt enhance stability without compromising on comfort. The Adventurer Pro Backpack also prioritizes your safety with its reflective accents for when night falls. This buoyant beauty does more than carry your essentials; it carries the promise of a stress-free adventure!"
+    },
+    {
+      "id": 13,
+      "productId": 3,
+      "quantity": 1,
+      "total": 120.0,
+      "date": "3/25/2023",
+      "name": "Summit Breeze Jacket",
+      "unitprice": 120.0,
+      "category": "Hiking Clothing",
+      "brand": "MountainStyle",
+      "description": "Discover the joy of hiking with MountainStyle's Summit Breeze Jacket. This lightweight jacket is your perfect companion for outdoor adventures. Sporting a trail-ready, windproof design and a water-resistant fabric, it's ready to withstand any weather. The breathable polyester material and adjustable cuffs keep you comfortable, whether you're ascending a mountain or strolling through a park. And its sleek black color adds style to function. The jacket features a full-zip front closure, adjustable hood, and secure zippered pockets. Experience the comfort of its inner lining and the convenience of its packable design. Crafted for night trekkers too, the jacket has reflective accents for enhanced visibility. Rugged yet chic, the Summit Breeze Jacket is more than a hiking essential, it's the gear that inspires you to reach new heights. Choose adventure, choose the Summit Breeze Jacket."
+    }
+  ]
+}

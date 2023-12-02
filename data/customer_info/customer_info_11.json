@@ -1,0 +1,24 @@
+{
+  "id": "11",
+  "firstName": "Robert",
+  "lastName": "Johnson",
+  "age": 36,
+  "email": "robertj@example.com",
+  "phone": "555-555-1212",
+  "address": "123 Main St,  Anytown USA, 12345",
+  "membership": "Base",
+  "orders": [
+    {
+      "id": 10,
+      "productId": 2,
+      "quantity": 2,
+      "total": 180.0,
+      "date": "5/5/2023",
+      "name": "Adventurer Pro Backpack",
+      "unitprice": 90.0,
+      "category": "Backpacks",
+      "brand": "HikeMate",
+      "description": "Venture into the wilderness with the HikeMate's Adventurer Pro Backpack! Uniquely designed with ergonomic comfort in mind, this backpack ensures a steadfast journey no matter the mileage. It boasts a generous 40L capacity wrapped up in durable nylon fabric ensuring its long-lasting performance on even the most rugged pursuits. It's meticulously fashioned with multiple compartments and pockets for organized storage, hydration system compatibility, and adjustable padded shoulder straps all in a lightweight construction. The added features of a sternum strap and hip belt enhance stability without compromising on comfort. The Adventurer Pro Backpack also prioritizes your safety with its reflective accents for when night falls. This buoyant beauty does more than carry your essentials; it carries the promise of a stress-free adventure!"
+    }
+  ]
+}
