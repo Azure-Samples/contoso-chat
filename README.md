@@ -76,12 +76,38 @@ To run the prompt flow, the connections need to be set up both locally and in th
 ### 2. Create the local connections
 To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
-## Building a Prompt flow (TODO)
+## Building Prompt flow
 
-Now that the environment, extensions, and connections have been installed we can open up the prompt flow and take a look at what it does.
+Now that the environment, resources and connections have been configured we can open up the prompt flow and take a look at how it works. 
 
-- Click on the flow.dag.yaml file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
+### 1. Open the prompt flow in VS Code and understand the steps
+The prompt flow is a DAG (directed acyclic graph) that is made up of nodes that are connected together to form a flow. Each node in the flow is a python function tool that can be edited and customized to fit your needs. 
 
+Click on the `flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the propmt flow:
+
+![Visual editor button](./images/visualeditorbutton.png)
+
+This will open up the prompt flow in the visual editor.
+
+![Alt text](./images/promptflow.png)
+
+The prompt flow is made up of the following nodes:
+
+- *input*s - This node is used to start the flow and is the entry point for the flow. It has the input parameters `customer_id` and `question`, and `chat_history`. The `customer_id` is used to lookup the customer information in the Cosmos DB. The `question` is the question the customer is asking. The `chat_history` is the chat history of the conversation with the customer.
+
+- *question_embedding* - This node is used to embed the question text using the `text-embedding-ada-002` model. The embedding is used to find the most relevant documents from the AI Search index.
+
+- *retrieve_documents* - This node is used to retrieve the most relevant documents from the AI Search index with the question vector. The documents are used to personalize the conversation with the customer.
+
+- *customer_lookup* - This node is used to get the customer information from the Cosmos DB.
+
+- *customer_prompt* - This node is used to generate the prompt with the information retrieved and added to the `customer_prompt.jinja2` template.
+
+- *llm_response* - This node is used to generate the response to the customer using the `GPT-35-Turbo` model.
+
+- *outputs* - This node is used to end the flow and return the response to the customer.
+
+### 2. Run the prompt flow (TODO: update this section)
 
 ## Evaluating prompt flow results
 
