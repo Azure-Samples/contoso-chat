@@ -72,7 +72,7 @@ To run the prompt flow, the connections need to be set up both locally and in th
 ### 1. Create the cloud connections in Azure AI Studio
 - Create the Azure AI Search connection named `contoso-search`. [Follow the instructions here to setup the Azure AI Search connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-ai-search#create-a-new-connection)
 
-- Create Cosmos DB Custom connection named `contoso-cosmos`. [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details)
+- Create Cosmos DB Custom connection named `contoso-cosmos`. [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details). NOTE: Be sure to add all the key value pairs needed in this connection: `endpoint`, `key`, `databaseId`, `containerId`.
 
 - Create Azure Open AI connection named `aoai-connection`. [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
 
