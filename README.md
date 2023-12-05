@@ -125,6 +125,9 @@ Follow the instructions and steps in the notebook `evaluate-prompt-flow.ipynb` u
 
 Now that you have validated and corrected any issues with the prompt flow performance. Its time to push the solution to the cloud and deploy.
 
+Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` under the `deployment` folder.
+
+
 
 
 ## Contributing
