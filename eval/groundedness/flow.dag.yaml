@@ -41,7 +41,7 @@ nodes:
     max_tokens: 256
     deployment_name: gpt-4
     temperature: 0
-  connection: isis-aoai
+  connection: aoai-connection
   api: chat
 - name: concat_scores
   type: python
