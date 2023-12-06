@@ -3,3 +3,5 @@ promptflow-tools
 azure-cosmos
 azure-search-documents==11.4.0b8
 azure-ai-ml
+ipykernel
+keyring.alt
