@@ -53,7 +53,7 @@ pip install -r requirements.txt
 ```
 
 ### Run in Codespaces Option
-For codespaces click on the green button `code` button on the rep and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Setup the connections locally and in Azure AI Studio".
+For codespaces click on the green `code` button on the repository and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Create the prompt flow runtime in AI Studio".
 
 ### Run in local Devcontainer Option
 If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the (Remote Container Extension)[https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers] for more information. Proceed with "Create the prompt flow runtime in AI Studio".
