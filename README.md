@@ -10,7 +10,7 @@
 
 ## Setup the code and environment
 
-To setup the development environment you can leverage codespaces, a local enviornment that you configure with Anaconda or venv, or a vs code docker container environemnt that leverages the Devcontainer.
+To setup the development environment you can leverage codespaces, a local environment that you configure with Anaconda or venv, or a vs code docker container environment that leverages the Devcontainer.
 
 ### Local development environment option (Anaconda or venv)
 
