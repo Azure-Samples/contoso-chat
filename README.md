@@ -10,14 +10,9 @@
 
 ## Setup the code and environment
 
-### Option A: Devcontainer / Codespaces
+To setup the development environment you can leverage codespaces, a local enviornment that you configure with Anaconda or venv, or a vs code docker container environemnt that leverages the Devcontainer.
 
-If you're using GitHub and **Codespaces**, click on the green button to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Setup the connections locally and in Azure AI Studio".
-If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the Remote Container Extension for more information. Proceed with "Setup the connections locally and in Azure AI Studio".
-
-> 💡 Hint: The devcontainer containing the Prompt Flow extension adds a Python environment holding the Prompt Flow required packages (see `requirements.txt`). At times, the extenstion does not recognice the environment as standard Python environment. In this case, you can manually select the Python environment. Once you open the Prompt Flow extension, it will advice you so. Select the recommended Python version (compare `Dockerfile`) as standard Python environment.
-
-### Option B: Local
+### Local Environment Option
 
 #### 1. Clone the repo
 
@@ -56,7 +51,14 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
-#### 5. Create the prompt flow runtime
+
+### Run in Codespaces Option
+For codespaces click on the green button `code` button on the rep and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Setup the connections locally and in Azure AI Studio".
+
+### Run in local Devcontainer Option
+If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the (Remote Container Extension)[https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers] for more information. Proceed with "Create the prompt flow runtime in AI Studio".
+
+## Create the prompt flow runtime in AI Studio
 
 Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
