@@ -1,0 +1,9 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: ../eval/multi_flow
+data: ../data/salestestdata.jsonl
+
+# define cloud resource
+runtime: promptflow-contoso-chat-rt
+  llm_response:
+    connection: aoai-connection
+    deployment_name: gpt-35-turbo

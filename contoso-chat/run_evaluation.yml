@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: ../eval/multi_flow
+data: ../data/salestestdata.jsonl
+run: contoso_chat # replace with your run name
+column_mapping:
+  customerId: ${data.customerId},
+  question: ${data.question},
+  context: ${run.outputs.context},
+  answer: ${run.outputs.answer},
+
+# define cloud resource
+runtime: automatic
+
+connections:
+  llm_response:
+    connection: aoai-connection
+    deployment_name: gpt-35-turbo

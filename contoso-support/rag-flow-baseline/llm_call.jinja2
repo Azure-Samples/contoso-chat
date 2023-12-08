@@ -1,0 +1,17 @@
+system:
+{{prompt_text}}
+
+{% for item in history %}
+user:
+{{item.inputs.question}}
+
+assistant:
+{{item.outputs.answer}} 
+{% endfor %}
+
+user:
+{{question}}
+Please be brief, use my name in the response, reference 
+previous purchases, and add emojis for personalization and flair.
+
+

@@ -119,7 +119,7 @@ Now that we have the prompt flow open in the visual editor, we can run the flow 
 
 Once the prompt flow is setup and working, its time to test it and evaluate the results. To do this we have included some evaluation prompt flows in this project that will use GPT-4 to test the prompt flow.
 
-Follow the instructions and steps in the notebook `evaluate-prompt-flow.ipynb` under the `eval` folder.
+Follow the instructions and steps in the notebook `evaluate-chat-prompt-flow.ipynb` under the `eval` folder.
 
 ## Deployment
 
