@@ -10,29 +10,33 @@
 
 ## Setup the code and environment
 
-### 1. Clone the repo
+To setup the development environment you can leverage codespaces, a local environment that you configure with Anaconda or venv, or a vs code docker container environment that leverages the Devcontainer.
+
+### Local development environment option (Anaconda or venv)
+
+#### 1. Clone the repo
 
 ```bash
 git clone https://github.com/azure/contoso-chat
 ```
 
-### 2. Open the repo in VS Code
+#### 2. Open the repo in VS Code
 
 ```bash
 cd contoso-chat
 code .
 ```
 
-### 3. Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
+#### 3. Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
 
 - Open the VS Code Extensions tab
 - Search for "Prompt Flow"
 - Install the extension
 
-### 4. Create a new local python environment
+#### 4. Create a new local python environment
 - [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage python environments.
 
-#### Using anaconda
+##### Using anaconda
 
 ```bash
 conda create -n contoso-chat python=3.9
@@ -40,14 +44,21 @@ conda activate contoso-chat
 pip install -r requirements.txt
 ```
 
-#### Using venv
+##### Using venv
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
-### 5. Create the prompt flow runtime
+
+### Codespaces development option
+For codespaces click on the green `code` button on the repository and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Create the prompt flow runtime in AI Studio".
+
+### Local Devcontainer development Option
+If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the [Remote Container Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for more information. Proceed with "Create the prompt flow runtime in AI Studio".
+
+## Create the prompt flow runtime in AI Studio
 
 Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
