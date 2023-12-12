@@ -30,8 +30,8 @@ nodes:
     tool: promptflow.tools.embedding.embedding
   inputs:
     connection: aoai-connection
-    deployment_name: text-embedding-ada-002
     input: ${inputs.question}
+    deployment_name: text-embedding-ada-002
 - name: retrieve_documentation
   type: python
   source:
