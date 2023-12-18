@@ -60,6 +60,10 @@ If you're using Visual Studio Code and **Devcontainer**, clone the project, open
 
 ## Create the prompt flow runtime in AI Studio
 
+First use command `az login` to sign into the Azure Command Line SDK
+
+Open `config.json` file and add `subscriptionid`, `resourcegroup`, `workspacename` for your Azure AI Studio instance
+
 Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
 ## Create Azure resources and populate with sample data
