@@ -34,8 +34,8 @@ jobs:
       run: pip install -r ../contoso-chat/requirements.txt
     - name: Run promptflow
       run: |
-        pfazure run create -f ../contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > promptflow/llmops-helper/run_info.txt
-        cat promptflow/llmops-helper/run_info.txt
+        pfazure run create -f ../contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
+        cat run_info.txt
     - name: Set run name
       run: |
         echo "RUN_NAME=$(python promptflow/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
@@ -44,13 +44,13 @@ jobs:
     - name: Show promptflow results
       run: pfazure run show-details --name ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Run promptflow evaluations
-      run: pfazure run create -f ../contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > promptflow/llmops-helper/eval_info.txt 
+      run: pfazure run create -f ../contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
     - name: Get eval run name
       run: echo "EVAL_RUN_NAME=$(python promptflow/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
     - name: Show promptflow details
       run: pfazure run show-details --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Show promptflow metrics
-      run: pfazure run show-metrics --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > promptflow/llmops-helper/eval_result.json 
+      run: pfazure run show-metrics --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > eval_result.json 
 
   assert-and-register-model:
     needs: login-and-run-and-evalpf
