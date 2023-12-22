@@ -32,6 +32,8 @@ jobs:
       run: ls
     - name: Install promptflow
       run: pip install -r ../contoso-chat/requirements.txt
+    - name: Install promptflow again
+      run: pip install -r ../contoso-chat/requirements.txt
     - name: Run promptflow
       run: |
         pfazure run create -f contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
