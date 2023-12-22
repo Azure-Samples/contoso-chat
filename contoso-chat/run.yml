@@ -3,7 +3,7 @@ flow: ../eval/multi_flow
 data: ../data/salestestdata.jsonl
 
 # define cloud resource
-runtime: promptflow-contoso-chat-rt
+runtime: automatic
   llm_response:
     connection: aoai-connection
     deployment_name: gpt-35-turbo
