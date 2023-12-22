@@ -31,22 +31,22 @@ jobs:
     - name: List current directory
       run: ls
     - name: Install promptflow
-      run: pip install -r ../../contoso-chat/requirements.txt
+      run: pip install -r ../contoso-chat/requirements.txt
     - name: Run promptflow
       run: |
-        pfazure run create -f ../../contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
+        pfazure run create -f ../contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
         cat run_info.txt
     - name: Set run name
       run: |
-        echo "RUN_NAME=$(python ../../deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
+        echo "RUN_NAME=$(python ../deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
     - name: Show the current run name
       run: echo "Run name is:" ${{env.RUN_NAME}}
     - name: Show promptflow results
       run: pfazure run show-details --name ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Run promptflow evaluations
-      run: pfazure run create -f ../../contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
+      run: pfazure run create -f ../contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
     - name: Get eval run name
-      run: echo "EVAL_RUN_NAME=$(python ../../deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
+      run: echo "EVAL_RUN_NAME=$(python ../deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
     - name: Show promptflow details
       run: pfazure run show-details --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Show promptflow metrics
@@ -74,11 +74,11 @@ jobs:
     - name: List current directory
       run: ls
     - name: Install promptflow
-      run: pip install -r ../../contoso-chat/requirements.txt
+      run: pip install -r ../contoso-chat/requirements.txt
     - name: Get assert eval results
       id: jobMetricAssert
       run: |
-            export ASSERT=$(python ../../deployment/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+            export ASSERT=$(python ../deployment/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
             echo "::debug::Assert has returned the following value: $ASSERT"
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then
@@ -90,4 +90,4 @@ jobs:
             fi
     - name: Register promptflow model
       if: ${{ steps.jobMetricAssert.outputs.result == 'true' }}
-      run: az ml model create --file ../../deployment/model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml model create --file ../deployment/model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
