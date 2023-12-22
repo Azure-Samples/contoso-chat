@@ -51,7 +51,7 @@ nodes:
     type: package
     tool: promptflow.tools.embedding.embedding
   inputs:
-    connection: aoai-connection
+    connection: contoso-aoai-west
     input: ${inputs.question}
     deployment_name: text-embedding-ada-002
   use_variants: false
@@ -61,7 +61,7 @@ nodes:
     type: code
     path: customer_lookup.py
   inputs:
-    conn: contoso-cosmos
+    conn: contoso-customer-cosmos
     customerId: ${inputs.customerId}
   use_variants: false
 - name: retrieve_support_documentation
@@ -95,7 +95,7 @@ nodes:
     prompt_text: ${customer_prompt.output}
     question: ${inputs.question}
     history: ${inputs.chat_history}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
   use_variants: false
 - name: context

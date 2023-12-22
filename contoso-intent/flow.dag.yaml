@@ -26,7 +26,7 @@ nodes:
   inputs:
     chat_history: ${inputs.chat_history}
     question: ${inputs.question}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
 - name: run_chat_or_support
   type: python
@@ -36,7 +36,7 @@ nodes:
   inputs:
     query: ${inputs.question}
     chat_history: ${inputs.chat_history}
-    azure_open_ai_connection: aoai-connection
+    azure_open_ai_connection: contoso-aoai-west
     customer_id: ${inputs.customer_id}
     intent: ${classify_intent_llm.output}
 - name: classify_intent_llm
@@ -47,5 +47,5 @@ nodes:
   inputs:
     deployment_name: gpt-35-turbo
     prompt_text: ${classify_intent_prompt.output}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat

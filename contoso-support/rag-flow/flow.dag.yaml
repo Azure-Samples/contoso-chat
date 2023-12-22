@@ -63,7 +63,7 @@ nodes:
     type: code
     path: customer_lookup.py
   inputs:
-    conn: contoso-cosmos
+    conn: contoso-customer-cosmos
     customerId: ${inputs.customerId}
   use_variants: false
 - name: retrieve_support_documentation
@@ -97,7 +97,7 @@ nodes:
     prompt_text: ${customer_prompt.output}
     question: ${inputs.question}
     history: ${inputs.chat_history}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
   use_variants: false
 - name: context
@@ -117,5 +117,5 @@ nodes:
     query: ${inputs.question}
     chat_history: ${inputs.chat_history}
     customer_data: ${customer_lookup.output}
-    azure_open_ai_connection: aoai-connection
+    azure_open_ai_connection: contoso-aoai-west
     open_ai_deployment: gpt-35-turbo

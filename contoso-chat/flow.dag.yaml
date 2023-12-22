@@ -31,7 +31,7 @@ nodes:
     type: package
     tool: promptflow.tools.embedding.embedding
   inputs:
-    connection: aoai-connection
+    connection: contoso-aoai-west
     input: ${inputs.question}
     deployment_name: text-embedding-ada-002
 - name: retrieve_documentation
@@ -51,7 +51,7 @@ nodes:
     path: customer_lookup.py
   inputs:
     customerId: ${inputs.customerId}
-    conn: contoso-cosmos
+    conn: contoso-customer-cosmos
 - name: customer_prompt
   type: prompt
   source:
@@ -70,5 +70,5 @@ nodes:
     deployment_name: gpt-35-turbo
     prompt_text: ${customer_prompt.output}
     question: ${inputs.question}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
