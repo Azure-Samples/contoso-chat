@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
-flow: ../eval/multi_flow
-data: ../data/salestestdata.jsonl
+flow: eval/multi_flow
+Sdata: data/salestestdata.jsonl
 
 # define cloud resource
 runtime: automatic
