@@ -40,7 +40,7 @@ jobs:
         cat run_info.txt
     - name: Set run name
       run: |
-        echo "RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
+        echo "RUN_NAME=$(python ../deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
     - name: Show the current run name
       run: echo "Run name is:" ${{env.RUN_NAME}}
     - name: Show promptflow results
@@ -48,7 +48,7 @@ jobs:
     - name: Run promptflow evaluations
       run: pfazure run create -f contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
     - name: Get eval run name
-      run: echo "EVAL_RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
+      run: echo "EVAL_RUN_NAME=$(python ../deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
     - name: Show promptflow details
       run: pfazure run show-details --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Show promptflow metrics
