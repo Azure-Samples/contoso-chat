@@ -158,6 +158,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   "tenantId": <GUID>
 }
 ```
+- Add `GROUP`, `RESOURCE`, and `WORKSPACE` to GitHub Secrets.
 - Instructions to update the config [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github) 
 
 -https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#update-llmops_configjson
