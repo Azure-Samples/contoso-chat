@@ -144,8 +144,8 @@ Now that you have validated and corrected any issues with the prompt flow perfor
 Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` under the `deployment` folder.
 
 ### 1. Create Connection to Azure in GitHub
-- Login to [Azure Shell].()
-- Follow the instructions to create a service principal [here]{hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
+- Login to [Azure Shell](https://shell.azure.com/)
+- Follow the instructions to create a service principal [here](hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
 - Follow the instructions in steps 1 - 8 to add create and add the user-assigned managed identity to the subscription and workspace. [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#steps)
     -If it errors on the step to add the data science role. Complete this step in the portal under the IAM.
 - Setup authentication with Github [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github)
@@ -159,9 +159,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
 }
 ```
 - Add `GROUP`, `RESOURCE`, and `WORKSPACE` to GitHub Secrets.
-- Instructions to update the config [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github) 
-
--https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#update-llmops_configjson
+- Instructions to update the config [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#update-llmops_configjson)
 
 
 ## Contributing
