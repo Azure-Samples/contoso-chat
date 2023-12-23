@@ -8,9 +8,6 @@ column_mapping:
   context: ${run.outputs.context},
   answer: ${run.outputs.answer},
 
-# define cloud resource
-runtime: automatic
-
 connections:
   groundedness_score:
     connection: contoso-aoai-west
