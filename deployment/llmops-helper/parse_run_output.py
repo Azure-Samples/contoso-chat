@@ -2,6 +2,7 @@ import os
 import sys
 
 def main():
+    os.chdir('..')
     cwd = os.getcwd()
     path = os.path.join(cwd,'deployment/llmops-helper',sys.argv[1])
     with open(path, 'r') as f:
@@ -11,6 +12,7 @@ def main():
     end = output.find('"', start)
 
     name = output[start:end]
+    os.chdir('contoso-chat')
     return name
 
 if __name__ == "__main__":
