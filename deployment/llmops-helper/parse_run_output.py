@@ -3,6 +3,10 @@ import sys
 
 def main():
     cwd = os.getcwd()
+    print(cwd)
+    os.chdir("../../")
+    cwd = os.getcwd()
+    print(cwd)
     path = os.path.join(cwd,'deployment/llmops-helper',sys.argv[1])
     with open(path, 'r') as f:
         output = f.read()
