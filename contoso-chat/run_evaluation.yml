@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
 flow: ../eval/multi_flow
 data: ../data/salestestdata.jsonl
-run: contoso_chat_variant_0_20231223_014027_509621
+run: ${{env.RUN_NAME}}
 column_mapping:
   customerId: ${data.customerId},
   question: ${data.question},
