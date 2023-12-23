@@ -3,7 +3,7 @@ import sys
 
 def main():
     cwd = os.getcwd()
-    path = os.path.join(cwd,'contoso-chat/deployment/llmops-helper',sys.argv[1])
+    path = os.path.join(cwd,'deployment/llmops-helper',sys.argv[1])
     with open(path, 'r') as f:
         output = f.read()
 
