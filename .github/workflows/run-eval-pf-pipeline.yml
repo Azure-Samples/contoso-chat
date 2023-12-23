@@ -49,7 +49,7 @@ jobs:
       run: pfazure run show-details --name ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Run promptflow evaluations
       run: |
-        pfazure run create -f contoso-chat/run_evaluation_multi.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
+        pfazure run create -f contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
         cat eval_info.txt
     - name: Get eval run name
       run: echo "EVAL_RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
