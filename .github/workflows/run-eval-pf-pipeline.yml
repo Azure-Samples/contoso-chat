@@ -42,7 +42,7 @@ jobs:
       run: ls
     - name: Set run name
       run: |
-        echo "RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
+        echo "RUN_NAME=$(python contoso-chat/contoso-chat/deployment/llmops-helper/parse_run_output.py run_info.txt)" >> "$GITHUB_ENV"
     - name: Show the current run name
       run: echo "Run name is:" ${{env.RUN_NAME}}
     - name: Show promptflow results
@@ -50,7 +50,7 @@ jobs:
     - name: Run promptflow evaluations
       run: pfazure run create -f contoso-chat/run_evaluation.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
     - name: Get eval run name
-      run: echo "EVAL_RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
+      run: echo "EVAL_RUN_NAME=$(python contoso-chat/contoso-chat/deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
     - name: Show the current eval run name
       run: echo "Eval run name is:" ${{env.EVAL_RUN_NAME}}
     - name: Show promptflow details
@@ -84,7 +84,7 @@ jobs:
     - name: Get assert eval results
       id: jobMetricAssert
       run: |
-            export ASSERT=$(python deployment/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+            export ASSERT=$(python contoso-chat/contoso-chat/deployment/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
             echo "::debug::Assert has returned the following value: $ASSERT"
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then
