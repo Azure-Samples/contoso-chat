@@ -4,7 +4,7 @@ import sys
 def main():
     cwd = os.getcwd()
     print(cwd)
-    os.chdir("../../")
+    os.chdir("../")
     cwd = os.getcwd()
     print(cwd)
     path = os.path.join(cwd,'deployment/llmops-helper',sys.argv[1])
