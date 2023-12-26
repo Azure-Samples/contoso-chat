@@ -1,12 +1,14 @@
 name: Deploy Prompts with Promptflow
 
 on:
-  workflow_dispatch:
   workflow_run:
-    workflows: ["run-eval-pf-pipeline"]
-    branches: [main]
+    workflows: 
+      - "run-eval-pf-pipeline"
+    branches: 
+      - main
     types:
       - completed
+      
 
 env: 
   GROUP: ${{secrets.GROUP}}
