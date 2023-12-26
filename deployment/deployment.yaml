@@ -17,7 +17,7 @@ environment:
     scoring_route:
       path: /score
       port: 8080
-instance_type: STANDARD_DS12_V2
+instance_type: Standard_DS3_v2
 instance_count: 1
 environment_variables:
 
