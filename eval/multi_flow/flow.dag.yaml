@@ -61,7 +61,7 @@ nodes:
     question: ${inputs.question}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
     temperature: 0
   connection: contoso-aoai-west
   api: chat
@@ -90,7 +90,7 @@ nodes:
     question: ${inputs.question}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
     temperature: 0
   connection: contoso-aoai-west
   api: chat
@@ -119,7 +119,7 @@ nodes:
     context: ${inputs.context}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
     temperature: 0
     question: ${inputs.question}
   connection: contoso-aoai-west
@@ -150,7 +150,7 @@ nodes:
     context: ${inputs.context}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
     temperature: 0
   connection: contoso-aoai-west
   api: chat

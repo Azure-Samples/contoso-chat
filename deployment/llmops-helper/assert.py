@@ -8,10 +8,37 @@ import json
 """
 def assert_metric(file_path:str, expected_value: str) -> bool:
     result = json.load(open(file_path))
-    # TODO Update to right metrics
-    metric_value = result['gpt_groundedness'] 
 
-    return float(metric_value) >= float(expected_value)
+    # Get metric values from json result
+    groundedness_metric_value = result['gpt_groundedness']
+    coherence_metric_value = result['gpt_coherence']
+    relevance_metric_value = result['gpt_relevance']
+    fluency_metric_value = result['gpt_fluency']
+
+    # Check if each metric is not null then check against expected value
+    result = False
+    if groundedness_metric_value is not None:
+        result = float(groundedness_metric_value) >= float(expected_value)
+        #break if false
+        if result == False:
+            return result
+    if coherence_metric_value is not None:
+        result = float(coherence_metric_value) >= float(expected_value)
+        #break if false
+        if result == False:
+            return result
+    if relevance_metric_value is not None:
+        result = float(relevance_metric_value) >= float(expected_value)
+        #break if false
+        if result == False:
+            return result
+    if fluency_metric_value is not None:
+        result = float(fluency_metric_value) >= float(expected_value)
+        #break if false
+        if result == False:
+            return result
+    
+    return True
     
 def main():
     cwd = os.getcwd()

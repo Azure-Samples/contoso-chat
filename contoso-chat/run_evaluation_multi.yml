@@ -1,5 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
-flow: ../eval/groundedness
+flow: ../eval/multi_flow
 data: ../data/salestestdata.jsonl
 
 column_mapping:
@@ -14,13 +14,13 @@ runtime: automatic
 connections:
   groundedness_score:
     connection: contoso-aoai-west
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
   fluency_scores:
     connection: contoso-aoai-west
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
   coherence_score:
     connection: contoso-aoai-west
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
   relevance_score:
     connection: contoso-aoai-west
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
