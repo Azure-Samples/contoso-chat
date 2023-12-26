@@ -15,7 +15,7 @@ connections:
   groundedness_score:
     connection: contoso-aoai-west
     deployment_name: gpt-35-turbo
-  fluency_scores:
+  fluency_score:
     connection: contoso-aoai-west
     deployment_name: gpt-35-turbo
   coherence_score:
