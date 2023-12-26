@@ -137,11 +137,13 @@ Once the prompt flow is setup and working, its time to test it and evaluate the 
 
 Follow the instructions and steps in the notebook `evaluate-chat-prompt-flow.ipynb` under the `eval` folder.
 
-## Deployment
+## Deployment with SDK
 
 Now that you have validated and corrected any issues with the prompt flow performance. Its time to push the solution to the cloud and deploy.
 
 Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` under the `deployment` folder.
+
+## Deploy with GitHub Actions
 
 ### 1. Create Connection to Azure in GitHub
 - Login to [Azure Shell](https://shell.azure.com/)
@@ -158,7 +160,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   "tenantId": <GUID>
 }
 ```
-- Add `GROUP`, `RESOURCE`, and `WORKSPACE` to GitHub Secrets.
+- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource name), and `WORKSPACE` (this is the project name) to GitHub Secrets.
 - Instructions to update the config [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#update-llmops_configjson)
 
 

@@ -9,7 +9,7 @@ import json
 def assert_metric(file_path:str, expected_value: str) -> bool:
     result = json.load(open(file_path))
     # TODO Update to right metrics
-    metric_value = result['accuracy'] 
+    metric_value = result['groundedness'] 
 
     return float(metric_value) >= float(expected_value)
     

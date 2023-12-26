@@ -58,7 +58,7 @@ jobs:
     - name: Show promptflow details
       run: pfazure run show-details --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Show promptflow metrics
-      run: pfazure run show-metrics --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > eval_result.json 
+      run: pfazure run show-metrics --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > eval_result.json cat eval_result.json
 
   assert-and-register-model:
     needs: login-and-run-and-evalpf
@@ -86,7 +86,7 @@ jobs:
     - name: Get assert eval results
       id: jobMetricAssert
       run: |
-            export ASSERT=$(python deployment/llmops-helper/assert.py result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+            export ASSERT=$(python deployment/llmops-helper/assert.py eval_result.json 0.6) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
             echo "::debug::Assert has returned the following value: $ASSERT"
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then
