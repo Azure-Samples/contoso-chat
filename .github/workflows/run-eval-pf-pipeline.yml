@@ -76,6 +76,8 @@ jobs:
               echo "::warning::Prompt flow run didn't meet quality bar."
               echo "::set-output name=result::false"
             fi
+    - name: Show the assert result
+      run: echo "Assert result is:" ${{ steps.jobMetricAssert.outputs.result }}
     - name: Register promptflow model
       if: ${{ steps.jobMetricAssert.outputs.result == 'true' }}
       run: az ml model create --file deployment/model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
