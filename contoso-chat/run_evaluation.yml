@@ -11,4 +11,4 @@ column_mapping:
 connections:
   groundedness_score:
     connection: contoso-aoai-west
-    deployment_name: gpt-4
+    deployment_name: gpt-35-turbo
