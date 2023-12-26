@@ -3,10 +3,10 @@ flow: ../eval/groundedness
 data: ../data/salestestdata.jsonl
 
 column_mapping:
-  customerId: ${data.customerId},
-  question: ${data.question},
-  context: ${run.outputs.context},
-  answer: ${run.outputs.answer},
+  customerId: ${data.customerId}
+  question: ${data.question}
+  context: ${run.outputs.context}
+  answer: ${run.outputs.answer}
 
 connections:
   groundedness_score:
