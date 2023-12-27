@@ -13,6 +13,8 @@ env:
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
+  ENDPOINT_PRINCIPAL: ${{secrets.ENDPOINT_PRINCIPAL}}
+  KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
   RUN_NAME: contoso_chat
   EVAL_RUN_NAME: contoso_chat_eval
   ENDPOINT_NAME: contoso_chat
@@ -36,6 +38,14 @@ jobs:
     - name: Set default subscription
       run: |
          az account set -s ${{env.SUBSCRIPTION}}
+  
+    - name: Service principal roles
+      run: |
+        echo "assigning permissions to Principal to AzureML workspace.."
+        az role assignment create --assignee ${{env.ENDPOINT_PRINCIPAL}} --role "AzureML Data Scientist" --scope "/subscriptions/${{env.SUBSCRIPTION}}/resourcegroups/${{env.GROUP}}/providers/Microsoft.MachineLearningServices/workspaces/${{env.WORKSPACE}}"
+    
+        echo "assigning permissions to Principal to Key vault.."
+        az keyvault set-policy --name ${{env.KEY_VAULT_NAME}} --resource-group ${{env.GROUP}} --object-id ${{env.ENDPOINT_PRINCIPAL}}  --secret-permissions get list
     - name: Create Hash
       run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
     - name: Create unique endpoint name   
