@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
 endpoint_name: contoso-chat
-model: azureml:contoso-chat-model:latest
+model: azureml:contoso-chat-model:8
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
 environment:
