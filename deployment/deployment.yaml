@@ -6,7 +6,7 @@ model: azureml:contoso-chat-model:1
   # path: examples/flows/chat/basic-chat
 environment:
 # install custom python packages
-  image: promptflow-contoso-chat-122723:latest
+  image: crcontosooutdoors886934069514.azurecr.io/azureml/azureml_4d442ed44db5c4e43e53010069d95016:latest
   inference_config:
     liveness_route:
       path: /health
