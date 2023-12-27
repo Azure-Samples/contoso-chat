@@ -1,11 +1,12 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
 endpoint_name: contoso-chat
-model: azureml:contoso-chat-model:8
+model: azureml:contoso-chat-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
 environment:
-  image: mcr.microsoft.com/azureml/promptflow/promptflow-runtime:20231218.v2
+# install custom python packages
+  image: promptflow-contoso-chat-122723:latest
   inference_config:
     liveness_route:
       path: /health
