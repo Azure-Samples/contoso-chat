@@ -1,6 +1,10 @@
 name: pfenv
+channels:
+  - defaults
 dependencies:
-  - promptflow
-  - promptflow-tools
-  - azure-cosmos
-  - azure-search-documents==11.4.0
+  - python=3.10
+  - pip
+    - promptflow
+    - promptflow-tools
+    - azure-cosmos
+    - azure-search-documents==11.4.0
