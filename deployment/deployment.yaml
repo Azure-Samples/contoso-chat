@@ -5,10 +5,8 @@ model: azureml:contoso-chat-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
 environment: 
+  conda_file: conda.yml
   image: mcr.microsoft.com/azureml/promptflow/promptflow-runtime:latest
-  # install requirements.txt in the image
-  python_requirements_txt: ../contoso-chat/requirements.txt
-  # inference config is used to build a serving container for online deployments
   inference_config:
     liveness_route:
       path: /health
