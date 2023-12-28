@@ -58,7 +58,7 @@ jobs:
     - name: Read endpoint principal
       run: |
         az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > endpoint.json
-        jq -r '.properties.azureml.onlineendpointid' endpoint.json > principal.txt
+        jq -r '.identity.principal_id' endpoint.json > principal.txt
         echo "Principal is: $(cat principal.txt)"
     - name: Assign Permission to Endpoint Principal
       run: |
