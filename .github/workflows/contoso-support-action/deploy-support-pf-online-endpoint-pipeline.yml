@@ -3,7 +3,7 @@ name: Deploy Prompts with Promptflow
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["run-eval-pf-pipeline"]
+    workflows: ["run-support-eval-pf-pipeline"]
     branches: [main]
     types:
       - completed
@@ -13,9 +13,9 @@ env:
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
-  RUN_NAME: contoso_chat
-  EVAL_RUN_NAME: contoso_chat_eval
-  ENDPOINT_NAME: contoso_chat
+  RUN_NAME: contoso_support
+  EVAL_RUN_NAME: contoso_support_eval
+  ENDPOINT_NAME: contoso_support
   DEPLOYMENT_NAME: blue
   KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
 
@@ -40,17 +40,17 @@ jobs:
     - name: Create Hash
       run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
     - name: Create unique endpoint name   
-      run: echo "ENDPOINT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
+      run: echo "ENDPOINT_NAME=$(echo 'contoso-support-'$HASH)" >> "$GITHUB_ENV"
     - name: Display endpoint name
       run: echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
     - name: Setup endpoint
-      run: az ml online-endpoint create --file deployment/chat-endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml online-endpoint create --file deployment/support-endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Update deployment PRT_CONFIG variable
       run: |
         PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
-        sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/chat-deployment.yaml
+        sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/support-deployment.yaml
     - name: Setup deployment
-      run: az ml online-deployment create --file deployment/chat-deployment.yaml --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml online-deployment create --file deployment/support-deployment.yaml --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the endpoint
       run: az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the deployment
