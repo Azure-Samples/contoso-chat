@@ -147,9 +147,10 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
 
 ### 1. Create Connection to Azure in GitHub
 - Login to [Azure Shell](https://shell.azure.com/)
-- Follow the instructions to create a service principal [here](hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
-- Follow the instructions in steps 1 - 8 to add create and add the user-assigned managed identity to the subscription and workspace. [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#steps)
-    -If it errors on the step to add the data science role. Complete this step in the portal under the IAM.
+- Follow the instructions to [create a service principal here](hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
+- Follow the [instructions in steps 1 - 8  here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#steps) to add create and add the user-assigned managed identity to the subscription and workspace.
+
+- Assign `Data Science Role` and the `Azure Machine Learning Workspace Connection Secrets Reader` to the service principal. Complete this step in the portal under the IAM.
 - Setup authentication with Github [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github)
 
 ```bash
@@ -160,9 +161,14 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   "tenantId": <GUID>
 }
 ```
-- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource name), and `WORKSPACE` (this is the project name) to GitHub Secrets.
-- Instructions to update the config [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#update-llmops_configjson)
+- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource group name), `WORKSPACE` (this is the project name), and 'KEY_VAULT_NAME' to GitHub.
 
+### 2. Create a custom environment for endpoint
+- Follow the instructions to create a custom env with the packages needed [here](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-manage-environments-in-studio?view=azureml-api-2#create-an-environment)
+  - Select the `upload existing docker` option 
+  - Upload from the folder `runtime\docker`
+
+- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environemnt details page.
 
 ## Contributing
 
