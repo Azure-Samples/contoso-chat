@@ -80,4 +80,4 @@ jobs:
       run: echo "Assert result is:" ${{ steps.jobMetricAssert.outputs.result }}
     - name: Register promptflow model
       if: ${{ steps.jobMetricAssert.outputs.result == 'true' }}
-      run: az ml model create --file deployment/model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml model create --file deployment/chat-model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
