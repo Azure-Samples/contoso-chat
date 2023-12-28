@@ -59,9 +59,9 @@ jobs:
       run: |
         az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > endpoint.json
         jq -r '.properties.authentication.principal' endpoint.json > principal.txt
+        echo "Principal is: $(cat principal.txt)"
     - name: Assign Permission to Endpoint Principal
       run: |
-          az ml workspace share -w ${{env.WORKSPACE}} -g ${{env.GROUP}} --user -role owner
           echo "assigning permissions to Principal to AzureML workspace.."
           az role assignment create --assignee $(cat principal.txt) --role "AzureML Data Scientist" --scope "/subscriptions/${{ env.SUBSCRIPTION }}/resourcegroups/${{env.GROUP}} /providers/Microsoft.MachineLearningServices/workspaces/${{env.WORKSPACE}}"
           
