@@ -31,9 +31,9 @@ jobs:
     - name: List current directory
       run: ls
     - name: Install promptflow
-      run: pip install -r ../contoso-support/requirements.txt
+      run: pip install -r contoso-support/requirements.txt
     - name: Install promptflow again
-      run: pip install -r ../contoso-support/requirements.txt
+      run: pip install -r contoso-support/requirements.txt
     - name: Run promptflow
       run: |
         pfazure run create -f contoso-support/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
