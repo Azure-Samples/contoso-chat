@@ -1,4 +1,4 @@
-name: Test and Evaulate Prompts with Promptflow
+name: Test and Evaulate Contoso-Chat with Promptflow
 
 on:
   workflow_dispatch:

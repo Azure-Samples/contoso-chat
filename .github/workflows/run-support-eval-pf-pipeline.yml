@@ -1,4 +1,4 @@
-name: Test and Evaulate Prompts with Promptflow
+name: Test and Evaulate Contoso-Support Promptflow
 
 on:
   workflow_dispatch:
