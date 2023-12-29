@@ -9,9 +9,10 @@ inputs:
   question:
     type: string
     is_chat_input: true
+    default: Can you suggest something that would work well for camping in cold weather?
   customer_id:
     type: string
-    default: ""
+    default: "2"
 outputs:
   answer:
     type: string
@@ -23,9 +24,7 @@ nodes:
   source:
     type: code
     path: intent.jinja2
-  inputs:
-    chat_history: ${inputs.chat_history}
-    question: ${inputs.question}
+  inputs: {}
   connection: contoso-aoai-west
   api: chat
 - name: run_chat_or_support
@@ -34,11 +33,11 @@ nodes:
     type: code
     path: run_chat_or_support_flow.py
   inputs:
-    query: ${inputs.question}
     chat_history: ${inputs.chat_history}
     azure_open_ai_connection: contoso-aoai-west
     customer_id: ${inputs.customer_id}
-    intent: ${classify_intent_llm.output}
+    question: ${inputs.question}
+    open_ai_deployment: gpt-35-turbo
 - name: classify_intent_llm
   type: llm
   source:
