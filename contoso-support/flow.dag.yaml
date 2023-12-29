@@ -54,8 +54,9 @@ nodes:
     type: package
     tool: promptflow.tools.embedding.embedding
   inputs:
-    connection: contoso-aoai-connection
+    connection: contoso-aoai-west
     input: ${rewrite_query.output}
+    deployment_name: text-embedding-ada-002
   use_variants: false
 - name: customer_lookup
   type: python
