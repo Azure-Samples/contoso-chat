@@ -6,6 +6,6 @@ data: ../data/supporttestdata.jsonl
 runtime: automatic
 
 connections:
-  llm_response:
+  llm_call:
     connection: contoso-aoai-west
     deployment_name: gpt-35-turbo
