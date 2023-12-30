@@ -3,3 +3,4 @@ promptflow-tools
 azure-cosmos
 azure-search-documents
 azure-ai-ml
+ipykernel
