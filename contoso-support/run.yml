@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: .
+data: ../data/supporttestdata.jsonl
+
+# define cloud resource
+runtime: automatic
+
+connections:
+  llm_call:
+    connection: aoai-connection
+    deployment_name: gpt-35-turbo

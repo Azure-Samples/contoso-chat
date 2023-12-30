@@ -67,15 +67,16 @@ Open `config.json` file and add `subscriptionid`, `resourcegroup`, `workspacenam
 Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
 ## Create Azure resources and populate with sample data
-### 1.  Azure AI Search service named `contoso-search`
-- Follow these instructions to [create an Azure AI Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
-- Populate the `local.env` file with the endpoint and key from the Azure AI Search service created in the previous step.
-- Now that the resource is created in Azure, use the notebook code and instructions `create-azure-search.ipynb` under the `data\product_info` folder to create the index and populate with the sample data.
 
-### 2.  Create Azure Open AI resource and deploy the models 
+### 1.  Create Azure Open AI resource and deploy the models 
 - Follow these instructions to [create an Azure Open AI resource](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
 - Populate the `local.env` file with the endpoint and key from the Azure Open AI resource created in the previous step.
 - Now that the service is created use Azure AI Studio to deploy the following models to be used in the prompt flow: `GPT-4`, `GPT-3.5 Turbo`, and the embedding model `text-embedding-ada-002`. Follow these instructions to [deploy the models.](https://learn.microsoft.com/en-us/azure/ai-studio/tutorials/deploy-copilot-ai-studio#deploy-a-chat-model)
+
+### 2.  Azure AI Search service named `contoso-search`
+- Follow these instructions to [create an Azure AI Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
+- Populate the `local.env` file with the endpoint and key from the Azure AI Search service created in the previous step.
+- Now that the resource is created in Azure, use the notebook code and instructions `create-azure-search.ipynb` under the `data\product_info` folder to create the index and populate with the sample data
 
 ### 3.  Create and populate the Azure Cosmos DB customer database 
 - Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
@@ -134,16 +135,40 @@ Now that we have the prompt flow open in the visual editor, we can run the flow 
 
 Once the prompt flow is setup and working, its time to test it and evaluate the results. To do this we have included some evaluation prompt flows in this project that will use GPT-4 to test the prompt flow.
 
-Follow the instructions and steps in the notebook `evaluate-prompt-flow.ipynb` under the `eval` folder.
+Follow the instructions and steps in the notebook `evaluate-chat-prompt-flow.ipynb` under the `eval` folder.
 
-## Deployment
+## Deployment with SDK
 
 Now that you have validated and corrected any issues with the prompt flow performance. Its time to push the solution to the cloud and deploy.
 
 Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` under the `deployment` folder.
 
+## Deploy with GitHub Actions
 
+### 1. Create Connection to Azure in GitHub
+- Login to [Azure Shell](https://shell.azure.com/)
+- Follow the instructions to [create a service principal here](hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
+- Follow the [instructions in steps 1 - 8  here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#steps) to add create and add the user-assigned managed identity to the subscription and workspace.
 
+- Assign `Data Science Role` and the `Azure Machine Learning Workspace Connection Secrets Reader` to the service principal. Complete this step in the portal under the IAM.
+- Setup authentication with Github [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github)
+
+```bash
+{
+  "clientId": <GUID>,
+  "clientSecret": <GUID>,
+  "subscriptionId": <GUID>,
+  "tenantId": <GUID>
+}
+```
+- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource group name), `WORKSPACE` (this is the project name), and 'KEY_VAULT_NAME' to GitHub.
+
+### 2. Create a custom environment for endpoint
+- Follow the instructions to create a custom env with the packages needed [here](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-manage-environments-in-studio?view=azureml-api-2#create-an-environment)
+  - Select the `upload existing docker` option 
+  - Upload from the folder `runtime\docker`
+
+- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environemnt details page.
 
 ## Contributing
 

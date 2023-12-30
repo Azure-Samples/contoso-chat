@@ -1,0 +1,50 @@
+id: template_chat_flow
+name: Template Chat Flow
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+  question:
+    type: string
+    is_chat_input: true
+    default: Can you suggest something that would work well for camping in cold weather?
+  customer_id:
+    type: string
+    default: "2"
+outputs:
+  answer:
+    type: string
+    reference: ${run_chat_or_support.output}
+    is_chat_output: true
+nodes:
+- name: classify_intent_prompt
+  type: prompt
+  source:
+    type: code
+    path: intent.jinja2
+  inputs: {}
+  connection: aoai-connection
+  api: chat
+- name: run_chat_or_support
+  type: python
+  source:
+    type: code
+    path: run_chat_or_support_flow.py
+  inputs:
+    chat_history: ${inputs.chat_history}
+    azure_open_ai_connection: aoai-connection
+    customer_id: ${inputs.customer_id}
+    question: ${inputs.question}
+    open_ai_deployment: gpt-35-turbo
+- name: classify_intent_llm
+  type: llm
+  source:
+    type: code
+    path: llm_response.jinja2
+  inputs:
+    deployment_name: gpt-35-turbo
+    prompt_text: ${classify_intent_prompt.output}
+  connection: aoai-connection
+  api: chat
