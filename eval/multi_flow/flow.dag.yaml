@@ -61,9 +61,9 @@ nodes:
     question: ${inputs.question}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-35-turbo
+    deployment_name: gpt-4
     temperature: 0
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: coherence_concat_scores
   type: python
@@ -90,9 +90,9 @@ nodes:
     question: ${inputs.question}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-35-turbo
+    deployment_name: gpt-4
     temperature: 0
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: fluency_concat_scores
   type: python
@@ -119,10 +119,10 @@ nodes:
     context: ${inputs.context}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-35-turbo
+    deployment_name: gpt-4
     temperature: 0
     question: ${inputs.question}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: groundedness_concat_scores
   type: python
@@ -150,9 +150,9 @@ nodes:
     context: ${inputs.context}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-35-turbo
+    deployment_name: gpt-4
     temperature: 0
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: relevance_concat_scores
   type: python

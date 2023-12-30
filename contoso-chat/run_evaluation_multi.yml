@@ -13,14 +13,14 @@ runtime: automatic
 
 connections:
   groundedness_score:
-    connection: contoso-aoai-west
+    connection: aoai-connection
     deployment_name: gpt-35-turbo
   fluency_score:
-    connection: contoso-aoai-west
+    connection: aoai-connection
     deployment_name: gpt-35-turbo
   coherence_score:
-    connection: contoso-aoai-west
+    connection: aoai-connection
     deployment_name: gpt-35-turbo
   relevance_score:
-    connection: contoso-aoai-west
+    connection: aoai-connection
     deployment_name: gpt-35-turbo

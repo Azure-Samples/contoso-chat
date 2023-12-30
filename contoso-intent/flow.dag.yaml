@@ -25,7 +25,7 @@ nodes:
     type: code
     path: intent.jinja2
   inputs: {}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: run_chat_or_support
   type: python
@@ -34,7 +34,7 @@ nodes:
     path: run_chat_or_support_flow.py
   inputs:
     chat_history: ${inputs.chat_history}
-    azure_open_ai_connection: contoso-aoai-west
+    azure_open_ai_connection: aoai-connection
     customer_id: ${inputs.customer_id}
     question: ${inputs.question}
     open_ai_deployment: gpt-35-turbo
@@ -46,5 +46,5 @@ nodes:
   inputs:
     deployment_name: gpt-35-turbo
     prompt_text: ${classify_intent_prompt.output}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat

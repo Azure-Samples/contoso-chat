@@ -39,9 +39,9 @@ nodes:
     context: ${inputs.context}
     answer: ${inputs.answer}
     max_tokens: 256
-    deployment_name: gpt-35-turbo
+    deployment_name: gpt-4
     temperature: 0
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: concat_scores
   type: python

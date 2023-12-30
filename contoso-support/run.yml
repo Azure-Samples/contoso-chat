@@ -7,5 +7,5 @@ runtime: automatic
 
 connections:
   llm_call:
-    connection: contoso-aoai-west
+    connection: aoai-connection
     deployment_name: gpt-35-turbo
