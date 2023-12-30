@@ -64,7 +64,7 @@ nodes:
     type: code
     path: customer_lookup.py
   inputs:
-    conn: contoso-customer-cosmos
+    conn: contoso-cosmos
     customerId: ${inputs.customerId}
   use_variants: false
 - name: retrieve_support_documentation
