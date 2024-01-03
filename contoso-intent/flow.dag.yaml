@@ -48,5 +48,5 @@ nodes:
   inputs:
     deployment_name: gpt-35-turbo
     prompt_text: ${classify_intent_prompt.output}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
