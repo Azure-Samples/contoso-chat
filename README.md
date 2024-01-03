@@ -161,7 +161,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   "tenantId": <GUID>
 }
 ```
-- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource group name), `WORKSPACE` (this is the project name), and 'KEY_VAULT_NAME' to GitHub.
+- Add `SUBSCRIPTION` (this is the subscription) , `GROUP` (this is the resource group name), `WORKSPACE` (this is the project name), and `KEY_VAULT_NAME` to GitHub.
 
 ### 2. Create a custom environment for endpoint
 - Follow the instructions to create a custom env with the packages needed [here](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-manage-environments-in-studio?view=azureml-api-2#create-an-environment)
