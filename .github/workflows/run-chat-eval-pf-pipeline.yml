@@ -31,9 +31,7 @@ jobs:
     - name: List current directory
       run: ls
     - name: Install promptflow
-      run: pip install -r ../contoso-chat/requirements.txt
-    - name: Install promptflow again
-      run: pip install -r ../contoso-chat/requirements.txt
+      run: pip install -r contoso-chat/requirements.txt
     - name: Run promptflow
       run: |
         pfazure run create -f contoso-chat/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
@@ -54,7 +52,7 @@ jobs:
     - name: Get eval run name
       run: echo "EVAL_RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
     - name: Show the current eval run name
-      run: echo "Eval run name is:" ${{env.EVAL_RUN_NAME}}
+      run: echo "Eval run name is:" ${{env.EVAL_RUN_NAME}} 
     - name: Show promptflow details
       run: pfazure run show-details --name ${{env.EVAL_RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Show promptflow metrics
@@ -67,7 +65,7 @@ jobs:
       id: jobMetricAssert
       run: |
             # NOTE The number after the file is the threshold score to pass the assertion.
-            export ASSERT=$(python deployment/llmops-helper/assert.py eval_result.json 2) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+            export ASSERT=$(python deployment/llmops-helper/assert.py eval_result.json 3) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
             echo "::debug::Assert has returned the following value: $ASSERT"
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then

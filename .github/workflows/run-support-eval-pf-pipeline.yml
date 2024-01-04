@@ -32,8 +32,6 @@ jobs:
       run: ls
     - name: Install promptflow
       run: pip install -r contoso-support/requirements.txt
-    - name: Install promptflow again
-      run: pip install -r contoso-support/requirements.txt
     - name: Run promptflow
       run: |
         pfazure run create -f contoso-support/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
@@ -67,7 +65,7 @@ jobs:
       id: jobMetricAssert
       run: |
             # NOTE The number after the file is the threshold score to pass the assertion.
-            export ASSERT=$(python deployment/llmops-helper/assert.py eval_result.json 2) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
+            export ASSERT=$(python deployment/llmops-helper/assert.py eval_result.json 3) # NOTE <file>.json is the file name and decimal is the threshold for the assertion
             echo "::debug::Assert has returned the following value: $ASSERT"
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then
