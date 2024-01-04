@@ -29,7 +29,7 @@ nodes:
     path: intent.jinja2
   inputs:
     question: ${inputs.question}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: run_chat_or_support
   type: python
@@ -51,5 +51,5 @@ nodes:
   inputs:
     deployment_name: gpt-35-turbo
     prompt_text: ${classify_intent_prompt.output}
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat

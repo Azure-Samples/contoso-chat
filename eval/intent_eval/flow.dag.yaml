@@ -22,7 +22,7 @@ nodes:
   inputs:
     question: ${inputs.question}
     deployment_name: gpt-35-turbo
-  connection: contoso-aoai-west
+  connection: aoai-connection
   api: chat
 - name: assert_value
   type: python
