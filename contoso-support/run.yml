@@ -5,6 +5,10 @@ data: ../data/supporttestdata.jsonl
 # define cloud resource
 runtime: automatic
 
+column_mapping:
+  customerId: ${data.customerId}
+  question: ${data.question}
+
 connections:
   llm_call:
     connection: aoai-connection
