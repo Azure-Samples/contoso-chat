@@ -1,5 +1,5 @@
-id: template_chat_flow
-name: Template Chat Flow
+id: intent_flow
+name: Intent Flow
 environment:
   python_requirements_txt: requirements.txt
 inputs:
