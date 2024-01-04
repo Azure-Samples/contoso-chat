@@ -18,6 +18,9 @@ outputs:
     type: string
     reference: ${run_chat_or_support.output}
     is_chat_output: true
+  intent_context:
+    type: string
+    reference: ${classify_intent_llm.output}
 nodes:
 - name: classify_intent_prompt
   type: prompt
@@ -26,7 +29,7 @@ nodes:
     path: intent.jinja2
   inputs:
     question: ${inputs.question}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
 - name: run_chat_or_support
   type: python
@@ -48,5 +51,5 @@ nodes:
   inputs:
     deployment_name: gpt-35-turbo
     prompt_text: ${classify_intent_prompt.output}
-  connection: aoai-connection
+  connection: contoso-aoai-west
   api: chat
