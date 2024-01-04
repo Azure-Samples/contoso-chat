@@ -1,5 +1,5 @@
-id: template_chat_flow
-name: Template Chat Flow
+id: intent_flow
+name: Intent Flow
 environment:
   python_requirements_txt: requirements.txt
 inputs:
@@ -18,6 +18,9 @@ outputs:
     type: string
     reference: ${run_chat_or_support.output}
     is_chat_output: true
+  intent_context:
+    type: string
+    reference: ${classify_intent_llm.output}
 nodes:
 - name: classify_intent_prompt
   type: prompt
