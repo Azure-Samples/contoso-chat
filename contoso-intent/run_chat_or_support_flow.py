@@ -15,7 +15,7 @@ def run_chat_flow(question: str, customer_id: str, chat_history: [], chat_endpoi
     url = chat_endpoint['api_base']
     key = chat_endpoint['api_key']
     input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
-    response = call_endpoint(url, key, input_data)
+    response = call_endpoint(url, key, input_data, 'contoso-chat')
     return response
 
 def run_support_flow(question: str, customer_id: str, chat_history: [], support_endpoint) -> str:
@@ -26,7 +26,7 @@ def run_support_flow(question: str, customer_id: str, chat_history: [], support_
     url = support_endpoint['api_base']
     key = support_endpoint['api_key']
     input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
-    response = call_endpoint(url, key, input_data)
+    response = call_endpoint(url, key, input_data, 'contoso-support')
     return response
   
 
@@ -34,7 +34,7 @@ def allowSelfSignedHttps(allowed):
 # bypass the server certificate verification on client side
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
         ssl._create_default_https_context = ssl._create_unverified_context
-def call_endpoint(url, api_key, input_data):
+def call_endpoint(url, api_key, input_data, model_deployment_name):
     # Allow self-signed certificate
     allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
     # Request data goes here
@@ -48,7 +48,7 @@ def call_endpoint(url, api_key, input_data):
         raise Exception("A key should be provided to invoke the endpoint")
     # The azureml-model-deployment header will force the request to go to a specific deployment.
     # Remove this header to have the request observe the endpoint traffic rules
-    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key), 'azureml-model-deployment': 'contoso-support' }
+    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key), 'azureml-model-deployment': model_deployment_name }
     req = urllib.request.Request(url, body, headers)
     try:
         response = urllib.request.urlopen(req)
