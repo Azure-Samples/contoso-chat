@@ -12,7 +12,6 @@ def run_chat_flow(question: str, customer_id: str, chat_history: [], chat_endpoi
     run chat flow based on the question and customer id
     """
     # call chat endpoint and return response (input is question and customer id in json format)
-    # TODO: Update these to secrets
     url = chat_endpoint['api_base']
     key = chat_endpoint['api_key']
     input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
@@ -24,7 +23,6 @@ def run_support_flow(question: str, customer_id: str, chat_history: [], support_
     run support flow based on the question and customer id
     """
     # call support endpoint and return response (input is question and customer id in json format)
-    # TODO: Update these to secrets
     url = support_endpoint['api_base']
     key = support_endpoint['api_key']
     input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
@@ -36,7 +34,7 @@ def allowSelfSignedHttps(allowed):
 # bypass the server certificate verification on client side
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
         ssl._create_default_https_context = ssl._create_unverified_context
-def call_endpoint(url, key, input_data):
+def call_endpoint(url, api_key, input_data):
     # Allow self-signed certificate
     allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
     # Request data goes here
@@ -44,11 +42,8 @@ def call_endpoint(url, key, input_data):
     # depending on the format your endpoint expects.
     # More information can be found here:
     # https://docs.microsoft.com/azure/machine-learning/how-to-deploy-advanced-entry-script
-    data = input_data
-    body = str.encode(json.dumps(data))
-    url = url
+    body = str.encode(json.dumps(input_data))
     # Replace this with the primary/secondary key or AMLToken for the endpoint
-    api_key = key
     if not api_key:
         raise Exception("A key should be provided to invoke the endpoint")
     # The azureml-model-deployment header will force the request to go to a specific deployment.

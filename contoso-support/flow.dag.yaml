@@ -24,7 +24,7 @@ inputs:
     is_chat_history: true
   question:
     type: string
-    default: the please look it up
+    default: What was in my last order?
     is_chat_input: true
   customerId:
     type: string
