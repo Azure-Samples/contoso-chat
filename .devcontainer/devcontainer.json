@@ -15,8 +15,6 @@
         "vscode": {
             "extensions": [
 				"prompt-flow.prompt-flow",
-				"GitHub.copilot-chat",
-				"GitHub.copilot",
 				"ms-azuretools.vscode-docker",
 				"ms-python.python",
 				"ms-toolsai.jupyter"
