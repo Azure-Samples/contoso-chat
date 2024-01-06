@@ -25,7 +25,9 @@ nodes:
     max_tokens: 256
     deployment_name: gpt-4
     temperature: 0
-  connection: azure_open_ai_connection
+    question: ${inputs.question}
+    chat_history: "[]"
+  connection: aoai-connection
   api: chat
 - name: concat_scores
   type: python

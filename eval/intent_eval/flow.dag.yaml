@@ -1,0 +1,41 @@
+id: intent_eval_flow
+name: Intent Evaluation Flow
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  groundtruth:
+    type: string
+    default: support
+  question:
+    type: string
+    default: What was in my last order
+outputs:
+  results:
+    type: string
+    reference: ${get_accuracy.output}
+nodes:
+- name: llm_call
+  type: llm
+  source:
+    type: code
+    path: intent.jinja2
+  inputs:
+    question: ${inputs.question}
+    deployment_name: gpt-35-turbo
+  connection: aoai-connection
+  api: chat
+- name: assert_value
+  type: python
+  source:
+    type: code
+    path: assert_value.py
+  inputs:
+    groundtruth: ${inputs.groundtruth}
+    prediction: ${llm_call.output}
+- name: get_accuracy
+  type: python
+  source:
+    type: code
+    path: get_accuracy.py
+  inputs:
+    processed_results: ${assert_value.output}

@@ -1,0 +1,55 @@
+id: intent_flow
+name: Intent Flow
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+  question:
+    type: string
+    is_chat_input: true
+    default: What was in my last order?
+  customer_id:
+    type: string
+    default: "2"
+outputs:
+  answer:
+    type: string
+    reference: ${run_chat_or_support.output}
+    is_chat_output: true
+  intent_context:
+    type: string
+    reference: ${classify_intent_llm.output}
+nodes:
+- name: classify_intent_prompt
+  type: prompt
+  source:
+    type: code
+    path: intent.jinja2
+  inputs:
+    question: ${inputs.question}
+  connection: aoai-connection
+  api: chat
+- name: run_chat_or_support
+  type: python
+  source:
+    type: code
+    path: run_chat_or_support_flow.py
+  inputs:
+    chat_history: ${inputs.chat_history}
+    customer_id: ${inputs.customer_id}
+    question: ${inputs.question}
+    user_intent: ${classify_intent_llm.output}
+    support_endpoint: support_endpoint
+    chat_endpoint: chat_endpoint
+- name: classify_intent_llm
+  type: llm
+  source:
+    type: code
+    path: llm_response.jinja2
+  inputs:
+    deployment_name: gpt-35-turbo
+    prompt_text: ${classify_intent_prompt.output}
+  connection: aoai-connection
+  api: chat
