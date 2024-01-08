@@ -10,7 +10,7 @@
 
 ## Setup the code and environment
 
-To setup the development environment you can leverage codespaces, a local environment that you configure with Anaconda or venv, or a vs code docker container environment that leverages the Devcontainer.
+To setup the development environment you can leverage Codespaces, a local environment that you configure with Anaconda or venv, or a VS Code Dev Container environment (using Docker).
 
 ### Local development environment option (Anaconda or venv)
 
@@ -53,16 +53,17 @@ pip install -r requirements.txt
 ```
 
 ### Codespaces development option
-For codespaces click on the green `code` button on the repository and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Create the prompt flow runtime in AI Studio".
 
-### Local Devcontainer development Option
-If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the [Remote Container Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for more information. Proceed with "Create the prompt flow runtime in AI Studio".
+For GitHub Codespaces, click on the green `Code` button on the repository and select the `Codespaces` tab. Click `Create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Create the prompt flow runtime in AI Studio".
+
+### Local Dev Container development Option
+If you're using Visual Studio Code and **Dev Container**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the [Remote Container Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for more information. Proceed with "Create the prompt flow runtime in AI Studio".
 
 ## Create the prompt flow runtime in AI Studio
 
-First use command `az login` to sign into the Azure Command Line SDK
+First use command `az login` to sign into the Azure Command Line SDK.
 
-Open `config.json` file and add `subscriptionid`, `resourcegroup`, `workspacename` for your Azure AI Studio instance
+Open `config.json` file and add `subscriptionid`, `resourcegroup`, `workspacename` for your Azure AI Studio instance. 
 
 Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
 
@@ -168,7 +169,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   - Select the `upload existing docker` option 
   - Upload from the folder `runtime\docker`
 
-- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environemnt details page.
+- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environment details page.
 
 ## Contributing
 

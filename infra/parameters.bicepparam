@@ -1,0 +1,1 @@
+using 'template.bicep'
