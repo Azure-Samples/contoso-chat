@@ -1,5 +1,11 @@
 resourceGroupName="contchat-rg"
 
+# check if user is logged in
+if [ -z "$(az account show)" ]; then
+    echo "You are not logged in. Please run 'az login' or 'az login --use-device-code' first."
+    exit 1
+fi
+
 # May be needed for a developer with multiple subscriptions:
 # az account set --subscription "<SUBSCRIPTION-NAME>"
 az group create --name $resourceGroupName --location "swedencentral"
