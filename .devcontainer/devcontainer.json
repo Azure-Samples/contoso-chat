@@ -15,11 +15,12 @@
     "customizations": {
         "vscode": {
             "extensions": [
-				"prompt-flow.prompt-flow",
-				"ms-azuretools.vscode-docker",
-				"ms-python.python",
-				"ms-toolsai.jupyter"
-			]
+                "prompt-flow.prompt-flow",
+                "ms-azuretools.vscode-docker",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-azuretools.vscode-bicep"
+            ]
         }
     }
 }

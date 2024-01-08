@@ -1,20 +1,26 @@
 resourceGroupName="contchat-rg"
+resourceGroupLocation="swedencentral"
 
-# check if user is logged in
 if [ -z "$(az account show)" ]; then
     echo "You are not logged in. Please run 'az login' or 'az login --use-device-code' first."
     exit 1
 fi
 
-# May be needed for a developer with multiple subscriptions:
-# az account set --subscription "<SUBSCRIPTION-NAME>"
-az group create --name $resourceGroupName --location "swedencentral"
+echo "Running provisioning using this subscription:"
+az account show --query "{subscriptionId:id, name:name}"
+echo "If that is not the correct subscription, please run 'az account set --subscription \"<SUBSCRIPTION-NAME>\"'"
 
-az deployment group create \
-    --resource-group $resourceGroupName \
-    --name contchat \
-    --template-file infra/main.bicep
+echo "Creating resource group $resourceGroupName in $resourceGroupLocation..."
+az group create --name $resourceGroupName --location $resourceGroupLocation > /dev/null
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to create resource group, perhaps you need to set the subscription? See command above."
+    exit 1
+fi
 
+echo "Provisioning resources in resource group $resourceGroupName..."
+az deployment group create --resource-group $resourceGroupName --name contchat --only-show-errors --template-file infra/main.bicep > /dev/null
+
+echo "Setting up environment variables in .env file..."
 # Save output values to variables
 openAiService=$(az deployment group show --name contchat --resource-group $resourceGroupName --query properties.outputs.openai_name.value -o tsv)
 searchService=$(az deployment group show --name contchat --resource-group $resourceGroupName --query properties.outputs.search_name.value -o tsv)
@@ -29,7 +35,6 @@ searchKey=$(az search admin-key show --service-name $searchService --resource-gr
 apiKey=$(az cognitiveservices account keys list --name $openAiService --resource-group $resourceGroupName --query key1 --output tsv)
 cosmosKey=$(az cosmosdb keys list --name $cosmosService --resource-group $resourceGroupName --query primaryMasterKey --output tsv)
 
-# Write values to .env file for notebooks usage
 echo "CONTOSO_SEARCH_ENDPOINT=$searchEndpoint" >> .env
 echo "CONTOSO_AI_SERVICES_ENDPOINT=$openAiEndpoint" >> .env
 echo "COSMOS_ENDPOINT=$cosmosEndpoint" >> .env
@@ -37,6 +42,8 @@ echo "CONTOSO_SEARCH_KEY=$searchKey" >> .env
 echo "CONTOSO_AI_SERVICES_KEY=$apiKey" >> .env
 echo "COSMOS_KEY=$cosmosKey" >> .env
 
-# Write config.json file for PromptFlow usage
+echo "Writing config.json file for PromptFlow usage..."
 subscriptionId=$(az account show --query id -o tsv)
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
+
+echo "Provisioning complete!"
