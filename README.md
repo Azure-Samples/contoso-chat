@@ -95,7 +95,7 @@ To run the prompt flow, the connections need to be set up both locally and in th
 - Create Azure Open AI connection named `aoai-connection`. [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
 
 ### 2. Create the local connections
-To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
+To simplify the local connection creation, use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
 ## Building a prompt flow
 
@@ -104,7 +104,7 @@ Now that the environment, resources and connections have been configured we can 
 ### 1. Open the prompt flow in VS Code and understand the steps
 The prompt flow is a DAG (directed acyclic graph) that is made up of nodes that are connected together to form a flow. Each node in the flow is a python function tool that can be edited and customized to fit your needs. 
 
-Click on the `flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the prompt flow:
+Click on the `contoso-chat/flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the prompt flow:
 
 ![Visual editor button](./images/visualeditorbutton.png)
 

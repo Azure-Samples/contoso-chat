@@ -435,8 +435,8 @@ resource appinsights 'microsoft.insights/components@2020-02-02' = {
   }
 }
 
-resource workspaces_contoso_chat_sf_ai_name_aoai_connection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: workspaces_contoso_chat_sf_ai_name_resource
+resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
+  parent: mlHub
   name: 'aoai-connection'
   properties: {
     category: 'AzureOpenAI'
@@ -452,8 +452,8 @@ resource workspaces_contoso_chat_sf_ai_name_aoai_connection 'Microsoft.MachineLe
   }
 }
 
-resource workspaces_contoso_chat_sf_ai_name_contoso_cosmos 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: workspaces_contoso_chat_sf_ai_name_resource
+resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
+  parent: mlHub
   name: 'contoso-cosmos'
   properties: {
     category: 'CustomKeys'
@@ -470,8 +470,8 @@ resource workspaces_contoso_chat_sf_ai_name_contoso_cosmos 'Microsoft.MachineLea
   }
 }
 
-resource workspaces_contoso_chat_sf_ai_name_contoso_search 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: workspaces_contoso_chat_sf_ai_name_resource
+resource searchConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
+  parent: mlHub
   name: 'contoso-search'
   properties: {
     category: 'CognitiveSearch'
@@ -482,8 +482,6 @@ resource workspaces_contoso_chat_sf_ai_name_contoso_search 'Microsoft.MachineLea
     }
   }
 }
-
-
 
 resource storageAccounts_stcontosocha735868071044_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
   parent: storage
@@ -628,7 +626,7 @@ resource databaseAccounts_contoso_chat_sf_cosmos_name_contoso_outdoor_customers 
 }
 
 
-resource workspaces_contoso_chat_sf_ai_name_resource 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
+resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   name: workspaces_contoso_chat_sf_ai_name
   location: location
   sku: {
@@ -655,7 +653,7 @@ resource workspaces_contoso_chat_sf_ai_name_resource 'Microsoft.MachineLearningS
   }
 }
 
-resource workspaces_contoso_chat_sf_aiproj_name_resource 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
+resource mlProject 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   name: workspaces_contoso_chat_sf_aiproj_name
   location: location
   sku: {
@@ -673,7 +671,7 @@ resource workspaces_contoso_chat_sf_aiproj_name_resource 'Microsoft.MachineLearn
     publicNetworkAccess: 'Enabled'
     discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
     // most properties are not allowed for a project workspace: "Project workspace shouldn't define ..."
-    hubResourceId: workspaces_contoso_chat_sf_ai_name_resource.id
+    hubResourceId: mlHub.id
   }
 }
 
@@ -681,6 +679,9 @@ resource workspaces_contoso_chat_sf_aiproj_name_resource 'Microsoft.MachineLearn
 output openai_name string = openai.name
 output cosmos_name string = cosmos.name
 output search_name string = search.name
+output mlhub_name string = mlHub.name
+output mlproject_name string = mlProject.name
 
 output openai_endpoint string = openai.properties.endpoint
 output cosmos_endpoint string = cosmos.properties.documentEndpoint
+output search_endpoint string = 'https://${search.name}.search.windows.net/'
