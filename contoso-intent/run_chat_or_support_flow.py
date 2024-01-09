@@ -15,7 +15,7 @@ def run_chat_flow(question: str, customer_id: str, chat_history: [], chat_endpoi
     url = chat_endpoint['api_base']
     key = chat_endpoint['api_key']
     input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
-    response = call_endpoint(url, key, input_data, 'contoso-chat')
+    response = call_endpoint(url, key, input_data, 'contoso-chat')       
     return response
 
 def run_support_flow(question: str, customer_id: str, chat_history: [], support_endpoint) -> str:
@@ -53,8 +53,10 @@ def call_endpoint(url, api_key, input_data, model_deployment_name):
     try:
         response = urllib.request.urlopen(req)
         result = response.read()
-        print(result)
-        return result.decode("utf8", 'ignore')
+        resultjson = json.loads(result)
+        print(resultjson)
+        return resultjson
+        #return result.decode("utf8", 'ignore')
     except urllib.error.HTTPError as error:
         print("The request failed with status code: " + str(error.code))
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
@@ -68,11 +70,11 @@ def call_endpoint(url, api_key, input_data, model_deployment_name):
 def run_chat_or_support_flow(
     question: str,
     chat_history: list[str],
-    customer_id: str,
+    customerId: str,
     user_intent: str,
     support_endpoint: CustomConnection,
     chat_endpoint: CustomConnection,
-) -> str:
+):
     """
     run chat or support flow based on the intent
     """
@@ -80,8 +82,16 @@ def run_chat_or_support_flow(
     if "support" in user_intent:
         # call chat endpoint and return response (input is question and customer id in json format)
         print("running support flow")
-        return run_support_flow(question, customer_id, chat_history, support_endpoint)
+        result = run_support_flow(question, customerId, chat_history, support_endpoint)
+        answer = result['answer']
+        context = result['context']['customer_data']['orders']
+        query_rewrite = result['query_rewrite']
+        # return a list[dict[str, str]] with the answer and context and query_rewrite
+        return {'answer': answer, 'context': context, 'query_rewrite': query_rewrite}
     else:
         # call support endpoint and return response (input is question and customer id in json format)
         print("running chat flow")
-        return run_chat_flow(question, customer_id, chat_history, chat_endpoint)
+        result = run_chat_flow(question, customerId, chat_history, chat_endpoint)
+        answer = result['answer']
+        context = result['context']
+        return {'answer': answer, 'context': context}
