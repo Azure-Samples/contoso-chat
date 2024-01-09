@@ -455,7 +455,7 @@ resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connecti
   }
 }
 
-
+/*
 resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
   parent: mlProject
   name: 'contoso-cosmos'
@@ -473,6 +473,7 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
     }
   }
 }
+*/
 
 resource searchConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
   parent: mlProject

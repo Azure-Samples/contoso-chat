@@ -76,6 +76,20 @@ Proceed with the "Create Azure resources" step below.
   ```
 
   That script will create a resource group, Azure AI Search service, Azure OpenAI service with 3 model deployments, Azure Cosmos DB, and Azure AI Hub and Project. It will also create a `.env` file with the connection information for those resources, and a `config.json` file with the Azure AI Project information.
+3. Create an Azure ML connection for Cosmos.
+    1. Visit https://ml.azure.com
+    2. Under Recent Workspaces, click project (contoso-chat-aiproj)
+    3. Select Prompt flow (sidebar), then Connections (tab)
+    4. Click Create and select Custom from dropdown
+      * Name: contoso-cosmos
+      * Provider: Custom (default)
+      * Key-value pairs: Add 4 entries (get env var values from .env)
+      * key: key, value: "COSMOS_KEY", check "is secret"
+      * key: endpoint , value: "COSMOS_ENDPOINT"
+      * key: containerId, value: customers
+      * key: databaseId, value: contoso-outdoor
+    5. Click Save to complete step.
+
 
 ## Populate with sample data
 
