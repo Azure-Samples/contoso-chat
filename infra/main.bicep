@@ -9,6 +9,8 @@ param workspaces_apws_contosochatsfai362802272292_name string = 'apws-contosocha
 param location string = 'swedencentral'
 param searchLocation string = 'eastus'
 
+var openaiSubdomain = '${accounts_contoso_chat_sf_ai_aiservices_name}${resourceToken}'
+var openaiEndpoint = 'https://${openaiSubdomain}.openai.azure.com/'
 resource openai 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   name: 'oai-contoso${resourceToken}'
   location: location
@@ -17,7 +19,7 @@ resource openai 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   }
   kind: 'AIServices'
   properties: {
-    customSubDomainName: '${accounts_contoso_chat_sf_ai_aiservices_name}${resourceToken}'
+    customSubDomainName: openaiSubdomain
     publicNetworkAccess: 'Enabled'
   }
 }
@@ -440,7 +442,7 @@ resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connecti
   name: 'aoai-connection'
   properties: {
     category: 'AzureOpenAI'
-    target: 'https://${openai.name}.openai.azure.com'
+    target: openaiEndpoint
     authType: 'ApiKey'
     metadata: {
         ApiVersion: '2023-07-01-preview'
@@ -684,6 +686,6 @@ output search_name string = search.name
 output mlhub_name string = mlHub.name
 output mlproject_name string = mlProject.name
 
-output openai_endpoint string = 'https://${openai.name}.openai.azure.com'
+output openai_endpoint string = openaiEndpoint
 output cosmos_endpoint string = cosmos.properties.documentEndpoint
 output search_endpoint string = 'https://${search.name}.search.windows.net/'
