@@ -445,6 +445,7 @@ resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connecti
     metadata: {
         ApiVersion: '2023-07-01-preview'
         ApiType: 'azure'
+        ResourceId: openai.id
     }
     credentials: {
       key: openai.listKeys().key1
