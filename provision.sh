@@ -19,6 +19,10 @@ fi
 
 echo "Provisioning resources in resource group $resourceGroupName..."
 az deployment group create --resource-group $resourceGroupName --name contchat --only-show-errors --template-file infra/main.bicep > /dev/null
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to provision resources. Please check the error message above."
+    exit 1
+fi
 
 echo "Setting up environment variables in .env file..."
 # Save output values to variables

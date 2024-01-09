@@ -436,11 +436,11 @@ resource appinsights 'microsoft.insights/components@2020-02-02' = {
 }
 
 resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: mlHub
+  parent: mlProject
   name: 'aoai-connection'
   properties: {
     category: 'AzureOpenAI'
-    target: openai.properties.endpoint
+    target: 'https://${openai.name}.openai.azure.com'
     authType: 'ApiKey'
     metadata: {
         ApiVersion: '2023-07-01-preview'
@@ -452,8 +452,9 @@ resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connecti
   }
 }
 
+
 resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: mlHub
+  parent: mlProject
   name: 'contoso-cosmos'
   properties: {
     category: 'CustomKeys'
@@ -471,7 +472,7 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
 }
 
 resource searchConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: mlHub
+  parent: mlProject
   name: 'contoso-search'
   properties: {
     category: 'CognitiveSearch'
@@ -682,6 +683,6 @@ output search_name string = search.name
 output mlhub_name string = mlHub.name
 output mlproject_name string = mlProject.name
 
-output openai_endpoint string = openai.properties.endpoint
+output openai_endpoint string = 'https://${openai.name}.openai.azure.com'
 output cosmos_endpoint string = cosmos.properties.documentEndpoint
 output search_endpoint string = 'https://${search.name}.search.windows.net/'
