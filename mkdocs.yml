@@ -1,0 +1,12 @@
+site_name: Contoso Chat
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: teal
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
