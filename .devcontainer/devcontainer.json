@@ -4,21 +4,23 @@
     "name": "Python 3.11",
     "build": {
         "dockerfile": "Dockerfile",
-        "context": "..",
-        "args": { "VARIANT": "3.11" }
+        "context": ".."
     },
     "features": {
-        "ghcr.io/devcontainers/features/azure-cli:1": {},
+        "ghcr.io/devcontainers/features/azure-cli:1": {
+            "installBicep": true
+        },
         "ghcr.io/devcontainers/features/git:1": {}
     },
     "customizations": {
         "vscode": {
             "extensions": [
-				"prompt-flow.prompt-flow",
-				"ms-azuretools.vscode-docker",
-				"ms-python.python",
-				"ms-toolsai.jupyter"
-			]
+                "prompt-flow.prompt-flow",
+                "ms-azuretools.vscode-docker",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-azuretools.vscode-bicep"
+            ]
         }
     }
 }
