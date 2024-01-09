@@ -80,8 +80,8 @@ def run_chat_or_support_flow(
     if "support" in user_intent:
         # call chat endpoint and return response (input is question and customer id in json format)
         print("running support flow")
-        return run_chat_flow(question, customer_id, chat_history, support_endpoint)
+        return run_support_flow(question, customer_id, chat_history, support_endpoint)
     else:
         # call support endpoint and return response (input is question and customer id in json format)
         print("running chat flow")
-        return run_support_flow(question, customer_id, chat_history, chat_endpoint)
+        return run_chat_flow(question, customer_id, chat_history, chat_endpoint)
