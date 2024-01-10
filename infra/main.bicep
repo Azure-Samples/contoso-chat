@@ -302,44 +302,11 @@ resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
       family: 'A'
       name: 'standard'
     }
-    tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-    accessPolicies: [
-      {
-        tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-        objectId: '9180726b-c7f4-4f0c-b69b-6a5955b4efb1'
-        permissions: {
-          keys: [
-            'all'
-          ]
-          secrets: [
-            'all'
-          ]
-          certificates: [
-            'all'
-          ]
-          storage: []
-        }
-      }
-      {
-        tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-        objectId: 'dfe947e7-0809-494d-bfac-f7e09e85701f'
-        permissions: {
-          keys: [
-            'all'
-          ]
-          secrets: [
-            'all'
-          ]
-          certificates: [
-            'all'
-          ]
-          storage: []
-        }
-      }
-    ]
+    tenantId: subscription().tenantId
     enabledForDeployment: false
     enableSoftDelete: true
     publicNetworkAccess: 'Enabled'
+    accessPolicies: []
   }
 }
 
