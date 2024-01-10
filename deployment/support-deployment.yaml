@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: contoso-support
 endpoint_name: contoso-support
-model: azureml:contoso-support-model:1
+model: azureml:contoso-support-model:17
   # You can also specify model files path inline
   # path: examples/flows/support/basic-support
 environment:
