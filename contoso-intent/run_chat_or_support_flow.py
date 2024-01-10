@@ -7,29 +7,6 @@ import json
 import ssl
 
 
-def run_chat_flow(question: str, customer_id: str, chat_history: [], chat_endpoint) -> str:
-    """
-    run chat flow based on the question and customer id
-    """
-    # call chat endpoint and return response (input is question and customer id in json format)
-    url = chat_endpoint['api_base']
-    key = chat_endpoint['api_key']
-    input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
-    response = call_endpoint(url, key, input_data, 'contoso-chat')       
-    return response
-
-def run_support_flow(question: str, customer_id: str, chat_history: [], support_endpoint) -> str:
-    """
-    run support flow based on the question and customer id
-    """
-    # call support endpoint and return response (input is question and customer id in json format)
-    url = support_endpoint['api_base']
-    key = support_endpoint['api_key']
-    input_data = {"question": question, "customer_id": customer_id, "chat_history": chat_history}
-    response = call_endpoint(url, key, input_data, 'contoso-support')
-    return response
-  
-
 def allowSelfSignedHttps(allowed):
 # bypass the server certificate verification on client side
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
@@ -53,10 +30,22 @@ def call_endpoint(url, api_key, input_data, model_deployment_name):
     try:
         response = urllib.request.urlopen(req)
         result = response.read()
+        # convert result to string
+        result = result.decode("utf-8", 'ignore')
+        # convert result to json
         resultjson = json.loads(result)
         print(resultjson)
-        return resultjson
-        #return result.decode("utf8", 'ignore')
+
+        answer = resultjson['answer']
+        context = resultjson['context']
+
+        if(model_deployment_name ==  'contoso-support'):
+            citations = resultjson['citations']
+            customer_data = resultjson['customer_data']
+            query_rewrite = resultjson['query_rewrite']
+            return {'answer': answer, 'context': context, 'citations': citations, 'customer_data': customer_data, 'query_rewrite': query_rewrite}
+        else:
+            return {'answer': answer, 'context': context}
     except urllib.error.HTTPError as error:
         print("The request failed with status code: " + str(error.code))
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
@@ -64,7 +53,6 @@ def call_endpoint(url, api_key, input_data, model_deployment_name):
         print(error.read().decode("utf8", 'ignore'))
             # call support endpoint and return response (input is question and customer id in json format)
         return error.read().decode("utf8", 'ignore')
-    # Get Intent of question
 
 @tool
 def run_chat_or_support_flow(
@@ -82,16 +70,16 @@ def run_chat_or_support_flow(
     if "support" in user_intent:
         # call chat endpoint and return response (input is question and customer id in json format)
         print("running support flow")
-        result = run_support_flow(question, customerId, chat_history, support_endpoint)
-        answer = result['answer']
-        context = result['context']['customer_data']['orders']
-        query_rewrite = result['query_rewrite']
-        # return a list[dict[str, str]] with the answer and context and query_rewrite
-        return {'answer': answer, 'context': context, 'query_rewrite': query_rewrite}
+        url = support_endpoint['api_base']
+        key = support_endpoint['api_key']
+
+        input_data = {"question": question, "customerId": customerId, "chat_history": chat_history}
+        return call_endpoint(url, key, input_data, 'contoso-support')
     else:
         # call support endpoint and return response (input is question and customer id in json format)
         print("running chat flow")
-        result = run_chat_flow(question, customerId, chat_history, chat_endpoint)
-        answer = result['answer']
-        context = result['context']
-        return {'answer': answer, 'context': context}
+        url = chat_endpoint['api_base']
+        key = chat_endpoint['api_key']
+
+        input_data = {"question": question, "customerId": customerId, "chat_history": chat_history}
+        return call_endpoint(url, key, input_data, 'contoso-chat')
