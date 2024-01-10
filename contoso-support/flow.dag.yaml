@@ -10,16 +10,16 @@ inputs:
         customerId: "6"
         question: what did I last order?
       outputs:
-        answer: Hey Emily! 🌟 Your last order was the TrailMaster X4 Tent from
-          OutdoorLiving. 🏕️ It's a spacious tent perfect for four occupants,
+        answer: Hey Emily! Your last order was the TrailMaster X4 Tent from
+          OutdoorLiving.  It's a spacious tent perfect for four occupants,
           with water-resistant construction and mesh panels for airflow and bug
-          defense. 🌧️🪰 It even comes with a two-year limited warranty for your
-          peace of mind. Enjoy your next camping adventure! 🌳🔥
+          defense. It even comes with a two-year limited warranty for your
+          peace of mind. Enjoy your next camping adventure! 
     - inputs:
         customerId: "6"
         question: and what is the tent's water proof rating
       outputs:
-        answer: I am not sure🌳🔥
+        answer: I am not sure
     is_chat_input: false
     is_chat_history: true
   question:
