@@ -5,6 +5,8 @@ theme:
   palette:
     scheme: slate
     primary: teal
+  features:
+    - navigation.tabs
 
 markdown_extensions:
   - admonition

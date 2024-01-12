@@ -1,15 +1,14 @@
-# Welcome, Learner! 👋
+# Introducing LLMOps
 
-Building AI Applications with Large Language Models (LLMs) requires a paradigm shift from traditional "MLOps" thinking to an "LLMOps" app lifecycle defined by three stages:
+End-to-end application development is always challenging. Building generative AI applications with Large Language Models (LLMs) is even harder, requiring developers to **think differently** about the application lifecycle given an evolution in the target audience, the generated assets, the evaluation metrics and the deployment models.
 
-- **ideation** - where you build a basic prompt flow for _your_ use case and data.
-- **augmentation** - where you evaluate & refine flow against _sample & larger_ datasets
-- **operationalization** - where you deploy, monitor and use flow in real-world apps.
+![](./img/concepts/01-llmops-shift.png)
 
-This is a constant process of try-evaluate-iterate that can tedious and error-prone for developers building applications for deployment at cloud scale.
+We're calling this **LLMOps** to acknowledge the basis in MLOps, while also highlighting the paradigm shift away from traditional thinking. As you can see, the burden on developers is much higher, requiring us to innovate with new tools and services that can streamline the end-to-end development process for AI applications from prompt engineering to LLMOps.
 
-![LLM Lifecycle Stage Flows](./img/concepts/03-llm-stage-flows.png)
+**That is our focus in this hands-on workshop.**  <br/>By the end of the lab, you should be able to explain what LLMOps is and why it matters. And you should be familiar with tools like Azure AI Studio and Prompt Flow that help streamlime your end-to-end AI application development process from prompt engineering to LLMOps. 
 
-The Azure AI Platorm provides tools and services to streamline the end-to-end development process for AI applications from prompt engineering to LLMOps. In this workshop, we'll walk through the steps of building and deploying a real-world AI solution using two key tools: **Prompt Flow** and **Azure AI Studio**. 
+**Want a deeper dive into the core concepts or thinking behind LLMOps?** <br/>Check out this related talk from Microsoft Ignite 2023.
 
-Let's get started!
+<iframe width="1243" height="699" src="https://www.youtube.com/embed/DdOylyrTOWg" title="End-to-End AI App Development: Prompt Engineering to LLMOps | BRK203" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
