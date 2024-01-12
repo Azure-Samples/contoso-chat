@@ -1,4 +1,4 @@
-# 1.3 Learning Objectives
+# Learning Objectives
 
 **This is a hands-on workshop to teach you how to build a RAG-based LLM application _end-to-end_ using Azure AI Studio and Prompt Flow.**
 

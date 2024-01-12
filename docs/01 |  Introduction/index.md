@@ -1,4 +1,4 @@
-# 1.1 Application Lifecycle
+# Index
 
 In an LLMOps context, the application lifecycle  consists of three core phases:
 

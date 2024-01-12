@@ -1,4 +1,4 @@
-# 1.2 Application Scenario
+# Application Scenario
 
 Let's define a real use case that showcases the various steps of this workflow. Consider the following scenario familiar to most startups and enterprise organizations.
 

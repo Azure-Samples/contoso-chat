@@ -1,4 +1,4 @@
-# 1.3. Development Environment
+# Development Environment
 
 The repository is instrumented with [dev container](https://containers.dev) configuration that provides a consistent pre-built development environment deployed in a Docker container. Launch this in the cloud with [GitHub Codespaces](https://docs.github.com/codespaces), or in your local device with [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
