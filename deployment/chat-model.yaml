@@ -11,6 +11,6 @@ properties:
   # endpoint detail UI Test tab needs this property to know it's a classification flow
   azureml.promptflow.mode: chat
 
-  azureml.promptflow.chat_input: question,customerId,chat_histry
+  azureml.promptflow.chat_input: question,customerId,chat_history
 
   azureml.promptflow.chat_output: answer,context
