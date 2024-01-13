@@ -1,12 +1,19 @@
 site_name: Contoso Chat E2E
 
+# Site Color Options
+# red, pink, purple, deep purple, indigo, 
+# blue, light blue, cyan, teal, green, light green, 
+# lime, yellow, amber, orange, deep orange, brown, 
+# grey, blue grey , black, white
+
+
 theme:
   name: material
   palette:
     scheme: slate
-    primary: teal
-  features:
-    - navigation.tabs
+    primary: deep purple # teal
+#  features:
+#    - navigation.tabs
 
 markdown_extensions:
   - admonition
