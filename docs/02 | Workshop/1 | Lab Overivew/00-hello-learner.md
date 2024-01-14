@@ -10,6 +10,7 @@
     - **Modern browser** - on laptop. _To launch the Lab-on-Demand session_.
     - **Azure subscription** - with Azure OpenAI access. _For model deployments_.
 
+<!--
 - [**Lab Overview**](./00-lab-overview.md)
 - [01. Get Started](./01-get-started.md)
 - [02. Launch GitHub Codespaces](./02-launch-codespaces.md)
@@ -32,3 +33,4 @@
 - [19. PromptFlow Deploy Flow](./19-pf-deploy.md)
 - [**Lab Recap**](./20-lab-recap.md)
 - [**Troubleshooting**](./99-troubleshooting.md)
+-->

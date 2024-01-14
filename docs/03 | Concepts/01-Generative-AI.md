@@ -1,4 +1,4 @@
-# Generative AI Application Development (LLM)
+# 01 | Large Language Models AI Apps (LLM Apps)
 
 (Explainer Here)
 

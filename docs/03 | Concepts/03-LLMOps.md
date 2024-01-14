@@ -1,4 +1,4 @@
-# End-to-End LLM App Dev Workflow (LLMOps)
+# 03 | Streamlined End-to-End LLM App Dev (LLMOps)
 
 
 (Explainer Here)

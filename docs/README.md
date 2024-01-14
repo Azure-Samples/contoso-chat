@@ -32,14 +32,16 @@ The main workshop focuses on building **Contoso Chat**, an AI application that u
 
     The workshop will refer to two different applications in the overview. The _[contoso-chat](https://github.com/Azure-Samples/contoso-chat)_ sample provides the basis for building our **RAG-based LLM Application** to implement the chat-completion AI. The  _[contoso-web](https://github.com/Azure-Samples/contoso-web)_ implements the **Contoso Outdoors Web Application** with an integrated chat interface that website visitors will use, to interact with our deployed AI application. We'll cover the details in the **[01 | Introduction](./01%20|%20%20Introduction/index.md)** section of the guide.
 
+----
+
 ## How You'll Build It
 
 The workshop is broadly organized into these steps, some of which may run in parallel.
 
-- [x] Setup Development Environment (GitHub Codespaces)
-- [x] Provision Project Resources (Azure Portal, Azure AI Studio)
-- [x] Configure Environment (Local & Cloud Connections)
-- [x] Configure Cloud Environment (Prompt Flow Connections)
+- [x] 1. Setup Development Environment (GitHub Codespaces)
+- [x] 2. Provision Azure Resources (Azure Portal, Azure AI Studio)
+- [x] 3. Configure VS Code (Azure Login, Populate Data)
+- [x] Setup Prompt Flow (Local & Cloud Connections)
 - [x] Run, Evaluate & Push Prompt Flow (Local, VS Code)
 - [x] Run, Deploy & Test Prompt Flow (Cloud, Azure AI Studio)
 
@@ -54,15 +56,17 @@ If time permits, complete these additional steps that showcase capabilities in t
 - [x] Automate Deployments (GitHub Actions)
 - [x] Explore Intents (Context-based Agent Routing)
 
-!!!example "Breakout Session: End-to-End App Development: Prompt Engineering to LLM Ops"
-
-    This workshop is inspired by (and extended from) the demo shown in this breakout session from Microsoft Ignite 2023. Watch the recording to understand the **significance of the LLM Ops terminology** and get an early introduction to new tooling we'll use in this session.
-
-    <iframe width="1000" height="420" src="https://www.youtube.com/embed/DdOylyrTOWg" title="End-to-End AI App Development: Prompt Engineering to LLMOps | BRK203"></iframe>
+---
 
 ## Start Workshop 🚀
 
 Ready to get started building this application? Pick your starting point from the two options below - and #LetsGo 
 
 - Want to understand the application before you start? 👉🏽 Go to **[01 | Introduction](./01%20|%20%20Introduction/index.md)**.
-- Want to jump straight into building the application? 👉🏽 Go to **[02 | Workshop](./02%20|%20Workshop/00-hello-learner.md)** section. 
+- Want to jump straight into building the application? 👉🏽 Go to **[02 | Workshop](./02%20|%20Workshop/0%20|%20Overview/00-lab-overview.md)** section. 
+
+!!!example "Breakout Session: End-to-End App Development: Prompt Engineering to LLM Ops"
+
+    This workshop is inspired by (and extended from) the demo shown in this breakout session from Microsoft Ignite 2023. Watch the recording to understand the **significance of the LLM Ops terminology** and get an early introduction to new tooling we'll use in this session.
+
+    <iframe width="1000" height="420" src="https://www.youtube.com/embed/DdOylyrTOWg" title="End-to-End AI App Development: Prompt Engineering to LLMOps | BRK203"></iframe>
