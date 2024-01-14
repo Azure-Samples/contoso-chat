@@ -26,11 +26,11 @@ You will need:
 
 The main workshop focuses on building **Contoso Chat**, an AI application that uses Retrieval Augmented Generation to build a _customer support_ chat agent for **Contoso Outdoors**, an online store for outdoor adventurers. The end goal is to _integrate customer chat support_ into the website application for Contoso Outdoors, as shown below.
        
-![Multi-turn Contoso Chat](./img/scenario/07-customer-multiturn-conversation.png)
+![Multi-turn Contoso Chat](./img/scenario/06-customer-multiturn-conversation.png)
 
 !!!example "Azure-Samples Repositories"
 
-    The workshop will refer to two different applications in the overview. The _[contoso-chat](https://github.com/Azure-Samples/contoso-chat)_ sample provides the basis for building our **RAG-based LLM Application** to implement the chat-completion AI. The  _[contoso-web](https://github.com/Azure-Samples/contoso-web)_ implements the **Contoso Outdoors Web Application** with an integrated chat interface that website visitors will use, to interact with our deployed AI application. We'll cover the details in the **[01 | Introduction](./01%20|%20%20Introduction/index.md)** section of the guide.
+    The workshop will refer to two different applications in the overview. The _[contoso-chat](https://github.com/Azure-Samples/contoso-chat)_ sample provides the basis for building our **RAG-based LLM Application** to implement the chat-completion AI. The  _[contoso-web](https://github.com/Azure-Samples/contoso-web)_ implements the **Contoso Outdoors Web Application** with an integrated chat interface that website visitors will use, to interact with our deployed AI application. We'll cover the details in the **[01 | Introduction](./01%20|%20%20Introduction/1-paradigm-shift.md)** section of the guide.
 
 ----
 
@@ -62,8 +62,8 @@ If time permits, complete these additional steps that showcase capabilities in t
 
 Ready to get started building this application? Pick your starting point from the two options below - and #LetsGo 
 
-- Want to understand the application before you start? 👉🏽 Go to **[01 | Introduction](./01%20|%20%20Introduction/index.md)**.
-- Want to jump straight into building the application? 👉🏽 Go to **[02 | Workshop](./02%20|%20Workshop/0%20|%20Overview/00-lab-overview.md)** section. 
+- Want to understand the application before you start? 👉🏽 Go to **[01 | Introduction](./01%20|%20%20Introduction/1-paradigm-shift.md)**.
+- Want to jump straight into building the application? 👉🏽 Go to **[02 | Workshop](./02%20|%20Workshop/1%20|%20Lab%20Overivew/00-lab-overview.md)** section. 
 
 !!!example "Breakout Session: End-to-End App Development: Prompt Engineering to LLM Ops"
 

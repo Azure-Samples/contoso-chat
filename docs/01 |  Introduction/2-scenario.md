@@ -71,7 +71,7 @@ Flow orchestration is hard. This is where [PromptFlow](https://aka.ms/promptflow
 
 This ends the _ideation_ phase of the application lifecycle we saw earlier. PromptFlow works seamlessly with Azure AI Studio to streamline the next two steps of the lifecycle (_evaluate_ and _deploy_), helping get deliver the final Contoso Chat Support Agent AI experience on the Contoso Outdoors website. Here is what a multi-turn conversation with customers might look like now:
 
-![Contoso Chat](./../img/scenario/07-customer-multiturn-conversation.png)
+![Contoso Chat](./../img/scenario/06-customer-multiturn-conversation.png)
 
 Your customer support AI is a hit! 
 
