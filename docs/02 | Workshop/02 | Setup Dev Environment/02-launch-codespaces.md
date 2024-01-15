@@ -24,7 +24,7 @@ While we wait for setup to complete, let's move to the next step: [**3 | Provisi
 
 ---
 
-!!!success "Congratulations! You're development environment is being setup for you..."
+!!!success "Congratulations! Your development environment is being setup for you..."
 
 !!!example "Click [**here**](https://youtu.be/1Z4sgjXTKkU?t=165) for a video walkthrough of _this step_ in a Skillable session, for reference."
 
