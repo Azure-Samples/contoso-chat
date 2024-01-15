@@ -8,10 +8,13 @@ site_name: Contoso Chat E2E
 
 
 theme:
+
   name: material
+
   palette:
     scheme: slate
     primary: deep purple # teal
+
 #  features:
 #    - navigation.tabs
 

@@ -7,6 +7,8 @@
 
 Let's walk through how you can make this happen in your organization, using the Azure AI Platform. Well start with the _ideation_ phase which involves identifying the business case, connecting to your data, building the basic prompt flow (LLM App), then iterating locally to extend it for your app requirements. Let's understand how this maps to our workshop.
 
+---
+
 ## Contoso Outdoors (Website)
 
 The Contoso Chat (LLM App) is being designed for integration into the Contoso Outdoors site (Web App) via the _chat icon_ seen at the bottom right. The website landing page features the Contoso Outdoors _product catalog_ organized neatly into categories like _Tents_ and _Backpacks_ to simplify discovery by customers.
@@ -20,6 +22,8 @@ When a customer clicks an item, they are taken to the _product details_ page wit
 !!!info "Step 1: Identify Business Case"
 
 The Contoso Chat AI should meet two business objectives. It should _reduce customer support calls_ (to manual operator) by proactively answering customer questions onsite. It should _increase customer product purchases_ by providing timely and contextual information to help them finalize the purchase decision. 
+
+---
 
 ## Chat Completion (Basic)
 
@@ -42,6 +46,8 @@ Let's see how it responds to the two questions above.
 
 We need a way to _fine-tune_ the model to take our product catalog and customer history into account as relevant context for the query. The first step is to make the data sources available to our workflow. [Azure AI Studio](https://ai.azure.com) makes this easy by helping you setup and manage _connections_ to relevant Azure search and database resources.
 
+---
+
 ## Chat Augmentation (RAG)
 
 That brings us to the next step - _prompt engineering_. We need to **augment** the user question (default prompt) with additional query context that ensures Contoso Outdoor product data is prioritized in responses. We use a popular technique know as [Retrieval Augmented Generation (RAG)](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) that works as shown below, to _generate responses that are specific to your data_. 
@@ -56,6 +62,8 @@ We can now get a more _grounded response_ in our Contoso Chat AI, as shown.
 
 We now need to add in a step that also takes _customer history_ into account. To implement this, we need a tool that helps us _orchestrate_ these various steps in a more intuitive way, allowing user query and data to "flow" through the processing pipeline to generate the final response. 
 
+---
+
 ## Chat Orchestration (Flow)
 
 The previous step gives us a basic flow that augments predefined model behaviors to add product context. Now, we want to add _another tool_ (or processing function) that looks up customer details for additional prompt engineering. The end result should be a user experience that looks something like this, helping move the user closer to a purchase decision.
@@ -66,6 +74,7 @@ The previous step gives us a basic flow that augments predefined model behaviors
 
 Flow orchestration is hard. This is where [PromptFlow](https://aka.ms/promptflow) helps, allowing us to insert a _customer lookup function_ seamlessly into the flow graph, to extend it. With the Azure AI platform, you get PromptFlow capabilities integrated seamlessly into both development (VS Code) and deployment (Azure AI Studio) environments for a streamlined end-to-end developer experience.
 
+---
 
 ## Evaluate & Deploy (E2E)
 

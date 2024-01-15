@@ -38,35 +38,35 @@ The main workshop focuses on building **Contoso Chat**, an AI application that u
 
 The workshop is broadly organized into these steps, some of which may run in parallel.
 
-- [x] 1. Setup Development Environment (GitHub Codespaces)
-- [x] 2. Provision Azure Resources (Azure Portal, Azure AI Studio)
-- [x] 3. Configure VS Code (Azure Login, Populate Data)
-- [x] Setup Prompt Flow (Local & Cloud Connections)
-- [x] Run, Evaluate & Push Prompt Flow (Local, VS Code)
-- [x] Run, Deploy & Test Prompt Flow (Cloud, Azure AI Studio)
+- [x] 1. Lab Overview
+- [x] 2. Setup Dev Environment (GitHub Codespaces)
+- [x] 3. Provision Azure (via Azure Portal, Azure AI Studio)
+- [x] 4. Configure VS Code (Azure Login, Populate Data)
+- [x] 5. Setup Promptflow (Local & Cloud Connections)
+- [x] 6. Run & Evaluate Flow (Locally on VS Code)
+- [x] 7. Deploy & Use Flow (Cloud, via Azure AI Studio)
 
-This completes the _ideating_ and _building_ phases of the LLM Application Lifecycle, and begins the _operationalization_ phase for real-world usage. 
+With this workshop, you get hands-on experience with the _ideating/exploring_ and _building/augmenting_ phases of the LLM App development lifecycle. The workshop ends with deploying the endpoint to kickstart the _operationalizing_ phase of LLM Ops.
 
 ![LLM Lifecycle Stage Flows](./img/concepts/03-llm-stage-flows.png)
 
-If time permits, complete these additional steps that showcase capabilities in that final phase.
+If time permits, continue operationalizing your app with the following _Bonus Exercises_:
 
-- [x] Integrate with Deployed Endpoint (Contoso Web)
-- [x] Explore Responsible AI Usage (Contoso Chat)
-- [x] Automate Deployments (GitHub Actions)
-- [x] Explore Intents (Context-based Agent Routing)
+- [x] 8.1 | Contoso Website Chat (Integration)
+- [x] 8.2 | GitHub Actions Deploy (Automation)
+- [x] 8.3 | Intent-based Routing (Multi-Agent)
+- [x] 8.4 | Content Filtering (Responsible AI)
 
 ---
 
-## Start Workshop 🚀
+## Get Started .. 🚀
 
-Ready to get started building this application? Pick your starting point from the two options below - and #LetsGo 
-
-- Want to understand the application before you start? 👉🏽 Go to **[01 | Introduction](./01%20|%20%20Introduction/1-paradigm-shift.md)**.
-- Want to jump straight into building the application? 👉🏽 Go to **[02 | Workshop](./02%20|%20Workshop/1%20|%20Lab%20Overivew/00-lab-overview.md)** section. 
+- Want to understand the app dev lifecycle first? Start here 👉🏽 **[01 | Introduction](./01%20|%20%20Introduction/1-paradigm-shift.md)**.
+- Want to jump straight into building the application? Start here 👉🏽  **[02 | Workshop](./02%20|%20Workshop/1%20|%20Lab%20Overivew/README.md)**.
+- Want to learn more about LLM Ops? Watch this first 👇🏽 **[#MSIgnite 2023 Breakout](https://ignite.microsoft.com/sessions/16ee2bd5-7cb8-4419-95f6-3cab36dfac93?source=sessions)**
 
 !!!example "Breakout Session: End-to-End App Development: Prompt Engineering to LLM Ops"
 
-    This workshop is inspired by (and extended from) the demo shown in this breakout session from Microsoft Ignite 2023. Watch the recording to understand the **significance of the LLM Ops terminology** and get an early introduction to new tooling we'll use in this session.
+    **Abstract** | Prompt engineering and LLMOps are pivotal in maximizing the capabilities of Language Models (LLMs) for specific business needs. This session offers a comprehensive guide to Azure AI's latest features that simplify the AI application development cycle. We'll walk you through the entire process—from prototyping and experimenting to evaluating and deploying your AI-powered apps. Learn how to streamline your AI workflows and harness the full potential of Generative AI with Azure AI Studio.
 
     <iframe width="1000" height="420" src="https://www.youtube.com/embed/DdOylyrTOWg" title="End-to-End AI App Development: Prompt Engineering to LLMOps | BRK203"></iframe>

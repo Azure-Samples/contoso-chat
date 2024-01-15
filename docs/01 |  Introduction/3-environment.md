@@ -2,6 +2,8 @@
 
 The repository is instrumented with [dev container](https://containers.dev) configuration that provides a consistent pre-built development environment deployed in a Docker container. Launch this in the cloud with [GitHub Codespaces](https://docs.github.com/codespaces), or in your local device with [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
+---
+
 ## Dev Tools
 
 In addition, we make use of these tools:
@@ -11,6 +13,8 @@ In addition, we make use of these tools:
 - **[Azure AI Studio (Preview)](https://ai.azure.com)** | Single pane of glass view into all resources and assets for your Azure AI projects. Currently in preview (expect it to evolve rapidly).
 - **[Azure ML Studio](https://ml.azure.com)** | Enterprise-grade AI service for managing end-to-end ML lifecycle for operationalizing AI models. Used for some configuration operations in our workshop (expect support to move to Azure AI Studio).
 - **[Prompt Flow](https://github.com/microsoft/promptflow)** | Open-source tooling for orchestrating end-to-end development workflow (design, implementation, execution, evaluation, deployment) for modern LLM applications.
+
+---
 
 ## Required Resources
 
