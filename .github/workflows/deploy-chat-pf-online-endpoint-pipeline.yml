@@ -39,8 +39,8 @@ jobs:
          az account set -s ${{env.SUBSCRIPTION}}
     - name: Check if endpoint exists
       run: |
-        ENDPOINT_EXISTS=$(az ml online-endpoint list --query "[?name=='contoso-chat'].{Name:name}" -g ${{env.GROUP}} -w ${{env.WORKSPACE}})
-        if [[ ENDPOINT_EXISTS != '[]' ]]; then
+        ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?Name=='${{env.ENDPOINT_NAME}}']" |  wc -l)
+        if [[ ENDPOINT_EXISTS -ne 1 ]]; then
             az ml online-endpoint create --file deployment/chat-endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
         else
             echo "endpoint exists"
