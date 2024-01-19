@@ -404,23 +404,7 @@ resource appinsights 'microsoft.insights/components@2020-02-02' = {
   }
 }
 
-resource openaiConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: mlProject
-  name: 'aoai-connection'
-  properties: {
-    category: 'AzureOpenAI'
-    target: openaiEndpoint
-    authType: 'ApiKey'
-    metadata: {
-        ApiVersion: '2023-07-01-preview'
-        ApiType: 'azure'
-        ResourceId: openai.id
-    }
-    credentials: {
-      key: openai.listKeys().key1
-    }
-  }
-}
+
 
 /*
 resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
@@ -442,18 +426,6 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
 }
 */
 
-resource searchConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
-  parent: mlProject
-  name: 'contoso-search'
-  properties: {
-    category: 'CognitiveSearch'
-    target: 'https://${search.name}.search.windows.net/'
-    authType: 'ApiKey'
-    credentials: {
-      key: search.listAdminKeys().primaryKey
-    }
-  }
-}
 
 resource storageAccounts_stcontosocha735868071044_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
   parent: storage
@@ -597,7 +569,7 @@ resource databaseAccounts_contoso_chat_sf_cosmos_name_contoso_outdoor_customers 
   }
 }
 
-
+// In ai.azure.com: Azure AI Resource
 resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   name: workspaces_contoso_chat_sf_ai_name
   location: location
@@ -605,7 +577,7 @@ resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
     name: 'Basic'
     tier: 'Basic'
   }
-  kind: 'Hub'
+  kind: 'Hub' 
   identity: {
     type: 'SystemAssigned'
   }
@@ -623,8 +595,73 @@ resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
     publicNetworkAccess: 'Enabled'
     discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
   }
+
+  // Required for API Service Provider?
+  resource defaultOpenaiConnection 'connections' = {
+    name: 'Default_AzureOpenAI'
+    properties: {
+      category: 'AzureOpenAI'
+      target: openaiEndpoint
+      authType: 'ApiKey'
+      metadata: {
+          ApiVersion: '2023-07-01-preview'
+          ApiType: 'azure'
+          ResourceId: openai.id
+      }
+      credentials: {
+        key: openai.listKeys().key1
+      }
+    }
+  }
+
+  resource defaultAIContentSafety 'connections' = {
+    name: 'Default_AzureAIContentSafety'
+    properties: {
+      category: 'CognitiveService'
+      target: openaiEndpoint
+      authType: 'ApiKey'
+      metadata: {
+          ApiVersion: '2023-07-01-preview'
+          ApiType: 'azure'
+          ResourceId: openai.id
+      }
+      credentials: {
+        key: openai.listKeys().key1
+      }
+    }
+  }
+
+  resource openaiConnection 'connections' = {
+    name: 'aoai-connection'
+    properties: {
+      category: 'AzureOpenAI'
+      target: openaiEndpoint
+      authType: 'ApiKey'
+      metadata: {
+          ApiVersion: '2023-07-01-preview'
+          ApiType: 'azure'
+          ResourceId: openai.id
+      }
+      credentials: {
+        key: openai.listKeys().key1
+      }
+    }
+  }
+
+  resource searchConnection 'connections' = {
+    name: 'contoso-search'
+    properties: {
+      category: 'CognitiveSearch'
+      target: 'https://${search.name}.search.windows.net/'
+      authType: 'ApiKey'
+      credentials: {
+        key: search.listAdminKeys().primaryKey
+      }
+    }
+  }
 }
 
+// In ai.azure.com: Azure AI Project
 resource mlProject 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   name: workspaces_contoso_chat_sf_aiproj_name
   location: location
