@@ -37,21 +37,22 @@ jobs:
     - name: Set default subscription
       run: |
          az account set -s ${{env.SUBSCRIPTION}}
-    - name: Check if endpoint exists
-      run: |
-        ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
-        echo "endpoint exists result: $ENDPOINT_EXISTS"
-        if [[ ENDPOINT_EXISTS -ne 1 ]]; then
-            az ml online-endpoint create --file deployment/chat-endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
-        else
-            echo "endpoint exists"
-        fi
     - name: Create Hash
       run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
     - name: Create unique deployemnt name   
       run: echo "DEPLOYMENT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
     - name: Display deployment name
       run: echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}}
+    - name: Check if endpoint exists
+      run: |
+        ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
+        echo "endpoint exists result: $ENDPOINT_EXISTS"
+        echo "endpoint name: ${{env.ENDPOINT_NAME}}"
+        if [[ ENDPOINT_EXISTS -ne 1 ]]; then
+            az ml online-endpoint create --file deployment/chat-endpoint.yaml   --name ${{env.DEPLOYMENT_NAME}} --endpoint ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+        else
+            echo "endpoint exists"
+        fi
     - name: Update deployment PRT_CONFIG variable
       run: |
         PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
