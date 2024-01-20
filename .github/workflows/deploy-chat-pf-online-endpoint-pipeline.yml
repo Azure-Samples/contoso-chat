@@ -13,10 +13,10 @@ env:
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
-  RUN_NAME: contoso_chat
-  EVAL_RUN_NAME: contoso_chat_eval
-  ENDPOINT_NAME: contoso_chat
-  DEPLOYMENT_NAME: contoso_chat
+  RUN_NAME: contoso-chat
+  EVAL_RUN_NAME: contoso-chat-eval
+  ENDPOINT_NAME: contoso-chat
+  DEPLOYMENT_NAME: contoso-chat
   KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
 
 jobs:
