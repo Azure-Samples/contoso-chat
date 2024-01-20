@@ -1,4 +1,4 @@
-var resourceToken = toLower(uniqueString(subscription().id, location))
+var resourceToken = toLower(uniqueString(subscription().id, resourceGroup().name, location))
 
 param workspaces_contoso_chat_sf_ai_name string = 'contoso-chat-sf-ai'
 param accounts_contoso_chat_sf_ai_aiservices_name string = 'contoso-chat-sf-ai-aiservices'
@@ -570,7 +570,7 @@ resource databaseAccounts_contoso_chat_sf_cosmos_name_contoso_outdoor_customers 
 }
 
 // In ai.azure.com: Azure AI Resource
-resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
+resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
   name: workspaces_contoso_chat_sf_ai_name
   location: location
   sku: {
@@ -596,38 +596,21 @@ resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
     discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
   }
 
-  // Required for API Service Provider?
-  resource defaultOpenaiConnection 'connections' = {
-    name: 'Default_AzureOpenAI'
+  resource openaiDefaultEndpoint 'endpoints' = {
+    name: 'Azure.OpenAI'
     properties: {
-      category: 'AzureOpenAI'
-      target: openaiEndpoint
-      authType: 'ApiKey'
-      metadata: {
-          ApiVersion: '2023-07-01-preview'
-          ApiType: 'azure'
-          ResourceId: openai.id
-      }
-      credentials: {
-        key: openai.listKeys().key1
-      }
+      name: 'Azure.OpenAI'
+      endpointType: 'Azure.OpenAI'
+      associatedResourceId: openai.id
     }
   }
 
-  resource defaultAIContentSafety 'connections' = {
-    name: 'Default_AzureAIContentSafety'
+  resource contentSafetyDefaultEndpoint 'endpoints' = {
+    name: 'Azure.ContentSafety'
     properties: {
-      category: 'CognitiveService'
-      target: openaiEndpoint
-      authType: 'ApiKey'
-      metadata: {
-          ApiVersion: '2023-07-01-preview'
-          ApiType: 'azure'
-          ResourceId: openai.id
-      }
-      credentials: {
-        key: openai.listKeys().key1
-      }
+      name: 'Azure.ContentSafety'
+      endpointType: 'Azure.ContentSafety'
+      associatedResourceId: openai.id
     }
   }
 
