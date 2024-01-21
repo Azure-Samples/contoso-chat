@@ -1,0 +1,71 @@
+name: Deploy Contoso-Chat Promptflow
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["run-chat-eval-pf-pipeline"]
+    branches: [main]
+    types:
+      - completed
+      
+
+env: 
+  GROUP: ${{secrets.GROUP}}
+  WORKSPACE: ${{secrets.WORKSPACE}}
+  SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
+  RUN_NAME: contoso_chat
+  EVAL_RUN_NAME: contoso_chat_eval
+  ENDPOINT_NAME: contoso_chat
+  DEPLOYMENT_NAME: blue
+  KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
+
+jobs:
+  create-endpoint-and-deploy-pf:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }} 
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: List current directory
+      run: ls
+    - name: Set default subscription
+      run: |
+         az account set -s ${{env.SUBSCRIPTION}}
+    - name: Create Hash
+      run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
+    - name: Create unique endpoint name   
+      run: echo "ENDPOINT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
+    - name: Display endpoint name
+      run: echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
+    - name: Setup endpoint
+      run: az ml online-endpoint create --file deployment/chat-endpoint.yaml  --name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+    - name: Update deployment PRT_CONFIG variable
+      run: |
+        PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
+        sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/chat-deployment.yaml
+    - name: Setup deployment
+      run: az ml online-deployment create --file deployment/chat-deployment.yaml --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+    - name: Check the status of the endpoint
+      run: az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+    - name: Check the status of the deployment
+      run: az ml online-deployment get-logs --name contoso-chat --endpoint-name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+    - name: Read endpoint principal
+      run: |
+        az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > endpoint.json
+        jq -r '.identity.principal_id' endpoint.json > principal.txt
+        echo "Principal is: $(cat principal.txt)"
+    - name: Assign Permission to Endpoint Principal
+      run: |
+          echo "assigning permissions to Principal to AzureML workspace.."
+          az role assignment create --assignee $(cat principal.txt) --role "AzureML Data Scientist" --scope "/subscriptions/${{ env.SUBSCRIPTION }}/resourcegroups/${{env.GROUP}}/providers/Microsoft.MachineLearningServices/workspaces/${{env.WORKSPACE}}"
+          az role assignment create --assignee $(cat principal.txt) --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "/subscriptions/${{ env.SUBSCRIPTION }}/resourcegroups/${{env.GROUP}}/providers/Microsoft.MachineLearningServices/workspaces/${{env.WORKSPACE}}/onlineEndpoints/${{env.ENDPOINT_NAME}}"
+          
+          echo "assigning permissions to Principal to Key vault.."
+          az keyvault set-policy --name ${{secrets.KEY_VAULT_NAME}} --resource-group ${{env.GROUP}} --object-id $(cat principal.txt) --secret-permissions get list
+    
