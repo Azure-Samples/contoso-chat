@@ -40,7 +40,7 @@ jobs:
     - name: Create Hash
       run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
     - name: Create unique endpoint name   
-      run: echo "ENDPOINT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
+      run: echo "DEPLOYMENT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
     - name: Display endpoint name
       run: echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
     - name: Setup endpoint
