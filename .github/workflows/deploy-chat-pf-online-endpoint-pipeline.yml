@@ -49,6 +49,7 @@ jobs:
         echo "endpoint exists result: $ENDPOINT_EXISTS"
         echo "endpoint name: ${{env.ENDPOINT_NAME}}"
         if [[ ENDPOINT_EXISTS -ne 1 ]]; then
+            ls
             az ml online-endpoint create --file deployment/chat-endpoint.yaml -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
         else
             echo "endpoint exists"
