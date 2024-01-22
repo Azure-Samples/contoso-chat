@@ -42,14 +42,15 @@ jobs:
     - name: Create unique deployemnt name   
       run: echo "DEPLOYMENT_NAME=$(echo 'contoso-support-'$HASH)" >> "$GITHUB_ENV"
     - name: Display deployment name
-      run: echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}}
+      run: |
+        echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}} 
+        echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
     - name: Check if endpoint exists
       run: |
         ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
         echo "endpoint exists result: $ENDPOINT_EXISTS"
-        echo "endpoint name: ${{env.ENDPOINT_NAME}}"
         if [[ ENDPOINT_EXISTS -ne 1 ]]; then
-            az ml online-endpoint create --file deployment/support-endpoint.yaml -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+          az ml online-endpoint create --file deployment/support-endpoint.yaml -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
         else
             echo "endpoint exists"
         fi
@@ -58,11 +59,11 @@ jobs:
         PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
         sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/support-deployment.yaml
     - name: Setup deployment
-      run: az ml online-deployment create --file deployment/support-deployment.yaml --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml online-deployment create --file deployment/support-deployment.yaml --name ${{env.DEPLOYMENT_NAME}} --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the endpoint
       run: az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the deployment
-      run: az ml online-deployment get-logs --name contoso-support --endpoint-name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml online-deployment get-logs --name ${{env.DEPLOYMENT_NAME}} --endpoint-name ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Read endpoint principal
       run: |
         az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} > endpoint.json
