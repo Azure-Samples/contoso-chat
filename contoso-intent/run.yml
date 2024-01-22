@@ -10,6 +10,6 @@ column_mapping:
   question: ${data.question}
 
 connections:
-  llm_call:
+  classify_intent_prompt:
     connection: aoai-connection
     deployment_name: gpt-35-turbo
