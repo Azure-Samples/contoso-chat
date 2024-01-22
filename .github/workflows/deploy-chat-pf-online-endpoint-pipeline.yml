@@ -42,7 +42,9 @@ jobs:
     - name: Create unique deployemnt name   
       run: echo "DEPLOYMENT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
     - name: Display deployment name
-      run: echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}}
+      run: |
+        echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}} 
+        echo "Endpoint name is:" ${{env.ENDPOINT_NAME}}
     - name: Check if endpoint exists
       run: |
         ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
