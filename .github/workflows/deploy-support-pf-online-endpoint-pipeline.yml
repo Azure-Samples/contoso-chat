@@ -1,4 +1,4 @@
-name: Deploy Contoso-support Promptflow
+name: Deploy Contoso-Support Promptflow
 
 on:
   workflow_dispatch:
