@@ -15,7 +15,7 @@ env:
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
   RUN_NAME: contoso-chat
   EVAL_RUN_NAME: contoso-chat-eval
-  ENDPOINT_NAME: contoso-chat
+  ENDPOINT_NAME: contoso-chat-store
   DEPLOYMENT_NAME: contoso-chat
   KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
 
@@ -49,7 +49,6 @@ jobs:
       run: |
         ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
         echo "endpoint exists result: $ENDPOINT_EXISTS"
-        echo "endpoint name: ${{env.ENDPOINT_NAME}}"
         if [[ ENDPOINT_EXISTS -ne 1 ]]; then
           az ml online-endpoint create --file deployment/chat-endpoint.yaml -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
         else
