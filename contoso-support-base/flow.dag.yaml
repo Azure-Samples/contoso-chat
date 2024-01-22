@@ -56,7 +56,7 @@ nodes:
   inputs:
     search: contoso-search
     question: ${inputs.question}
-    index_name: contoso-manuals-chunked
+    index_name: contoso-manuals-index
     embedding: ${question_embedding.output}
   use_variants: false
 - name: customer_prompt
