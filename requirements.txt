@@ -3,4 +3,3 @@ promptflow-tools
 azure-cosmos
 azure-search-documents==11.4.0
 azure-ai-ml
-mkdocs-material
