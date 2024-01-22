@@ -1,7 +1,6 @@
 from promptflow import tool
 from promptflow.connections import CustomConnection
-import os, openai
-from jinja2 import Template
+import os
 import urllib.request
 import json
 import ssl
@@ -74,7 +73,7 @@ def run_chat_or_support_flow(
         key = support_endpoint['api_key']
 
         input_data = {"question": question, "customerId": customerId, "chat_history": chat_history}
-        return call_endpoint(url, key, input_data, 'contoso-support')
+        return call_endpoint(url, key, input_data, "contoso-support-9f8e7b")
     else:
         # call support endpoint and return response (input is question and customer id in json format)
         print("running chat flow")
@@ -82,4 +81,4 @@ def run_chat_or_support_flow(
         key = chat_endpoint['api_key']
 
         input_data = {"question": question, "customerId": customerId, "chat_history": chat_history}
-        return call_endpoint(url, key, input_data, 'contoso-chat')
+        return call_endpoint(url, key, input_data, "contoso-chat-b7a357")
