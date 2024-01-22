@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: ../eval/groundedness
+data: ../data/alltestdata.jsonl
+
+column_mapping:
+  customerId: ${data.customerId}
+  question: ${data.question}
+  context: ${run.outputs.context}
+  answer: ${run.outputs.answer}
+
+connections:
+  groundedness_score:
+    connection: aoai-connection
+    deployment_name: gpt-4

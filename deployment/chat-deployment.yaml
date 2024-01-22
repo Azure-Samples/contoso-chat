@@ -1,12 +1,11 @@
-$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
-name: contoso-chat
-endpoint_name: contoso-chat
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json\
+endpoint_name: contoso-chat-store
 model: azureml:contoso-chat-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
 environment:
 # install custom python packages
-  image: craitourcontosostore964392317550.azurecr.io/8a82542e-6930-4508-aafa-2285e571f07b/azureml/azureml_02fe737292f94edf9914cd1c3c7b6b99:latest
+  image: crcontosooutdoors284684954710.azurecr.io/contoso/promptflow:v20240120v2
   inference_config:
     liveness_route:
       path: /health
@@ -18,7 +17,7 @@ environment:
       path: /score
       port: 8080
 instance_type: Standard_DS3_v2
-instance_count: 1
+instance_count: 3
 environment_variables:
   
   # "compute" mode is the default mode, if you want to deploy to serving mode, you need to set this env variable to "serving"

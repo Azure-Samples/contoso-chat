@@ -17,13 +17,13 @@ def retrieve_documentation(question: str, index_name: str, embedding: List[float
 
   vector_query = VectorizedQuery(vector=embedding, 
                                  k_nearest_neighbors=3, 
-                                 fields="embedding")
+                                 fields="contentVector")
 
   results = search_client.search(  
       search_text=query,  
       vector_queries=[vector_query],
       query_type=QueryType.SEMANTIC, 
-      semantic_configuration_name='default', 
+      semantic_configuration_name='azureml-default', 
       query_caption=QueryCaptionType.EXTRACTIVE, 
       query_answer=QueryAnswerType.EXTRACTIVE,
       top=6

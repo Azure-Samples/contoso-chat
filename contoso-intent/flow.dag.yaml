@@ -43,8 +43,8 @@ nodes:
     chat_history: ${inputs.chat_history}
     question: ${inputs.question}
     user_intent: ${classify_intent_llm.output}
-    support_endpoint: support_endpoint
-    chat_endpoint: chat_endpoint
+    support_endpoint: support-endpoint
+    chat_endpoint: chat-endpoint
     customerId: ${inputs.customerId}
 - name: classify_intent_llm
   type: llm
