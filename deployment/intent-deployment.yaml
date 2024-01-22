@@ -1,8 +1,8 @@
-$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
-endpoint_name: contoso-support
-model: azureml:contoso-support-model:1
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json\
+endpoint_name: contoso-intent
+model: azureml:contoso-intent-model:1
   # You can also specify model files path inline
-  # path: examples/flows/support/basic-support
+  # path: examples/flows/chat/basic-chat
 environment:
 # install custom python packages
   image: crcontosooutdoors284684954710.azurecr.io/contoso/promptflow:v20240120v2
