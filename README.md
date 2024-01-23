@@ -4,13 +4,10 @@
 
 - Signup for an [Azure Subscription](https://azure.microsoft.com/free/)
 - Download [VS Code](https://code.visualstudio.com/download)
-- Install the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) and run `az login` to get token credentials set.
-- Create an [AI Studio Resource](https://learn.microsoft.com/azure/ai-studio/how-to/create-azure-ai-resource)
-- Create an [AI Studio Project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects)
 
 ## Setup the code and environment
 
-To setup the development environment you can leverage codespaces, a local environment that you configure with Anaconda or venv, or a vs code docker container environment that leverages the Devcontainer.
+To setup the development environment you can leverage either GitHub Codespaces, a local Python environment (using Anaconda or venv), or a VS Code Dev Container environment (using Docker).
 
 ### Local development environment option (Anaconda or venv)
 
@@ -27,19 +24,24 @@ cd contoso-chat
 code .
 ```
 
-#### 3. Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow)
+#### 3. Install required tools
+
+1. Install the [Prompt Flow Extension](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow):
 
 - Open the VS Code Extensions tab
 - Search for "Prompt Flow"
 - Install the extension
 
-#### 4. Create a new local python environment
-- [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage python environments.
+2. Install the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
+
+#### 4. Create a new local Python environment
+
+Follow steps below for using either [anaconda](https://www.anaconda.com/products/individual) or [venv](https://docs.python.org/3/library/venv.html) to manage Python environments.
 
 ##### Using anaconda
 
 ```bash
-conda create -n contoso-chat python=3.9
+conda create -n contoso-chat python=3.11
 conda activate contoso-chat
 pip install -r requirements.txt
 ```
@@ -53,57 +55,57 @@ pip install -r requirements.txt
 ```
 
 ### Codespaces development option
-For codespaces click on the green `code` button on the repository and select the `codespaces` tab. Click `create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment. Proceed with "Create the prompt flow runtime in AI Studio".
 
-### Local Devcontainer development Option
-If you're using Visual Studio Code and **Devcontainer**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the [Remote Container Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for more information. Proceed with "Create the prompt flow runtime in AI Studio".
+For GitHub Codespaces, click on the green `Code` button on the repository and select the `Codespaces` tab. Click `Create codespace...` to open the project in a Codespace container. This will automatically install all the dependencies and setup the environment.
 
-## Create the prompt flow runtime in AI Studio
+Proceed with the "Create Azure resources" step below.
 
-First use command `az login` to sign into the Azure Command Line SDK
+### Local Dev Container development Option
 
-Open `config.json` file and add `subscriptionid`, `resourcegroup`, `workspacename` for your Azure AI Studio instance
+If you're using Visual Studio Code and **Dev Container**, clone the project, open it with `code .` or as folder. VS Code will detect the devcontainer configuration and ask you to reopen the project in a container. Alternatively you will need to run this step manually. See the [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for more information.
 
-Follow the instructions and steps in the notebook `create_compute_runtime.ipynb` under the `runtime` folder.
+Proceed with the "Create Azure resources" step below.
 
-## Create Azure resources and populate with sample data
+## Create Azure resources
 
-### 1.  Create Azure Open AI resource and deploy the models 
-- Follow these instructions to [create an Azure Open AI resource](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal)
-- Populate the `local.env` file with the endpoint and key from the Azure Open AI resource created in the previous step.
-- Now that the service is created use Azure AI Studio to deploy the following models to be used in the prompt flow: `GPT-4`, `GPT-3.5 Turbo`, and the embedding model `text-embedding-ada-002`. Follow these instructions to [deploy the models.](https://learn.microsoft.com/en-us/azure/ai-studio/tutorials/deploy-copilot-ai-studio#deploy-a-chat-model)
+1. Use command `az login` to sign into the Azure Command Line SDK. If you're inside a dev container or Codespace, you may need to run `az login --use-device-code` instead.
+2. Run the following command to create the Azure resources:
 
-### 2.  Azure AI Search service named `contoso-search`
-- Follow these instructions to [create an Azure AI Search service](https://docs.microsoft.com/en-us/azure/search/search-create-service-portal)
-- Populate the `local.env` file with the endpoint and key from the Azure AI Search service created in the previous step.
-- Now that the resource is created in Azure, use the notebook code and instructions `create-azure-search.ipynb` under the `data\product_info` folder to create the index and populate with the sample data
+  ```bash
+  ./provision.sh
+  ```
 
-### 3.  Create and populate the Azure Cosmos DB customer database 
-- Follow these instructions to create the resource: [Create an Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal)
-- Populate the `local.env` file with the endpoint and key from the Azure Cosmos DB resource created in the previous step.
-- Now that the resource is created in Azure, use the notebook code and instructions `create-cosmos-db.ipynb` under the `data\customer_info` folder to create the database, container and populate with the sample data.
+  That script will create a resource group, Azure AI Search service, Azure OpenAI service with 3 model deployments, Azure Cosmos DB, and Azure AI Hub and Project. It will also create a `.env` file with the connection information for those resources, and a `config.json` file with the Azure AI Project information.
+3. Create an Azure ML connection for Cosmos.
+    1. Visit https://ml.azure.com
+    2. Under Recent Workspaces, click project (contoso-chat-aiproj)
+    3. Select Prompt flow (sidebar), then Connections (tab)
+    4. Click Create and select Custom from dropdown
+      * Name: contoso-cosmos
+      * Provider: Custom (default)
+      * Key-value pairs: Add 4 entries (get env var values from .env)
+      * key: key, value: "COSMOS_KEY", check "is secret"
+      * key: endpoint , value: "COSMOS_ENDPOINT"
+      * key: containerId, value: customers
+      * key: databaseId, value: contoso-outdoor
+    5. Click Save to complete step.
 
-## Setup the connections locally and in Azure AI Studio
-To run the prompt flow, the connections need to be set up both locally and in the Azure AI Studio. When setting up the connections in the Azure AI Studio, make sure to use the same names as the local connections. Follow the instructions below to setup the connections.
 
-### 1. Create the cloud connections in Azure AI Studio
-- Create the Azure AI Search connection named `contoso-search`. [Follow the instructions here to setup the Azure AI Search connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-ai-search#create-a-new-connection)
+## Populate with sample data
 
-- Create Cosmos DB Custom connection named `contoso-cosmos`. [Follow the instructions here to create the Custom connection to Cosmos DB](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=custom#connection-details). NOTE: Be sure to add all the key value pairs needed in this connection: `endpoint`, `key`, `databaseId`, `containerId`.
-
-- Create Azure Open AI connection named `aoai-connection`. [Follow the instructions here to setup the Azure Open AI connection](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/connections-add?tabs=azure-openai#create-a-new-connection)
-
-### 2. Create the local connections
-To simplify the local connection creation use the notebook `create-connections.ipynb` under the `connections` folder. This notebook will create the local connections with the naming above. Be sure to update the endpoints and keys in the notebook to create the connections to the resources created in Azure. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
+1. To create the search index and populate with sample data, run the code in the `data/product_info/create-azure-search.ipynb` notebook.
+2. To create the database container and populate with sample data, run the code in the `data/customer_info/create-cosmos-db.ipynb` notebook. 
+3.  To simplify the local PromptFlow connection creation, run the code in the `connections/create-connections.ipynb` notebook. This notebook will create local connections using the same name as the provisioned AI project connections. If you prefer to create the connection mannually, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/manage-connections.html).
 
 ## Building a prompt flow
 
-Now that the environment, resources and connections have been configured we can open up the prompt flow and take a look at how it works. 
+Now that the environment, resources and connections have been configured, we can open up the prompt flow and take a look at how it works. 
 
 ### 1. Open the prompt flow in VS Code and understand the steps
+
 The prompt flow is a DAG (directed acyclic graph) that is made up of nodes that are connected together to form a flow. Each node in the flow is a python function tool that can be edited and customized to fit your needs. 
 
-Click on the `flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following and select `visual editor` to view the prompt flow:
+Click on the `contoso-chat/flow.dag.yaml` file in the explorer. If everything was installed and the python environment was activated you should see the following. Select `visual editor` to view the prompt flow:
 
 ![Visual editor button](./images/visualeditorbutton.png)
 
@@ -168,7 +170,7 @@ Follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb` und
   - Select the `upload existing docker` option 
   - Upload from the folder `runtime\docker`
 
-- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environemnt details page.
+- Update the deployment.yml image to the newly created environemnt. You can find the name under `Azure container registry` in the environment details page.
 
 ## Contributing
 
