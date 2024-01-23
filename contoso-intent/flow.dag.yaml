@@ -9,7 +9,7 @@ inputs:
   question:
     type: string
     is_chat_input: true
-    default: Can you tell me about your jackest?
+    default: Can you tell me about your jackets?
   customerId:
     type: string
     default: "2"
@@ -43,8 +43,8 @@ nodes:
     chat_history: ${inputs.chat_history}
     question: ${inputs.question}
     user_intent: ${classify_intent_llm.output}
-    support_endpoint: support_endpoint
-    chat_endpoint: chat_endpoint
+    support_endpoint: support-endpoint
+    chat_endpoint: chat-endpoint
     customerId: ${inputs.customerId}
 - name: classify_intent_llm
   type: llm

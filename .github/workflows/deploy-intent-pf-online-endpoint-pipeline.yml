@@ -1,9 +1,9 @@
-name: Deploy Contoso-Chat Promptflow
+name: Deploy Contoso-Intent Promptflow
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["run-chat-eval-pf-pipeline"]
+    workflows: ["run-intent-eval-pf-pipeline"]
     branches: [main]
     types:
       - completed
@@ -13,10 +13,10 @@ env:
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
-  RUN_NAME: contoso-chat
-  EVAL_RUN_NAME: contoso-chat-eval
-  ENDPOINT_NAME: contoso-chat-store
-  DEPLOYMENT_NAME: contoso-chat
+  RUN_NAME: contoso-intent
+  EVAL_RUN_NAME: contoso-intent-eval
+  ENDPOINT_NAME: contoso-intent
+  DEPLOYMENT_NAME: contoso-intent
   KEY_VAULT_NAME: ${{secrets.KEY_VAULT_NAME}}
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
     - name: Create Hash
       run: echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
     - name: Create unique deployemnt name   
-      run: echo "DEPLOYMENT_NAME=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
+      run: echo "DEPLOYMENT_NAME=$(echo 'contoso-intent-'$HASH)" >> "$GITHUB_ENV"
     - name: Display deployment name
       run: |
         echo "Deployment name is:" ${{env.DEPLOYMENT_NAME}} 
@@ -50,16 +50,16 @@ jobs:
         ENDPOINT_EXISTS=$(az ml online-endpoint list -o tsv  -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --query "[?name=='${{env.ENDPOINT_NAME}}'][name]" |  wc -l)
         echo "endpoint exists result: $ENDPOINT_EXISTS"
         if [[ ENDPOINT_EXISTS -ne 1 ]]; then
-          az ml online-endpoint create --file deployment/chat-endpoint.yaml -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+          az ml online-endpoint create --file deployment/intent-endpoint.yaml -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
         else
             echo "endpoint exists"
         fi
     - name: Update deployment PRT_CONFIG variable
       run: |
         PRT_CONFIG_OVERRIDE=deployment.subscription_id=${{ env.SUBSCRIPTION }},deployment.resource_group=${{ env.GROUP }},deployment.workspace_name=${{ env.WORKSPACE }},deployment.endpoint_name=${{ env.ENDPOINT_NAME }},deployment.deployment_name=${{ env.DEPLOYMENT_NAME }}
-        sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/chat-deployment.yaml
+        sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/intent-deployment.yaml
     - name: Setup deployment
-      run: az ml online-deployment create --file deployment/chat-deployment.yaml --name ${{env.DEPLOYMENT_NAME}} --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml online-deployment create --file deployment/intent-deployment.yaml --name ${{env.DEPLOYMENT_NAME}} --endpoint-name ${{env.ENDPOINT_NAME}} --all-traffic -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the endpoint
       run: az ml online-endpoint show -n ${{env.ENDPOINT_NAME}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Check the status of the deployment

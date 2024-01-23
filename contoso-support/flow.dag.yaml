@@ -1,27 +1,9 @@
-id: template_chat_flow
-name: Template Chat Flow
 environment:
   python_requirements_txt: requirements.txt
 inputs:
   chat_history:
     type: list
-    default:
-    - inputs:
-        customerId: "6"
-        question: what did I last order?
-      outputs:
-        answer: Hey Emily! Your last order was the TrailMaster X4 Tent from
-          OutdoorLiving.  It's a spacious tent perfect for four occupants,
-          with water-resistant construction and mesh panels for airflow and bug
-          defense. It even comes with a two-year limited warranty for your
-          peace of mind. Enjoy your next camping adventure! 
-    - inputs:
-        customerId: "6"
-        question: and what is the tent's water proof rating
-      outputs:
-        answer: I am not sure
-    is_chat_input: false
-    is_chat_history: true
+    default: []
   question:
     type: string
     default: What was in my last order?
@@ -75,7 +57,7 @@ nodes:
   inputs:
     search: contoso-search
     question: ${inputs.question}
-    index_name: contoso-manuals-chunked
+    index_name: contoso-manuals-index
     embedding: ${question_embedding.output}
   use_variants: false
 - name: customer_prompt

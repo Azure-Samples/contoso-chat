@@ -1,4 +1,4 @@
-name: Test and Evaulate Contoso-Support Promptflow
+name: Test and Evaulate Contoso-Intent Promptflow
 
 on:
   workflow_dispatch:
@@ -7,8 +7,8 @@ env:
   GROUP: ${{secrets.GROUP}}
   WORKSPACE: ${{secrets.WORKSPACE}}
   SUBSCRIPTION: ${{secrets.SUBSCRIPTION}}
-  RUN_NAME: contoso_support
-  EVAL_RUN_NAME: contoso_support_eval
+  RUN_NAME: contoso-intent
+  EVAL_RUN_NAME: contoso-intent-eval
 
 jobs:
   login-runpf-evalpf-assertpf-registermodel:
@@ -29,10 +29,10 @@ jobs:
     - name: List current directory
       run: ls
     - name: Install promptflow
-      run: pip install -r contoso-support/requirements.txt
+      run: pip install -r contoso-intent/requirements.txt
     - name: Run promptflow
       run: |
-        pfazure run create -f contoso-support/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
+        pfazure run create -f contoso-intent/run.yml --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > run_info.txt
         cat run_info.txt
     - name: List current directory
       run: ls
@@ -45,7 +45,7 @@ jobs:
       run: pfazure run show-details --name ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
     - name: Run promptflow evaluations
       run: |
-        pfazure run create -f contoso-support/run_evaluation_multi.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
+        pfazure run create -f contoso-intent/run_evaluation_multi.yml --run ${{env.RUN_NAME}} --subscription ${{env.SUBSCRIPTION}} -g ${{env.GROUP}} -w ${{env.WORKSPACE}} --stream > eval_info.txt 
         cat eval_info.txt
     - name: Get eval run name
       run: echo "EVAL_RUN_NAME=$(python deployment/llmops-helper/parse_run_output.py eval_info.txt)" >> "$GITHUB_ENV"
@@ -77,4 +77,4 @@ jobs:
       run: echo "Assert result is:" ${{ steps.jobMetricAssert.outputs.result }}
     - name: Register promptflow model
       if: ${{ steps.jobMetricAssert.outputs.result == 'true' }}
-      run: az ml model create --file deployment/support-model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
+      run: az ml model create --file deployment/intent-model.yaml  -g ${{env.GROUP}} -w ${{env.WORKSPACE}}
