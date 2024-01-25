@@ -1,5 +1,5 @@
 environment:
-  python_requirements_txt: requirements.txt
+  image: docker.io/sethjuarez/contoso-store:v20240124.1
 inputs:
   chat_history:
     type: list
