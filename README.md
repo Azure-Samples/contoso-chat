@@ -207,14 +207,12 @@ You should see `contoso-search` and `aoai-connection` pre-configured, else creat
 
 You will however need to **create `contoso-cosmos` manually from Azure ML Studio**. This is a temporary measure for _custom connections_ and may be automated in future. For now, do this:
 
-1. Visit https://ml.azure.com, and navigate to "All Workspaces"
-1. Under Recent Workspaces, click your Azure AI project (e.g., contoso-chat-aiproj)
-1. Select Prompt flow (on sidebar), then click Connections (tab)
-1. Click Create and select Custom from dropdown
-1. Fill in the following details (you will add **4 key-value pair** elements, with keys found in the `.env` file):
-    - Name: contoso-cosmos
-    - Provider: Custom (default)
-    - Add 4 items under key-value pairs as follows:
+1. Visit https://ai.azure.com and sign in if necessary
+1. Under Recent Projects, click your Azure AI project (e.g., contoso-chat-aiproj)
+1. Select Settings (on sidebar), scroll down to the Connections pane, and click "View All"
+1. Click "+ New connection", modify the Service field, and select Custom from dropdown
+1. Enter "Connection Name": contoso-cosmos, "Access": Project.
+1. Click "+ Add key value pairs" **four** times. Fill in the following details found in the `.env` file:
       - key=key, value=.env value for COSMOS_KEY, is-secret=checked
       - key=endpoint, value=.env value for COSMOS_ENDPOINT
       - key=containerId, value=customers
