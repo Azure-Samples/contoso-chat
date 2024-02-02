@@ -145,20 +145,22 @@ In either case, verify that the console shows a message indicating a successful 
 
 ### 4.2 Run Provisioning Script
 
-The project requires a number of Azure resources to be setup, in a specified order. To simplify this, an auto-provisioning script has been provided. Run it now as follows:
+The project requires a number of Azure resources to be set up, in a specified order. To simplify this, an auto-provisioning script has been provided. (NOTE: It will use the current active subscription to create the resource. If you have multiple subscriptions, use `az account set --subscription "<SUBSCRIPTION-NAME>"` first to set the desired active subscription.)
+
+Run the provisioning script as follows:
 
   ```bash
   ./provision.sh
   ```
 
-The script should **setup a dedicated resource group** with the following resources:
+The script should **set up a dedicated resource group** with the following resources:
 
- - **Azure AI** resource
- - **Azure AI Project** resource
- - **Azure AI Search** resource
- - **Azure Cosmos DB** resource
+ - **Azure AI services** resource
+ - **Azure Machine Learning workspace** (Azure AI Project) resource
+ - **Search service** (Azure AI Search) resource
+ - **Azure Cosmos DB account** resource
 
-The Azure AI resource will setup an **Azure OpenAI service** resource with the following model deployments created by default, in a relevant region that supports them. _Your Azure subscription must be enabled for Azure OpenAI access_.
+The script will set up an **Azure AI Studio** project with the following model deployments created by default, in a relevant region that supports them. _Your Azure subscription must be [enabled for Azure OpenAI access](https://learn.microsoft.com/azure/ai-services/openai/overview#how-do-i-get-access-to-azure-openai)_.
  - gpt-3.5-turbo
  - text-embeddings-ada-002
  - gpt-4
@@ -169,7 +171,7 @@ The Azure AI Search resource will have **Semantic Ranker** enabled for this proj
 
 The script should automatically create a `config.json` in your root directory, with the relevant Azure subscription, resource group, and AI workspace properties defined. _These will be made use of by the Azure AI SDK for relevant API interactions with the Azure AI platform later_.
 
-If the config.json file is not created, simply download it from your Azure portal by visiting the _Azure AI project_ resource created, and looking at it's Overview page.
+If the config.json file is not created, simply download it from your Azure portal by visiting the _Azure AI project_ resource created, and looking at its Overview page.
 
 ### 4.4 Verify `.env` setup
 
@@ -179,7 +181,7 @@ If the file is not created, simply copy over `.env.sample` to `.env` - then popu
 
 ### 4.5 Verify local connections for Prompt Flow
 
-You will need to have your local Prompt Flow extension configured to have the following _connection_ objects setup:
+You will need to have your local Prompt Flow extension configured to have the following _connection_ objects set up:
  - `contoso-cosmos` to Azure Cosmos DB endpoint
  - `contoso-search` to Azure AI Search endpoint
  - `aoai-connection` to Azure OpenAI endpoint
@@ -187,7 +189,7 @@ You will need to have your local Prompt Flow extension configured to have the fo
 Verify if these were created by using the [pf tool](https://microsoft.github.io/promptflow/reference/pf-command-reference.html#pf-connection) from the VS Code terminal as follows:
 
 ```bash
-pf list connections
+pf connection list
 ```
 
 If the connections are _not_ visible, create them by running the `connections/create-connections.ipynb` notebook. Then run the above command to verify they were created correctly.
@@ -199,17 +201,17 @@ The auto-provisioning will have setup 2 of the 3 connections for you by default.
  - signing in with your Azure account, then clicking "Build"
  - selecting the Azure AI project for this repo, from that list
  - clicking "Settings" in the sidebar for the project
- - clicking "View Connections" in the Connections panel in Settings
+ - clicking "View All" in the Connections panel in Settings
 
 You should see `contoso-search` and `aoai-connection` pre-configured, else create them from the Azure AI Studio interface using the **Create Connection** workflow (and using the relevant values from your `.env` file).
 
 You will however need to **create `contoso-cosmos` manually from Azure ML Studio**. This is a temporary measure for _custom connections_ and may be automated in future. For now, do this:
 
-1. Visit https://ml.azure.com
+1. Visit https://ml.azure.com, and navigate to "All Workspaces"
 1. Under Recent Workspaces, click your Azure AI project (e.g., contoso-chat-aiproj)
 1. Select Prompt flow (on sidebar), then click Connections (tab)
 1. Click Create and select Custom from dropdown
-1. Fill in the following details after first **adding 4 key-value pair** elements.
+1. Fill in the following details (you will add **4 key-value pair** elements, with keys found in the `.env` file):
     - Name: contoso-cosmos
     - Provider: Custom (default)
     - Add 4 items under key-value pairs as follows:
@@ -224,20 +226,20 @@ Refresh main Connections list screen to verify that you now have all three requi
 
 ## 5. Populate with sample data
 
-In this steom we want to populate the required data for our application use case.
+In this step we want to populate the required data for our application use case.
 
 1. **Populate Search Index** in Azure AI Search
     - Run the code in the `data/product_info/create-azure-search.ipynb` notebook.
     - Visit the Azure AI Search resource in the Azure Portal
-    - Click on "Indexes" and verify that a new index was created!
-1. **Populate Cusomer Data** in Azure Cosmos DB
+    - Click on "Indexes" and verify that a new index was created
+1. **Populate Customer Data** in Azure Cosmos DB
     - Run the code in the `data/customer_info/create-cosmos-db.ipynb` notebook. 
     - Visit the Azure Cosmos DB resource in the Azure Portal
-    - Click on "Data Explorere" and verify tat the container and database were created!
+    - Click on "Data Explorer" and verify tat the container and database were created!
 
 ## 6. Building a prompt flow
 
-We are now ready to begin building our prompt flow1 The repository comes with a number of pre-written flows that provide the starting points for this project. In the following section, we'll explore what these are and how they work.
+We are now ready to begin building our prompt flow! The repository comes with a number of pre-written flows that provide the starting points for this project. In the following section, we'll explore what these are and how they work.
 
 ### 6.1. Explore the `contoso-chat` Prompt Flow
 
@@ -257,7 +259,7 @@ The prompt flow is a directed acyclic graph (DAG) of nodes, with a starting node
 
 | Node | Description |
 |:---|:---|
-|*input*s  | This node is used to start the flow and is the entry point for the flow. It has the input parameters `customer_id` and `question`, and `chat_history`. The `customer_id` is used to lookup the customer information in the Cosmos DB. The `question` is the question the customer is asking. The `chat_history` is the chat history of the conversation with the customer.|
+|*input*s  | This node is used to start the flow and is the entry point for the flow. It has the input parameters `customer_id` and `question`, and `chat_history`. The `customer_id` is used to look up the customer information in the Cosmos DB. The `question` is the question the customer is asking. The `chat_history` is the chat history of the conversation with the customer.|
 | *question_embedding* | This node is used to embed the question text using the `text-embedding-ada-002` model. The embedding is used to find the most relevant documents from the AI Search index.|
 | *retrieve_documents*| This node is used to retrieve the most relevant documents from the AI Search index with the question vector. |
 | *customer_lookup* | This node is used to get the customer information from the Cosmos DB.|
@@ -270,7 +272,7 @@ The prompt flow is a directed acyclic graph (DAG) of nodes, with a starting node
 
 Let's run the flow to see what happens.  **Note that the input node is pre-configured with a question.** By running the flow, we anticipate that the output node should now provide the result obtained from the LLM when presented with the _customer prompt_ that was created from the initial question with enhanced customer data and retrieved product context.
 
-- To run the flow, click the `Run` (play icon) at the top. 
+- To run the flow, click the `Run All` (play icon) at the top. When prompted, select "Run it with standard mode".
 - Watch the console output for execution progress updates
 - On completion, the visual graph nodes should light up (green=success, red=failure).
 - Click any node to open the declarative version showing details of execution
@@ -280,6 +282,17 @@ For more details on running the prompt flow, [follow the instructions here](http
 
 **Congratulations!! You ran the prompt flow and verified it works!**
 
+### 6.4 Try other customer inputs (optional)
+
+If you like, you can try out other possible customer inputs to see what the output of the Prompt Flow might be. (This step is optional, and you can skip it if you like.)
+
+- As before, run the flow by clicking the `Run All` (play icon) at the top. This time when prompted, select "Run it with interactive mode (text only)."
+- Watch the console output, and when the "User: " prompt appears, enter a question of your choice. The "Bot" response (from the output node) will then appear.
+
+ Here are some questions you can try:
+  - What have I purchased before?
+  - What is a good sleeping bag for summer use?
+  - How do you clean the CozyNights Sleeping Bag?
 
 ## 7. Evaluating prompt flow results
 
