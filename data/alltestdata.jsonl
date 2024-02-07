@@ -1,3 +1,8 @@
+{ "customerId": "4", "question": "tell me about your hiking jackets", "chat_history": [], "intent": "chat"}
+{ "customerId": "1", "question": "Do you have any climbing gear?", "chat_history": [], "intent": "chat" }
+{ "customerId": "3", "question": "Can you tell me about your selection of tents?", "chat_history": [], "intent": "chat" }
+{ "customerId": "6", "question": "Do you have any hiking boots?", "chat_history": [], "intent": "chat" }
+{ "customerId": "2", "question": "What gear do you recommend for hiking?", "chat_history": [], "intent": "chat" }
 {"customerId": "7", "question": "what is the temperature rating of my sleeping bag?", "chat_history": [], "intent": "support"}
 {"customerId": "7", "question": "what is the temperature rating of the cozynights sleeping bag?", "chat_history": [], "intent": "support"}
 {"customerId": "8", "question": "what is the waterproof rating of the tent I bought?", "chat_history": [], "intent": "support"}
@@ -5,8 +10,3 @@
 {"customerId": "2", "question": "What is your return or exchange policy?", "chat_history": [], "intent": "support" }
 {"customerId": "6", "question": "is the jacket I bought machine washable?", "chat_history": [], "intent": "support"}
 {"customerId": "8", "question": "I would like to return the tent I bought. It is used but I still want to return it since the roof leaks.", "chat_history": [], "intent": "support"}
-{ "customerId": "4", "question": "tell me about your hiking jackets", "chat_history": [], "intent": "chat"}
-{ "customerId": "1", "question": "Do you have any climbing gear?", "chat_history": [], "intent": "chat" }
-{ "customerId": "3", "question": "Can you tell me about your selection of tents?", "chat_history": [], "intent": "chat" }
-{ "customerId": "6", "question": "Do you have any hiking boots?", "chat_history": [], "intent": "chat" }
-{ "customerId": "2", "question": "What gear do you recommend for hiking?", "chat_history": [], "intent": "chat" }
