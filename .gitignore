@@ -3,3 +3,4 @@ __pycache__/
 .promptflow/
 .env
 config.json
+eval/downloaded_artifacts/remote/eval_results.jsonl
