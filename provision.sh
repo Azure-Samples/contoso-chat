@@ -1,7 +1,7 @@
 resourceGroupName="contchat-rg"
 resourceGroupLocation="swedencentral"
 endpointName="contoso-chat-store"
-deploymentName="contoso-chat"
+deploymentName="contoso-chat-ai"
 
 if [ -z "$(az account show)" ]; then
     echo "You are not logged in. Please run 'az login' or 'az login --use-device-code' first."
@@ -57,8 +57,6 @@ az ml model create --file deployment/chat-model.yaml  -g $resourceGroupName -w $
 
 # Deploy prompt flow
 az extension add -n ml -y
-HASH=$(-n $RANDOM | sha1sum | cut -c 1-6)
-deploymentName=$('contoso-chat-'$HASH)
 az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $resourceGroupName -w $mlProjectName
 # Update deployment PRT_CONFIG variable
 PRT_CONFIG_OVERRIDE=deployment.subscription_id=$subscription_id,deployment.resource_group=$resourceGroupName,deployment.workspace_name=$mlProjectName,deployment.endpoint_name=$endpointName,deployment.deployment_name=$deploymentName
