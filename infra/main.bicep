@@ -6,10 +6,8 @@ param workspaces_contoso_chat_sf_aiproj_name string = 'contoso-chat-sf-aiproj'
 param workspaces_apws_contosochatsfai362802272292_name string = 'apws-contosochatsfai362802272292'
 
 // Necessary for GPT-4
-//param location string = 'swedencentral'
-//param searchLocation string = 'eastus'
-param location string = 'westus2'
-param searchLocation string = 'westus2'
+param location string = 'swedencentral'
+param searchLocation string = 'eastus'
 
 var openaiSubdomain = '${accounts_contoso_chat_sf_ai_aiservices_name}${resourceToken}'
 var openaiEndpoint = 'https://${openaiSubdomain}.openai.azure.com/'
@@ -43,7 +41,7 @@ var deployments = [
     name: 'GPT-4'
     model: {
       format: 'OpenAI'
-      name: 'GPT-35-Turbo'
+      name: 'GPT-4'
       version: '0613'
     }
     sku: {
