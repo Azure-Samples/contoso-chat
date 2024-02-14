@@ -1,7 +1,9 @@
 resourceGroupName="contchat-rg"
 resourceGroupLocation="swedencentral"
-endpointName="contoso-chat-ai-endpoint"
-deploymentName="contoso-chat-ai-deployment"
+# create a random hash for the endpoint name
+endpointName="contoso-chat-$(date +%s | sha256sum | base64 | head -c 8)"
+# create a random hash for the deployment name
+deploymentName="contoso-chat-$(date +%s | sha256sum | base64 | head -c 8)"
 
 if [ -z "$(az account show)" ]; then
     echo "You are not logged in. Please run 'az login' or 'az login --use-device-code' first."
