@@ -55,8 +55,8 @@ echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resource
 # Deploy prompt flow
 
 az extension add -n ml -y
-echo "HASH=$(echo -n $RANDOM | sha1sum | cut -c 1-6)" >> "$GITHUB_ENV"
-echo "deploymentName=$(echo 'contoso-chat-'$HASH)" >> "$GITHUB_ENV"
+HASH=$(-n $RANDOM | sha1sum | cut -c 1-6)
+deploymentName=$('contoso-chat-'$HASH)
 az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $resourceGroupName -w $mlProjectName
 # Update deployment PRT_CONFIG variable
 PRT_CONFIG_OVERRIDE=deployment.subscription_id=$subscription_id,deployment.resource_group=$resourceGroupName,deployment.workspace_name=$mlProjectName,deployment.endpoint_name=$endpointName,deployment.deployment_name=$deploymentName
