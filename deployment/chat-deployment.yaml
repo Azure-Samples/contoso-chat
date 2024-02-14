@@ -2,19 +2,19 @@ $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.sch
 model: azureml:contoso-chat-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
-
 environment:
-  dockerfile_path: Dockerfile
-inference_config:
-  liveness_route:
-    path: /health
-    port: 8080
-  readiness_route:
-    path: /health
-    port: 8080
-  scoring_route:
-    path: /score
-    port: 8080
+# install custom python packages
+  image: crcontosooutdoors284684954710.azurecr.io/contoso/promptflow:v20240120v2
+  inference_config:
+    liveness_route:
+      path: /health
+      port: 8080
+    readiness_route:
+      path: /health
+      port: 8080
+    scoring_route:
+      path: /score
+      port: 8080
 instance_type: Standard_DS3_v2
 instance_count: 3
 environment_variables:
