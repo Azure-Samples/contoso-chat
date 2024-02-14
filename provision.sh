@@ -52,8 +52,10 @@ echo "Writing config.json file for PromptFlow usage..."
 subscriptionId=$(az account show --query id -o tsv)
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
-# Deploy prompt flow
+# register promptflow as model
+az ml model create --file deployment/chat-model.yaml  -g $resourceGroupName -w $mlProjectName
 
+# Deploy prompt flow
 az extension add -n ml -y
 HASH=$(-n $RANDOM | sha1sum | cut -c 1-6)
 deploymentName=$('contoso-chat-'$HASH)
