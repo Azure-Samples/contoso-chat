@@ -1,5 +1,5 @@
 resourceGroupName="contchat-rg"
-resourceGroupLocation="westus2"
+resourceGroupLocation="swedencentral"
 endpointName="contoso-chat-store"
 deploymentName="contoso-chat"
 
