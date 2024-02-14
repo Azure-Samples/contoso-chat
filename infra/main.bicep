@@ -43,7 +43,7 @@ var deployments = [
     name: 'GPT-4'
     model: {
       format: 'OpenAI'
-      name: 'GPT-4'
+      name: 'GPT-35-Turbo'
       version: '0613'
     }
     sku: {
