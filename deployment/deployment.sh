@@ -4,6 +4,11 @@ subscriptionId=$(az account show --query id -o tsv)
 resourceGroupName=$(az group show --name $resourceGroupName --query name -o tsv)
 mlProjectName=$(az deployment group show --name contchat --resource-group $resourceGroupName --query properties.outputs.mlproject_name.value -o tsv)
 
+# create a random hash for the endpoint name all lowercase letters
+endpointName="contoso-chat-$RANDOM"
+# create a random hash for the deployment name
+deploymentName="contoso-chat-$RANDOM"
+
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 $(cat principal.txt) --secret-permissions get list
 
