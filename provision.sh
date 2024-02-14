@@ -1,7 +1,7 @@
 resourceGroupName="contchat-rg"
 resourceGroupLocation="swedencentral"
-endpointName="contoso-chat-store"
-deploymentName="contoso-chat-ai"
+endpointName="contoso-chat-ai-endpoint"
+deploymentName="contoso-chat-ai-deployment"
 
 if [ -z "$(az account show)" ]; then
     echo "You are not logged in. Please run 'az login' or 'az login --use-device-code' first."
@@ -54,11 +54,11 @@ echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resource
 
 # register promptflow as model
 echo "Registering PromptFlow as a model in Azure ML..."
+az extension add -n ml -y
 az ml model create --file deployment/chat-model.yaml  -g $resourceGroupName -w $mlProjectName
 
 # Deploy prompt flow
 echo "Deploying PromptFlow to Azure ML..."
-az extension add -n ml -y
 az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $resourceGroupName -w $mlProjectName
 
 # Setup deployment
