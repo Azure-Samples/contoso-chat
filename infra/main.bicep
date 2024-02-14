@@ -6,8 +6,10 @@ param workspaces_contoso_chat_sf_aiproj_name string = 'contoso-chat-sf-aiproj'
 param workspaces_apws_contosochatsfai362802272292_name string = 'apws-contosochatsfai362802272292'
 
 // Necessary for GPT-4
-param location string = 'swedencentral'
-param searchLocation string = 'eastus'
+//param location string = 'swedencentral'
+//param searchLocation string = 'eastus'
+param location string = 'westus2'
+param searchLocation string = 'westus2'
 
 var openaiSubdomain = '${accounts_contoso_chat_sf_ai_aiservices_name}${resourceToken}'
 var openaiEndpoint = 'https://${openaiSubdomain}.openai.azure.com/'
@@ -38,10 +40,10 @@ var deployments = [
     }
   }
   {
-    name: 'gpt-4'
+    name: 'GPT-4'
     model: {
       format: 'OpenAI'
-      name: 'gpt-4'
+      name: 'GPT-4-Turbo'
       version: '0613'
     }
     sku: {
@@ -593,7 +595,7 @@ resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview'
     v1LegacyMode: false
     containerRegistry: containerRegistry.id
     publicNetworkAccess: 'Enabled'
-    discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
+    discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
   }
 
   resource openaiDefaultEndpoint 'endpoints' = {
@@ -661,7 +663,7 @@ resource mlProject 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
     hbiWorkspace: false
     v1LegacyMode: false
     publicNetworkAccess: 'Enabled'
-    discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
+    discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
     // most properties are not allowed for a project workspace: "Project workspace shouldn't define ..."
     hubResourceId: mlHub.id
   }
