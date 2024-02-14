@@ -53,23 +53,28 @@ subscriptionId=$(az account show --query id -o tsv)
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
 # register promptflow as model
+echo "Registering PromptFlow as a model in Azure ML..."
 az ml model create --file deployment/chat-model.yaml  -g $resourceGroupName -w $mlProjectName
 
 # Deploy prompt flow
+echo "Deploying PromptFlow to Azure ML..."
 az extension add -n ml -y
 az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $resourceGroupName -w $mlProjectName
-# Update deployment PRT_CONFIG variable
-PRT_CONFIG_OVERRIDE=deployment.subscription_id=$subscription_id,deployment.resource_group=$resourceGroupName,deployment.workspace_name=$mlProjectName,deployment.endpoint_name=$endpointName,deployment.deployment_name=$deploymentName
-sed -i "s/PRT_CONFIG_OVERRIDE:.*/PRT_CONFIG_OVERRIDE: $PRT_CONFIG_OVERRIDE/g" deployment/chat-deployment.yaml
+
 # Setup deployment
+echo "Setting up deployment..."
 az ml online-deployment create --file deployment/chat-deployment.yaml --name $deploymentName --endpoint-name $endpointName --all-traffic -g $resourceGroupName -w $mlProjectName
 az ml online-endpoint show -n $endpointName -g $resourceGroupName -w $mlProjectName
 az ml online-deployment get-logs --name $deploymentName --endpoint-name $endpointName -g $resourceGroupName -w $mlProjectName
+
 # Read endpoint principal
+echo "Reading endpoint principal..."
 az ml online-endpoint show -n $endpointName -g $resourceGroupName -w $mlProjectName > endpoint.json
 jq -r '.identity.principal_id' endpoint.json > principal.txt
 echo "Principal is: $(cat principal.txt)"
+
 #Assign Permission to Endpoint Principal
+echo "Assigning permissions to Principal..."
 az role assignment create --assignee $(cat principal.txt) --role "AzureML Data Scientist" --scope "/subscriptions/$subscription_id/resourcegroups/$resourceGroupName/providers/Microsoft.MachineLearningServices/workspaces/$mlProjectName"
 az role assignment create --assignee $(cat principal.txt) --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "/subscriptions/$subscription_id/resourcegroups/$resourceGroupName/providers/Microsoft.MachineLearningServices/workspaces/$mlProjectName/onlineEndpoints/$endpointName"
 # Get keyValueName from Azure ML
