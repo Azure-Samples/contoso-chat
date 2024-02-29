@@ -414,12 +414,15 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
     credentials: {
       keys: {
         key: cosmos.listKeys().primaryMasterKey
-        endpoint: cosmos.properties.documentEndpoint
-        databaseId: 'contoso-outdoor'
-        containerId: 'customers'
-        'azureml.flow.connection_type': 'Custom'
-        'azureml.flow.module': 'promptflow.connections'
-      }
+        }
+    }
+    metadata: {
+      endpoint: cosmos.properties.documentEndpoint
+      databaseId: 'contoso-outdoor'
+      containerId: 'customers'
+      'azureml.flow.connection_type': 'Custom'
+      'azureml.flow.module': 'promptflow.connections'
+
     }
   }
 }
