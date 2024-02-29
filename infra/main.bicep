@@ -404,9 +404,6 @@ resource appinsights 'microsoft.insights/components@2020-02-02' = {
   }
 }
 
-
-
-/*
 resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
   parent: mlProject
   name: 'contoso-cosmos'
@@ -420,12 +417,12 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
         endpoint: cosmos.properties.documentEndpoint
         databaseId: 'contoso-outdoor'
         containerId: 'customers'
+        'azureml.flow.connection_type': 'Custom'
+        'azureml.flow.module': 'promptflow.connections'
       }
     }
   }
 }
-*/
-
 
 resource storageAccounts_stcontosocha735868071044_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
   parent: storage
