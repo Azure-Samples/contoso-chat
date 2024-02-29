@@ -404,9 +404,6 @@ resource appinsights 'microsoft.insights/components@2020-02-02' = {
   }
 }
 
-
-
-/*
 resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connections@2023-10-01' = {
   parent: mlProject
   name: 'contoso-cosmos'
@@ -417,15 +414,18 @@ resource cosmosConnection 'Microsoft.MachineLearningServices/workspaces/connecti
     credentials: {
       keys: {
         key: cosmos.listKeys().primaryMasterKey
-        endpoint: cosmos.properties.documentEndpoint
-        databaseId: 'contoso-outdoor'
-        containerId: 'customers'
-      }
+        }
+    }
+    metadata: {
+      endpoint: cosmos.properties.documentEndpoint
+      databaseId: 'contoso-outdoor'
+      containerId: 'customers'
+      'azureml.flow.connection_type': 'Custom'
+      'azureml.flow.module': 'promptflow.connections'
+
     }
   }
 }
-*/
-
 
 resource storageAccounts_stcontosocha735868071044_name_default 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
   parent: storage
@@ -593,7 +593,7 @@ resource mlHub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview'
     v1LegacyMode: false
     containerRegistry: containerRegistry.id
     publicNetworkAccess: 'Enabled'
-    discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
+    discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
   }
 
   resource openaiDefaultEndpoint 'endpoints' = {
@@ -661,7 +661,7 @@ resource mlProject 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
     hbiWorkspace: false
     v1LegacyMode: false
     publicNetworkAccess: 'Enabled'
-    discoveryUrl: 'https://swedencentral.api.azureml.ms/discovery'
+    discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
     // most properties are not allowed for a project workspace: "Project workspace shouldn't define ..."
     hubResourceId: mlHub.id
   }

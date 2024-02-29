@@ -49,5 +49,5 @@ echo "COSMOS_KEY=$cosmosKey" >> .env
 echo "Writing config.json file for PromptFlow usage..."
 subscriptionId=$(az account show --query id -o tsv)
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
-
+    
 echo "Provisioning complete!"
