@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: hello-ai
+metadata:
+  template: hello-ai@0.0.1-beta
+hooks:
+  postprovision:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/postprovision.sh
