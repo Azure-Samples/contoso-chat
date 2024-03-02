@@ -4,3 +4,4 @@ azure-cosmos
 azure-ai-ml
 azure-ai-resources
 azure-search-documents==11.4.0
+nbconvert

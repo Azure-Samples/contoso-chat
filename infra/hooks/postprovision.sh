@@ -73,3 +73,8 @@ echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resource
 azd env get-values > .env
 
 echo "Script execution completed successfully."
+
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 connections/create-connections.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 deployment/push_and_deploy_pf.ipynb
