@@ -8,6 +8,9 @@ param environmentName string
 @description('Primary location for all resources')
 param location string = 'swedencentral'
 
+@description('Id of the user or app to assign application roles')
+param principalId string = ''
+
 // Necessary for GPT-4
 param searchLocation string = 'eastus'
 param resourceGroupName string = ''
@@ -28,6 +31,7 @@ module resources 'resources.bicep' = {
     location: location
     tags: tags
     searchLocation: searchLocation
+    principalId: principalId
   }
 }
 
@@ -42,3 +46,4 @@ output AZURE_RESOURCE_GROUP string = rg.name
 output CONTOSO_AI_SERVICES_ENDPOINT string = resources.outputs.openai_endpoint
 output COSMOS_ENDPOINT string = resources.outputs.cosmos_endpoint
 output CONTOSO_SEARCH_ENDPOINT string = resources.outputs.search_endpoint
+output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.acr_name

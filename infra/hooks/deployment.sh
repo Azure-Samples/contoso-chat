@@ -9,46 +9,50 @@ done <<EOF
 $(azd env get-values)
 EOF
 
-# get config.json
-echo "Writing config.json file for PromptFlow usage..."
-subscriptionId="$AZURE_SUBSCRIPTION_ID"
-resourceGroupName="$AZURE_RESOURCE_GROUP"
-mlProjectName="$mlproject_name"
-
 # create a random hash for the endpoint name all lowercase letters
 endpointName="contoso-chat-$RANDOM"
 # create a random hash for the deployment name
 deploymentName="contoso-chat-$RANDOM"
 
-echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
-$(cat principal.txt) --secret-permissions get list
+az extension add -n ml -y
+
+az acr login --name $AZURE_CONTAINER_REGISTRY_NAME
+az ml environment create --file deployment/docker/environment.yml --resource-group $AZURE_RESOURCE_GROUP --workspace-name $mlproject_name --registry-name $AZURE_CONTAINER_REGISTRY_NAME --version 1
+
+#get registry name
+#acrName=$(az acr list --resource-group $AZURE_RESOURCE_GROUP --query "[0].name" -o tsv)
+# get repository name
+acrRepository="promptflow-contoso-chat"
+# get envirnment image name from acr
+image_tag=$(az acr repository show-tags --name $AZURE_CONTAINER_REGISTRY_NAME --repository $acrRepository --query "[0]" -o tsv)
+#concatenate the image name
+image_name=$AZURE_CONTAINER_REGISTRY_NAME.azurecr.io/$acrRepository:$image_tag
 
 # register promptflow as model
 echo "Registering PromptFlow as a model in Azure ML..."
-az extension add -n ml -y
-az ml model create --file deployment/chat-model.yaml  -g $resourceGroupName -w $mlProjectName
+az ml model create --file deployment/chat-model.yaml  -g $AZURE_RESOURCE_GROUP -w $mlproject_name
 
 # Deploy prompt flow
 echo "Deploying PromptFlow to Azure ML..."
-az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $resourceGroupName -w $mlProjectName
+az ml online-endpoint create --file deployment/chat-endpoint.yaml -n $endpointName -g $AZURE_RESOURCE_GROUP -w $mlproject_name
 
 # Setup deployment
 echo "Setting up deployment..."
-az ml online-deployment create --file deployment/chat-deployment.yaml --name $deploymentName --endpoint-name $endpointName --all-traffic -g $resourceGroupName -w $mlProjectName
-az ml online-endpoint show -n $endpointName -g $resourceGroupName -w $mlProjectName
-az ml online-deployment get-logs --name $deploymentName --endpoint-name $endpointName -g $resourceGroupName -w $mlProjectName
+az ml online-deployment create --file deployment/chat-deployment.yaml --name $deploymentName --endpoint-name $endpointName --all-traffic -g $AZURE_RESOURCE_GROUP -w $mlproject_name --set environment.image=$image_name
+az ml online-endpoint show -n $endpointName -g $AZURE_RESOURCE_GROUP -w $mlproject_name
+az ml online-deployment get-logs --name $deploymentName --endpoint-name $endpointName -g $AZURE_RESOURCE_GROUP -w $mlproject_name
 
 # Read endpoint principal
-echo "Reading endpoint principal..."
-az ml online-endpoint show -n $endpointName -g $resourceGroupName -w $mlProjectName > endpoint.json
-jq -r '.identity.principal_id' endpoint.json > principal.txt
-echo "Principal is: $(cat principal.txt)"
+#echo "Reading endpoint principal..."
+#az ml online-endpoint show -n $endpointName -g $AZURE_RESOURCE_GROUP -w $mlproject_name > endpoint.json
+#jq -r '.identity.principal_id' endpoint.json > principal.txt
+#echo "Principal is: $(cat principal.txt)"
 
 #Assign Permission to Endpoint Principal
-echo "Assigning permissions to Principal..."
-az role assignment create --assignee $(cat principal.txt) --role "AzureML Data Scientist" --scope "/subscriptions/$subscription_id/resourcegroups/$resourceGroupName/providers/Microsoft.MachineLearningServices/workspaces/$mlProjectName"
-az role assignment create --assignee $(cat principal.txt) --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "/subscriptions/$subscription_id/resourcegroups/$resourceGroupName/providers/Microsoft.MachineLearningServices/workspaces/$mlProjectName/onlineEndpoints/$endpointName"
+#echo "Assigning permissions to Principal..."
+#az role assignment create --assignee $(cat principal.txt) --role "AzureML Data Scientist" --scope "/subscriptions/$subscription_id/resourcegroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.MachineLearningServices/workspaces/$mlproject_name"
+#az role assignment create --assignee $(cat principal.txt) --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "/subscriptions/$subscription_id/resourcegroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.MachineLearningServices/workspaces/$mlproject_name/onlineEndpoints/$endpointName"
 # Get keyValueName from Azure ML
-keyValueName=$(az ml online-endpoint show -n $endpointName -g $resourceGroupName -w $mlProjectName --query "identity.principal_id" -o tsv)          
-echo "assigning permissions to Principal to Key vault.."
-az keyvault set-policy --name $keyValueName --resource-group $resourceGroupName --object-id 
+#keyValueName=$(az ml online-endpoint show -n $endpointName -g $AZURE_RESOURCE_GROUP -w $mlproject_name --query "identity.principal_id" -o tsv)          
+#echo "assigning permissions to Principal to Key vault.."
+#az keyvault set-policy --name $keyValueName --resource-group $AZURE_RESOURCE_GROUP --object-id 

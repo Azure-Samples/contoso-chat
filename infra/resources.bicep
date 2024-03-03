@@ -1,5 +1,6 @@
 param environmentName string
 param location string = resourceGroup().location
+param principalId string = ''
 param searchLocation string = 'eastus'
 param tags object
 param workspaces_contoso_chat_sf_ai_name string = 'contoso-chat-sf-ai'
@@ -309,6 +310,14 @@ resource keyvault 'Microsoft.KeyVault/vaults@2023-07-01' = {
     enableSoftDelete: true
     publicNetworkAccess: 'Enabled'
     accessPolicies: []
+  }
+}
+
+module keyVaultAccess 'keyvalut-access.bicep' = {
+  name: 'keyvault-access'
+  params: {
+    keyVaultName: keyvault.name
+    principalId: mlProject.identity.principalId
   }
 }
 
@@ -670,6 +679,43 @@ resource mlProject 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   }
 }
 
+
+module userAcrRolePush 'role.bicep' = {
+  name: 'user-acr-role-push'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '8311e382-0749-4cb8-b61a-304f252e45ec'
+    principalType: 'User'
+  }
+}
+
+module userAcrRolePull 'role.bicep' = {
+  name: 'user-acr-role-pull'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+    principalType: 'User'
+  }
+}
+
+module mlServiceRoleDataScientist 'role.bicep' = {
+  name: 'ml-service-role-data-scientist'
+  params: {
+    principalId: mlProject.identity.principalId
+    roleDefinitionId: 'f6c7c914-8db3-469d-8ca1-694a8f32e121'
+    principalType: 'ServicePrincipal'
+  }
+}
+
+module mlServiceRoleSecretsReader 'role.bicep' = {
+  name: 'ml-service-role-secrets-reader'
+  params: {
+    principalId: mlProject.identity.principalId
+    roleDefinitionId: 'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
+    principalType: 'ServicePrincipal'
+  }
+}
+
 output openai_name string = openai.name
 output cosmos_name string = cosmos.name
 output search_name string = search.name
@@ -679,3 +725,4 @@ output mlproject_name string = mlProject.name
 output openai_endpoint string = openaiEndpoint
 output cosmos_endpoint string = cosmos.properties.documentEndpoint
 output search_endpoint string = 'https://${search.name}.search.windows.net/'
+output acr_name string = containerRegistry.name
