@@ -9,6 +9,20 @@ endpointName="contoso-chat-$RANDOM"
 # create a random hash for the deployment name
 deploymentName="contoso-chat-$RANDOM"
 
+# create a new environment in Azure ML
+az ml environment create --file deployment/docker/environment.yml --resource-group $resourceGroupName --workspace-name $mlProjectName --version 1
+
+#crcontosooutdoors284684954710.azurecr.io/contoso/promptflow:v20240120v2
+#get registry name
+acrName=$(az acr list --resource-group $resourceGroupName --query "[0].name" -o tsv)
+# get repository name
+acrRepository= "promptflow-contoso-chat"
+# get envirnment image name from acr
+image_tag=$(az acr repository show-tags --name $acrName --repository $acrRepository --query "[0]" -o tsv)
+#concatenate the image name
+image_name=$acrName.azurecr.io/$acrRepository:$image_tag
+
+
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 $(cat principal.txt) --secret-permissions get list
 
