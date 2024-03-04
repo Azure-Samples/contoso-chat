@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
-name: hello-ai
+name: contoso-chat
 metadata:
-  template: hello-ai@0.0.1-beta
+  template: contoso-chat@0.0.1-beta
 workflow:
   up:
     - azd: provision

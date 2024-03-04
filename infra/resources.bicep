@@ -698,6 +698,24 @@ module userAcrRolePull 'role.bicep' = {
   }
 }
 
+module userRoleDataScientist 'role.bicep' = {
+  name: 'user-role-data-scientist'
+  params: {
+    principalId: principalId
+    roleDefinitionId: 'f6c7c914-8db3-469d-8ca1-694a8f32e121'
+    principalType: 'User'
+  }
+}
+
+module userRoleSecretsReader 'role.bicep' = {
+  name: 'user-role-secrets-reader'
+  params: {
+    principalId: principalId
+    roleDefinitionId: 'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
+    principalType: 'User'
+  }
+}
+
 module mlServiceRoleDataScientist 'role.bicep' = {
   name: 'ml-service-role-data-scientist'
   params: {
