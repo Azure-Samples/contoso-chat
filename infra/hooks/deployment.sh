@@ -16,13 +16,30 @@ deploymentName="contoso-chat-$RANDOM"
 
 az extension add -n ml -y
 
+acrRepository="promptflow-contoso-chat"
+
+# Execute the command and parse versions directly, storing the highest version number
+max_version=0
+for version in $(az ml environment list -n $acrRepository --resource-group $AZURE_RESOURCE_GROUP -w $mlproject_name | jq -r '.[].version'); do
+    if [ "$version" -gt "$max_version" ]; then
+        max_version=$version
+    fi
+done
+
+# Increment the highest version number
+next_version=$((max_version + 1))
+
+# Store the next version number in a variable
+new_version=$next_version
+echo "The next version number is: $new_version"
+
+
 az acr login --name $AZURE_CONTAINER_REGISTRY_NAME
-az ml environment create --file deployment/docker/environment.yml --resource-group $AZURE_RESOURCE_GROUP --workspace-name $mlproject_name --registry-name $AZURE_CONTAINER_REGISTRY_NAME --version 1
+az ml environment create --file deployment/docker/environment.yml --resource-group $AZURE_RESOURCE_GROUP --workspace-name $mlproject_name --registry-name $AZURE_CONTAINER_REGISTRY_NAME --version $new_version
 
 #get registry name
 #acrName=$(az acr list --resource-group $AZURE_RESOURCE_GROUP --query "[0].name" -o tsv)
 # get repository name
-acrRepository="promptflow-contoso-chat"
 # get envirnment image name from acr
 image_tag=$(az acr repository show-tags --name $AZURE_CONTAINER_REGISTRY_NAME --repository $acrRepository --query "[0]" -o tsv)
 #concatenate the image name
