@@ -47,3 +47,4 @@ output CONTOSO_AI_SERVICES_ENDPOINT string = resources.outputs.openai_endpoint
 output COSMOS_ENDPOINT string = resources.outputs.cosmos_endpoint
 output CONTOSO_SEARCH_ENDPOINT string = resources.outputs.search_endpoint
 output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.acr_name
+output AZURE_KEY_VAULT_NAME string = resources.outputs.key_vault_name

@@ -771,3 +771,4 @@ output openai_endpoint string = openaiEndpoint
 output cosmos_endpoint string = cosmos.properties.documentEndpoint
 output search_endpoint string = 'https://${search.name}.search.windows.net/'
 output acr_name string = containerRegistry.name
+output key_vault_name string = keyvault.name
