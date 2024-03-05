@@ -1,16 +1,22 @@
+#!/bin/bash
+
+set -e
+
 # get config.json
-echo "Writing config.json file for PromptFlow usage..."
-subscriptionId=$(az account show --query id -o tsv)
-resourceGroupName=$(az group show --name $resourceGroupName --query name -o tsv)
-mlProjectName=$(az deployment group show --name contchat --resource-group $resourceGroupName --query properties.outputs.mlproject_name.value -o tsv)
+
+echo "Reading config.json file for PromptFlow usage..."
+subscriptionId=$(cat config.json | jq -r .subscription_id)
+resourceGroupName=$(cat config.json | jq -r .resource_group)
+mlProjectName=$(cat config.json | jq -r .workspace_name)
+
+echo "subscriptionId: ${subscriptionId}"
+echo "resourceGroupName: ${resourceGroupName}"
+echo "mlProjectName: ${mlProjectName}"
 
 # create a random hash for the endpoint name all lowercase letters
 endpointName="contoso-chat-$RANDOM"
 # create a random hash for the deployment name
 deploymentName="contoso-chat-$RANDOM"
-
-echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
-$(cat principal.txt) --secret-permissions get list
 
 # register promptflow as model
 echo "Registering PromptFlow as a model in Azure ML..."
