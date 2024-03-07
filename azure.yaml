@@ -3,7 +3,7 @@
 name: contoso-chat
 metadata:
   template: contoso-chat@0.0.1-beta
-workflow:
+workflows:
   up:
     - azd: provision
 hooks:

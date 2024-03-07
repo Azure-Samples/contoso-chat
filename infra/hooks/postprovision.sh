@@ -43,16 +43,16 @@ fi
 
 # Retrieve service names, resource group name, and other values from environment variables
 resourceGroupName=$AZURE_RESOURCE_GROUP
-searchService=$search_name
-openAiService=$openai_name
-cosmosService=$cosmos_name
+searchService=$AZURE_SEARCH_NAME
+openAiService=$AZURE_OPENAI_NAME
+cosmosService=$AZURE_COSMOS_NAME
 subscriptionId=$AZURE_SUBSCRIPTION_ID
-mlProjectName=$mlproject_name
+mlProjectName=$AZURE_MLPROJECT_NAME
 
 # Ensure all required environment variables are set
 if [ -z "$resourceGroupName" ] || [ -z "$searchService" ] || [ -z "$openAiService" ] || [ -z "$cosmosService" ] || [ -z "$subscriptionId" ] || [ -z "$mlProjectName" ]; then
     echo "One or more required environment variables are not set."
-    echo "Ensure that AZURE_RESOURCE_GROUP, search_name, openai_name, cosmos_name, AZURE_SUBSCRIPTION_ID, and mlproject_name are set."
+    echo "Ensure that AZURE_RESOURCE_GROUP, AZURE_SEARCH_NAME, AZURE_OPENAI_NAME, AZURE_COSMOS_NAME, AZURE_SUBSCRIPTION_ID, and AZURE_MLPROJECT_NAME are set."
     exit 1
 fi
 
@@ -73,6 +73,9 @@ echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resource
 azd env get-values > .env
 
 echo "Script execution completed successfully."
+
+echo 'Installing dependencies from "requirements.txt"'
+python -m pip install -r requirements.txt
 
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 connections/create-connections.ipynb
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
