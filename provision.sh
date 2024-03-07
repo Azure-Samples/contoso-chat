@@ -39,6 +39,7 @@ searchKey=$(az search admin-key show --service-name $searchService --resource-gr
 apiKey=$(az cognitiveservices account keys list --name $openAiService --resource-group $resourceGroupName --query key1 --output tsv)
 cosmosKey=$(az cosmosdb keys list --name $cosmosService --resource-group $resourceGroupName --query primaryMasterKey --output tsv)
 
+echo "" > .env
 echo "CONTOSO_SEARCH_ENDPOINT=$searchEndpoint" >> .env
 echo "CONTOSO_AI_SERVICES_ENDPOINT=$openAiEndpoint" >> .env
 echo "COSMOS_ENDPOINT=$cosmosEndpoint" >> .env

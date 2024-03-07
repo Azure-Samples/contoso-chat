@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: contoso-chat
+metadata:
+  template: contoso-chat@0.0.1-beta
+hooks:
+    postprovision:
+      posix:
+        shell: sh
+        run: ./scripts/post-provision.sh
+        interactive: true
+        continueOnError: false
