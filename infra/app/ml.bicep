@@ -82,33 +82,6 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2023-08-01-prev
       }
     }
   }
-
-  resource env 'environments' = {
-    name: 'promptflow-contoso-chat'
-    properties: {
-      properties: {}
-      tags: {}
-    }
-    resource version 'versions' = {
-      name: 'version'
-      properties: {
-        osType: 'Linux'
-        isAnonymous: false
-        image: 'mcr.microsoft.com/azureml/promptflow/promptflow-runtime-stable:latest'
-        condaFile: '''
-        name: pfenv
-          - conda-forge
-        dependencies:
-          - python=3.9
-          - pip
-            - promptflow
-            - promptflow-tools
-            - azure-cosmos
-            - azure-search-documents==11.4.0'
-        '''
-      }
-    }
-  }
 }
 
 // In ai.azure.com: Azure AI Project
