@@ -1,4 +1,4 @@
-$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json\
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 model: azureml:contoso-chat-model:1
   # You can also specify model files path inline
   # path: examples/flows/chat/basic-chat
