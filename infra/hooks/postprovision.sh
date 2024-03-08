@@ -81,3 +81,8 @@ jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 connect
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 deployment/push_and_deploy_pf.ipynb
+
+# call deployment.sh
+echo "Deploying PromptFlow to Azure AI Studio..."
+sh infra/hooks/deployment.sh
+

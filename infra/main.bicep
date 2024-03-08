@@ -134,7 +134,7 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
 }
 
 module keyvault 'core/security/keyvault.bicep' = {
-  name: 'keyvault'
+  name: !empty(keyVaultName) ? keyVaultName : 'kvcontoso${resourceToken}'
   scope: rg
   params: {
     name: !empty(keyVaultName) ? keyVaultName : 'kvcontoso${resourceToken}'
