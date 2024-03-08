@@ -10,9 +10,6 @@
     },
     "openAiResourceLocation": {
       "value": "${AZURE_OPEN_AI__LOCATION}"
-    },
-    "searchServiceLocation": {
-      "value": "${AZURE_SEARCH_SERVICE_LOCATION}"
     }
   }
 }

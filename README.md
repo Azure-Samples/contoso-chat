@@ -2,27 +2,33 @@
 
 **Table Of Contents**
 
-1. [Learning Objectives](#1-learning-objectives)
-2. [Pre-Requisites](#2-pre-requisites)
-3. [Setup Development Environment](#3-development-environment)
-    - 3.1 [Pre-built Container, GitHub Codespaces](#31-pre-built-environment-in-cloud-github-codespaces)
-    - 3.2 [Pre-built Container, Docker Desktop](#32-pre-built-environment-on-device-docker-desktop)
-    - 3.3 [Manual Python env, Anaconda or venv](#33-manual-setup-environment-on-device-anaconda-or-venv)
-4. [Provision Azure Resources](#4-create-azure-resources)
-    - 4.1 [Authenticate With Azure](#41-authenticate-with-azure)
-    - 4.2 [Run Provisioning Script](#42-run-provisioning-script)
-    - 4.3 [Verify config.json setup](#43-verify-configjson-setup)
-    - 4.4 [Verify .env setup](#44-verify-env-setup)
-    - 4.5 [Verify local Connections](#45-verify-local-connections-for-prompt-flow)
-    - 4.6 [Verify cloud Connections](#46-verify-cloud-connections-for-prompt-flow)
-5. [Populate With Your Data](#5-populate-with-sample-data)
-6. [Build Your Prompt Flow](#6-building-a-prompt-flow)
-    - 6.1 [Explore contoso-chat Prompt Flow](#61-explore-the-contoso-chat-prompt-flow)
-    - 6.2 [Understand Prompt Flow Components](#62-understand-prompt-flow-components)
-    - 6.3 [Run The Prompt Flow](#63-run-the-prompt-flow)
-7. [Evaluate Your Prompt Flow](#7-evaluating-prompt-flow-results)
-8. [Deploy Using Azure AI SDK](#8-deployment-with-sdk)
-9. [Deploy with GitHub Actions](#9-deploy-with-github-actions)
+- [End to End LLM App development with Azure AI Studio and Prompt Flow](#end-to-end-llm-app-development-with-azure-ai-studio-and-prompt-flow)
+  - [1. Learning Objectives](#1-learning-objectives)
+  - [2. Pre-Requisites](#2-pre-requisites)
+  - [3. Development Environment](#3-development-environment)
+    - [3.1 Pre-Built Environment, in cloud (GitHub Codespaces)](#31-pre-built-environment-in-cloud-github-codespaces)
+    - [3.2 Pre-Built Environment, on device (Docker Desktop)](#32-pre-built-environment-on-device-docker-desktop)
+    - [3.3 Manual Setup Environment, on device (Anaconda or venv)](#33-manual-setup-environment-on-device-anaconda-or-venv)
+  - [4. Create Azure resources](#4-create-azure-resources)
+    - [4.1 Authenticate with Azure](#41-authenticate-with-azure)
+    - [4.2 Run azd](#42-run-azd)
+    - [4.3 Verify `config.json` setup](#43-verify-configjson-setup)
+    - [4.4 Verify `.env` setup](#44-verify-env-setup)
+    - [4.5 Verify local connections for Prompt Flow](#45-verify-local-connections-for-prompt-flow)
+    - [4.6 Verify cloud connections for Prompt Flow](#46-verify-cloud-connections-for-prompt-flow)
+  - [5. Populate with sample data](#5-populate-with-sample-data)
+  - [6. Building a prompt flow](#6-building-a-prompt-flow)
+    - [6.1. Explore the `contoso-chat` Prompt Flow](#61-explore-the-contoso-chat-prompt-flow)
+    - [6.2 Understand Prompt Flow components](#62-understand-prompt-flow-components)
+    - [6.3 Run the prompt flow](#63-run-the-prompt-flow)
+    - [6.4 Try other customer inputs (optional)](#64-try-other-customer-inputs-optional)
+  - [7. Evaluating prompt flow results](#7-evaluating-prompt-flow-results)
+  - [8. Deployment with SDK](#8-deployment-with-sdk)
+  - [9. Deploy with GitHub Actions](#9-deploy-with-github-actions)
+    - [9.1. Create Connection to Azure in GitHub](#91-create-connection-to-azure-in-github)
+    - [9.2. Create a custom environment for endpoint](#92-create-a-custom-environment-for-endpoint)
+  - [Contributing](#contributing)
+  - [Trademarks](#trademarks)
 
 
 
@@ -103,8 +109,9 @@ Once your project launches in the local Docker desktop container, you should see
       - Install the extension
 
 1. Install the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) for your device OS
+2. Install the [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) for your device OS
 
-1. Create a new local Python environment using **either** [anaconda](https://www.anaconda.com/products/individual) **or** [venv](https://docs.python.org/3/library/venv.html) for a managed environment.
+3. Create a new local Python environment using **either** [anaconda](https://www.anaconda.com/products/individual) **or** [venv](https://docs.python.org/3/library/venv.html) for a managed environment.
 
     1. **Option 1**: Using anaconda
 
@@ -114,7 +121,7 @@ Once your project launches in the local Docker desktop container, you should see
         pip install -r requirements.txt
         ```
 
-    1. **Option 2:** Using venv
+    2. **Option 2:** Using venv
 
         ```bash
         python3 -m venv .venv
@@ -133,27 +140,41 @@ We setup our development ennvironment in the previous step. In this step, we'll 
 Start by connecting your Visual Studio Code environment to your Azure account:
 
 1. Open the terminal in VS Code and use command `az login`. 
-1. Complete the authentication flow. 
+2. Complete the authentication flow. 
+3. Then authenticate using the Azure developer CLI by typing the following command `azd auth login`
+4. Complete the authentication flow. 
 
 **If you are running within a dev container, use these instructions to login instead:**
  1. Open the terminal in VS Code and use command `az login --use-device-code`
  1. The console message will give you an alphanumeric code
  1. Navigate to _https://microsoft.com/devicelogin_ in a new tab
  1. Enter the code from step 2 and complete the flow.
+ 2. Do the same for the Azure Developer CLI by typing the following command `azd auth login --use-device-code`
 
 In either case, verify that the console shows a message indicating a successful authentication. **Congratulations! Your VS Code session is now connected to your Azure subscription!**
 
-### 4.2 Run Provisioning Script
+### 4.2 Run azd
 
-The project requires a number of Azure resources to be set up, in a specified order. To simplify this, an auto-provisioning script has been provided. (NOTE: It will use the current active subscription to create the resource. If you have multiple subscriptions, use `az account set --subscription "<SUBSCRIPTION-NAME>"` first to set the desired active subscription.)
+The project requires a number of Azure resources to be set up, in a specified order. To simplify this, we will be using the Azure Developer CLI to provision and maage the lifecycle of the Azure Resources and populate the *.env* environment. (NOTE: post provision script will use the current active subscription to get the services keys. If you have multiple subscriptions, use `az account set --subscription "<SUBSCRIPTION-NAME>"` first to set the desired active subscription.)
 
-Run the provisioning script as follows:
+Run the Azure Developer CLI as follows:
 
   ```bash
-  ./provision.sh
+  azd provision
   ```
+This will provision Azure resources.
 
-The script should **set up a dedicated resource group** with the following resources:
+ * You will be prompted to select a subscription to deploy to: `Select an Azure Subscription to use:`
+ * You will be prompted to select two locations, one for the majority of resources and one for the OpenAI resource, which is currently a short list. That location list is based on the [OpenAI model availability table](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/models#model-summary-table-and-region-availability) and may become outdated as availability changes.
+
+⚠️ To avoid unnecessary costs, remember to take down the entire resources if they are no longer in use,
+either by deleting the resource group in the Portal or running `azd down`.
+
+using `azd down`, will simplify the process of purging the resources that support soft delete, like Azure KeyVault and Azure OpenAI. 
+
+
+
+The code should **set up a dedicated resource group** with the following resources:
 
  - **Azure AI services** resource
  - **Azure Machine Learning workspace** (Azure AI Project) resource

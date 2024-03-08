@@ -33,8 +33,6 @@ param location string
 param openAiResourceLocation string
 param openAiSkuName string = 'S0'
 
-param searchServiceLocation string
-
 var openaiSubdomain = '${aiServicesName}${resourceToken}'
 var openaiEndpoint = 'https://${openaiSubdomain}.openai.azure.com/'
 
@@ -158,7 +156,7 @@ module aiSearch 'core/aisearch/aisearch.bicep' = {
   name: 'aisearch'
   params: {
     name: '${aiSearchName}${resourceToken}'
-    location: searchServiceLocation
+    location: location
     tags : tags
   }
 }
