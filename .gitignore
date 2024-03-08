@@ -4,3 +4,10 @@ __pycache__/
 .env
 config.json
 eval/downloaded_artifacts/remote/eval_results.jsonl
+connections/create-connections.py
+data/customer_info/create-cosmos-db.py
+data/product_info/create-azure-search.py
+deployment/push_and_deploy_pf.py
+endpoint.json
+principal.txt
+.azure
