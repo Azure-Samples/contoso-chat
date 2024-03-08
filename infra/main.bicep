@@ -223,5 +223,5 @@ output mlproject_name string = aiProject.outputs.mlProjectName
 
 output CONTOSO_AI_SERVICES_ENDPOINT string = openaiEndpoint
 output COSMOS_ENDPOINT string = cosmosDb.outputs.cosmosDocEP
-output CONTOSO_SEARCH_ENDPOINT string = 'https://${aiSearch.name}.search.windows.net/'
+output CONTOSO_SEARCH_ENDPOINT string = 'https://${aiSearch.outputs.searchName}.search.windows.net/'
 
