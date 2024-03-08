@@ -194,7 +194,7 @@ module aiHub 'core/aihub/aihub.bicep' = {
     openaiId: openAi.outputs.id
     storageId: storageAccount.outputs.storageId 
     tags: tags
-    aiSearchName: aiSearchName
+    aiSearchName: aiSearch.name
   }
 }
 
