@@ -1,5 +1,17 @@
 # End to End LLM App development with Azure AI Studio and Prompt Flow
 
+> [!WARNING]  
+> This sample is under active development to showcase new features and evolve with the Azure AI Studio (preview) platform.  Keep in mind that the latest build may not be rigorously tested for all environments (local development, GitHub Codespaces, Skillable VM). 
+> 
+> Instead refer to the table, identify the right _commit_ version in context, then launch in GitHub Codespaces
+> | Build Version | Description |
+> |:---|:---|
+> | Stable : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | Version tested & used in Microsoft AI Tour (works on Skillable) |
+> | Active : [main](https://github.com/Azure-Samples/contoso-chat) | Version under active development (breaking changes possible) |
+> | | |
+
+---
+
 **Table Of Contents**
 
 1. [Learning Objectives](#1-learning-objectives)
@@ -23,8 +35,6 @@
 7. [Evaluate Your Prompt Flow](#7-evaluating-prompt-flow-results)
 8. [Deploy Using Azure AI SDK](#8-deployment-with-sdk)
 9. [Deploy with GitHub Actions](#9-deploy-with-github-actions)
-
-
 
 _If you find this sample useful, consider giving us a star on GitHub! If you have any questions or comments, consider filing an Issue on the [source repo](https://github.com/Azure-Samples/contoso-chat)_.
 
