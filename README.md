@@ -243,7 +243,7 @@ In this step we want to populate the required data for our application use case.
 1. **Populate Customer Data** in Azure Cosmos DB
     - Run the code in the `data/customer_info/create-cosmos-db.ipynb` notebook. 
     - Visit the Azure Cosmos DB resource in the Azure Portal
-    - Click on "Data Explorer" and verify tat the container and database were created!
+    - Click on "Data Explorer" and verify that the container and database were created!
 
 ## 6. Building a prompt flow
 
