@@ -9,10 +9,12 @@ done <<EOF
 $(azd env get-values)
 EOF
 
+
+random_number=$(od -An -N2 -i /dev/urandom | awk '{print $1}')
 # create a random hash for the endpoint name all lowercase letters
-endpointName="contoso-chat-$RANDOM"
+endpointName="contoso-chat-$random_number"
 # create a random hash for the deployment name
-deploymentName="contoso-chat-$RANDOM"
+deploymentName="contoso-chat-$random_number"
 
 az extension add -n ml -y
 
@@ -69,14 +71,14 @@ az ml online-deployment get-logs --name $deploymentName --endpoint-name $endpoin
 echo "Reading endpoint principal..."
 principal_id=$(az ml online-endpoint show -n $endpointName -g $AZURE_RESOURCE_GROUP -w $AZURE_MLPROJECT_NAME --query "identity.principal_id" -o tsv)
 echo "Principal is: $principal_id"
- 
+
 # Assign Permission to Endpoint Principal
 
 echo "Assigning Data Scientist permissions to Principal..."
 az role assignment create --assignee $principal_id --role "AzureML Data Scientist" --scope "subscriptions/$AZURE_SUBSCRIPTION_ID/resourcegroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.MachineLearningServices/workspaces/$AZURE_MLPROJECT_NAME"
 echo "Assigning permissions to Principal to Endpoint..."
 az role assignment create --assignee $principal_id --role "Azure Machine Learning Workspace Connection Secrets Reader" --scope "subscriptions/$AZURE_SUBSCRIPTION_ID/resourcegroups/$AZURE_RESOURCE_GROUP/providers/Microsoft.MachineLearningServices/workspaces/$AZURE_MLPROJECT_NAME/onlineEndpoints/$endpointName"
- 
+
 # Get Key Vault name
 
 echo "Getting keyValueName from Azure ML..."
