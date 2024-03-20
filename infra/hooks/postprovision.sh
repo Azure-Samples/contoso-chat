@@ -5,7 +5,12 @@ EXPIRED_TOKEN=$(az ad signed-in-user show --query 'id' -o tsv 2>/dev/null || tru
 
 if [ -z "$EXPIRED_TOKEN" ]; then
     echo "No Azure user signed in. Please login."
-    az login -o none
+    if [ -z "$CODESPACES" ]; then
+        echo "Running in Codespaces: Force device code flow."
+        az login --use-device-code
+    else
+        echo "Running in Local Env: Use standard login flow."
+        az login -o none
 fi
 
 # Check if Azure Subscription ID is set
