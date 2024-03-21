@@ -68,10 +68,10 @@ jobs:
             # assert.py will return True or False, but bash expects lowercase.
             if ${ASSERT,,} ; then
               echo "::debug::Prompt flow run met the quality bar and can be deployed."
-              echo "::set-output name=result::true"
+              echo "result=true" >> "$GITHUB_OUTPUT"
             else
               echo "::warning::Prompt flow run didn't meet quality bar."
-              echo "::set-output name=result::false"
+              echo "result=false" >> "$GITHUB_OUTPUT"
             fi
     - name: Show the assert result
       run: echo "Assert result is:" ${{ steps.jobMetricAssert.outputs.result }}
