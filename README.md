@@ -53,7 +53,7 @@ Learn to build an Large Language Model (LLM) Application with a RAG (Retrieval A
 - **Azure Subscription** - [Signup for a free account.](https://azure.microsoft.com/free/)
 - **Visual Studio Code** - [Download it for free.](https://code.visualstudio.com/download)
 - **GitHub Account** - [Signup for a free account.](https://github.com/signup)
-- **Access to Azure Open AI Services** - [Learn about getting access.](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
+- **Access to Azure OpenAI Services** - [Learn about getting access.](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
 - **Ability to provision Azure AI Search (Paid)** - Required for Semantic Ranker
 
 ## 3. Development Environment
