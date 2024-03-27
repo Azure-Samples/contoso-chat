@@ -153,15 +153,49 @@ Start by connecting your Visual Studio Code environment to your Azure account:
 
 In either case, verify that the console shows a message indicating a successful authentication. **Congratulations! Your VS Code session is now connected to your Azure subscription!**
 
-### 4.2 Run Provisioning Script
+### 4.2 Provision with Azure Developer CLI
 
-The project requires a number of Azure resources to be set up, in a specified order. To simplify this, an auto-provisioning script has been provided. (NOTE: It will use the current active subscription to create the resource. If you have multiple subscriptions, use `az account set --subscription "<SUBSCRIPTION-NAME>"` first to set the desired active subscription.)
+For this project, we need to provision multiple Azure resources in a specific order. **Before**, we achieved this by running the `provision.sh` script. **Now**, we'll use the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/overview) (or `azd`) instead, and follow the steps below.
+Visit the [azd reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference) for more details on tool syntax, commands and options.
 
-Run the provisioning script as follows:
+#### 4.2.1 Install `azd`
+- If you setup your development environment manually, follow [these instructions](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-windows) to install `azd` for your local device OS.
+- If you used a pre-built dev container environment (e.g., GitHub Codespaces or Docker Desktop) the tool is pre-installed for you.
+- Verify that the tool is installed by typing ```azd version``` in a terminal.
 
-  ```bash
-  ./provision.sh
-  ```
+#### 4.2.2 Authenticate with Azure
+- Start the authentication flow from a terminal:
+    ```bash
+    azd auth login
+    ```
+- This should activate a Device Code authentication flow as shown below. Just follow the instructions and complete the auth flow till you get the `Logged in on Azure` message indicating success.
+    ```bash
+    Start by copying the next code: <code-here>
+    Then press enter and continue to log in from your browser...
+    ```
+
+#### 4.2.3 Provision and Deploy 
+
+- Run this unified command to provision all resources. This will take a non-trivial amount of time to complete.
+    ```bash
+    azd up
+    ```
+- On completion, it automatically invokes a`postprovision.sh` script that will attempt to log you into Azure. You may see something like this. Just follow the provided instructions to complete the authentication flow.
+    ```bash
+    No Azure user signed in. Please login.
+    ```
+- Once logged in, the script will do the following for you:
+    - Download `config.json` to the local device
+    - Populate `.env` with required environment variables
+    - Populate your data (in Azure AI Search, Azure CosmosDB)
+    - Create relevant Connections (for prompt flow)
+    - Upload your prompt flow to Azure (for deployment)
+
+That's it! You should now be ready to continue the process as before.Note that this is a new process so there may be some issues to iron out. Start by completing the verification steps below and taking any troubleshooting actions identified.
+
+
+#### 4.2.4 Verify Provisioning
+
 
 The script should **set up a dedicated resource group** with the following resources:
 
