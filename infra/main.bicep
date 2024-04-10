@@ -188,7 +188,6 @@ module openai 'core/ai/cognitiveservices.bicep' = {
     location: location
     tags: tags
     kind: 'AIServices'
-    customSubDomainName: openAiSubdomain
     deployments: [
       {
         name: 'gpt-35-turbo'
