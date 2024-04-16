@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Loading azd .env file from current environment..."
 
@@ -10,9 +10,13 @@ $(azd env get-values)
 EOF
 
 # create a random hash for the endpoint name all lowercase letters
-endpointName="contoso-chat-$RANDOM"
+endpointSuffix=`shuf -i 10000-99999 -n 1`
+endpointName="contoso-chat-$endpointSuffix"
+echo "Using endpoint name: $endpointName"
 # create a random hash for the deployment name
-deploymentName="contoso-chat-$RANDOM"
+deploymentNameSuffix=`shuf -i 10000-99999 -n 1`
+deploymentName="contoso-chat-$deploymentNameSuffix"
+echo "Using deployment name: $deploymentName"
 
 az extension add -n ml -y
 
