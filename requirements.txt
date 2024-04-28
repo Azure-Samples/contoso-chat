@@ -1,5 +1,6 @@
 promptflow
 promptflow-tools
+promptflow[azure]
 azure-cosmos
 azure-ai-ml
 azure-ai-resources
