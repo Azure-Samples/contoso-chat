@@ -26,6 +26,6 @@ module applicationInsightsDashboard 'applicationinsights-dashboard.bicep' = if (
 }
 
 output connectionString string = applicationInsights.properties.ConnectionString
+output id string = applicationInsights.id
 output instrumentationKey string = applicationInsights.properties.InstrumentationKey
 output name string = applicationInsights.name
-output id string = applicationInsights.id

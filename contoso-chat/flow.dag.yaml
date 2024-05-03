@@ -43,7 +43,7 @@ nodes:
     question: ${inputs.question}
     index_name: contoso-products
     embedding: ${question_embedding.output}
-    search: contoso-search
+    search: search-connection
 - name: customer_lookup
   type: python
   source:
@@ -51,7 +51,7 @@ nodes:
     path: customer_lookup.py
   inputs:
     customerId: ${inputs.customerId}
-    conn: contoso-cosmos
+    conn: products-cosmos
 - name: customer_prompt
   type: prompt
   source:

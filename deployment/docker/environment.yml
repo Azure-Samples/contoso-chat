@@ -1,5 +1,13 @@
 $schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
-name: promptflow-contoso-chat
-version: 1
 build:
   path: .
+inference_config:
+  liveness_route:
+    path: /health
+    port: 8080
+  readiness_route:
+    path: /health
+    port: 8080
+  scoring_route:
+    path: /score
+    port: 8080

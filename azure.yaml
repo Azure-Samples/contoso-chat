@@ -1,14 +1,26 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+# yaml-language-server: $schema=azure.yaml.json
 
 name: contoso-chat
 metadata:
   template: contoso-chat@0.0.1-beta
-workflows:
-  up:
-    - azd: provision
 hooks:
   postprovision:
     shell: sh
-    continueOnError: false
-    interactive: true
-    run: infra/hooks/postprovision.sh
+    run: ./infra/hooks/postprovision.sh
+services:
+  chat:
+    host: ai.endpoint
+    config:
+      workspace: ${AZUREAI_PROJECT_NAME}
+      environment:
+        path: deployment/docker/environment.yml
+      flow:
+        path: ./contoso-chat
+      model:
+        path: deployment/chat-model.yaml
+        overrides:
+          "properties.azureml.promptflow.source_flow_id": ${AZUREAI_FLOW_NAME}
+      deployment:
+        path: deployment/chat-deployment.yaml
+        environment:
+          PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZUREAI_PROJECT_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
