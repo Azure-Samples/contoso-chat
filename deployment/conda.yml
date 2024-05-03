@@ -1,9 +1,0 @@
-name: pfenv
-  - conda-forge
-dependencies:
-  - python=3.9
-  - pip
-    - promptflow
-    - promptflow-tools
-    - azure-cosmos
-    - azure-search-documents==11.4.0
