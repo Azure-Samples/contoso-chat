@@ -44,6 +44,7 @@ def get_response(customerId, question, chat_history):
     customer = get_customer(customerId)
     embedding = get_embedding(question)
     context = get_context(question, embedding)
+    print("context:", context)
     prompt = "chat.prompty"
     print("getting result...")
 
@@ -58,7 +59,7 @@ def get_response(customerId, question, chat_history):
         "parameters": {"max_tokens": 512}
     }
     prompty_obj = Prompty.load("chat.prompty", model=override_model)
-    result = prompty_obj(inputs={"question": question, "customer": customer, "documentation": context})
+    result = prompty_obj(question = question, customer = customer, documentation = context)
 
     print("result: ", result)
 
