@@ -1,5 +1,5 @@
 from typing import List
-from promptflow import tool
+import os
 from azure.search.documents import SearchClient
 from azure.search.documents.models import (
     VectorizedQuery,
@@ -8,21 +8,18 @@ from azure.search.documents.models import (
     QueryAnswerType,
 )
 from azure.core.credentials import AzureKeyCredential
-from promptflow.connections import CognitiveSearchConnection
 
 
-@tool
 def retrieve_documentation(
     question: str,
     index_name: str,
     embedding: List[float],
-    search: CognitiveSearchConnection,
 ) -> str:
     
     search_client = SearchClient(
-        endpoint=search.configs["api_base"],
+        endpoint=os.environ["CONTOSO_SEARCH_ENDPOINT"],
         index_name=index_name,
-        credential=AzureKeyCredential(search.secrets["api_key"]),
+        credential=AzureKeyCredential(os.environ["CONTOSO_SEARCH_KEY"]),
     )
 
     vector_query = VectorizedQuery(
