@@ -3,9 +3,8 @@ from azure.cosmos import CosmosClient
 from sys import argv
 import os
 from ai_search import retrieve_documentation
-from evaluations import coherence, relevance, groundedness, fluency
 from promptflow.core import (AzureOpenAIModelConfiguration,
-                             OpenAIModelConfiguration, Prompty)
+                             Prompty)
 load_dotenv()
 
 
@@ -39,20 +38,22 @@ def get_response(customerId, question, chat_history):
     context = get_context(question, embedding)
     prompt = "chat.prompty"
     print("getting result...")
-    #prompt.inputs["question"] = "what is the price of the RainGuard Hiking Jacket?"
-    result = prompty.execute(
-        prompt,
-        #model={"azure_endpoint": endpoint, "api_key": key},
-        inputs={"question": question, "customer": customer, "documentation": context},
+
+    configuration = AzureOpenAIModelConfiguration(
+        azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
+        api_key=os.environ["AZURE_OPENAI_API_KEY"],
+        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
     )
-    score = {}
-    score["groundedness"] = groundedness.evaluate(question, context, result)
-    score["coherence"] = coherence.evaluate(question, context, result)
-    score["relevance"] = relevance.evaluate(question, context, result)
-    score["fluency"] = fluency.evaluate(question, context, result)
+    override_model = {
+        "configuration": configuration,
+        "parameters": {"max_tokens": 512}
+    }
+    prompty_obj = Prompty.load("chat.prompty", model=override_model)
+    result = prompty_obj(inputs={"question": question, "customer": customer, "documentation": context})
 
     print("result: ", result)
-    print("score: ", score)
+
     return {"question": question, "answer": result, "context": context}
 
 
