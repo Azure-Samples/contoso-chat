@@ -58,13 +58,13 @@ def get_response(customerId, question, chat_history):
         "configuration": configuration,
         "parameters": {"max_tokens": 512}
     }
-    prompty_obj = Prompty.load("chat.prompty", model=override_model)
+    # get cwd
+    prompty_obj = Prompty.load("../chat.prompty", model=override_model)
     result = prompty_obj(question = question, customer = customer, documentation = context)
 
     print("result: ", result)
 
     return {"question": question, "answer": result, "context": context}
-
 
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
