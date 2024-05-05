@@ -1,26 +1,35 @@
-# yaml-language-server: $schema=azure.yaml.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
 name: contoso-chat
 metadata:
-  template: contoso-chat@0.0.1-beta
+  template: contoso-chat@0.0.1-beta          
+workflows:
+  up:
+    steps:
+      - azd: provision
+      - azd: deploy      
 hooks:
   postprovision:
     shell: sh
+    continueOnError: false
+    interactive: true
     run: ./infra/hooks/postprovision.sh
+
+################################################################
+# The section below configures the new `ai.endpoint` resource 
+# used for the Azure AI based chat service (application)
+################################################################
 services:
   chat:
     host: ai.endpoint
+    language: python
     config:
       workspace: ${AZUREAI_PROJECT_NAME}
       environment:
-        path: deployment/docker/environment.yml
-      flow:
-        path: ./contoso-chat
+        path: ./deployment/environment.yaml 
       model:
-        path: deployment/chat-model.yaml
-        overrides:
-          "properties.azureml.promptflow.source_flow_id": ${AZUREAI_FLOW_NAME}
+        path: ./deployment/chat-model.yaml
       deployment:
-        path: deployment/chat-deployment.yaml
-        environment:
-          PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZUREAI_PROJECT_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
+        path: ./deployment/chat-deployment.yaml
+        overrides:
+          environment_variables.PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZUREAI_PROJECT_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}

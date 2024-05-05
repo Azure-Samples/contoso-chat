@@ -92,7 +92,7 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' =
 
   resource searchConnection 'connections' =
     if (!empty(aiSearchName)) {
-      name: 'search-connection'
+      name: 'contoso-search'
       properties: {
         category: 'CognitiveSearch'
         authType: 'ApiKey'
