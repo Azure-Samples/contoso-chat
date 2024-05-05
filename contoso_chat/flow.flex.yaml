@@ -1,0 +1,6 @@
+inputs:
+  question:
+    type: string
+entry: chat_request:get_response
+#environment:
+#  python_requirements_txt: requirements.txt
