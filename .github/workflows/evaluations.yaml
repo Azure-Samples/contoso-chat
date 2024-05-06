@@ -1,13 +1,13 @@
 name: Evaluate writer agent
 
 on:
-    workflow_dispatch:
-    push:
-      # Run when commits are pushed to mainline branch (main or master)
-      # Set this to the mainline branch you are using
-      branches:
-        - main
-        - azd
+  workflow_dispatch:
+  push:
+    # Run when commits are pushed to mainline branch (main or master)
+    # Set this to the mainline branch you are using
+    branches:
+      - main
+      - azd
 
 jobs:
   build:
@@ -16,12 +16,7 @@ jobs:
       AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
       AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
       AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
-      AZURE_DEPLOYMENT_NAME: "gpt-35-turbo"
-      AZURE_EMBEDDING_NAME: "text-embedding-ada-002"
-      CONTOSO_SEARCH_ENDPOINT: ${{ secrets.CONTOSO_SEARCH_ENDPOINT }}
-      CONTOSO_SEARCH_KEY: ${{ secrets.CONTOSO_SEARCH_KEY }}
-      COSMOS_ENDPOINT: ${{ secrets.COSMOS_ENDPOINT }}
-      COSMOS_KEY: ${{ secrets.COSMOS_KEY }}
+      AZURE_DEPLOYMENT_NAME: "gpt-4"
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content
@@ -35,9 +30,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: evaluate writer coherence agent
+
+      - name: evaluate chat data using the eval sdk
         run: |
-          python src/api/evaluations/coherence.py "${{env.INSTRUCTION}}" research.json writer.json > coherence.json
-          echo "Coherence Score: 2 out of 5"
+          python evaluations/evaluate_chat.py
 
         
