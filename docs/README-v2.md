@@ -18,6 +18,8 @@ _This will get you a pre-defined runtime with all dependencies installed_
 1. `azd up` to provision Azure & complete postprovisioning actions
     - Select the Azure subscription to use
     - Select an Azure location to use (`swedencentral`)
+    - You will be prompted to login again for _postprovision_ hooks
+    - If successful, you should see `.env` and `config.json` locally.
 1. `azd deploy` may need to be called again to complete deployment.
 1. `azd down` to deprovision Azure resources. Pick the "purge" option in prompt!
 
