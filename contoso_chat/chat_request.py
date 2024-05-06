@@ -64,7 +64,7 @@ def get_response(customerId, question, chat_history):
 
     print("result: ", result)
 
-    return {"question": question, "answer": result, "context": context}
+    return {"answer": result, "context": context}
 
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
