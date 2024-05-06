@@ -74,6 +74,26 @@ Let's look at the first two steps in this section since they impact the Azure ba
 
 <br/>
 
+<br/>
+
+## 7. Appendix: Notebooks
+
+The labs are setup with notebooks (in thr `exercises/` folder) with tasks you execute for different steps of the workflow. This section lists notebooks and their functionality for reference.
+
+| Notebook | Description | Status |
+|:---|:---|:---|
+| [0-hello-contoso-chat.ipynb](./exercises/0-hello-contoso-chat.ipynb)| Tour of Contoso Chat with explainers only | ⃠ |
+| [1-create-cosmos-db.ipynb)](./exercises/1-create-cosmos-db.ipynb) | Populate customer data in Azure Cosmos DB | ✅ |
+| [2-create-azure-search.ipynb](./exercises/2-create-azure-search.ipynb) | Populate product indexes in Azure AI Search| ✅ |
+| [3-create-connections.ipynb](./exercises/3-create-connections.ipynb) | Create promptflow connections to Azure services| ⃠ |
+| [4_contoso-chat-eval-more-data.ipynb](./exercises/4_contoso-chat-eval-more-data.ipynb) | | ⃠ |
+| [4-contoso-chat-eval.ipynb](./exercises/4-contoso-chat-eval.ipynb) | | ⃠ |
+| [4-evaluate-chat-all-data-v-sales-only-cloud.ipynb](./exercises/4-evaluate-chat-all-data-v-sales-only-cloud.ipynb) | | ⃠ |
+| [4-evaluate-chat-local.ipynb](./exercises/4-evaluate-chat-local.ipynb) | | ⃠ |
+| [4-evaluate-chat-prompt-flow.ipynb](./exercises/4-evaluate-chat-prompt-flow.ipynb) | | ⃠ |
+| [5-push_and_deploy_pf.ipynb](./exercises/5-push_and_deploy_pf.ipynb) | Upload prompt flow to Azure AI Studio| ⃠ |
+| | |
+
 ---
 
 ## Contributing
