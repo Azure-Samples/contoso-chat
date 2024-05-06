@@ -1,58 +1,10 @@
 #!/bin/sh
 
-# Check if the Azure CLI is authenticated
-EXPIRED_TOKEN=$(az ad signed-in-user show --query 'id' -o tsv 2>/dev/null || true)
-
-if [ -z "$EXPIRED_TOKEN" ]; then
-    echo "No Azure user signed in. Please login."
-    az login -o none
-fi
-
-# NN: Checks if $CODESPACES is defined and use device code flow if it is
-#     TODO: find a more elegant way to handle dev container environments
-if [ -z "$EXPIRED_TOKEN" ]; then
-    echo "No Azure user signed in. Please login."
-    if [ -z "$CODESPACES" ]; then
-        echo "Running in Local Env: Use standard login flow."
-        az login -o none
-    else
-        echo "Running in Github Codespaces: Force --use-device-code flow."
-        az login --use-device-code
-    fi
-fi
-
-
-# Check if Azure Subscription ID is set
-if [ -z "${AZURE_SUBSCRIPTION_ID:-}" ]; then
-    ACCOUNT=$(az account show --query '[id,name]')
-    echo "You can set the \`AZURE_SUBSCRIPTION_ID\` environment variable with \`azd env set AZURE_SUBSCRIPTION_ID\`."
-    echo "$ACCOUNT"
-
-    echo "Do you want to use the above subscription? (Y/n) "
-    read response
-    response=${response:-Y}
-    case "$response" in
-        [yY][eE][sS]|[yY])
-            ;;
-        *)
-            echo "Listing available subscriptions..."
-            SUBSCRIPTIONS=$(az account list --query 'sort_by([], &name)' --output json)
-            echo "Available subscriptions:"
-            echo "$SUBSCRIPTIONS" | jq -r '.[] | [.name, .id] | @tsv' | column -t -s $'\t'
-            echo "Enter the name or ID of the subscription you want to use: "
-            read subscription_input
-            AZURE_SUBSCRIPTION_ID=$(echo "$SUBSCRIPTIONS" | jq -r --arg input "$subscription_input" '.[] | select(.name==$input or .id==$input) | .id')
-            if [ -n "$AZURE_SUBSCRIPTION_ID" ]; then
-                echo "Setting active subscription to: $AZURE_SUBSCRIPTION_ID"
-                az account set -s $AZURE_SUBSCRIPTION_ID
-            else
-                echo "Subscription not found. Please enter a valid subscription name or ID."
-                exit 1
-            fi
-            ;;
-    esac
-else
-    az account set -s $AZURE_SUBSCRIPTION_ID
+# Check if running in GitHub Workspace
+if [ -z "$GITHUB_WORKSPACE" ]; then
+    # The GITHUB_WORKSPACE is not set, meaning this is not running in a GitHub Action
+    DIR=$(dirname "$(realpath "$0")")
+    "$DIR/login.sh"
 fi
 
 # Retrieve service names, resource group name, and other values from environment variables
