@@ -44,6 +44,15 @@ echo "Script execution completed successfully."
 echo 'Installing dependencies from "requirements.txt"'
 python -m pip install -r requirements.txt
 
+# Install ipythong and ipykernel
+python -m pip install ipython ipykernel
+
+# Configure the IPython kernel
+ipython kernel install --name=python3 --user
+
+# Verify kernelspec list isn't empty
+jupyter kernelspec list
+
 # jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 connections/create-connections.ipynb
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
