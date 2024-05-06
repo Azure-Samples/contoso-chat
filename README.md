@@ -9,6 +9,8 @@
 
 ## 1. Azure Provisioning
 
+If you are completing this lab as part of a Microsoft Event session, you are likely using the _Skillable_ platform with a _pre-provisioned_ Azure subscription that completes these steps for you. In that case, move to the next section to validate the provisioned backend.
+
 1. Log into Azure: `az login --use-device-code`
 1. Set Azure Subscription: `az account set --subscription <name or id>`
 1. Change to the provisioning directory: `cd provision-v1`
@@ -42,9 +44,17 @@ The second is required to provide the Azure SDK (Python) with the required infor
 
 Let's look at the first two steps in this section since they impact the Azure backend.
 
-### 1.2 Populate Customer Database
+### 1.2 Post-Provisioning
 
-### 1.3 Populate Search Index
+The lab comes with a mumber of _exercise_ notebooks that you can run manually to get a step-by-step understanding of the workflow from populating data and connections, to building, evaluating and deploying the promptflow. However, in the interests of time, you might want to take advantage of a _post-provisioning_ script that runs the notebooks for you automatically, so you have more time to explore the codebase, tools and processes.
+
+To run the post-provisioning script, open the VS Code terminal.
+ - Change directories: `cd provision-v1/` folder
+ - Run this command: `sh 2-post-provision.sh` (auto-executes first 3 notebooks)
+
+### 1.3 Populate Customer Database (Manual)
+
+### 1.4 Populate Search Index (Manual)
 
 <br/>
 
@@ -95,6 +105,31 @@ The labs are setup with notebooks (in thr `exercises/` folder) with tasks you ex
 | | |
 
 ---
+
+## Troubleshooting
+
+### Issue: Soft-Deleted Resources
+
+One of the more familiar messages you might see with _this_ script is as shown below. This comes from the fact that the script creates _deterministic names_ for various resources, and some of these are held in a _soft deleted_ state which means those names cannot be reused until that resource is purged.
+
+```bash
+"A vault with the same name already exists in deleted state. You need to either recover or purge existing key vault. Follow this link https://go.microsoft.com/fwlink/?linkid=2149745 for more information on soft delete."
+...
+
+ERROR: Failed to provision resources. Please check the error message above.
+```
+
+> **Soft-Deleted: Key Vault**
+- Run `az keyvault list-deleted --subscription <subscription name or id> --resource-type vault` 
+- This gives you a list of soft-deleted keyvault resources for that subscription
+- Look for the `vaultId` that has the `contchat-rg` resource group name provisioned by this script
+- Use the `deletion-date`, `name` parameters to double-check that you have the right vaultId.
+- Use `az keyvault purge --subscription {SUBSCRIPTION ID} -n {VAULT NAME}` to permanently delete that keyvault resource. **This is irreversible**
+
+</br>
+
+---
+
 
 ## Contributing
 
