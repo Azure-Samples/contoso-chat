@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+image: mcr.microsoft.com/azureml/promptflow/promptflow-runtime:latest
+  # inference config is used to build a serving container for online deployments
+inference_config:
+  liveness_route:
+    path: /health
+    port: 8080
+  readiness_route:
+    path: /health
+    port: 8080
+  scoring_route:
+    path: /score
+    port: 8080

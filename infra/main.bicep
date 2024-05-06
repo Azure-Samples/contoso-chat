@@ -49,7 +49,7 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
   scope: rg
   params: {
     accountName: actualCosmosAccountName
-    databaseName: 'products'
+    databaseName: 'contoso-outdoor'
     location: location
     tags: union(
       tags,

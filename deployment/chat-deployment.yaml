@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+model: azureml:contoso-chat-model:1
+instance_type: Standard_DS3_v2
+instance_count: 1
+request_settings:
+  request_timeout_ms: 50000
+environment_variables:
+  # "compute" mode is the default mode, if you want to deploy to serving mode, you need to set this env variable to "serving"
+  PROMPTFLOW_RUN_MODE: serving
+
+  # (Optional) When there are multiple fields in the response, using this env variable will filter the fields to expose in the response.
+  # For example, if there are 2 flow outputs: "answer", "context", and I only want to have "answer" in the endpoint response, I can set this env variable to '["answer"]'.
+  # If you don't set this environment, by default all flow outputs will be included in the endpoint response.
+  # PROMPTFLOW_RESPONSE_INCLUDED_FIELDS: '["category", "evidence"]'

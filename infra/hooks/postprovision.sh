@@ -8,6 +8,20 @@ if [ -z "$EXPIRED_TOKEN" ]; then
     az login -o none
 fi
 
+# NN: Checks if $CODESPACES is defined and use device code flow if it is
+#     TODO: find a more elegant way to handle dev container environments
+if [ -z "$EXPIRED_TOKEN" ]; then
+    echo "No Azure user signed in. Please login."
+    if [ -z "$CODESPACES" ]; then
+        echo "Running in Local Env: Use standard login flow."
+        az login -o none
+    else
+        echo "Running in Github Codespaces: Force --use-device-code flow."
+        az login --use-device-code
+    fi
+fi
+
+
 # Check if Azure Subscription ID is set
 if [ -z "${AZURE_SUBSCRIPTION_ID:-}" ]; then
     ACCOUNT=$(az account show --query '[id,name]')
@@ -68,6 +82,10 @@ azd env set COSMOS_KEY $cosmosKey
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values > .env
+
+# NN: Re-added this to support local development notebooks & workshop
+# Create config.json with the environment variable values
+echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
 echo "Script execution completed successfully."
 
