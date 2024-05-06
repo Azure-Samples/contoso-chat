@@ -11,3 +11,4 @@ deployment/push_and_deploy_pf.py
 endpoint.json
 principal.txt
 .azure
+evaluations/process_log/

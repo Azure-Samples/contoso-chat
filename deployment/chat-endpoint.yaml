@@ -1,2 +1,0 @@
-$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
-auth_mode: key
