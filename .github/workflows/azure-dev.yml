@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
@@ -86,3 +86,13 @@ jobs:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
           AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Build Deep Link
+        id: deep_link
+        run: |
+          echo "deep_link=https://portal.azure.com/#@/resource/subscriptions/${{ env.AZURE_SUBSCRIPTION_ID }}/resourceGroups/rg-${{ env.AZURE_ENV_NAME }}/overview" >> "$GITHUB_OUTPUT"
+
+      - name: GitHub Summary Step
+        if: ${{ success() }}
+        run: |
+          echo "🔗 [View Resources Deployed Here](${{ steps.deep_link.outputs.deep_link }})" >> $GITHUB_STEP_SUMMARY
