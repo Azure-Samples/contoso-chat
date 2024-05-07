@@ -1,3 +1,0 @@
-$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
-name: contoso-support
-auth_mode: key
