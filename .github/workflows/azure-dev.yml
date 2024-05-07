@@ -68,7 +68,7 @@ jobs:
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set az account
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2
         with:
           inlineScript: |
             az account set --subscription ${{env.AZURE_SUBSCRIPTION_ID}}
@@ -90,7 +90,7 @@ jobs:
       - name: Build Deep Link
         id: deep_link
         run: |
-          echo "deep_link=https://portal.azure.com/#@/resource/subscriptions/${{ env.AZURE_SUBSCRIPTION_ID }}/resourceGroups/rg-${{ env.AZURE_ENV_NAME }}/overview" >> "$GITHUB_OUTPUT"
+          echo "deep_link=https://portal.azure.com/#@/resource/subscriptions/${{ env.AZURE_SUBSCRIPTION_ID }}/resourceGroups/rg-${{ vars.AZURE_ENV_NAME }}/overview" >> "$GITHUB_OUTPUT"
 
       - name: GitHub Summary Step
         if: ${{ success() }}
