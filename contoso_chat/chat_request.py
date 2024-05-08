@@ -4,6 +4,7 @@ load_dotenv()
 from azure.cosmos import CosmosClient
 from sys import argv
 import os
+import pathlib
 from ai_search import retrieve_documentation
 from promptflow.tools.common import init_azure_openai_client
 from promptflow.connections import AzureOpenAIConnection
@@ -59,7 +60,9 @@ def get_response(customerId, question, chat_history):
         "parameters": {"max_tokens": 512}
     }
     # get cwd
-    prompty_obj = Prompty.load("./chat.prompty", model=override_model)
+    data_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "./chat.prompty")
+    prompty_obj = Prompty.load(data_path, model=override_model)
+
     result = prompty_obj(question = question, customer = customer, documentation = context)
 
     print("result: ", result)
