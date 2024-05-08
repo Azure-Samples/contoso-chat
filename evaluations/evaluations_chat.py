@@ -54,13 +54,21 @@ if __name__ == '__main__':
         },
     )
     
-    # Print result_eval to json file
-    with open('result_eval.json', 'w') as f:
-        json.dump(result_eval, f) 
+    # # Print result_eval to json file
+    # with open('result_eval.json', 'w') as f:
+    #     json.dump(result_eval, f)
 
     # Convert the evaluation results to a pandas DataFrame
     eval_result = pd.DataFrame(result_eval["rows"])
     
+    # parse result_eval to capture the studio_url
+    studio_url = result_eval["studio_url"]
+
+    # write the studio_url to a file
+    with open('studio_url.txt', 'w') as f:
+        f.write(studio_url)
+    
+    # Format data for markdown, drop unneeded columns from dataframe
     fmtresult = eval_result.drop(['outputs.context', 'outputs.answer', 'inputs.customerId', 'inputs.chat_history', 'inputs.intent', 'line_number'], axis=1)
 
     # Save the evaluation results as JSON lines and Markdown files
