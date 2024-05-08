@@ -8,7 +8,7 @@ import pathlib
 from ai_search import retrieve_documentation
 from promptflow.tools.common import init_azure_openai_client
 from promptflow.connections import AzureOpenAIConnection
-from promptflow.core import (AzureOpenAIModelConfiguration, Prompty)
+from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
 
 def get_customer(customerId: str) -> str:
     url = os.environ["COSMOS_ENDPOINT"]
@@ -39,14 +39,13 @@ def get_embedding(question: str):
             input=question,
             model=os.environ["AZURE_EMBEDDING_NAME"]
         ).data[0].embedding
-
+@tool
 def get_response(customerId, question, chat_history):
     print("inputs:", customerId, question)
     customer = get_customer(customerId)
     embedding = get_embedding(question)
     context = get_context(question, embedding)
     print("context:", context)
-    prompt = "chat.prompty"
     print("getting result...")
 
     configuration = AzureOpenAIModelConfiguration(
@@ -69,6 +68,6 @@ def get_response(customerId, question, chat_history):
 
     return {"answer": result, "context": context}
 
-if __name__ == "__main__":
-    get_response(4, "What hiking jackets would you recommend?", [])
-    #get_response(argv[1], argv[2], argv[3])
+# if __name__ == "__main__":
+#     get_response(4, "What hiking jackets would you recommend?", [])
+#     #get_response(argv[1], argv[2], argv[3])
