@@ -1,15 +1,16 @@
-resourceGroupName="contchat-rg"
+resourceGroupName="contoso-chat-rg"
 resourceGroupLocation="swedencentral"
+name="contoso-chat"     #TODO: Replace with Deployment name
 
 echo "Setting up environment variables in .env file..."
 # Save output values to variables
-openAiService=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.openai_name.value -o tsv)
-searchService=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.search_name.value -o tsv)
-cosmosService=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.cosmos_name.value -o tsv)
-searchEndpoint=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.search_endpoint.value -o tsv)
-openAiEndpoint=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.openai_endpoint.value -o tsv)
-cosmosEndpoint=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.cosmos_endpoint.value -o tsv)
-mlProjectName=$(az deployment group show --name contoso-chat --resource-group $resourceGroupName --query properties.outputs.mlproject_name.value -o tsv)
+openAiService=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.openai_name.value -o tsv)
+searchService=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.search_name.value -o tsv)
+cosmosService=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.cosmos_name.value -o tsv)
+searchEndpoint=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.search_endpoint.value -o tsv)
+openAiEndpoint=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.openai_endpoint.value -o tsv)
+cosmosEndpoint=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.cosmos_endpoint.value -o tsv)
+mlProjectName=$(az deployment group show --name $name --resource-group $resourceGroupName --query properties.outputs.mlproject_name.value -o tsv)
 
 # Get keys from services
 searchKey=$(az search admin-key show --service-name $searchService --resource-group $resourceGroupName --query primaryKey --output tsv)
