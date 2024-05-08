@@ -9,6 +9,58 @@ This is a proctored 75-min lab to on **"Developing a production-level RAG Workfl
 > [+hint]
 > Take a minute to familiarize yourself with the instructor and proctors for this session. The lab is organized into the sections below, with numbered steps in each. Use the section and step number as context for proctors when asking questions. 
 
+===
+
+[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+
+1. Log into Skillable
+1. Open Browser
+    1. Bookmark: https://portal.azure.com 
+    1. Bookmark: https://ai.azure.com 
+    1. Bookmark: https://ml.azure.com
+    1. Bookmark: https://aka.ms/contoso-chat/msbuild2024-lab
+1. Click last link - log into GitHub
+    1. Log into GitHub
+    1. Open Codespaces on this repo branch
+1. While waiting for Codespaces
+    1. Click Bookmark 1 - log into Azure
+    1. Click Bookmark 2 - sign in
+    1. Click Bookmark 3 - refresh
+    1. Return to Bookmark 1 
+        - Verify you have 10 resources
+        - Check off the specific resource types
+1. Codespaces is ready
+    1. Log in with az login --device-code
+    1. cd 1-provision - "sh setup.sh"
+        1. Verify config.json ready
+        1. Verify .env ready
+    1. sh postprovision.sh
+    1. Verify the following
+        1. Cosmos Data populated
+        1. Azure AI Search populated
+        1. Connections created locally
+1. Fix CosmosDB Connection
+    1. Create custom connection in ML Studio
+    1. Update values from .env in VS Code
+    1. Save
+1. Return to VS Code: Push Flow To Azure
+1. Return to Azure AI: Start Runtime -- let it go.
+1. Return To VS Code: 
+    1. Open flow.dag.yaml - run flow
+    1. Explore prompt flow code and components
+    1. Run evaluation notebook *local*
+    1. Explore outputs
+1. Return to Azure AI 
+    1. Run flow - fix issues if any
+    1. Deploy flow - wait to see if it gets done
+1. Return to VS Code
+    1. Run Batch Evals
+
+1. DELETE CODESPACES
+
+---
+
+===
 
 ## Pre-requisites
 
