@@ -72,7 +72,7 @@ jobs:
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set az account
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2
         with:
           inlineScript: |
             az account set --subscription ${{env.AZURE_SUBSCRIPTION_ID}}

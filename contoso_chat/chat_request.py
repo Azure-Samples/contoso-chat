@@ -74,8 +74,15 @@ def get_response(customerId, question, chat_history):
         "configuration": configuration,
         "parameters": {"max_tokens": 512}
     }
-    # get cwd
-    prompty_obj = Prompty.load("../contoso_chat/chat.prompty", model=override_model)
+    
+    # Make chat.prompty path relative to the current file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_path = "./chat.prompty"
+    abs_path = os.path.join(current_dir, relative_path)
+    prompty_path = os.path.normpath(abs_path)
+
+    # Load the Prompty object
+    prompty_obj = Prompty.load(prompty_path, model=override_model)
     result = prompty_obj(question = question, customer = customer, documentation = context)
 
     print("result: ", result)
