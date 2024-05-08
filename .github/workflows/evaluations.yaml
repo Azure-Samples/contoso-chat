@@ -97,11 +97,11 @@ jobs:
         working-directory: ./evaluations
         run: |
           studio_url=$(cat studio_url.txt)
-          echo $studio_url
+          echo $studio_url 
 
-          echo "🔗 [View in Azure Studio Here]($studio_url)" 
+          echo "🔗 [View in Azure Studio Here]($studio_url)" >> $GITHUB_STEP_SUMMARY
 
-          echo "🔗 [View in Azure Studio Here]($studio_url)" >> $GITHUB_STEP_SUMMARY  
+          echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "📊 Promptflow Evaluation Results" >> $GITHUB_STEP_SUMMARY
           cat eval_result.md >> $GITHUB_STEP_SUMMARY
