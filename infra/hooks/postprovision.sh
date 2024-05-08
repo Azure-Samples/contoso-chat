@@ -53,6 +53,9 @@ ipython kernel install --name=python3 --user
 # Verify kernelspec list isn't empty
 jupyter kernelspec list
 
-# jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 connections/create-connections.ipynb
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
+# Run juypter notebooks
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
+
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
+
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb

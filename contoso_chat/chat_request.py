@@ -11,15 +11,31 @@ from promptflow.connections import AzureOpenAIConnection
 from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
 
 def get_customer(customerId: str) -> str:
-    url = os.environ["COSMOS_ENDPOINT"]
-    credential = os.environ["COSMOS_KEY"]
-    client = CosmosClient(url=url, credential=credential)
-    db = client.get_database_client("contoso-outdoor")
-    container = db.get_container_client("customers")
-    response = container.read_item(item=str(customerId), partition_key=str(customerId))
-    response["orders"] = response["orders"][:2]
-    return response
+    try:
+        url = os.environ["COSMOS_ENDPOINT"]
+        credential = os.environ["COSMOS_KEY"]
+        client = CosmosClient(url=url, credential=credential)
+        db = client.get_database_client("contoso-outdoor")
+        container = db.get_container_client("customers")
+        response = container.read_item(item=str(customerId), partition_key=str(customerId))
+        response["orders"] = response["orders"][:2]
+        return response
+    except Exception as e:
+        print(f"Error retrieving customer: {e}")
+        return None
 
+def get_product(productId: str) -> str:
+    try:
+        url = os.environ["COSMOS_ENDPOINT"]
+        credential = os.environ["COSMOS_KEY"]
+        client = CosmosClient(url=url, credential=credential)
+        db = client.get_database_client("contoso-outdoor")
+        container = db.get_container_client("products")
+        response = container.read_item(item=str(productId), partition_key=str(productId))
+        return response
+    except Exception as e:
+        print(f"Error retrieving product: {e}")
+        return None
 
 def get_context(question, embedding):
     return retrieve_documentation(question=question, index_name="contoso-products", embedding=embedding)

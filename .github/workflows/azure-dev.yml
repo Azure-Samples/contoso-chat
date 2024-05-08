@@ -1,3 +1,5 @@
+name: Deploy Contoso Chat
+
 on:
   workflow_dispatch:
   push:
@@ -6,6 +8,9 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - '.github/workflows/evaluations.yaml'
+      - 'README.md'    
 
 # GitHub Actions workflow to deploy to Azure using azd
 # To configure required secrets for connecting to Azure, simply run `azd pipeline config`
