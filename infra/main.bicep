@@ -67,6 +67,9 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
         partitionKey: '/id'
       }
     ]
+    principalIds: [
+      principalId
+    ]
   }
 }
 
@@ -158,6 +161,18 @@ module userRoleSecretsReader 'core/security/role.bicep' = {
     principalType: principalType
   }
 }
+
+// search service role
+module userRoleSearchIndexDataReader 'core/security/role.bicep' = {
+  name: 'user-role-search-index-data-reader'
+  scope: rg
+  params: {
+    principalId: principalId
+    roleDefinitionId: '1407120a-92aa-4202-b7e9-c0e197c71c8f'
+    principalType: principalType
+  }
+}
+
 
 // output the names of the resources
 output AZURE_TENANT_ID string = tenant().tenantId

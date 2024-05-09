@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from azure.cosmos import CosmosClient
+from azure.identity import DefaultAzureCredential
 from sys import argv
 import os
 import pathlib
@@ -13,7 +14,7 @@ from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
 def get_customer(customerId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
+        credential = DefaultAzureCredential()
         client = CosmosClient(url=url, credential=credential)
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("customers")
@@ -27,7 +28,7 @@ def get_customer(customerId: str) -> str:
 def get_product(productId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
+        credential = DefaultAzureCredential()
         client = CosmosClient(url=url, credential=credential)
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("products")
@@ -42,6 +43,7 @@ def get_context(question, embedding):
 
 
 def get_embedding(question: str):
+    # promptflow doesn't support MI connection to AOAI yet, https://github.com/microsoft/promptflow/issues/2102
     connection = AzureOpenAIConnection(        
                     azure_deployment=os.environ["AZURE_EMBEDDING_NAME"],
                     api_key=os.environ["AZURE_OPENAI_API_KEY"],
