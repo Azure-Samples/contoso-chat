@@ -28,34 +28,25 @@ apiKey=$(az cognitiveservices account keys list --name $openAiService --resource
 cosmosKey=$(az cosmosdb keys list --name $cosmosService --resource-group $resourceGroupName --query primaryMasterKey --output tsv)
 
 # Set the environment variables using azd env set
+# TODO: Remove these once we have MI integration
 azd env set AZURE_SEARCH_KEY $searchKey
 azd env set AZURE_OPENAI_KEY $apiKey
 azd env set COSMOS_KEY $cosmosKey
 
+# Set additional environment variables expected by app 
+# TODO: Standardize these and remove need for setting here
+azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
+azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
+azd env set CONTOSO_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
+azd env set CONTOSO_SEARCH_KEY $AZURE_SEARCH_KEY 
+
 # Output environment variables to .env file using azd env get-values
 azd env get-values > .env
 
-# NN: Re-added this to support local development notebooks & workshop
-# Create config.json with the environment variable values
+# Create config.json with required Azure AI project config information
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
 echo "Script execution completed successfully."
 
-echo 'Installing dependencies from "requirements.txt"'
-python -m pip install -r requirements.txt
-
-# Install ipythong and ipykernel
-python -m pip install ipython ipykernel
-
-# Configure the IPython kernel
-ipython kernel install --name=python3 --user
-
-# Verify kernelspec list isn't empty
-jupyter kernelspec list
-
-# Run juypter notebooks
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
-
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
-
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
+echo "To run evaluations automatically uncomment the line below"
+# ./run-eval.sh
