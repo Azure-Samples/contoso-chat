@@ -46,7 +46,23 @@ azd env get-values > .env
 # Create config.json with required Azure AI project config information
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
-echo "Script execution completed successfully."
+echo "--- ✅ | 1. Post-provisioning - env configured ---"
 
-echo "To run evaluations automatically uncomment the line below"
-# ./run-eval.sh
+# Setup to run notebooks
+echo 'Installing dependencies from "requirements.txt"'
+python -m pip install -r requirements.txt
+python -m pip install ipython ipykernel      # Install ipython and ipykernel
+ipython kernel install --name=python3 --user # Configure the IPython kernel
+jupyter kernelspec list                      # Verify kernelspec list isn't empty
+echo "--- ✅ | 2. Post-provisioning - ready execute notebooks ---"
+
+echo "Populating data ...."
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
+echo "--- ✅ | 3. Post-provisioning - populated data ---"
+
+echo "Running evaluations ...."
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
+echo "--- ✅ | 4. Post-provisioning - ran evaluations ---"
