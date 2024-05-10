@@ -52,7 +52,7 @@ The sample is also a  _signature application_ for demonstrating new the capabili
  
 ### Architecture Diagram
 
-🚧 Embed DevDiv designed architecture diagram here
+![Architecture Digram](docs\img\architecture-diagram-contoso-retail.png)
 
 ### Demo Video (optional)
 
