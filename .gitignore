@@ -11,3 +11,7 @@ deployment/push_and_deploy_pf.py
 endpoint.json
 principal.txt
 .azure
+evaluations/process_log/
+evaluations/flow.flex.yaml
+evaluations/eval_result.**
+evaluations/studio_url.txt
