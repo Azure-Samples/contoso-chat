@@ -1,5 +1,5 @@
 ---
-name: Contoso Retail copilot with Azure AI 
+name: Contoso Chat Retail copilot with Azure AI 
 description: Build, evaluate and deploy a RAG-based retail copilot with promptflow on Azure AI
 languages:
 - python
@@ -14,11 +14,11 @@ page_type: sample
 urlFragment: contoso-chat
 ---
  
-# Contoso Retail copilot with Azure AI
+# Contoso Chat Retail copilot with Azure AI
 
 In this sample we build, evaluate and deploy a support chat agent for Contoso Outdoors, a fictitious retailer who sells hiking and camping equipment. The implementation uses a Retrieval Augmented Generation approach to answer customer queries with responses grounded in the company's product catalog and customer purchase history.
 
-# Contoso Retail copilot with Azure AI
+# Contoso Chat Retail copilot with Azure AI
 
 This sample uses the [**Azure AI Search**](https://learn.microsoft.com/azure/search/) service to store product indexes, and the [**Azure Cosmos DB**](https://learn.microsoft.com/azure/cosmos-db/) service to store customer history data. It uses the [**Azure OpenAI**](https://learn.microsoft.com/azure/ai-services/openai/) service to vectorize the user query (with **`text-embeddings-ada-002`**), conduct AI-assisted evaluation (with **`gpt-4`**) and generate the chat response (with **`gpt-35-turbo`**).
  
@@ -52,7 +52,7 @@ The sample is also a  _signature application_ for demonstrating new the capabili
  
 ### Architecture Diagram
 
-🚧 Embed DevDiv designed architecture diagram here
+![Architecture Digram](docs\img\architecture-diagram-contoso-retail.png)
 
 ### Demo Video (optional)
 
