@@ -9,6 +9,10 @@ from azure.search.documents.models import (
 )
 from azure.core.credentials import AzureKeyCredential
 
+# Environment Variables Used
+#   CONTOSO_SEARCH_ENDPOINT, CONTOSO_SEARCH_KEY
+# Constants Used:
+# 
 
 def retrieve_documentation(
     question: str,
