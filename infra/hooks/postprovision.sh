@@ -61,8 +61,8 @@ jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/cu
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
 echo "--- ✅ | 3. Post-provisioning - populated data ---"
 
-echo "Running evaluations ...."
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
-echo "--- ✅ | 4. Post-provisioning - ran evaluations ---"
+#echo "Running evaluations ...."
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
+#echo "--- ✅ | 4. Post-provisioning - ran evaluations ---"

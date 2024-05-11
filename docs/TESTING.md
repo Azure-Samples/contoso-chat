@@ -30,7 +30,9 @@
     }
     ```
 
-## Test Things Locally First
+## Test Things Locally 
+
+> To test this locally, you need to have completed at least an `azd provision` step so Azure resources are available for client-side access to relevant Azure AI services, Azure AI search indexes and Azure CosmosDB databases.
 
 1. Explore prompts locally
     ```bash
@@ -47,15 +49,6 @@
     ```bash
     azd auth login
     ```
-1. Create new env (optional) - will be prompted in azd flow if not set
-    ```bash
-    azd env new <environment> <flags>
-    ```
-    I like using this - check the created `.azure/` folder to verify success.
-
-    ```bash
-    azd env new <environment> --location <location> --subscription <name or id>
-    ```
 1. Provision and Deploy App To Azure
     ```bash
     azd up
@@ -70,6 +63,7 @@
     ```bash
     azd deploy
     ```
+1. Note: Azure AI Search is the only resource that is hardcoded to `eastus` (dependency for semantic ranker). All others are deployed to the region specified during initial setup in the `--location`.
 
 ---
 
@@ -78,7 +72,16 @@
 Documenting potential issues and fixes taken to resolve them:
 
 1. Updated `azure.yaml` to add environment variable overrides for env vars that will be required by app in Azure runtime.
-1. 
+1. Had to manually add in the Cognitive Services OpenAI User assignment to the Azure AI Services resources. This should be automated in azd in the future. For now do this manually **after the chat app deployment is complete**.
+    - Go to Azure Portal, open this resource group
+    - Find the Azure AI Services resources - click for details
+    - Go to Access Control (IAM) tab and select "Add Role"
+    - Search for the "Cognitive Services OpenAI User" role
+    - Click "Managed Services" and "Add Members"
+    - Select the Managed ML Endpoint resource - pick the instance for this resource group and select it.
+    - On the main page, verify this role assignment is now present and click "Review+Assign" - twice - and save.
+    - You should see an alert confirming the role assigment is complete. Return to Azure AI Studio and refresh the chat deployment details page.
+    - Try the test message - it should work. 
 
 ---
 
@@ -91,8 +94,6 @@ This PR had changes to 3 files:
 - [`chat_request.py`](https://github.com/Azure-Samples/contoso-chat/pull/110/files#diff-43c2f1da4e97373ae88c1685935a829c375946f1f98a8b1845e98db41cba18d3) - add and use DefaultAzureCredential
 - [`main.bicep`](https://github.com/Azure-Samples/contoso-chat/pull/110/files#diff-7ef659fc9cf6968e718894d300490b14ea7a52091e7d4bcffae3a5029ac721d4) - add `principalId` support
 
-
-
 ---
 
 ## Env Vars Standarization
@@ -100,27 +101,31 @@ This PR had changes to 3 files:
 Different names and vars were used in different contexts. Capturing them all here for now, and will reconcile and standardize them next. The naming is shown with just enough prefix context to provide usable references in workshop documentation.
 
 ```bash
+AZURE_ENV_NAME="msbuild-flexflow-test"
+AZURE_LOCATION="swedencentral"
+AZURE_SUBSCRIPTION_ID="#########"
+AZURE_TENANT_ID="#########"
+
+AZURE_RESOURCE_GROUP="rg-#########"
 AZUREAI_HUB_NAME="ai-hub-gcdx#########"
 AZUREAI_PROJECT_NAME="ai-project-gcdx#########"
 AZURE_CONTAINER_REGISTRY_ENDPOINT="crgcdx#########.azurecr.io"
 AZURE_CONTAINER_REGISTRY_NAME="crgcdx#########"
-AZURE_COSMOS_NAME="cosmos-gcdx#########"
-AZURE_ENV_NAME="msbuild-flexflow-test"
 AZURE_KEY_VAULT_ENDPOINT="https://kv-gcdx#########.vault.azure.net/"
 AZURE_KEY_VAULT_NAME="kv-gcdx#########"
-AZURE_LOCATION="swedencentral"
+
+AZURE_OPENAI_NAME="aoai-gcdx#########"
 AZURE_OPENAI_API_VERSION="2023-03-15-preview"
 AZURE_OPENAI_CHAT_DEPLOYMENT="gpt-35-turbo"
 AZURE_OPENAI_ENDPOINT="https://aoai-gcdx#########.openai.azure.com/"
 AZURE_OPENAI_KEY="#########"
-AZURE_OPENAI_NAME="aoai-gcdx#########"
-AZURE_RESOURCE_GROUP="rg-#########"
+
+AZURE_SEARCH_NAME="srch-gcdxl#########"
 AZURE_SEARCH_ENDPOINT="https://srch-gcdx#########.search.windows.net/"
 AZURE_SEARCH_KEY="#########"
-AZURE_SEARCH_NAME="srch-gcdxl#########"
-AZURE_SUBSCRIPTION_ID="#########"
-AZURE_TENANT_ID="#########"
 CONTOSO_SEARCH_ENDPOINT="https://srch-gcdx#########.search.windows.net/"
+
+AZURE_COSMOS_NAME="cosmos-gcdx#########"
 COSMOS_ENDPOINT="https://cosmos-gcdx#########.documents.azure.com:443/"
 COSMOS_KEY="#########"
 ```
