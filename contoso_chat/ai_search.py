@@ -17,7 +17,7 @@ def retrieve_documentation(
 
     
     search_client = SearchClient(
-        service_endpoint=os.environ["AZURE_SEARCH_ENDPOINT"],
+        endpoint=os.environ["AZURE_SEARCH_ENDPOINT"],
         index_name=index_name,
         credential=DefaultAzureCredential())
 
