@@ -6,24 +6,15 @@ from sys import argv
 import os
 import pathlib
 from ai_search import retrieve_documentation
+from azure.identity import DefaultAzureCredential
 from promptflow.tools.common import init_azure_openai_client
 from promptflow.connections import AzureOpenAIConnection
 from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
 
-# Environment Variables Used
-#   COSMOS_ENDPOINT, COSMOS_KEY, 
-#   AZURE_OPENAI_API_KEY, AZURE_OPENAI_API_VERSION, AZURE_OPENAI_ENDPOINT
-# Constants Used:
-#   contoso-outdoor, customers => Cosmos database
-#   contoso-outdoor, products => Cosmos database
-#   contoso-products => AI search index
-# --- NN: Created missing env manually for testing
-# --- RECONCILE IT WITH AZD
-
 def get_customer(customerId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
+        credential = DefaultAzureCredential()
         client = CosmosClient(url=url, credential=credential)
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("customers")
@@ -37,7 +28,7 @@ def get_customer(customerId: str) -> str:
 def get_product(productId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
+        credential = DefaultAzureCredential()
         client = CosmosClient(url=url, credential=credential)
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("products")
@@ -55,7 +46,6 @@ def get_embedding(question: str):
     connection = AzureOpenAIConnection(        
                     #azure_deployment=os.environ["AZURE_EMBEDDING_NAME"],
                     azure_deployment="text-embedding-ada-002",
-                    api_key=os.environ["AZURE_OPENAI_API_KEY"],
                     api_version=os.environ["AZURE_OPENAI_API_VERSION"],
                     api_base=os.environ["AZURE_OPENAI_ENDPOINT"]
                     )
@@ -79,7 +69,6 @@ def get_response(customerId, question, chat_history):
     configuration = AzureOpenAIModelConfiguration(
         #azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
         azure_deployment="gpt-35-turbo",
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
     )

@@ -30,8 +30,8 @@ jobs:
       AZURE_EMBEDDING_NAME: "text-embedding-ada-002"
       COSMOS_ENDPOINT: "${{ secrets.CONTOSO_SEARCH_ENDPOINT }}"
       COSMOS_KEY: "${{ secrets.CONTOSO_SEARCH_KEY }}"
-      CONTOSO_SEARCH_ENDPOINT: "${{ secrets.CONTOSO_SEARCH_ENDPOINT }}"
-      CONTOSO_SEARCH_KEY: "${{ secrets.CONTOSO_SEARCH_KEY }}"
+      AZURE_SEARCH_ENDPOINT: "${{ secrets.AZURE_SEARCH_ENDPOINT }}"
+      AZURE_SEARCH_KEY: "${{ secrets.AZURE_SEARCH_KEY }}"
 
     steps:
       - name: checkout repo content

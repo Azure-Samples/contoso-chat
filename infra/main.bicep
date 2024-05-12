@@ -139,6 +139,17 @@ module userAcrRolePull 'core/security/role.bicep' = {
   }
 }
 
+module openaiRoleUser 'core/security/role.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'openai-role-user'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' //Cognitive Services OpenAI User
+    principalType: principalType
+  }
+}
+
+
 module userRoleDataScientist 'core/security/role.bicep' = {
   name: 'user-role-data-scientist'
   scope: rg

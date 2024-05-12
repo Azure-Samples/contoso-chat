@@ -10,10 +10,16 @@ workflows:
       - azd: deploy      
 hooks:
   postprovision:
-    shell: sh
-    continueOnError: false
-    interactive: true
-    run: ./infra/hooks/postprovision.sh
+    posix:
+      shell: sh
+      continueOnError: false
+      interactive: true
+      run: infra/hooks/postprovision.sh
+    windows:
+      shell: pwsh
+      continueOnError: false
+      interactive: true
+      run: infra/hooks/postprovision.ps1
 
 
 ################################################################
@@ -40,5 +46,5 @@ services:
           environment_variables.AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION}
           environment_variables.COSMOS_ENDPOINT: ${COSMOS_ENDPOINT}
           environment_variables.COSMOS_KEY: ${COSMOS_KEY}
-          environment_variables.CONTOSO_SEARCH_ENDPOINT: ${AZURE_SEARCH_ENDPOINT}
-          environment_variables.CONTOSO_SEARCH_KEY: ${AZURE_SEARCH_KEY}
+          environment_variables.AZURE_SEARCH_ENDPOINT: ${AZURE_SEARCH_ENDPOINT}
+          environment_variables.AZURE_SEARCH_KEY: ${AZURE_SEARCH_KEY}
