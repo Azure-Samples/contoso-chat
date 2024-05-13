@@ -1,6 +1,7 @@
 from typing import List
 import os
 from azure.identity import DefaultAzureCredential
+from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import (
     VectorizedQuery,
@@ -19,7 +20,8 @@ def retrieve_documentation(
     search_client = SearchClient(
         endpoint=os.environ["AZURE_SEARCH_ENDPOINT"],
         index_name=index_name,
-        credential=DefaultAzureCredential())
+        credential=AzureKeyCredential(os.environ["AZURE_SEARCH_KEY"]),
+    )
 
     vector_query = VectorizedQuery(
         vector=embedding, k_nearest_neighbors=3, fields="contentVector"
