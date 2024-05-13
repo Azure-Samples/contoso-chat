@@ -28,34 +28,41 @@ apiKey=$(az cognitiveservices account keys list --name $openAiService --resource
 cosmosKey=$(az cosmosdb keys list --name $cosmosService --resource-group $resourceGroupName --query primaryMasterKey --output tsv)
 
 # Set the environment variables using azd env set
+# TODO: Remove these once we have MI integration
 azd env set AZURE_SEARCH_KEY $searchKey
 azd env set AZURE_OPENAI_KEY $apiKey
 azd env set COSMOS_KEY $cosmosKey
 
-# Output environment variables to .env file using azd env get-values
-azd env get-values > .env
+# Set additional environment variables expected by app
+# TODO: Standardize these and remove need for setting here
+azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
+azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
+azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
+azd env set AZURE_SEARCH_KEY $AZURE_SEARCH_KEY
 
-# NN: Re-added this to support local development notebooks & workshop
-# Create config.json with the environment variable values
+# Output environment variables to .env file using azd env get-values
+azd env get-values >.env
+
+# Create config.json with required Azure AI project config information
 echo "{\"subscription_id\": \"$subscriptionId\", \"resource_group\": \"$resourceGroupName\", \"workspace_name\": \"$mlProjectName\"}" > config.json
 
-echo "Script execution completed successfully."
+echo "--- ✅ | 1. Post-provisioning - env configured ---"
 
+# Setup to run notebooks
 echo 'Installing dependencies from "requirements.txt"'
-python -m pip install -r requirements.txt
+python -m pip install -r requirements.txt > /dev/null
+python -m pip install ipython ipykernel > /dev/null      # Install ipython and ipykernel
+ipython kernel install --name=python3 --user > /dev/null # Configure the IPython kernel
+jupyter kernelspec list > /dev/null                      # Verify kernelspec list isn't empty
+echo "--- ✅ | 2. Post-provisioning - ready execute notebooks ---"
 
-# Install ipythong and ipykernel
-python -m pip install ipython ipykernel
+echo "Populating data ...."
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > /dev/null
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > /dev/null
+echo "--- ✅ | 3. Post-provisioning - populated data ---"
 
-# Configure the IPython kernel
-ipython kernel install --name=python3 --user
-
-# Verify kernelspec list isn't empty
-jupyter kernelspec list
-
-# Run juypter notebooks
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
-
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
-
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
+#echo "Running evaluations ...."
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
+#echo "--- ✅ | 4. Post-provisioning - ran evaluations ---"

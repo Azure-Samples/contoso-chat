@@ -6,6 +6,7 @@ from sys import argv
 import os
 import pathlib
 from ai_search import retrieve_documentation
+from azure.identity import DefaultAzureCredential
 from promptflow.tools.common import init_azure_openai_client
 from promptflow.connections import AzureOpenAIConnection
 from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
@@ -43,8 +44,8 @@ def get_context(question, embedding):
 
 def get_embedding(question: str):
     connection = AzureOpenAIConnection(        
-                    azure_deployment=os.environ["AZURE_EMBEDDING_NAME"],
-                    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+                    #azure_deployment=os.environ["AZURE_EMBEDDING_NAME"],
+                    azure_deployment="text-embedding-ada-002",
                     api_version=os.environ["AZURE_OPENAI_API_VERSION"],
                     api_base=os.environ["AZURE_OPENAI_ENDPOINT"]
                     )
@@ -53,7 +54,8 @@ def get_embedding(question: str):
 
     return client.embeddings.create(
             input=question,
-            model=os.environ["AZURE_EMBEDDING_NAME"]
+            #model=os.environ["AZURE_EMBEDDING_NAME"]
+            model="text-embedding-ada-002",
         ).data[0].embedding
 @tool
 def get_response(customerId, question, chat_history):
@@ -65,8 +67,8 @@ def get_response(customerId, question, chat_history):
     print("getting result...")
 
     configuration = AzureOpenAIModelConfiguration(
-        azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
+        #azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
+        azure_deployment="gpt-35-turbo",
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
     )
