@@ -52,7 +52,7 @@ The sample is also a  _signature application_ for demonstrating new the capabili
  
 ### Architecture Diagram
 
-![Architecture Digram](docs\img\architecture-diagram-contoso-retail-aistudio.png)
+![Architecture Digram](/docs/img/architecture-diagram-contoso-retail-aistudio.png)
 
 ### Demo Video (optional)
 
