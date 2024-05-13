@@ -38,7 +38,8 @@ Let's get a quick overview of the lab in the next section.
 
 ## 2. Lab Overview
 
-This lab teaches you how to build, evaluate, and deploy, a retail copilot application (_Contoso Chat_) using the Azure AI platform. By the end of this lab, you should be able to:
+> [!tip] 
+> **Learning Objectives:** This lab teaches you how to build, evaluate, and deploy, a retail copilot application (_Contoso Chat_) using the Azure AI platform. By the end of this lab, you should be able to:
 
 1. Describe the Contoso Chat retail copilot (Application)
 1. Explain retrieval augmented generation (Architecture)
@@ -46,26 +47,27 @@ This lab teaches you how to build, evaluate, and deploy, a retail copilot applic
 1. Describe the Promptflow tools & usage (Framework)
 1. Build, evaluate, and deploy, a copilot app end-to-end (on Azure)
 
-### 2.1 Azure Subscription (Provisioned)
+> [!tip] 
+> **Pre-Provisioned Resources:** This lab comes with an _Azure Subscription_ that has been pre-provisioned with the necessary resources for developing this retail copilot solution. These include:
 
-This lab comes with an _Azure Subscription_ that has been pre-provisioned with the necessary resources for developing this retail copilot solution. These include:
 1. Azure AI Hub and Project - to manage your AI application
 1. Azure AI Services - to manage your Open AI model deployments
 1. Azure AI Search - to build and maintain the product index
 1. Azure Cosmos DB - to build and maintain the customer history data
 
-### 2.2 Browser Interface (Interactions)
+> [!tip] 
+> **Browser as Default UI:** We will be using the Microsoft Edge browser in the VM as the default user interface throughout this lab. We recommend keeping three tabs open to these three resources:
 
-We will be using the Microsoft Edge browser in the VM as the default user interface throughout this lab. You will be instructed to open tabs to the following resources:
-1. Azure Portal - to manage all Azure resources
-1. Azure AI Studio - to manage your Azure AI application interactions
-1. GitHub Codespaces - to provide your local development environment (dev container)
-1. GitHub Repository - to start the lab by forking a copy of the repo to your profile.
+1. **(Tab 1) GitHub Codespaces** - local dev environment in browser (dev container)
+1. **(Tab 2) Azure Portal** - to view and manage all Azure resources
+1. **(Tab 3) Azure AI Studio** - to view and manage Azure AI applications
 
-### 2.3 Lab Repository (Contoso Chat)
+> [!tip] 
+> **Codespaces as Default Dev Env:** We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) branch of the Contoso Chat repository. We will launch this in the browser with GitHub Codespaces, to get a ready-to-use dev environment for the lab.
 
-We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) branch of the Contoso Chat repository. Watch for instructions on how to fork this and launch GitHub Codespaces to get a pre-defined development environment with minimal setup effort.
+---
 
+🚀 | **Next** - Let's launch the browser and setup our dev environment!
 
 ===
 
@@ -75,14 +77,16 @@ We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) b
 
 ## 3. Browser Setup
 
-**Launch the browser and organize your tabs for efficiency!**
+> [!tip] 
+> **Check off Tasks As You Go:** This will let you track your progress through the lab.
+
 
 * []  **01** | Launch the Edge Browser. **Open it in full-screen mode.**
 
 * []  **02** | _Tab 1_: Open a new tab for **GitHub interactions**.
     - Navigate to  +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
     - Log into GitHub - user your GitHub profile credentials.
-    - Leave this tab open | Tab 1 = GitHub interactions
+    - Leave this tab open | Tab 1 = Development Tab
 
 * []  **03** | _Tab 2_: Open a new tab for the **Azure Portal**.
     - Navigate to  +++**https://portal.azure.com**+++ in a new tab.
@@ -100,7 +104,7 @@ We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) b
 
 ---
 
-🥳 **Congratulations!** <br/>  You have organized your workspaces and are ready to launch the dev environment!
+🚀 | **Next** -  Let's get GitHub Codespaces setup for development in the browser!
 
 ===
 
@@ -110,33 +114,29 @@ We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) b
 
 ## 4. Launch GitHub Codespaces 
 
-> [!Important] **Note:** You need a GitHub account to launch the lab with GitHub Codespaces. **We recommend using a personal account (or a secondary account not linked to your corporate profile) for this purpose**. You can [create a free GitHub account here](https://github.com/signup) if needed. The lab can be completed within the free GitHub Codespaces quota available for personal accounts.
-
-
-This workshop uses a specially-tagged [#msbuild-lab322](https://aka.ms/msbuild2024-lab) branch of the Contoso Chat repo. In this section, you will fork the repo **and uncheck the 'main only' default** to ensure your fork contains the right branch. You'll then launch GitHub Codespaces to get a Visual Studio Code environment in the browser, with all required depdencies pre-installed.
-
+> [!Important] **Note:** You need a GitHub account to use with GitHub Codespaces. **We recommend using a personal account (or a secondary account not linked to your corporate profile) for this purpose**. You can [create a free GitHub account](https://github.com/signup) if needed. The free tier of GitHub Codespaces is sufficient for this lab.
 
 * []  **01** | Switch to the GitHub tab (Tab 1) in the browser
     - Navigate to the  +++**https://aka.ms/msbuild2024-lab**+++ link
-    - Verify you are logged in (from prior step)
+    - Verify you are logged into GitHub (from prior step)
 
 * []  **02** | Fork the repo into your profile
-    - Click the fork button the repo
-    - **Uncheck the "Copy the 'main' branch" only** to get all branches.
-    - Click "Create fork".
-    - Wait for the fork to complete in your profile.
+    - Click the fork button on the repo.
+    - Uncheck the _"Copy the 'main' branch" only_ to fork with all branches.
+    - Click "Create fork" and wait for process to complete.
+    - **You should see** - a fork of the repo in your personal profile.
 
-* []  **03** | Launch the Codespace on the **#msbuild-lab322** branch/
-    - In the forked repo, select _`msbuild-lab322`_ branch in dropdown
-    - Click _'Code'_ dropdown, select the `Codespaces` tab 
-    - Click _"Create codespace on main"_
-    - You should see - a new browser tab witg _'Setting up your codespace'_
+* []  **03** | Launch GitHub Codespaces on `msbuild2024-lab` branch
+    - Click branches dropdown - select _msbuild-lab322_ branch.
+    - Click _Code_ dropdown - select the _Codespaces_ tab
+    - Click "Create codespace on main"
+    - **You should see** - a new browser tab witg _'Setting up your codespace'_
 
-This process can take 3-4 minutes to complete. Once done, the tab will refresh to show an interface resembling _Visual Studio Code_ running in the browser. **Your Tab 1 will now be the GitHub Codespaces tab**. _While you wait, you can move on to the next task and return to this tab later_.
+This process takes a few minutes to complete. Let's keep going on the next task, and we'll check back on status later.
 
 ---
 
-🥳 **Congratulations!** <br/> Your GitHub Codespaces environment is getting ready!
+🚀 | **Next** - Let's verify Azure resources are provisioned while we wait ..
 
 
 ===
@@ -147,47 +147,43 @@ This process can take 3-4 minutes to complete. Once done, the tab will refresh t
 
 ## 5. Verify Azure Is Provisioned
 
-> [!note] 
-> Your Azure subscription is pre-provisioned with resources for the workshop. Let's verify this.
-
+> [!tip] 
+> **Look for Resource Group "contoso-chat-rg"**. And verify the right resources were created.
 
 * []  **01** | Switch to Tab 2 (Azure Portal) in the browser
     - Navigate to the Azure Portal home page +++**https://portal.azure.com**+++
     - Click the _'Resource Groups'_ option
     - Verify that a Resource Group called **contoso-chat-rg** is listed.
-* []  **02** | Click the Resource Group to view details. 
-    - Verify it contains the following resources (refer to the "Type" column in the table).
-        - an "Azure AI hub" resource
-        - an "Azure AI services" resource
-        - an "Azure AI project" resource
-        - a "Search service" (Azure AI Search) resource
-        - a "Azure Cosmos DB account" resource
+* []  **02** | Click it to view details. Verify these resources exist (by Type):
+    - "Azure AI hub" resource
+    - "Azure AI services" resource
+    - "Azure AI project" resource
+    - "Search service" resource (Azure AI Search)
+    - "Azure Cosmos DB account" resource
 
-Next we need to verify that Azure OpenAI model deployments are complete.
+> [!tip] 
+> **Verify required OpenAI Models were deployed**. And validate that related connections were created.
 
 * []  **03** | Switch to Tab 3 (Azure AI Studio) in the browser
-    - Navigate to the Build section of Azure AI Studio - +++**https://ai.azure.com/build**+++
+    - Navigate to Azure AI Studio "Build" section - +++**https://ai.azure.com/build**+++
     - Click the listed AI project for details. 
-    - Click on the **Deployments** item in the sidebar to see Deployments
-    - **You may need to Refresh the list** to see updates.
+    - Click **Deployments** in sidebar, click _Refresh_ in details page.
     - Verify that the following models are listed
         - gpt-35-turbo
         - gpt-4
         - text-embedding-ada-002
 
-* []  **04** | Check that required connections were created
-    - Click the **Settings** icon on the sidebar (bottom left)
-    - Look for the **Connections** panel and click **View all**
-    - Verify that the listed connections have **these two names**
+* []  **04** | Check that relevant "connections" were created in AI project.
+    - Click **Settings** in the AI projects page sidebar
+    - Look for a **Connected Resources** or **Connections** panel - click _View All_.
+    - Verify these connections exist (by name):
         - contoso-search
         - aoai-connection
-    - We will create the third connection (contoso-cosmos) later.
+    - We will be creating a third one (contoso-cosmos) manually later.
 
 ---
 
-🥳 **Congratulations!** <br/> Your verified Azure subscription is provisioned correctly!
-
-
+🚀 | **Next** - Let's see if our GitHub Codespaces enviornment is ready for development...
 
 ===
 
@@ -197,27 +193,26 @@ Next we need to verify that Azure OpenAI model deployments are complete.
 
 ## 6. VSCode Azure Login
 
-Return to the **GitHub Codespaces session** (Tab 1) and see if the Visual Studio Code environment is ready. You may need to wait a few minutes till the terminal is ready, with a prompt cursor active.
+> [!tip] 
+> **Connect VSCode To Azure:** Once ready, the GitHub Codespaces environment will launch with a Visual Studio Code session (IDE) by default. In this step, we'll connect it to our Azure environment to access pre-provisioned resources.
 
-> [!note] 
-> Our development environment comes pre-configured with the Azure CLI (`az`) that we can now use from the command-line, to authenticate our Visual Studio Code session with Azure.
+* []  **01** |  Switch to Tab 1 (GitHub Codespaces launched earlier) 
+    - Wait for setup to complete if still ongoing
+    - On completion, tab will refresh automatically
+    - You should see - a Visual Studio Code editor 
+    - You should see - a terminal open in editor (wait till prompt is active)
 
-* []  **01** | Visit the browser tab where you launched GitHub Codespaces.
-    - You should see a Visual Studio Code editor 
-    - You should see a terminal open in editor
-
-> [!hint]
-> If the Visual Studio Code Terminal is not open at this time, just click the hamburger menu (top left). Then look for the _Terminal_ option & Open a New Terminal.
-
-* []  **02** | Use Azure CLI from terminal, to login
+* []  **02** | Click in the terminal to use the Azure CLI (`az`) tool:
     - Enter command: +++az login --use-device-code+++ 
     - Open +++https://microsoft.com/devicelogin+++ in new tab
     - Copy-paste code from Azure CLI into the dialog you see here
     - On success, close this tab and return to VS Code tab
 
+🥳 **Congratulations!** You've connected your VS Code development environment to Azure!
+
 ---
 
-🥳 **Congratulations!** <br/> You're logged into Azure on VS Code.
+🚀 | **Next** - Run post-provision script (auto-populates data, pushes flows to Azure)
 
 ===
 
@@ -228,104 +223,52 @@ Return to the **GitHub Codespaces session** (Tab 1) and see if the Visual Studio
 ## 7. VSCode Config Env
 
 > [!warning]
-> 🚨 Work in Progress - CLEAN THIS UP TO A SINGLE SCRIPT RUN
+> 🚨 Work in Progress - TEST THESE UPDATED INSTRUCTIONS ARE CORRECT
 
-> [!note] 
-> Your Azure subscription comes with pre-provisioned resources for this workshop. Let's take a minute to copy the configuration details to our local environment, so we can use them from our code later.
+> [!tip] 
+> **Connect VSCode To Azure:** Run scripts that automate steps to populate data for key resources, and push the promptflow to Azure for use in a later deployment step.
 
-* []  **01** | Download the 'config.json' for this Azure AI project
-    - Visit +++https://portal.azure.com+++ in a new browser tab
+* []  **01** | Run the postprovision script
+    - Click in the terminal and change working directory: +++cd 1-provision/+++
+    - Run the setup script using: +++sh postprovision.sh+++
+    - Wait till script execution completes.
+
+* []  **02** | Verify the following files were created
+    - Open the file explorer panel in Visual Studio Code
+    - Verify that `config.json` was created in the root folder
+    - Click file to open in editor and verify it is not empty
+    - Verify that `.env` was created in the root folder
+    - Click file to open in editor and verify it is not empty
+
+* []  **03** | Verify Azure CosmosDB data was populated
+    - Switch to Tab 2 (Azure Portal)
     - Click on your created resource group (_contoso-chat-rg_)
-    - Click on your Azure AI project resource (_contoso-chat-aiproj_) 
-    - Look for the **download config.json** option under Overview
-    - Click to download the file to the Windows 11 VM 
-    - Open the file and **Copy** the contents to clipboard.
-
-* []  **02** | Update your VS Code project with these values
-    - Switch browser tab to your Visual Studio Code editor
-    - Open VS Code Terminal, enter: +++touch config.json+++
-    - This creates an empty config.json file in root directory.
-    - Open file in VS Code and **Paste** data from clipboard
-    - Save the file.
-
-> [!hint]
-_We'll now configure service endpoints and keys as env vars for programmatic access from Jupyter Notebooks. This step requires Copy-Paste actions. If you have trouble pasting into the VS Code window, right-click and choose **Paste** from the menu._
-
-* []  **01** | Keep your Visual Studio Code editor open in one tab
-    - Open VS Code Terminal, enter: +++cp .env.sample .env+++
-    - This should copy "local.env" to a new **.env** file.
-    - Open ".env" in Visual Studio Code, keep tab open.
-
-> [!warning]
-Your Virtual Machine will have a _local.env_ file on the desktop. **If you don't see that file, skip to step 03 | Update the Azure OpenAI environment variables** below
-
-* []  **02** | Copy pre-existing _local.env_ values to **.env**
-    - Delete the contents of .env file created above (Ctrl-A, DEL)
-    - Open the file _local.env_ on your desktop in Notepad 
-    - Copy its entire contents to the clipboard (Ctrl-A, Ctrl-C)
-    - Paste the clipboard contents into **.env** (Control-V)
-    - Save the **.env** file.
-
-> [!NOTE]
-_This assumes you setup the Azure AI Search resource earlier. In this section, we'll populate it with product data and create the index._
-
-* []  **01** | Return to the Visual Studio Code editor tab
-    - Locate the "data/product_info/" folder
-    - Open the **create-azure-search.ipynb** Jupyter Notebook.
-
-* []  **02** | Run the notebook to populate search index
-    - Click **Select Kernel** (top right)
-    - Pick "Python Environments" and select recommended option
-    - Click **Clear All Outputs** then **Run All**
-    - Verify that all code cells executed correctly.
-
-* []  **03** | Verify the search index was created
-    - Open +++https://portal.azure.com+++ to Azure AI Search resource
-    - Click the **Indexes** option in sidebar to view indexes
-    - Verify that the **contoso-products** search index was created.
-
-
-> [!NOTE]
-_This assumes you setup the Azure CosmosDB resource earlier. In this section, we'll populate it with customer data._
-
-* []  **01** | Return to the Visual Studio Code editor tab
-    - Locate the "data/customer_info/" folder
-    - Open the **create-cosmos-db.ipynb** Jupyter Notebook.
-
-* []  **02** | Run the notebook to populate customer database
-    - Click **Select Kernel**, set recommended Python environment 
-    - Click **Clear All Outputs** then **Run All** & verify completion
-
-* []  **03** | Verify the customer database was created
-    - Open +++https://portal.azure.com+++ to Azure CosmosDB resource
+    - Click on your Azure Cosmos DB resource
     - Click the **Data Explorer** option in sidebar to view data
     - Verify that the **contoso-outdoor** container was created
     - Verify that it contains a **customers** database
 
-> [!NOTE]
-_This assumes you completed all Azure resource setup and VS Code configuration for those resources. Now let's setup **local Connections** so we can run the prompt flow in VS Code later._
+* []  **04** | Verify Azure AI Search indexes was populated
+    - Return to the resource group (_contoso-chat-rg_) page
+    - Click on the Azure AI Search resource
+    - Click the **Indexes** option in sidebar to view indexes
+    - Verify that the **contoso-products** search index was created.
 
-* []  **01** | Return to the Visual Studio Code editor tab
-
-* []  **02** | Setup a local third-party backend to store keys
-    - Open the Visual Studio Code terminal 
-    - Type +++pip install keyrings-alt+++ and hit Enter
-    - Installation should complete quickly
-
-* []  **03** | Run the notebook to set local prompt flow connections
-    - Locate the "connections/" folder
-    - Open the **create-connections.ipynb** Jupyter Notebook.
-    - Click **Select Kernel**, set recommended Python environment 
-    - Click **Clear All Outputs** then **Run All** & verify completion
-
-* []  **04** | Validate connections were created
+* []  **05** | Verify local promptflow connections were created
     - Return to Visual Studio Code terminal
     - Type +++pf connection list+++ and hit Enter
     - Verify 3 connections were created *with these names* <br/> **"contoso-search", "contoso-cosmos", "aoai-connection"**
 
+* []  **06** | Verify the local promptflow was uploaded to Azure
+    - This allows us to run & test the same application in Azure AI Studio (pre-deploy)
+    - Navigate to Azure AI Studio "Build" section - +++**https://ai.azure.com/build**+++
+    - Select the AI Project - then click the _Prompt Flow_ tab in sidebar
+    - Verify you are in the Flows tab - you may need to click _Refresh_ for updates
+    - Verify that you can see a Flow listed - the name will be of the form `chat-flow-xxxx`
+
 ---
 
-🥳 **Congratulations!** <br/> You're configured to use Azure from VS Code.
+🥳 **Congratulations!** Your application is configured and ready to run (locally, and on Azure)
 
 ===
 
@@ -333,43 +276,38 @@ _This assumes you completed all Azure resource setup and VS Code configuration f
 
 ---
 
-## 8. Azure Config Connections
+## 8. Add Custom Cosmos Connection 
+
+> [!tip] 
+> **Temporary Fix:** The postprovision script sets up all promptflow connections by default. For now, we have to manually configure the one _custom connection_ required for Azure Cosmos DB. This is a temporary measure that is being automated in upcoming versions of the sample.
 
 > [!warning]
-> 🚨 Work in Progress 
-
-We've configured our local connections. Now it's time to do the same in the cloud, so we can use them in the later steps for deployment. In the earlier step, we verified that two of three connections are already setup for us, namely _contoso-search_ and _aoai-connection_. We just need to **create the custom connection** for _contoso-cosmos_.
-
-> [!IMPORTANT]
-> _This is a custom connection you will need to setup manually_. **Note that it uses Azure ML Studio (for now).** We expect this to change in future to allow all connections to be provisioned from Azure AI Studio instead.
+> 🚨 Work in Progress - TEST THESE UPDATED INSTRUCTIONS ARE CORRECT
 
 * []  **01** | Create the **Custom Connection** (+++contoso-cosmos+++) 
-    - Visit +++https://ml.azure.com+++ 
-    - Under **Recent Workspaces**, click project (_contoso-chat-aiproj_)
-    - Select **Prompt flow** (sidebar), then **Connections** (tab)
-    - Click **Create** and select **Custom** from dropdown
-    - **Name**: +++contoso-cosmos+++
-    - **Provider**: Custom (default)
-    - **Key-value pairs**: Add 4 entries (get env var values from .env)
-        - key: +++key+++, <br/> value: use the "COSMOS_KEY" value from .env <br/> **check "is secret"**
-        - key: +++_endpoint_+++ , <br/> value: use the "COSMOS_ENDPOINT" value from .env 
+    - Navigate to Azure AI Studio "Build" section - +++**https://ai.azure.com/build**+++
+    - Select the AI Project and click _Settings_ in sidebar
+    - Select the _New Connection_ option and click _Custom keys_ in available options
+    - Under **Custom Keys** - Add 4 entries as shown below
+        - key: +++key+++, value: use "COSMOS_KEY" value from .env 
+        - key: +++_endpoint_+++, value: use "COSMOS_ENDPOINT" value from .env 
         - key: +++_containerId_+++, value: +++customers+++
         - key: +++_databaseId_+++, value: +++contoso-outdoor+++
+        - **check "is secret" on the first key-value pair**
     - Click **Save** to complete step. 
-    
-* []  **02** | Let's verify all three connections now exist in Azure AI Studio
-    - Visit +++https://ai.azure.com+++ and navigate to "Build".
-    - Select your Azure AI project from list, click to see details page.
-    - Click **Settings** icon (sidebar, bottom left)
-    - Look for the **Connections** panel and click **View all**
-    - Verify that you see all 3 connections:
+
+* []  **02** | Verify all three connections now exist in Azure AI Studio
+    - Navigate to Azure AI Studio "Build" section - +++**https://ai.azure.com/build**+++
+    - Select the AI Project and click _Settings_ in sidebar
+    - Click **Connected Resources** - and select _View all_
+    - Verify you see the following in the listed connections:
         - contoso-search
         - aoai-connection
         - contoso-cosmos
 
 ---
 
-🥳 **Congratulations!** <br/> Your *cloud connections* to the Azure AI project are ready!
+🚀 | **Next** - Let's run the promptflow on VS Code, and explore the code
 
 ===
 
@@ -377,7 +315,10 @@ We've configured our local connections. Now it's time to do the same in the clou
 
 ---
 
-## 9. PromptFlow Explore Codebase
+## 9. Understand Promptflow Codebase
+
+> [!warning]
+> 🚨 Work in Progress - FIX THESE INSTRUCTIONS
 
 > [!NOTE]
 > Our environment, resources and connections are configured. Now, let's learn about prompt flow and how it works. A **prompt flow is a DAG (directed acyclic graph)** made of up **nodes** connected together in a **flow**. Each node is a **function tool** (written in Python) that can be edited and customized to suit your needs.
@@ -416,18 +357,6 @@ We've configured our local connections. Now it's time to do the same in the clou
         - **nodes** - processing functions (tools) for workflow
 
 The "prompt flow" is defined by the **flow.dag.yaml** but the text view does not help us understand the "flow" of this process. Thankfully, the Prompt Flow extension gives us a **Visual Editor** that can help. Let's explore it.
-
----
-
-🥳 **Congratulations!** <br/> You're ready to explore a prompt flow visually!
-
-===
-
-[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
-
----
-
-## 10. PromptFlow Open Visual Editor
 
 > [!hint]
 > In the previous section, you should have opened Visual Studio Code, navigated to the _contoso-chat_ folder, and opened the _flow.dag.yaml_ file in the editor pane. We also assume you have the _Prompt Flow_ extension installed correctly (see VS Code extensions sidebar).
@@ -470,7 +399,10 @@ This defines the _processing pipeline_ for your LLM application from user input,
 
 ---
 
-## 11. PromptFlow Run Flow
+## 10. Run Promptflow In VS Code
+
+> [!warning]
+> 🚨 Work in Progress - FIX THESE INSTRUCTIONS
 
 > [!hint]
 > Let's now return to the Visual Studio Code editor from the earlier step. It should still be in the _contoso-chat_ folder, with the_flow.dag.yaml_ opened in the Visual Editor view. Let's now try to **run the prompt flow in our local environment** and verify that it works.
@@ -548,7 +480,19 @@ This defines the _processing pipeline_ for your LLM application from user input,
 
 ---
 
-## 12. PromptFlow Evaluate Flow
+## 11. Run Promptflow in Azure
+
+> [!warning]
+> 🚨 Work in Progress - FIX THESE INSTRUCTIONS
+
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 12. Evaluate Promptflow in VS Code
 
 > [!NOTE]
 > You've built and run the _contoso-chat_ prompt flow locally using the Visual Studio Code Prompt Flow extension and SDK. Now it's time to **evaluate** the quality of your LLM app response to see if it's performing up to expectations. Let's dive in.
