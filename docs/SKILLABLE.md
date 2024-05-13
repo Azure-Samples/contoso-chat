@@ -1,4 +1,4 @@
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
@@ -15,175 +15,144 @@ This is a proctored 45-min lab on **Build, Evaluate & Deploy a RAG-based retail 
 > You must have the following to participate in this lab:
 
  * A **GitHub Account** for GitHub Codespaces usage. (mandatory) 
- * Familiarity with **Python and Jupyter Notebooks**.
- * Familiarity with **Azure**, **Visual Studio Code** and **GitHub**.
+ * Familiarity with **Python and Jupyter Notebooks** is useful.
+ * Familiarity with **Azure**, **Visual Studio Code** and **GitHub** is useful.
 
-## Table Of Contents
-
-- [**Lab Overview**](#lab-overview)
-    - [01. Get Started](#1-get-started)
-    - [02. Launch GitHub Codespaces](#2-launch-github-codespaces)
-    - [03. Verify Azure Is Provisioned](#3-verify-azure-is-provisioned)
-    - [04. VSCode Azure Login](#4-vscode-azure-login)
-    - [05. VSCode Azure Config](#5-vscode-azure-config)
-    - [06. VSCode Config Env](#6-vscode-config-env)
-    - [07. VSCode Populate Search](#7-vscode-populate-search)
-    - [08. VSCode Populate Database](#8-vscode-populate-database)
-    - [09. VSCode Config Connections](#9-vscode-config-connections)
-    - [10. Azure Config Connections](#10-azure-config-connections)
-    - [11. PromptFlow Explore Codebase](#11-promptflow-explore-codebase)
-    - [12. PromptFlow Open Visual Editor](#12-promptflow-open-visual-editor)
-    - [13. PromptFlow Run Flow ](#13-promptflow-run-flow)
-    - [14. PromptFlow Evaluate Flow](#14-promptflow-evaluate-flow)
-    - [15. Push PromptFlow To Azure ](#15-push-promptflow-to-azure)
-    - [16. PromptFlow Deploy Flow](#16-promptflow-deploy-flow)
-    - [**Lab Recap**](#lab-recap)
-- [**Appendix**](#appendix)
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## Lab Overview
-
-This lab gives you hands-on experience with **End-to-End LLM Application Development (LLMOps)** by teaching you to _build, run, evaluate, and deploy_ a RAG-based application ("Contoso Chat") using **Azure AI Studio** and **Prompt Flow**.
-
-## Learning Objectives
-
-By the end of this lab, you should be able to:
-
-1. Explain **LLMOps** concepts & benefits.
-1. Explain **Prompt Flow** concept & benefits.
-1. Explain **Azure AI Studio** features & usage.
-1. Use **Prompt Flow** on Visual Studio Code
-1. Design **RAG-based LLM Applications**
-1. Build, run, evaluate & deploy RAG-based LLM apps **on Azure**.
-
-
-## Pre-Requisites
-
-The lab environment is pre-configured with an Azure subscription **and pre-provisioned with the required Azure resources** to jumpstart your journey. We assume some familiarity with the following concepts:
-1. Machine Learning & Generative AI _concepts_
-1. Python & Jupyter Notebook _programming_
-1. Azure, GitHub & Visual Studio Code _tooling_
-
-## Development Environment
-
-You'll use the following resources in this lab:
- - [Contoso Chat](https://github.com/Azure-Samples/contoso-chat) - as the target application.
- - [Github Codespaces](https://github.com/codespaces) - as the dev container
- - [Visual Studio Code](https://code.visualstudio.com/) - as the default editor
- - [Azure AI Studio (Preview)](https://ai.azure.com) - for AI projects
- - [Azure ML Studio](https://ml.azure.com) - for minor configuration
- - [Azure Portal](https://portal.azure.com) - for managing Azure resources
- - [Prompt Flow](https://github.com/microsoft/promptflow) - for streamlining end-to-end LLM app dev
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## 1. Get Started
-
+## 1. Get Started!
 
 > [!hint] 
-> **First time using Skillable?** Tip: The green "T" (e.g., +++**@lab.VirtualMachine(BuildBaseVM).Username**+++) indicate values that are _automatically input for you_ at the current cursor location in VM, with one click. This reduces your effort and minimizes input errors.
+> **Skillable Pro-Tip:** Click on the green "T" (e.g., +++**@lab.VirtualMachine(BuildBaseVM).Username**+++) to have the associated value automatically entered into the VM at the current cursor location to minimize input errors.
 
-**Let's get started by logging into the VM and organizing our space!**
+-  [] **01** | Log into the Skillable VM with these credentials.
+    - Username - Will already be set to **@lab.VirtualMachine(BuildBaseVM).Username**.
+    - Password - Enter +++**@lab.VirtualMachine(BuildBaseVM).Password**+++ and click.
+    - You should see - _A Windows 11 Desktop._
 
--  [] **01** | Log in using these credentials.
-    - Username: will already be set to **@lab.VirtualMachine(BuildBaseVM).Username**.
-    - Password: enter +++**@lab.VirtualMachine(BuildBaseVM).Password**+++ and click.
-    - You should see: _A Windows 11 Desktop._
+Let's get a quick overview of the lab in the next section.
 
-* []  **02** | Launch the Edge Browser
-    - Open it in full-screen mode.
-    - All workshop tasks will happen in-browser.
+===
 
-* []  **03** | Open Azure Portal in a new tab and authenticate.
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 2. Lab Overview
+
+This lab teaches you how to build, evaluate, and deploy, a retail copilot application (_Contoso Chat_) using the Azure AI platform. By the end of this lab, you should be able to:
+
+1. Describe the Contoso Chat retail copilot (Application)
+1. Explain retrieval augmented generation (Architecture)
+1. Describe the Azure AI Studio (Platform)
+1. Describe the Promptflow tools & usage (Framework)
+1. Build, evaluate, and deploy, a copilot app end-to-end (on Azure)
+
+### 2.1 Azure Subscription (Provisioned)
+
+This lab comes with an _Azure Subscription_ that has been pre-provisioned with the necessary resources for developing this retail copilot solution. These include:
+1. Azure AI Hub and Project - to manage your AI application
+1. Azure AI Services - to manage your Open AI model deployments
+1. Azure AI Search - to build and maintain the product index
+1. Azure Cosmos DB - to build and maintain the customer history data
+
+### 2.2 Browser Interface (Interactions)
+
+We will be using the Microsoft Edge browser in the VM as the default user interface throughout this lab. You will be instructed to open tabs to the following resources:
+1. Azure Portal - to manage all Azure resources
+1. Azure AI Studio - to manage your Azure AI application interactions
+1. GitHub Codespaces - to provide your local development environment (dev container)
+1. GitHub Repository - to start the lab by forking a copy of the repo to your profile.
+
+### 2.3 Lab Repository (Contoso Chat)
+
+We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) branch of the Contoso Chat repository. Watch for instructions on how to fork this and launch GitHub Codespaces to get a pre-defined development environment with minimal setup effort.
+
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 3. Browser Setup
+
+**Launch the browser and organize your tabs for efficiency!**
+
+* []  **01** | Launch the Edge Browser. **Open it in full-screen mode.**
+
+* []  **02** | _Tab 1_: Open a new tab for **GitHub interactions**.
+    - Navigate to  +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
+    - Log into GitHub - user your GitHub profile credentials.
+    - Leave this tab open | Tab 1 = GitHub interactions
+
+* []  **03** | _Tab 2_: Open a new tab for the **Azure Portal**.
     - Navigate to  +++**https://portal.azure.com**+++ in a new tab.
-    - You should see: _A Microsoft Azure login dialog_.
+    - You should see - _A Microsoft Azure login dialog_.
     - Enter Username: +++**@lab.CloudPortalCredential(User1).Username**+++
     - Enter Password: +++**@lab.CloudPortalCredential(User1).Password**+++ and click.
-    - You should see: _Your Azure Subscription home page._
-    - **This is your Azure Portal tab**. Leave it open.
+    - You should see - _Your Azure Subscription home page._
+    - Leave this tab open | Tab 2 = Azure Portal
     
-* []  **04** | Open Azure AI Studio in a new tab.
+* []  **04** | _Tab 3_: Open a new tab for **Azure AI Studio.**
     - Navigate to +++**https://ai.azure.com**+++ in a new tab.
-    - Click the _Sign in_ button. (no need to re-enter Username/Password)
+    - Click _Sign in_ - no need to re-enter Username/Password.
     - You should see: _You are logged in with your Azure profile._
-    - **This is your Azure AI Studio tab**. Leave it open.
-
-* []  **05** | Open Azure ML Studio in a new tab.
-    - Navigate to +++**https://ml.azure.com**+++ in a new tab
-    - You should see: _You are already logged in with your Azure profile._
-    - **This is your Azure ML Studio tab**. Leave it open.
-
-You should now have a full-screen browser with 3 tabs open - to Azure Portal, Azure AI Studio and Azure ML Studio respectively. We'll use each of these at specific points in the workshop so leave them open and let's move on. 
+    - Leave this tab open | Tab 3 = Azure AI Studio
 
 ---
 
-🥳 **Congratulations!** <br/>  You successfully logged into Azure and Azure AI platform sites!!
+🥳 **Congratulations!** <br/>  You have organized your workspaces and are ready to launch the dev environment!
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 2. Launch GitHub Codespaces 
+## 4. Launch GitHub Codespaces 
 
-This workshop will use the [Azure-Samples/contoso-chat](https://aka.ms/aitour/contoso-chat) sample as the base. This is configured with "devcontainer.json" - meaning you can launch it in GitHub Codespaces to get a pre-built development environment with no added effort.
+> [!Important] **Note:** You need a GitHub account to launch the lab with GitHub Codespaces. **We recommend using a personal account (or a secondary account not linked to your corporate profile) for this purpose**. You can [create a free GitHub account here](https://github.com/signup) if needed. The lab can be completed within the free GitHub Codespaces quota available for personal accounts.
 
-> [!Important] **Note:** You will need a GitHub account to use GitHub Codespaces. **We recommend using a personal account (or a secondary account that is not linked to your corporate profile) for this purpose**. You will be able to complete the workshop within the free GitHub Codespaces quota available for personal accounts.
 
-* []  **01** | Log into GitHub
-    - Open a new browser tab
-    - Navigate to  +++**https://aka.ms/aitour/contoso-chat**+++
-    - **Login using _your_ GitHub credentials.**
+This workshop uses a specially-tagged [#msbuild-lab322](https://aka.ms/msbuild2024-lab) branch of the Contoso Chat repo. In this section, you will fork the repo **and uncheck the 'main only' default** to ensure your fork contains the right branch. You'll then launch GitHub Codespaces to get a Visual Studio Code environment in the browser, with all required depdencies pre-installed.
 
-> [!note] 
-> **Note:** If you use a GitHub Enterprise account that requires single sign-on authentication, authentication may fail. In that case, [create a free GitHub account here](https://github.com/signup) and use that instead.
+
+* []  **01** | Switch to the GitHub tab (Tab 1) in the browser
+    - Navigate to the  +++**https://aka.ms/msbuild2024-lab**+++ link
+    - Verify you are logged in (from prior step)
 
 * []  **02** | Fork the repo into your profile
-    - Navigate to +++**https://aka.ms/aitour/contoso-chat**+++
     - Click the fork button the repo
-    - Check "Copy the 'main' branch" only
-    - Click "Create fork"
+    - **Uncheck the "Copy the 'main' branch" only** to get all branches.
+    - Click "Create fork".
     - Wait for the fork to complete in your profile.
 
-* []  **03** | Launch a Codespace
-    - In your forked repo, click _'Code'_ dropdown
-    - Select the "Codespaces" tab (next to the "Local" tab)
+* []  **03** | Launch the Codespace on the **#msbuild-lab322** branch/
+    - In the forked repo, select _`msbuild-lab322`_ branch in dropdown
+    - Click _'Code'_ dropdown, select the `Codespaces` tab 
     - Click _"Create codespace on main"_
-    - You should see a new browser tab: _'Setting up your codespace'_
-    - In 3-4 minutes, this will be replaced by an interface resembling Visual Studio code, but running in the browser.
+    - You should see - a new browser tab witg _'Setting up your codespace'_
 
-You should now have a _fourth browser tab_ with GitHub Codespaces running. Keep this tab open. **This is your Visual Studio Code tab**.
-
+This process can take 3-4 minutes to complete. Once done, the tab will refresh to show an interface resembling _Visual Studio Code_ running in the browser. **Your Tab 1 will now be the GitHub Codespaces tab**. _While you wait, you can move on to the next task and return to this tab later_.
 
 ---
 
-🥳 **Congratulations!** <br/> Your development environment is ready!
+🥳 **Congratulations!** <br/> Your GitHub Codespaces environment is getting ready!
 
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 3. Verify Azure Is Provisioned
+## 5. Verify Azure Is Provisioned
 
 > [!note] 
-> Your Azure subscription should come pre-configured with resources for the workshop. Let's check this.
+> Your Azure subscription is pre-provisioned with resources for the workshop. Let's verify this.
 
 
-* []  **01** | Check that your subscription is pre-provisioned.
-    - Switch to your Azure Portal tab - +++**https://portal.azure.com**+++
+* []  **01** | Switch to Tab 2 (Azure Portal) in the browser
+    - Navigate to the Azure Portal home page +++**https://portal.azure.com**+++
     - Click the _'Resource Groups'_ option
     - Verify that a Resource Group called **contoso-chat-rg** is listed.
 * []  **02** | Click the Resource Group to view details. 
@@ -194,9 +163,10 @@ You should now have a _fourth browser tab_ with GitHub Codespaces running. Keep 
         - a "Search service" (Azure AI Search) resource
         - a "Azure Cosmos DB account" resource
 
-* []  **03** | Check that required models were deployed
-    - Switch to your Azure AI Studio tab - +++**https://ai.azure.com**+++
-    - Click on the **Build** tab to see the list of AI projects
+Next we need to verify that Azure OpenAI model deployments are complete.
+
+* []  **03** | Switch to Tab 3 (Azure AI Studio) in the browser
+    - Navigate to the Build section of Azure AI Studio - +++**https://ai.azure.com/build**+++
     - Click the listed AI project for details. 
     - Click on the **Deployments** item in the sidebar to see Deployments
     - **You may need to Refresh the list** to see updates.
@@ -204,28 +174,30 @@ You should now have a _fourth browser tab_ with GitHub Codespaces running. Keep 
         - gpt-35-turbo
         - gpt-4
         - text-embedding-ada-002
+
 * []  **04** | Check that required connections were created
     - Click the **Settings** icon on the sidebar (bottom left)
     - Look for the **Connections** panel and click **View all**
     - Verify that the listed connections have **these two names**
         - contoso-search
         - aoai-connection
-    - We create the third connection (contoso-cosmos) later.
-
+    - We will create the third connection (contoso-cosmos) later.
 
 ---
 
-🥳 **Congratulations!** <br/> Your Azure subscription is provisioned correctly!
+🥳 **Congratulations!** <br/> Your verified Azure subscription is provisioned correctly!
 
 
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 4. VSCode Azure Login
+## 6. VSCode Azure Login
+
+Return to the **GitHub Codespaces session** (Tab 1) and see if the Visual Studio Code environment is ready. You may need to wait a few minutes till the terminal is ready, with a prompt cursor active.
 
 > [!note] 
 > Our development environment comes pre-configured with the Azure CLI (`az`) that we can now use from the command-line, to authenticate our Visual Studio Code session with Azure.
@@ -249,11 +221,14 @@ You should now have a _fourth browser tab_ with GitHub Codespaces running. Keep 
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 5. VSCode Azure Config
+## 7. VSCode Config Env
+
+> [!warning]
+> 🚨 Work in Progress - CLEAN THIS UP TO A SINGLE SCRIPT RUN
 
 > [!note] 
 > Your Azure subscription comes with pre-provisioned resources for this workshop. Let's take a minute to copy the configuration details to our local environment, so we can use them from our code later.
@@ -273,18 +248,6 @@ You should now have a _fourth browser tab_ with GitHub Codespaces running. Keep 
     - Open file in VS Code and **Paste** data from clipboard
     - Save the file.
 
----
-
-🥳 **Congratulations!** <br/> You're configured to use Azure from VS Code.
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## 6. VSCode Config Env
-
 > [!hint]
 _We'll now configure service endpoints and keys as env vars for programmatic access from Jupyter Notebooks. This step requires Copy-Paste actions. If you have trouble pasting into the VS Code window, right-click and choose **Paste** from the menu._
 
@@ -302,52 +265,6 @@ Your Virtual Machine will have a _local.env_ file on the desktop. **If you don't
     - Copy its entire contents to the clipboard (Ctrl-A, Ctrl-C)
     - Paste the clipboard contents into **.env** (Control-V)
     - Save the **.env** file.
-
-🥳 **Congratulations!** <br/> Your VS Code env variables are updated!
-You can skip the remaining sections below, and advance to the next page.
-
----
-<br/>
-
-> [!warning]
-**Do the steps below only if you were unable to do step 02.** If you did not have a pre-existing _local.env_ file and need to configure the values manually, continue from here.
-
-> [!hint] 
-To configure values, replace the placeholders (e.g. `<YOUR_OPEN_AI_KEY>`) by **deleting them first** then copying in values. Do **NOT** retain the < and > brackets.
-
-* []  **03** | Update the Azure OpenAI environment variables
-    - Open +++https://ai.azure.com+++ in a new tab
-    - Click **"Build"**, then open your AI project page.
-    - Click **"Settings"**, click **"Show endpoints"** in the first tile
-    - Copy **Azure.OpenAI** endpoint value, <br/> To "CONTOSO_AI_SERVICES_ENDPOINT" value in ".env"
-    - Copy **Primary key** value <br/> To "CONTOSO_AI_SERVICES_KEY" value in ".env"
-
-* []  **04** | Update the Azure AI Search environment variables
-    - Open +++https://portal.azure.com+++ in a new tab
-    - Open your Azure AI Search **"Search service"** resource page (_search-contosoXXXXX_)
-    - Copy **Uri** value under Overview page <br/> To "CONTOSO_SEARCH_ENDPOINT" in ".env"
-    - Navigate to the **"Keys"** blade (left pane) and copy **Primary admin key** to "CONTOSO_SEARCH_KEY" in ".env"
-
-* []  **05** | Locate the Azure CosmosDB environment variables
-    - Open +++https://portal.azure.com+++ in a new tab
-    - Open your **Azure Cosmos DB account** resource page
-    - Navigate to the **Keys** blade from the left pane
-    - Copy **URI** value, <br/> To "COSMOS_ENDPOINT" value in ".env"
-    - Copy **PRIMARY KEY** value <br/> To "COSMOS_KEY" value in ".env"
-
-* []  **06** | Save the ".env" file.
-
----
-
-🥳 **Congratulations!** <br/> Your VS Code env variables are updated!
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## 7. VSCode Populate Search
 
 > [!NOTE]
 _This assumes you setup the Azure AI Search resource earlier. In this section, we'll populate it with product data and create the index._
@@ -367,17 +284,6 @@ _This assumes you setup the Azure AI Search resource earlier. In this section, w
     - Click the **Indexes** option in sidebar to view indexes
     - Verify that the **contoso-products** search index was created.
 
----
-
-🥳 **Congratulations!** <br/> Your Azure AI Search index is ready!
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## 8. VSCode Populate Database
 
 > [!NOTE]
 _This assumes you setup the Azure CosmosDB resource earlier. In this section, we'll populate it with customer data._
@@ -395,18 +301,6 @@ _This assumes you setup the Azure CosmosDB resource earlier. In this section, we
     - Click the **Data Explorer** option in sidebar to view data
     - Verify that the **contoso-outdoor** container was created
     - Verify that it contains a **customers** database
-
----
-
-🥳 **Congratulations!** <br/> Your Azure CosmosDB database is ready!
-
-===
-
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
-
----
-
-## 9. VSCode Config Connections
 
 > [!NOTE]
 _This assumes you completed all Azure resource setup and VS Code configuration for those resources. Now let's setup **local Connections** so we can run the prompt flow in VS Code later._
@@ -431,15 +325,18 @@ _This assumes you completed all Azure resource setup and VS Code configuration f
 
 ---
 
-🥳 **Congratulations!** <br/> Your *local connections* to the Azure AI project are ready!
+🥳 **Congratulations!** <br/> You're configured to use Azure from VS Code.
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 10. Azure Config Connections
+## 8. Azure Config Connections
+
+> [!warning]
+> 🚨 Work in Progress 
 
 We've configured our local connections. Now it's time to do the same in the cloud, so we can use them in the later steps for deployment. In the earlier step, we verified that two of three connections are already setup for us, namely _contoso-search_ and _aoai-connection_. We just need to **create the custom connection** for _contoso-cosmos_.
 
@@ -476,11 +373,11 @@ We've configured our local connections. Now it's time to do the same in the clou
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 11. PromptFlow Explore Codebase
+## 9. PromptFlow Explore Codebase
 
 > [!NOTE]
 > Our environment, resources and connections are configured. Now, let's learn about prompt flow and how it works. A **prompt flow is a DAG (directed acyclic graph)** made of up **nodes** connected together in a **flow**. Each node is a **function tool** (written in Python) that can be edited and customized to suit your needs.
@@ -526,11 +423,11 @@ The "prompt flow" is defined by the **flow.dag.yaml** but the text view does not
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 12. PromptFlow Open Visual Editor
+## 10. PromptFlow Open Visual Editor
 
 > [!hint]
 > In the previous section, you should have opened Visual Studio Code, navigated to the _contoso-chat_ folder, and opened the _flow.dag.yaml_ file in the editor pane. We also assume you have the _Prompt Flow_ extension installed correctly (see VS Code extensions sidebar).
@@ -569,11 +466,11 @@ This defines the _processing pipeline_ for your LLM application from user input,
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 13. PromptFlow Run Flow
+## 11. PromptFlow Run Flow
 
 > [!hint]
 > Let's now return to the Visual Studio Code editor from the earlier step. It should still be in the _contoso-chat_ folder, with the_flow.dag.yaml_ opened in the Visual Editor view. Let's now try to **run the prompt flow in our local environment** and verify that it works.
@@ -647,11 +544,11 @@ This defines the _processing pipeline_ for your LLM application from user input,
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 14. PromptFlow Evaluate Flow
+## 12. PromptFlow Evaluate Flow
 
 > [!NOTE]
 > You've built and run the _contoso-chat_ prompt flow locally using the Visual Studio Code Prompt Flow extension and SDK. Now it's time to **evaluate** the quality of your LLM app response to see if it's performing up to expectations. Let's dive in.
@@ -714,11 +611,14 @@ This defines the _processing pipeline_ for your LLM application from user input,
 🥳 **Congratulations!** <br/> You've evaluated your contoso-chat flow for single-data and batch data runs, using single-metric and multi-metric eval flows. _Now you're ready to deploy the flow so apps can use it_. 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 15. Push PromptFlow To Azure
+## 13. Push PromptFlow To Azure
+
+> [!warning]
+> 🚨 Work in Progress - Remove this, should be done in Step 8 automatically
 
 >[!note] 
 > We can run the prompt flow in local (Visual Studio Code) and cloud (Azure) runtime environments. In this section, we'll push the prompt flow to the cloud and validate that it runs there, so it is ready for the _Deployment_ step later. 
@@ -746,11 +646,11 @@ This defines the _processing pipeline_ for your LLM application from user input,
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
-## 16. PromptFlow Deploy Flow
+## 14. PromptFlow Deploy Flow
 
 > [!hint]
 > Till now, you've explored, built, tested, and evaluated, the prompt flow _from Visual Studio Code_, as a developer. Now it's time to _deploy the flow to production_ so applications can use the endpoint to make requests and receive responses in real time.
@@ -834,7 +734,7 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
 ---
 
@@ -883,7 +783,30 @@ If you found this workshop useful, please give us a star on GitHub and help us m
 
 ===
 
-[🏠 Table Of Contents](#table-of-contents) ⎯ [⚙️ Appendix](#appendix)
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## Table Of Contents
+
+- [**Lab Overview**](#lab-overview)
+    - [01. Get Started](#1-get-started)
+    - [02. Lab Overview](#2-lab-overview)
+    - [03. Browser Setup](#3-browser-setup)
+    - [04. Launch GitHub Codespaces](#4-launch-github-codespaces)
+    - [05. Verify Azure Is Provisioned](#5-verify-azure-is-provisioned)
+    - [06. VSCode Azure Login](#6-vscode-azure-login)
+    - [07. VSCode Config Env](#7-vscode-config-env)
+    - [08. Azure Config Connections](#8-azure-config-connections)
+    - [09. PromptFlow Explore Codebase](#9-promptflow-explore-codebase)
+    - [10. PromptFlow Open Visual Editor](#10-promptflow-open-visual-editor)
+    - [11. PromptFlow Run Flow ](#11-promptflow-run-flow)
+    - [12. PromptFlow Evaluate Flow](#12-promptflow-evaluate-flow)
+    - [13. Push PromptFlow To Azure ](#13-push-promptflow-to-azure)
+    - [14. PromptFlow Deploy Flow](#14-promptflow-deploy-flow)
+- [**Lab Recap**](#lab-recap)
+
+
 
 ---
 
