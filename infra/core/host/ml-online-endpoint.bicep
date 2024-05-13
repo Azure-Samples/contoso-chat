@@ -8,6 +8,8 @@ param aiHubName string
 param keyVaultName string
 param kind string = 'Managed'
 param authMode string = 'Key'
+param roleDefinitionId string
+param accountName string
 
 resource endpoint 'Microsoft.MachineLearningServices/workspaces/onlineEndpoints@2023-10-01' = {
   name: name
@@ -50,6 +52,23 @@ var azureMLWorkspaceConnectionSecretsReader = resourceId(
   'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
 )
 
+module openaiRoleUser '../../core/security/role.bicep' = {
+  name: 'openai-role-user'
+  params: {
+    principalId: endpoint.identity.principalId
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' //Cognitive Services OpenAI User
+    principalType:  'ServicePrincipal'
+  }
+}
+
+module userRole '../database/cosmos/sql/cosmos-sql-role-assign.bicep' =  {
+  name: 'cosmos-sql-role-custom-reader'
+  params: {
+    accountName: accountName
+    roleDefinitionId: roleDefinitionId
+    principalId: endpoint.identity.principalId
+  }
+}
 resource azureMLWorkspaceConnectionSecretsReaderRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(subscription().id, resourceGroup().id, aiProjectName, name, azureMLWorkspaceConnectionSecretsReader)
   scope: endpoint
