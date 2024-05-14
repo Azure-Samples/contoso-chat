@@ -22,23 +22,11 @@ if [ -z "$resourceGroupName" ] || [ -z "$searchService" ] || [ -z "$openAiServic
     exit 1
 fi
 
-# Retrieve the keys
-searchKey=$(az search admin-key show --service-name $searchService --resource-group $resourceGroupName --query primaryKey --output tsv)
-apiKey=$(az cognitiveservices account keys list --name $openAiService --resource-group $resourceGroupName --query key1 --output tsv)
-cosmosKey=$(az cosmosdb keys list --name $cosmosService --resource-group $resourceGroupName --query primaryMasterKey --output tsv)
-
-# Set the environment variables using azd env set
-# TODO: Remove these once we have MI integration
-azd env set AZURE_SEARCH_KEY $searchKey
-azd env set AZURE_OPENAI_KEY $apiKey
-azd env set COSMOS_KEY $cosmosKey
-
 # Set additional environment variables expected by app
 # TODO: Standardize these and remove need for setting here
 azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
 azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
 azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
-azd env set AZURE_SEARCH_KEY $AZURE_SEARCH_KEY
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values >.env

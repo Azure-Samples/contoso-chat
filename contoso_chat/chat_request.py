@@ -14,8 +14,7 @@ from promptflow.core import (AzureOpenAIModelConfiguration, Prompty, tool)
 def get_customer(customerId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
-        client = CosmosClient(url=url, credential=credential)
+        client = CosmosClient(url=url, credential=DefaultAzureCredential())
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("customers")
         response = container.read_item(item=str(customerId), partition_key=str(customerId))
@@ -28,8 +27,7 @@ def get_customer(customerId: str) -> str:
 def get_product(productId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
-        credential = os.environ["COSMOS_KEY"]
-        client = CosmosClient(url=url, credential=credential)
+        client = CosmosClient(url=url, credential=DefaultAzureCredential())
         db = client.get_database_client("contoso-outdoor")
         container = db.get_container_client("products")
         response = container.read_item(item=str(productId), partition_key=str(productId))

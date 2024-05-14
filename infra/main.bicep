@@ -22,7 +22,6 @@ param aiResourceGroupName string = ''
 param aiProjectName string = ''
 param aiHubName string = ''
 param logAnalyticsName string = ''
-
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 param principalType string = 'User'
@@ -179,6 +178,66 @@ module userRoleSecretsReader 'core/security/role.bicep' = {
     principalId: principalId
     roleDefinitionId: 'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
     principalType: principalType
+  }
+}
+
+module userAiSearchRole 'core/security/role.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'user-ai-search-index-data-contributor'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '8ebe5a00-799e-43f5-93ac-243d3dce84a7' //Search Index Data Contributor
+    principalType: principalType
+  }
+}
+
+module aiSearchRole 'core/security/role.bicep' = {
+  scope: rg
+  name: 'ai-search-index-data-contributor'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    roleDefinitionId: '8ebe5a00-799e-43f5-93ac-243d3dce84a7' //Search Index Data Contributor
+    principalType: 'ServicePrincipal'
+  }
+}
+
+module userAiSearchServiceContributor 'core/security/role.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'user-ai-search-service-contributor'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '7ca78c08-252a-4471-8644-bb5ff32d4ba0' //Search Service Contributor
+    principalType: principalType
+  }
+}
+
+module aiSearchServiceContributor 'core/security/role.bicep' = {
+  scope: rg
+  name: 'ai-search-service-contributor'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    roleDefinitionId: '7ca78c08-252a-4471-8644-bb5ff32d4ba0' //Search Service Contributor
+    principalType: 'ServicePrincipal'
+  }
+}
+
+module userCosmosAccountRole 'core/security/role-cosmos.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'user-cosmos-account-role'
+  params: {
+    principalId: principalId
+    databaseAccountId: cosmos.outputs.accountId
+    databaseAccountName: cosmos.outputs.accountName
+  }
+}
+
+module cosmosAccountRole 'core/security/role-cosmos.bicep' = {
+  scope: rg
+  name: 'cosmos-account-role'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    databaseAccountId: cosmos.outputs.accountId
+    databaseAccountName: cosmos.outputs.accountName
   }
 }
 

@@ -13,7 +13,6 @@ if __name__ == '__main__':
     # Initialize Azure OpenAI Connection
     model_config = AzureOpenAIModelConfiguration(
             azure_deployment="gpt-4",
-            # api_key=os.environ["AZURE_OPENAI_API_KEY"],
             api_version=os.environ["AZURE_OPENAI_API_VERSION"],
             azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
         )
