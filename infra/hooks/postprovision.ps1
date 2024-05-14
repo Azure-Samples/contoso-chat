@@ -37,8 +37,9 @@ azd env get-values > .env
 Write-Host "Script execution completed successfully."
 
 Write-Host 'Installing dependencies from "requirements.txt"'
-python -m pip install -r contoso_chat/requirements.txt
+python -m pip install -r contoso_chat/requirements.txt > $null
 
 # populate data
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb
+Write-Host "Populating data ...."
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > $null
+jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > $null
