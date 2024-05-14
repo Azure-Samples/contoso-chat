@@ -122,12 +122,10 @@ AZURE_OPENAI_KEY="#########"
 
 AZURE_SEARCH_NAME="srch-gcdxl#########"
 AZURE_SEARCH_ENDPOINT="https://srch-gcdx#########.search.windows.net/"
-AZURE_SEARCH_KEY="#########"
 CONTOSO_SEARCH_ENDPOINT="https://srch-gcdx#########.search.windows.net/"
 
 AZURE_COSMOS_NAME="cosmos-gcdx#########"
 COSMOS_ENDPOINT="https://cosmos-gcdx#########.documents.azure.com:443/"
-COSMOS_KEY="#########"
 ```
 
 ---

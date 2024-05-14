@@ -144,6 +144,7 @@ module search '../search/search-services.bicep' =
       tags: tags
       name: searchName
       semanticSearch: 'free'
+      disableLocalAuth: true
     }
   }
 

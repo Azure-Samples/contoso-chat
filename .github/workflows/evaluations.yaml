@@ -24,14 +24,11 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
       AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
       AZURE_DEPLOYMENT_NAME: "gpt-4"
       AZURE_EMBEDDING_NAME: "text-embedding-ada-002"
       COSMOS_ENDPOINT: "${{ secrets.CONTOSO_SEARCH_ENDPOINT }}"
-      COSMOS_KEY: "${{ secrets.CONTOSO_SEARCH_KEY }}"
       AZURE_SEARCH_ENDPOINT: "${{ secrets.AZURE_SEARCH_ENDPOINT }}"
-      AZURE_SEARCH_KEY: "${{ secrets.AZURE_SEARCH_KEY }}"
 
     steps:
       - name: checkout repo content
