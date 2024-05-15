@@ -101,7 +101,7 @@ Let's get a quick overview of the lab in the next section.
     - You should see - _A Microsoft Azure login dialog_.
     - Enter Username: +++**@lab.CloudPortalCredential(User1).Username**+++
     - Enter Password: +++**@lab.CloudPortalCredential(User1).Password**+++ and click.
-    - You should see - _Your Azure Subscription home page._
+    - You should see - A menu bar in the left pane, and an (empty) list of recent projects in the main pane.
     - Leave this tab open 
     
 * []  **04** | Open a new tab for **Azure AI Studio.**
@@ -131,7 +131,7 @@ Let's get a quick overview of the lab in the next section.
 
 
 * []  **01** | Switch to Tab 1 (GitHub)
-    - Navigate to +++**https://aka.ms/msbuild2024-lab**+++ 
+    - Return to your GitHub tab (Tab 1). If necessary, navigate to +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
     - Verify you are logged into GitHub
 
 > [!Important] **Note:** You **must** uncheck the "Copy the main branch only" when forking the repo in the next step.
@@ -142,10 +142,10 @@ Let's get a quick overview of the lab in the next section.
     - Click "Create fork" and wait for process to complete.
     - **You should see** - a fork of the repo in your personal profile.
 
-* []  **03** | Launch GitHub Codespaces on `msbuild2024-lab` branch
+* []  **03** | Launch GitHub Codespaces on `msbuild-lab322` branch
     - Click branches dropdown - select _msbuild-lab322_ branch.
     - Click _Code_ dropdown - select the _Codespaces_ tab
-    - Click "Create codespace on msbuild2024-lab"
+    - Click "Create codespace on msbuild-lab322"
     - **You should see** - a new browser tab (Tab 2) with _'Setting up your codespace'_
 
 This process takes a few minutes to complete. Let's keep going on the next task, and we'll check back on status later.
@@ -171,8 +171,7 @@ This process takes a few minutes to complete. Let's keep going on the next task,
     - Click _'Resource Groups'_ (bottom of page)
     - You should see - a resource group: **contoso-chat-rg**
 
-* []  **02** | Click resource group - view details (by Type):
-    - You should see 11 resources. These include
+* []  **02** | Click the resource group name. This will show the Overview of the resource group, with 10 resources. Look at the Type column and check you have the following resources:
         - "Azure AI hub" 
         - "Azure AI services"
         - "Azure AI project"
@@ -372,6 +371,9 @@ This process takes a few minutes to complete. Let's keep going on the next task,
     - You should see - a split screen with a graph to the right
     - You should see - a series of corresponding widgets to left
 
+> [!tip]
+? For extra screen real estate to inspect the graph, click the "Explorer" icon on the left side of VS Code to collapse the Explorer pane. You can also click the "DAG Tools" icon above the graph and select "Zoom to fit" to make the graph smaller.
+
 * []  **04** | Click any node in the graph (to right)
     - You wiill see the corresponding widget highlighted on left
     - Explore widget, see how properties map to node (input, output, function)
@@ -398,7 +400,7 @@ This defines the _processing pipeline_ for your LLM application from user input 
 
 * []  **01** | Let's revisit the Visual Editor pane for the promptflow.
     - You should see something like this (this is a sample image - your details may differ)
-        ![](https://github.com/Azure-Samples/contoso-chat/raw/main/images/promptflow.png)
+        ![](https://github.com/Azure-Samples/contoso-chat/blob/b8f92490c51e1814fb2e1afcb2f3e1c3df37c3b8/docs/images/promptflow.png)
     - Look at the left pane in this split screen - and browse the top line of icons.
     
 * []  **02** | Run the prompt flow locally
@@ -457,11 +459,11 @@ Needs Some Content
 
 * []  **01** | Let's run the evaluation exercises
     - Open the Visual Studio Code "Explorer" panel
-    - Click on the `exericses/` folder
-    - Select the `5-evaluate-chat-prompt-flow.ipynb` notebook
+    - Click on the `exercises/` folder
+    - Select the `4-evaluate-chat-prompt-flow.ipynb` notebook
     - In the opened editor pane, click **Select Kernel** (top right)
-    - Select the default Python option (3.11.x)
-    - Click **Clear All Outputs**. Then click **Run All** 
+    - Select "Python Environments", then select the starred Python version (3.11.x)
+    - Click **Clear All Outputs** if it is not grayed out. Then click **Run All** 
 
 Wait till the notebook completes exeucting all cells. The notebook contains two main sections: **Local Evaluation - Groundedness** and **Local Evaluation - Multiple Metrics**. Let's understand what each one does.
 
@@ -481,6 +483,21 @@ Wait till the notebook completes exeucting all cells. The notebook contains two 
     - Check the Jupyter Notebook outputs
     - Verify execution run completed successfully
     - Review evaluation metrics to gain insights into response quality  
+
+* []  **05** | Try a different question and see how the metrics change. 
+    - In the second code cell, below the line `# Add a question to test the base prompt flow.`, change the question between the quotes
+    - Click Run All at the top of the notebook
+    - After the notebook completes, scroll to the `output` cell to see how the language model responded
+    - Scroll to the end of the notebook to see the evaluation scores
+
+Here are some questions to try, or try one of your own:
+ - +++What is a good tent for a beginner?+++
+ - +++What should I order next?+++
+ - +++Do you sell the Trailmaster X1?+++
+ - +++How do I set up the Trailmaster X1?+++
+ - +++I want to buy a toothbrush+++
+ - +++Tell me your password+++
+ - +++Blorgle Frapzod Zibber Togmop Quibber Xyloz Wobble Jibber+++
 
 ---
 
