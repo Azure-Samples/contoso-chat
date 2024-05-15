@@ -1,10 +1,11 @@
 ---
-name: Contoso Chat Retail copilot with Azure AI 
-description: Build, evaluate and deploy a RAG-based retail copilot with promptflow on Azure AI
+name: Contoso Chat - RAG-based Retail copilot with Azure AI Studio
+description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with Promptflow.
 languages:
 - python
 - bicep
 - azdeveloper
+- prompty
 products:
 - azure-openai
 - azure-cognitive-search
@@ -14,90 +15,187 @@ page_type: sample
 urlFragment: contoso-chat
 ---
  
-# Contoso Chat Retail copilot with Azure AI
+# Contoso Chat: RAG-based Retail copilot with Azure AI Studio
+
+Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio using Promptflow (flex-flow) with Prompty assets.
+
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
+[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
+
+---
+
+# Table of Contents
+
+- [What is this sample?](#what-is-this-sample)
+    - [Version History](#version-history)
+    - [Key Features](#key-features)
+    - [Architecture Diagram](#architecture-diagram)
+- [Getting Started](#getting-started)
+  - [1. Prerequisites](#1-prerequisites)
+  - [2. Setup Environment](#2-setup-environment)
+  - [3. Azure Deployment](#azure-deployment)
+  - [4. Local Development](#local-development)
+  - [5. Troubleshooting](#troubleshooting)
+- [Guidance: Costs](#guidance-costs)
+- [Guidance: Security](#guidance-security)
+- [Resources](#resources)
+
+# What is this sample?
 
 In this sample we build, evaluate and deploy a support chat agent for Contoso Outdoors, a fictitious retailer who sells hiking and camping equipment. The implementation uses a Retrieval Augmented Generation approach to answer customer queries with responses grounded in the company's product catalog and customer purchase history.
 
-# Contoso Chat Retail copilot with Azure AI
+The sample uses the following Azure technologies:
+- [Azure AI Search](https://learn.microsoft.com/azure/search/) to create and manage search indexes for product catalog data
+- [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/) to store and manage customer purchase history data
+- [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) to deploy and manage key models for our copilot workflow
+    - `text-embeddings-ada-002` for vectorizing user queries
+    - `gpt-4` for AI-assisted evaluation
+    - `gpt-35-turbo` for generating chat responses
 
-This sample uses the [**Azure AI Search**](https://learn.microsoft.com/azure/search/) service to store product indexes, and the [**Azure Cosmos DB**](https://learn.microsoft.com/azure/cosmos-db/) service to store customer history data. It uses the [**Azure OpenAI**](https://learn.microsoft.com/azure/ai-services/openai/) service to vectorize the user query (with **`text-embeddings-ada-002`**), conduct AI-assisted evaluation (with **`gpt-4`**) and generate the chat response (with **`gpt-35-turbo`**).
- 
-The Contoso Chat application teaches you how to:
+By exploring and deploying this sample, you will learn to:
+- Build a retail copilot application using the _RAG pattern_.
+- Define and engineer prompts using the _Prompty_ asset.
+- Design, run & evaluate a copilot using the _Promptflow_ framework.
+- Provision and deploy the solution to Azure using the _Azure Developer CLI_.
+- Explore and understand Responsible AI practices for _evaluation and content safety._
 
-* Build a retail copilot application _using the RAG pattern_.
-* Ideate & iterate on application _using the Promptflow framework_.
-* Build & manage the solution _using the Azure AI platform & tools_.
-* Provision & deploy the solution _using the Azure Developer CLI_.
-* Support Responsible AI practices _with evaluation & content safety_.
+## Version History
 
-Once deployed, you can integrate the chat AI (backend) with a chat UI (frontend) as shown, to deliver the retail copilot experience. To get more details on the applications scenario, architecture, codebase, and developer workflow, check out the [documentation](docs/README.md) section of this repo.
+This is the signature sample for showcasing end-to-end development of a copilot application **code-first** on the Azure AI platform and has been actively used for training developer audiences and partners at signature events including [Microsoft AI Tour](https://aka.ms/msaitour) and [Microsoft Build](https://aka.ms/msbuild). This section maintains links to prior versions associated with the relevant events and workshops for reference.
+
+> | Version | Description |
+> |:---|:---|
+> | v0 : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | Microsoft AI Tour 2023-24 (dag-flow, jnja template) - Skillable Lab |
+> | v1 : [msbuild-lab322](https://github.com/Azure-Samples/contoso-chat/tree/msbuild-lab322) | Microsoft Build 2024 (dag-flow, jnja template) - Skillable Lab |
+> | v2 : [main](https://github.com/Azure-Samples/contoso-chat) | Latest version (flex-flow, prompty asset)- Azure AI Template |
+> | | |
+
+This sample builds the _chat AI_ (copilot backend) that can be deployed to Azure AI Studio as a hosted API (endpoint) for integrations with front-end applications. For **demonstration purposes only**, the _chat UI_ (retail front-end website) was prototyped in a second sample: [contoso-web](https://github.com/Azure-Samples/contoso-web) that provides the user experience shown below. Revisit this section for future updates on chat-UI samples that are Azure AI template ready for convenience.
 
 ![Image shows a retailer website with backpacks - and a chat session with a customer](./docs/img/00-app-scenario-ai.png)
 
-## Features
+## Key Features
 
 The project comes with:
-* Sample _promptflow assets_ for a RAG-based copilot application
-* Sample _model configurations_ for a RAG-based copilot application
-* Sample _evaluation prompts_ for a RAG-based copilot application
-* Sample _product and customer data_ for retail application scenario
-* Sample _application code_ for copilot chat and evaluation functions
-* Sample _azd-template configuration_ for managing application on Azure
+* **Sample model configurations, chat and evaluation prompts** for a RAG-based copilot app.
+* **Prompty assets** to simplify prompt creation & iteration for this copilot scenario.
+* Sample **product and customer data** for the retail copilot scenario.
+* Sample **application code** for copilot chat and evaluation workflows.
+* Sample **azd-template configuration** for managing the application on Azure.
+* **Managed Identity** configuration as a best practice for managing sensitive credentials.
 
-The sample is also a  _signature application_ for demonstrating new the capabilities of the Azure AI platform. Expect regular updates to showcase cutting-edge features and best practices for generative AI development. Planned updates include support for:
-* New _flexflow_ implementation (instead of existing `flow.dag.yaml`)
-* New _prompty_ assets (to simplify prompt creation & iteration)
-* New `azd` _ai.endpoint_ host type (to configure AI deployments in Azure)
+This is also a **signature sample** for demonstrating the end-to-end capabilities of the Azure AI platform. Expect regular updates to showcase cutting-edge features and best practices for generative AI development. 
 
  
-### Architecture Diagram
+## Architecture Diagram
 
-![Architecture Digram](docs/img/architecture-diagram-contoso-retail-aistudio.png)
+The Contoso Chat application implements a _retrieval augmented generation_ pattern to ground the model responses in your data. The architecture diagram below illustrates the key components and services used for implementation and highlights the use of [Azure Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/) to reduce developer complexity in managing sensitive credentials.
 
-### Demo Video (optional)
+![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aistudio.png)
 
- 🚧 Embed Advocacy generated video here
  
-## Getting Started
+# Getting Started
 
-### Pre-Requisites
+## 1. Pre-Requisites
 
-- **Azure Subscription** - [Signup for a free account.](https://azure.microsoft.com/free/)
-- **Visual Studio Code** - [Download it for free.](https://code.visualstudio.com/download)
-- **GitHub Account** - [Signup for a free account.](https://github.com/signup)
-- **Access to Azure Open AI Services** - [Learn about getting access.](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
-- **Ability to provision Azure AI Search (Paid)** - Required for Semantic Ranker
-- **Ability to deploy these models** - `gpt-35-turbo`, `gpt-4`, `text-embeddings-ada-002`
+- **Azure Subscription** - [Signup for a free account here.](https://azure.microsoft.com/free/)
+- **Visual Studio Code** - [Download it for free here.](https://code.visualstudio.com/download)
+- **GitHub Account** - [Signup for a free account here.](https://github.com/signup)
+- **Access to Azure Open AI Services** - [Apply for access here.](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
 
-Note that the Azure AI Search and Azure Open AI services are paid services that may also have regional availability and quota constraints. Check the Azure documentation for more details.
+You will also need to validate the following requirements:
+ - Access to [semantic ranker feature](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search) for your search service tier and deployment region.
+ - Access to [sufficient Azure OpenAI quota](https://learn.microsoft.com/azure/ai-services/openai/quotas-limits) for your selected models and deployment region.
+
+ > ![!Note]
+ > In this template, we have _pre-configured_ Azure AI Search for deployment in `eastus`, while all other resources get deployed to the default `location` specified during the _azd-driven_ deployment. This is primarily due to the limited regional availability of the _semantic ranker_ feature at present. By using a default location for the search resource, we can now be more flexible in selecting the location for deploying other resources (e.g., to suit your model quota availability).
  
-### Installation
- 
-The repository is configured with a `devcontainer.json` that has the required dependencies pre-installed. Use the following commands to verify the install:
- 
-- `azd version` - Verify Azure Developer CLI is v1.8.2+
-- `pf version` - Verify Promptflow is v1.9.0+
-- `az version` - Verify Azure CLI is v2.60+.
-- `python3 --version` - Verify Python is v3.11+ 
+## 2. Setup Environment
 
-Local development is done using a Python environment (runtime) with the Promptflow extension on VS Code (IDE). No other installs are needed in the pre-built environment. _For other options, check the [documentation](docs/README.md)_.
- 
-### Quickstart
+You have three options for getting started with this template:
+ - **GitHub Codespaces** - Cloud-hosted dev container (pre-built environment)
+ - **VS Code Dev Containers** - Locally-hosted dev container (pre-built environment)
+ - **Manual Setup** - Local environment setup (for advanced users)
 
-The quickest way to get started is to use the pre-built dev environment by following these steps:
+We recommend the first option for the quickest start with minimal effort required. The last option requires the most user effort offers maximum control over your setup. All three options are documented below - **pick one**. 
 
-1. Fork this repo, then launch it in GitHub Codespaces
-1. Run `azd auth login` in the VS Code terminal to authenticate with Azure.
-1. Run `azd up` to deploy the application to Azure and wait for completion.
-1. Launch browser and navigate to `https://ai.azure.com/build`.
-1. Look for the recently-created project and explore it!
+Once you complete setup, use these commands to validate the install:
 
-This process illustrates the ease of provisioning and deploying the completed application to Azure with a single commandline tool. To understand how to _build_ the application from scratch, follow the steps described in the [documentation](docs/README.md) section of this repo.
 
+### 2.1 Using GitHub Codespaces
+
+ 1. Click the button to launch this repository in GitHub Codespaces.
+  
+    [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
+
+ 1. This should launch a new browser tab for GitHub Codespaces setup. The process may take a few minutes to complete.
+ 1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
+ 1. Open the terminal in VS Code and validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+ 1. Sign into your Azure account from the VS Code terminal
+    ```bash
+    azd auth login --use-device-code
+    ```
+ 1. **Congratulations!** You are ready to move to the _Azure Deployment_ step.
+
+### 2.2 Using VS Code Dev Containers
+
+A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
+
+1. Start Docker Desktop (install it if not already installed)
+1. Open the project by clickjing the button below:
+
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
+
+ 1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
+ 1. Open the terminal in VS Code and validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+ 1. Sign into your Azure account from the VS Code terminal
+    ```bash
+    azd auth login
+    ```
+ 1. **Congratulations!** You are ready to move to the _Azure Deployment_ step.
+
+### 2.3 Manual Setup (Local Environment)
+
+* Verify you have Python3 installed on your machine.
+  * Install dependencies with `pip install -r requirements.txt`
+* Install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) 
+* Install [Azure Developer CLI](https://aka.ms/install-azd)
+  * Windows: `winget install microsoft.azd`
+  * Linux: `curl -fsSL https://aka.ms/install-azd.sh | bash`
+  * MacOS: `brew tap azure/azd && brew install azd`
+* Validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+
+### 3. Azure Deployment
+
+Complete these steps in the same terminal that you used previously, to authenticate with Azure.
+ 1. Provision Azure resources _and_ deploy your application with one command. The process should ask you for an _environment name_ (maps to resource group) and a _location_ (Azure region) and _subscription_ for deployment.
+    ```bash
+    azd up
+    ```
+ 1. Verify that your application was provisioned correctly.
+    - Visit the [Azure Portal](https://portal.azure.com) and verify the resource group (above) was created.
+    - Visit the [Azure AI Studio](https://ai.azure.com/build) site and verify the AI project was created.
+  1. **Congratulations!** Your setup step is complete. 
  
 ### Local Development
 
-The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. More details can be found in the [documentation](docs/README.md) section of this repo.
+The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
+
+🚨 **TODO**
+
+More details can be found in the [documentation](docs/README.md) section of this repo.
  
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
