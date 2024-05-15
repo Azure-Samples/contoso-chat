@@ -1,0 +1,15 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: .
+data: ../data/salestestdata.jsonl
+
+# define cloud resource
+runtime: automatic
+
+column_mapping:
+  customerId: ${data.customerId}
+  question: ${data.question}
+
+connections:
+  llm_response:
+    connection: aoai-connection
+    deployment_name: gpt-35-turbo

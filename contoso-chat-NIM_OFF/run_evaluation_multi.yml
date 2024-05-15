@@ -1,0 +1,26 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Run.schema.json
+flow: ../eval/multi_flow
+data: ../data/salestestdata.jsonl
+
+column_mapping:
+  customerId: ${data.customerId}
+  question: ${data.question}
+  context: ${run.outputs.context}
+  answer: ${run.outputs.answer}
+
+# define cloud resource
+runtime: automatic
+
+connections:
+  groundedness_score:
+    connection: aoai-connection
+    deployment_name: gpt-4
+  fluency_score:
+    connection: aoai-connection
+    deployment_name: gpt-4
+  coherence_score:
+    connection: aoai-connection
+    deployment_name: gpt-4
+  relevance_score:
+    connection: aoai-connection
+    deployment_name: gpt-4
