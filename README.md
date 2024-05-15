@@ -17,25 +17,56 @@ urlFragment: contoso-chat
  
 # Contoso Chat: RAG-based Retail copilot with Azure AI Studio
 
-Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio. Check out the [Version History](#version-history) for prior versions used in hands-on labs on #MSAITour and #MSBuild.
+Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio using Promptflow with Prompty assets.
+
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
+[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
 
 ---
 
+# Table of Contents
+
+- [What is this sample?](#what-is-this-sample)
+- [Version History](#version-history)
+- [Features](#features)
+- [Architecture Diagram](#architecture-diagram)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quickstart](#quickstart)
+- [Security Guidelines](#security-guidelines)
+- [Resources](#resources)
+
+# What is this sample?
+
 In this sample we build, evaluate and deploy a support chat agent for Contoso Outdoors, a fictitious retailer who sells hiking and camping equipment. The implementation uses a Retrieval Augmented Generation approach to answer customer queries with responses grounded in the company's product catalog and customer purchase history.
 
-# Contoso Chat Retail copilot with Azure AI
+The sample uses the following Azure technologies:
+- [Azure AI Search](https://learn.microsoft.com/azure/search/) to create and manage search indexes for product catalog data
+- [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/) to store and manage customer purchase history data
+- [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) to deploy and manage key models for our copilot workflow
+    - `text-embeddings-ada-002` for vectorizing user queries
+    - `gpt-4` for AI-assisted evaluation
+    - `gpt-35-turbo` for generating chat responses
 
-This sample uses the [**Azure AI Search**](https://learn.microsoft.com/azure/search/) service to store product indexes, and the [**Azure Cosmos DB**](https://learn.microsoft.com/azure/cosmos-db/) service to store customer history data. It uses the [**Azure OpenAI**](https://learn.microsoft.com/azure/ai-services/openai/) service to vectorize the user query (with **`text-embeddings-ada-002`**), conduct AI-assisted evaluation (with **`gpt-4`**) and generate the chat response (with **`gpt-35-turbo`**).
- 
-The Contoso Chat application teaches you how to:
+By exploring and deploying this sample, you will learn to:
+- Build a retail copilot application using the _RAG pattern_.
+- Define and engineer prompts using the _Prompty_ asset.
+- Design, run & evaluate a copilot using the _Promptflow_ framework.
+- Provision and deploy the solution to Azure using the _Azure Developer CLI_.
+- Explore and understand Responsible AI practices for _evaluation and content safety._
 
-* Build a retail copilot application _using the RAG pattern_.
-* Ideate & iterate on application _using the Promptflow framework_.
-* Build & manage the solution _using the Azure AI platform & tools_.
-* Provision & deploy the solution _using the Azure Developer CLI_.
-* Support Responsible AI practices _with evaluation & content safety_.
+# Version History
 
-Once deployed, you can integrate the chat AI (backend) with a chat UI (frontend) as shown, to deliver the retail copilot experience. To get more details on the applications scenario, architecture, codebase, and developer workflow, check out the [documentation](docs/README.md) section of this repo.
+This is the signature sample for showcasing end-to-end development of a copilot application **code-first** on the Azure AI platform and has been actively used for training developer audiences and partners at signature events including [Microsoft AI Tour](https://aka.ms/msaitour) and [Microsoft Build](https://aka.ms/msbuild). This section maintains links to prior versions associated with the relevant events and workshops for reference.
+
+> | Version | Description |
+> |:---|:---|
+> | v0 : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | Microsoft AI Tour 2023-24 (dag-flow, jnja template) - Skillable Lab |
+> | v1 : [msbuild-lab322](https://github.com/Azure-Samples/contoso-chat/tree/msbuild-lab322) | Microsoft Build 2024 (dag-flow, jnja template) - Skillable Lab |
+> | v2 : [main](https://github.com/Azure-Samples/contoso-chat) | Latest version (flex-flow, prompty asset)- Azure AI Template |
+> | | |
+
+This sample builds the _chat AI_ (copilot backend) that can be deployed to Azure AI Studio as a hosted API (endpoint) for integrations with front-end applications. For **demonstration purposes only**, the _chat UI_ (retail front-end website) was prototyped in a second sample: [contoso-web](https://github.com/Azure-Samples/contoso-web) that provides the user experience shown below. Revisit this section for future updates on chat-UI samples that are Azure AI template ready for convenience.
 
 ![Image shows a retailer website with backpacks - and a chat session with a customer](./docs/img/00-app-scenario-ai.png)
 
@@ -59,9 +90,6 @@ The sample is also a  _signature application_ for demonstrating new the capabili
 
 ![Architecture Digram](docs/img/architecture-diagram-contoso-retail-aistudio.png)
 
-### Demo Video (optional)
-
- 🚧 Embed Advocacy generated video here
  
 ## Getting Started
 
