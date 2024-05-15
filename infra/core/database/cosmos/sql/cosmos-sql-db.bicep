@@ -7,6 +7,7 @@ param tags object = {}
 param containers array = []
 param keyVaultName string
 param principalIds array = []
+param aiServicePrincipalId string
 
 module cosmos 'cosmos-sql-account.bicep' = {
   name: 'cosmos-sql-account'
@@ -65,6 +66,19 @@ module userRole 'cosmos-sql-role-assign.bicep' = [for principalId in principalId
     database
   ]
 }]
+
+module userRoleForProject 'cosmos-sql-role-assign.bicep' = {
+  name: 'cosmos-sql-user-role-${uniqueString(aiServicePrincipalId)}'
+  params: {
+    accountName: accountName
+    roleDefinitionId: roleDefinition.outputs.id
+    principalId: aiServicePrincipalId
+  }
+  dependsOn: [
+    cosmos
+    database
+  ]
+}
 
 output accountId string = cosmos.outputs.id
 output accountName string = cosmos.outputs.name

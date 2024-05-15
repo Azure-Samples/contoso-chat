@@ -2,13 +2,45 @@
 
 name: contoso-chat
 metadata:
-  template: contoso-chat@0.0.1-beta
+  template: contoso-chat@0.0.1-beta          
 workflows:
   up:
-    - azd: provision
+    steps:
+      - azd: provision
+      - azd: deploy      
 hooks:
   postprovision:
-    shell: sh
-    continueOnError: false
-    interactive: true
-    run: infra/hooks/postprovision.sh
+    posix:
+      shell: sh
+      continueOnError: false
+      interactive: true
+      run: infra/hooks/postprovision.sh
+    windows:
+      shell: pwsh
+      continueOnError: false
+      interactive: true
+      run: infra/hooks/postprovision.ps1
+
+
+################################################################
+# The section below configures the new `ai.endpoint` resource 
+# used for the Azure AI based chat service (application)
+################################################################
+services:
+  chat:
+    host: ai.endpoint
+    language: python
+    config:
+      workspace: ${AZUREAI_PROJECT_NAME}
+      environment:
+        path: ./deployment/environment.yaml 
+      model:
+        path: ./deployment/chat-model.yaml
+      deployment:
+        path: ./deployment/chat-deployment.yaml
+        overrides:
+          environment_variables.PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZUREAI_PROJECT_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
+          environment_variables.AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
+          environment_variables.AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION}
+          environment_variables.COSMOS_ENDPOINT: ${COSMOS_ENDPOINT}
+          environment_variables.AZURE_SEARCH_ENDPOINT: ${AZURE_SEARCH_ENDPOINT}

@@ -9,120 +9,57 @@ param environmentName string
 @description('Primary location for all resources')
 param location string
 
-// Optional parameters to override the default azd resource naming conventions. Update the main.parameters.json file to provide values. e.g.,:
-// "resourceGroupName": {
-//      "value": "myGroupName"
-// }
-
-param applicationInsightsName string = ''
-param azureOpenAiResourceName string = ''
+param appInsightsName string = ''
+param openAiName string = ''
 param containerRegistryName string = ''
 param cosmosAccountName string = ''
 param keyVaultName string = ''
 param resourceGroupName string = ''
-param searchLocation string = ''
 param searchServiceName string = ''
-param storageServiceName string = ''
-
-param accountsContosoChatSfAiServicesName string = 'contoso-chat-sf-ai-aiservices'
-param workspacesApwsContosoChatSfAiName string = 'apws-contoso-chat-sf-ai'
-
+param storageAccountName string = ''
+param endpointName string = ''
+param aiResourceGroupName string = ''
+param aiProjectName string = ''
+param aiHubName string = ''
+param logAnalyticsName string = ''
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
+param principalType string = 'User'
 
-var openAiSubdomain  = '${accountsContosoChatSfAiServicesName}${resourceToken}'
-var openAiEndpoint = 'https://${openAiSubdomain }.openai.azure.com/'
+var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 
 // Organize resources in a resource group
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: !empty(resourceGroupName) ? resourceGroupName : 'rg-${environmentName}'
+  name: !empty(resourceGroupName) ? resourceGroupName : '${abbrs.resourcesResourceGroups}${environmentName}'
   location: location
   tags: tags
 }
 
-module containerRegistry 'core/host/container-registry.bicep' = {
-  name: 'containerregistry'
-  scope: rg
-  params: {
-    name: !empty(containerRegistryName) ? containerRegistryName : 'acrcontoso${resourceToken}'
-    location: location
-    tags: tags
-    sku: {
-      name: 'Standard'
-    }
-    scopeMaps: [
-      {
-        name: '_repositories_pull'
-        properties: {
-          description: 'Can pull any repository of the registry'
-          actions: [
-            'repositories/*/content/read'
-          ]
-        }
-      }
-      {
-        name: '_repositories_pull_metadata_read'
-        properties: {
-          description: 'Can perform all read operations on the registry'
-          actions: [
-            'repositories/*/content/read'
-            'repositories/*/metadata/read'
-          ]
-        }
-      }
-      {
-        name: '_repositories_push'
-        properties: {
-          description: 'Can push to any repository of the registry'
-          actions: [
-            'repositories/*/content/read'
-            'repositories/*/content/write'
-          ]
-        }
-      }
-      {
-        name: '_repositories_push_metadata_write'
-        properties: {
-          description: 'Can perform all read and write operations on the registry'
-          actions: [
-            'repositories/*/metadata/read'
-            'repositories/*/metadata/write'
-            'repositories/*/content/read'
-            'repositories/*/content/write'
-          ]
-        }
-      }
-      {
-        name: '_repositories_admin'
-        properties: {
-          description: 'Can perform all read, write and delete operations on the registry'
-          actions: [
-            'repositories/*/metadata/read'
-            'repositories/*/metadata/write'
-            'repositories/*/content/read'
-            'repositories/*/content/write'
-            'repositories/*/content/delete'
-          ]
-        }
-      }
-    ]
-  }
-}
+var actualCosmosAccountName = !empty(cosmosAccountName)
+  ? cosmosAccountName
+  : '${abbrs.documentDBDatabaseAccounts}${resourceToken}'
+
+var openAiConfig = loadYamlContent('./ai.yaml')
+var openAiModelDeployments = array(contains(openAiConfig, 'deployments') ? openAiConfig.deployments : [])
 
 module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
   name: 'cosmos'
   scope: rg
   params: {
-    accountName: !empty(cosmosAccountName) ? cosmosAccountName : 'cosmos-contoso-${resourceToken}'
+    accountName: actualCosmosAccountName
     databaseName: 'contoso-outdoor'
     location: location
-    tags: union(tags, {
-      defaultExperience: 'Core (SQL)'
-      'hidden-cosmos-mmspecial': ''
-    })
-    keyVaultName: keyvault.outputs.name
+    tags: union(
+      tags,
+      {
+        defaultExperience: 'Core (SQL)'
+        'hidden-cosmos-mmspecial': ''
+      }
+    )
+    keyVaultName: ai.outputs.keyVaultName
+    aiServicePrincipalId: ai.outputs.projectPrincipalId
     containers: [
       {
         name: 'customers'
@@ -133,176 +70,54 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
   }
 }
 
-module keyvault 'core/security/keyvault.bicep' = {
-  name: !empty(keyVaultName) ? keyVaultName : 'kvcontoso${resourceToken}'
-  scope: rg
+module ai 'core/host/ai-environment.bicep' = {
+  name: 'ai'
+  scope: resourceGroup(!empty(aiResourceGroupName) ? aiResourceGroupName : rg.name)
   params: {
-    name: !empty(keyVaultName) ? keyVaultName : 'kvcontoso${resourceToken}'
     location: location
     tags: tags
-    principalId: principalId
+    hubName: !empty(aiHubName) ? aiHubName : 'ai-hub-${resourceToken}'
+    projectName: !empty(aiProjectName) ? aiProjectName : 'ai-project-${resourceToken}'
+    logAnalyticsName: !empty(logAnalyticsName)
+      ? logAnalyticsName
+      : '${abbrs.operationalInsightsWorkspaces}${resourceToken}'
+    appInsightsName: !empty(appInsightsName) ? appInsightsName : '${abbrs.insightsComponents}${resourceToken}'
+    containerRegistryName: !empty(containerRegistryName)
+      ? containerRegistryName
+      : '${abbrs.containerRegistryRegistries}${resourceToken}'
+    keyVaultName: !empty(keyVaultName) ? keyVaultName : '${abbrs.keyVaultVaults}${resourceToken}'
+    storageAccountName: !empty(storageAccountName)
+      ? storageAccountName
+      : '${abbrs.storageStorageAccounts}${resourceToken}'
+    openAiName: !empty(openAiName) ? openAiName : 'aoai-${resourceToken}'
+    openAiModelDeployments: openAiModelDeployments
+    searchName: !empty(searchServiceName) ? searchServiceName : 'srch-${resourceToken}'
   }
 }
 
-module keyVaultAccess 'core/security/keyvalut-access.bicep' = {
-  name: 'keyvault-access'
-  scope: rg
+module machineLearningEndpoint './core/host/ml-online-endpoint.bicep' = {
+  name: 'endpoint'
+  scope: resourceGroup(!empty(aiResourceGroupName) ? aiResourceGroupName : rg.name)
   params: {
-    keyVaultName: keyvault.name
-    principalId: machineLearning.outputs.principalId
-  }
-}
-
-module machineLearning 'app/ml.bicep' = {
-  name: 'machinelearning'
-  scope: rg
-  params: {
-    location: location
-    storageAccountId: storage.outputs.id
-    keyVaultId: keyvault.outputs.id
-    applicationInsightsId: monitoring.outputs.applicationInsightsId
-    containerRegistryId: containerRegistry.outputs.id
-    openAiEndpoint: openAiEndpoint
-    openAiName: openai.outputs.name
-    searchName: search.outputs.name
-  }
-}
-
-module monitoring 'core/monitor/monitoring.bicep' = {
-  name: 'monitoring'
-  scope: rg
-  params: {
-    logAnalyticsName: workspacesApwsContosoChatSfAiName
-    applicationInsightsName: !empty(applicationInsightsName) ? applicationInsightsName : '${environmentName}-appi-contoso${resourceToken}'
+    name: !empty(endpointName) ? endpointName : 'mloe-${resourceToken}'
     location: location
     tags: tags
+    serviceName: 'chat'
+    aiHubName: ai.outputs.hubName
+    aiProjectName: ai.outputs.projectName
+    keyVaultName: ai.outputs.keyVaultName
+    roleDefinitionId: cosmos.outputs.roleDefinitionId
+    accountName: cosmos.outputs.accountName
   }
 }
 
-
-module openai 'core/ai/cognitiveservices.bicep' = {
-  name: 'openai'
+module workspaceConnections 'app/workspace-connections.bicep' = {
+  name: 'workspace-connections'
   scope: rg
   params: {
-    name: !empty(azureOpenAiResourceName) ? azureOpenAiResourceName : '${environmentName}-openai-contoso-${resourceToken}'
-    location: location
-    tags: tags
-    kind: 'AIServices'
-    customSubDomainName: openAiSubdomain
-    deployments: [
-      {
-        name: 'gpt-35-turbo'
-        model: {
-          format: 'OpenAI'
-          name: 'gpt-35-turbo'
-          version: '0613'
-        }
-        sku: {
-          name: 'Standard'
-          capacity: 20
-        }
-      }
-      {
-        name: 'gpt-4'
-        model: {
-          format: 'OpenAI'
-          name: 'gpt-4'
-          version: '0613'
-        }
-        sku: {
-          name: 'Standard'
-          capacity: 10
-        }
-      }
-      {
-        name: 'text-embedding-ada-002'
-        model: {
-          format: 'OpenAI'
-          name: 'text-embedding-ada-002'
-          version: '2'
-        }
-        sku: {
-          name: 'Standard'
-          capacity: 20
-        }
-      }
-    ]
-  }
-}
-
-module search 'core/search/search-services.bicep' = {
-  name: 'search'
-  scope: rg
-  params: {
-    name: !empty(searchServiceName) ? searchServiceName : '${environmentName}-search-contoso${resourceToken}'
-    location: searchLocation
-    semanticSearch: 'free'
-  }
-}
-
-module storage 'core/storage/storage-account.bicep' = {
-  name: 'storage'
-  scope: rg
-  params: {
-    name: !empty(storageServiceName) ? storageServiceName : 'stcontoso${resourceToken}'
-    location: location
-    containers: [
-      {
-        name: 'default'
-      }
-    ]
-    files: [
-      {
-        name: 'default'
-      }
-    ]
-    queues: [
-      {
-        name: 'default'
-      }
-    ]
-    tables: [
-      {
-        name: 'default'
-      }
-    ]
-    corsRules: [
-      {
-        allowedOrigins: [
-          'https://mlworkspace.azure.ai'
-          'https://ml.azure.com'
-          'https://*.ml.azure.com'
-          'https://ai.azure.com'
-          'https://*.ai.azure.com'
-          'https://mlworkspacecanary.azure.ai'
-          'https://mlworkspace.azureml-test.net'
-        ]
-        allowedMethods: [
-          'GET'
-          'HEAD'
-          'POST'
-          'PUT'
-          'DELETE'
-          'OPTIONS'
-          'PATCH'
-        ]
-        maxAgeInSeconds: 1800
-        exposedHeaders: [
-          '*'
-        ]
-        allowedHeaders: [
-          '*'
-        ]
-      }
-    ]
-    deleteRetentionPolicy: {
-      allowPermanentDelete: false
-      enabled: false
-    }
-    shareDeleteRetentionPolicy: {
-      enabled: true
-      days: 7
-    }
+    aiHubName: ai.outputs.hubName
+    aiResourceGroupName: !empty(aiResourceGroupName) ? aiResourceGroupName : rg.name
+    cosmosAccounntName: cosmos.outputs.accountName
   }
 }
 
@@ -312,7 +127,7 @@ module userAcrRolePush 'core/security/role.bicep' = {
   params: {
     principalId: principalId
     roleDefinitionId: '8311e382-0749-4cb8-b61a-304f252e45ec'
-    principalType: 'User'
+    principalType: principalType
   }
 }
 
@@ -322,7 +137,27 @@ module userAcrRolePull 'core/security/role.bicep' = {
   params: {
     principalId: principalId
     roleDefinitionId: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
-    principalType: 'User'
+    principalType: principalType
+  }
+}
+
+module openaiRoleUser 'core/security/role.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'openai-role-user'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' //Cognitive Services OpenAI User
+    principalType: principalType
+  }
+}
+
+module openaiRoleBackend 'core/security/role.bicep' = {
+  scope: rg
+  name: 'openai-role-backend'
+  params: {
+    principalId: principalId
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' //Cognitive Services OpenAI User
+    principalType: principalType
   }
 }
 
@@ -332,7 +167,7 @@ module userRoleDataScientist 'core/security/role.bicep' = {
   params: {
     principalId: principalId
     roleDefinitionId: 'f6c7c914-8db3-469d-8ca1-694a8f32e121'
-    principalType: 'User'
+    principalType: principalType
   }
 }
 
@@ -342,40 +177,90 @@ module userRoleSecretsReader 'core/security/role.bicep' = {
   params: {
     principalId: principalId
     roleDefinitionId: 'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
-    principalType: 'User'
+    principalType: principalType
   }
 }
 
-module mlServiceRoleDataScientist 'core/security/role.bicep' = {
-  name: 'ml-service-role-data-scientist'
+module userAiSearchRole 'core/security/role.bicep' = if (!empty(principalId)) {
   scope: rg
+  name: 'user-ai-search-index-data-contributor'
   params: {
-    principalId: machineLearning.outputs.principalId
-    roleDefinitionId: 'f6c7c914-8db3-469d-8ca1-694a8f32e121'
+    principalId: principalId
+    roleDefinitionId: '8ebe5a00-799e-43f5-93ac-243d3dce84a7' //Search Index Data Contributor
+    principalType: principalType
+  }
+}
+
+module aiSearchRole 'core/security/role.bicep' = {
+  scope: rg
+  name: 'ai-search-index-data-contributor'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    roleDefinitionId: '8ebe5a00-799e-43f5-93ac-243d3dce84a7' //Search Index Data Contributor
     principalType: 'ServicePrincipal'
   }
 }
 
-module mlServiceRoleSecretsReader 'core/security/role.bicep' = {
-  name: 'ml-service-role-secrets-reader'
+module userAiSearchServiceContributor 'core/security/role.bicep' = if (!empty(principalId)) {
   scope: rg
+  name: 'user-ai-search-service-contributor'
   params: {
-    principalId: machineLearning.outputs.principalId
-    roleDefinitionId: 'ea01e6af-a1c1-4350-9563-ad00f8c72ec5'
+    principalId: principalId
+    roleDefinitionId: '7ca78c08-252a-4471-8644-bb5ff32d4ba0' //Search Service Contributor
+    principalType: principalType
+  }
+}
+
+module aiSearchServiceContributor 'core/security/role.bicep' = {
+  scope: rg
+  name: 'ai-search-service-contributor'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    roleDefinitionId: '7ca78c08-252a-4471-8644-bb5ff32d4ba0' //Search Service Contributor
     principalType: 'ServicePrincipal'
   }
 }
+
+module userCosmosAccountRole 'core/security/role-cosmos.bicep' = if (!empty(principalId)) {
+  scope: rg
+  name: 'user-cosmos-account-role'
+  params: {
+    principalId: principalId
+    databaseAccountId: cosmos.outputs.accountId
+    databaseAccountName: cosmos.outputs.accountName
+  }
+}
+
+module cosmosAccountRole 'core/security/role-cosmos.bicep' = {
+  scope: rg
+  name: 'cosmos-account-role'
+  params: {
+    principalId: machineLearningEndpoint.outputs.principalId
+    databaseAccountId: cosmos.outputs.accountId
+    databaseAccountName: cosmos.outputs.accountName
+  }
+}
+
 
 // output the names of the resources
-output AZURE_OPENAI_NAME string = openai.outputs.name
-output AZURE_COSMOS_NAME string = cosmos.outputs.accountName
-output AZURE_SEARCH_NAME string = search.outputs.name
-output AZURE_WORKSPACE_NAME string = machineLearning.outputs.workspaceName
-output AZURE_MLPROJECT_NAME string = machineLearning.outputs.projectName
-
+output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = rg.name
-output CONTOSO_AI_SERVICES_ENDPOINT string = openAiEndpoint
+
+output AZUREAI_HUB_NAME string = ai.outputs.hubName
+output AZUREAI_PROJECT_NAME string = ai.outputs.projectName
+
+output AZURE_OPENAI_NAME string = ai.outputs.openAiName
+output AZURE_OPENAI_ENDPOINT string = ai.outputs.openAiEndpoint
+
+output AZURE_COSMOS_NAME string = cosmos.outputs.accountName
 output COSMOS_ENDPOINT string = cosmos.outputs.endpoint
-output CONTOSO_SEARCH_ENDPOINT string = search.outputs.endpoint
-output AZURE_CONTAINER_REGISTRY_NAME string = containerRegistry.outputs.name
-output AZURE_KEY_VAULT_NAME string = keyvault.outputs.name
+
+output AZURE_SEARCH_NAME string = ai.outputs.searchName
+output AZURE_SEARCH_ENDPOINT string = ai.outputs.searchEndpoint
+
+output AZURE_CONTAINER_REGISTRY_NAME string = ai.outputs.containerRegistryName
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = ai.outputs.containerRegistryEndpoint
+
+output AZURE_KEY_VAULT_NAME string = ai.outputs.keyVaultName
+output AZURE_KEY_VAULT_ENDPOINT string = ai.outputs.keyVaultEndpoint
+

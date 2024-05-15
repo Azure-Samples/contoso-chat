@@ -1,0 +1,10 @@
+inputs:
+  question:
+    type: string
+  customerId:
+    type: string
+  chat_history:
+    type: object
+entry: chat_request:get_response
+#environment:
+#  python_requirements_txt: requirements.txt
