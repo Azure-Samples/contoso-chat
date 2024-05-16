@@ -4,19 +4,29 @@
 
 ## Hello @lab.User.FirstName 👋🏽. 
 
-This is a proctored 45-min lab on **Build, Evaluate & Deploy a RAG-based retail copilot with Azure AI** associated with the 1-hour instructor-led [Lab322 Session](https://build.microsoft.com/sessions/852fa54a-9756-4681-8cd5-ae9632b635ca) offered once daily at Microsoft Build 2024. 
+Welcome to Lab 322. This is a proctored 45-min lab on **Build, Evaluate & Deploy a RAG-based retail copilot with Azure AI** associated with the 1-hour instructor-led [Lab322 Session](https://build.microsoft.com/sessions/852fa54a-9756-4681-8cd5-ae9632b635ca) offered once daily at Microsoft Build 2024. 
 
 > [+hint]
 > Familiarize yourself with the instructor and proctors for this session. Lab instructions are organized in numbered sections and steps to make them easier to reference when asking questions.
 
 ## Pre-requisites
 
-> [+alert]
-> You must have the following to participate in this lab:
+You must have the following to participate in this lab:
 
  * A **GitHub Account** for GitHub Codespaces usage. (mandatory) 
  * Familiarity with **Python and Jupyter Notebooks** is useful.
  * Familiarity with **Azure**, **Visual Studio Code** and **GitHub** is useful.
+
+
+> [+alert] You need a to log into GitHub account to use GitHub Codespaces in a later section. If you can't log into your GitHub account here, or you don't have one, [create a free GitHub account](https://github.com/signup) instead. The free tier of GitHub Codespaces is sufficient for this lab.
+
+> [+alert]
+> Corporate GitHub accounts may not be able to sign in or launch CodeSpaces from within the Virtual Machine. Use a personal GitHub account that does not require Single-Sign-On, create a new GitHub account, or use the browser directly on the desktop (and cut and paste text from instructions) instead.
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
 
 ## 1. Get Started!
 
@@ -28,7 +38,16 @@ This is a proctored 45-min lab on **Build, Evaluate & Deploy a RAG-based retail 
     - Password - Enter +++**@lab.VirtualMachine(BuildBaseVM).Password**+++ and click.
     - You should see - _A Windows 11 Desktop._
 
-Let's get a quick overview of the lab in the next section.
+* []  **02** | Launch the Edge Browser
+    - Double-click the "Internet" icon on the VM desktop.
+    - All lab exercises will happen within this browser.
+
+> [!tip] 
+> **Full Screen Mode:** You may find screen real estate limited in the Virtual Machine. Running Edge in Full Screen Mode (press F11) may help.
+
+---
+
+🚀 | **Next** - Launch GitHub Codespaces to setup our dev environment!
 
 ===
 
@@ -36,7 +55,122 @@ Let's get a quick overview of the lab in the next section.
 
 ---
 
-## 2. Lab Overview
+## 2. Launch GitHub Codespaces
+
+> [!hint] 
+> **Skillable Pro-Tip:** Check off Tasks As You Go to track your progress through the lab.
+
+* []  **01** | Open a new browser tab for **GitHub interactions** (Tab 1)
+    - Navigate to  +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
+    - **Log into GitHub** - user your GitHub profile credentials.
+
+> [!Important] You **must** uncheck the "Copy the main branch only" when forking the repo in the next step.
+
+* []  **02** | Fork the repo to your profile for this lab
+    - Click the fork button on the repo.
+    - **Uncheck** the _"Copy the 'main' branch" only_ (forks all branches)
+    - Click "Create fork" and wait for process to complete.
+    - **You should see** - a fork of the repo in your personal profile.
+
+> [!Important] You **must** select the _msbuild-lab322_ branch before creating the codespace.
+
+* []  **03** | Launch GitHub Codespaces on the **msbuild-lab322** branch
+    - Click branches dropdown - select _msbuild-lab322_ branch.
+    - Click _Code_ dropdown - select the _Codespaces_ tab
+    - Click "Create codespace on msbuild-lab322"
+    - **You should see** - a new browser tab (Tab 2) with _'Setting up your codespace'_
+    - Leave this tab open.
+
+This process takes a few minutes to complete - we'll come back in a bit.
+
+---
+
+🚀 | **Next** - Sign into Azure and verify provisioning.
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 3. Visit Azure Portal
+
+> [!tip] 
+> **Helper popups:** In the Virtual Machine, you are a brand new user to Windows, this instance of Edge, and various Azure services. You may see "helper" pop-ups along the way. Dismiss them to get back on task.
+
+* []  **01** | Open a new browser tab for the **Azure Portal**. (Tab 3)
+    - Navigate to  +++**https://portal.azure.com**+++ in a new tab.
+    - You should see - _A Microsoft Azure login dialog_.
+    - Enter Username: +++**@lab.CloudPortalCredential(User1).Username**+++
+    - Enter Password: +++**@lab.CloudPortalCredential(User1).Password**+++ and click.
+    - You should see - A menu bar in the left pane, and an (empty) list of recent projects in the main pane.
+    - Leave this tab open.
+
+* []  **02** | Click the resource group name.
+    - You will see - Overview page with 10 resources listed
+    - Look at the Type column and check you have the following resources:
+        - "Azure AI hub" 
+        - "Azure AI services"
+        - "Azure AI project"
+        - "Search service" (Azure AI Search)
+        - "Azure Cosmos DB account"     
+
+---
+
+🚀 | **Next** - Sign into Azure AI Studio and verify setup.
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 4. Visit Azure AI Studio
+
+    
+* []  **01** | Open a new browser tab for **Azure AI Studio.** (Tab 4)
+    - Navigate to +++**https://ai.azure.com/build**+++ in a new tab.
+    - **Click _Sign in_** - no need to re-enter Username/Password.
+    - You should see: _You are logged in with your Azure profile._
+    - You should see: An AI project listed in the main content pane.
+    
+> [!tip] 
+> **Verify required OpenAI Models were deployed**. 
+
+* []  **02** | Click the listed AI project for details. 
+    - Click **Deployments** in sidebar (_Refresh_ if needed)
+    - Verify that the following models are listed
+        - gpt-35-turbo (for chat completion)
+        - gpt-4 (for chat evaluation)
+        - text-embedding-ada-002 (for text embedding)
+    - (The deployments will be listed more than once. That's OK.)
+
+* []  **03** | Check that Promptflow connections exist
+    - Click **Settings** ("Project Settings") in the AI Projects page sidebar
+    - Look for **Connected Resources** - click _View All_.
+    - Verify these connections exist (by name):
+        - contoso-search
+        - aoai-connection
+    - There may be additional connections listed. 
+    - We will create one more (contoso-cosmos) manually later.
+
+* []  **04** | Check if GitHub Codespaces is ready ..
+    - Return to the browser tab for **GitHub Codespaces** (Tab 2)
+    - Check if setup process is still ongoing.
+    - Keep this tab open - then sit back and listen.
+
+---
+🚀 | **Next** - Let's get a lab overview from the instructor!
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 5. Lab Overview
+
+> [!Important] The Instructor will provide a quick lab overview.
 
 > [!tip] 
 > **Learning Objectives:** This lab teaches you how to build, evaluate, and deploy, a retail copilot application (_Contoso Chat_) using the Azure AI platform. By the end of this lab, you should be able to:
@@ -48,7 +182,7 @@ Let's get a quick overview of the lab in the next section.
 1. Build, evaluate, and deploy, a copilot app end-to-end (on Azure)
 
 > [!tip] 
-> **Pre-Provisioned Resources:** This lab comes with an _Azure Subscription_ that has been pre-provisioned with the necessary resources for developing this retail copilot solution. These include:
+> **Pre-Provisioned Resources:** This lab has an _Azure Subscription_ with pre-provisioned resources for developing this retail copilot solution. These include:
 
 1. Azure AI Hub and Project - to manage your AI application
 1. Azure AI Services - to manage your Open AI model deployments
@@ -56,7 +190,7 @@ Let's get a quick overview of the lab in the next section.
 1. Azure Cosmos DB - to build and maintain the customer history data
 
 > [!tip] 
-> **Browser as Default UI:** We will be using the Microsoft Edge browser in the VM as the default user interface throughout this lab. Once you have launched the sites in the next section, we recommend keeping four tabs open to these resources:
+> **Browser as Default UI:** All lab exercises happen within the Microsoft Edge browser in the VM. You should have 4 browser tabs created for this purpose:
 
 1. **(Tab 1) GitHub** - open to the repository and branch we use for this lab
 1. **(Tab 1) GitHub Codespaces** - development environment, with Visual Studio Code running in the browser
@@ -64,144 +198,11 @@ Let's get a quick overview of the lab in the next section.
 1. **(Tab 4) Azure AI Studio** - to view and manage Azure AI applications
 
 > [!tip] 
-> **Codespaces as Default Dev Env:** We will use the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) branch of the Contoso Chat repository. We will launch this in the browser with GitHub Codespaces, to get a ready-to-use dev environment for the lab.
-
----
-
-🚀 | **Next** - Let's launch the browser and setup our dev environment!
-
-===
-
-[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
-
----
-
-## 3. Setup Browser Tabs
-
-> [!tip] 
-> **Check off Tasks As You Go:** This will let you track your progress through the lab.
-
-* []  **01** | Launch the Edge Browser, by double-clicking the "Internet" icon on the VM desktop.
-
-> [!tip] 
-> **Helper popups:** In the Virtual Machine, you are a brand new user to Windows, this instance of Edge, and various Azure services. You may see "helper" pop-ups along the way. Dismiss them if they're not helpful to you.
-
-* []  **02** | Open a new tab for **GitHub interactions**.
-    - Navigate to  +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
-    - **Log into GitHub** - user your GitHub profile credentials.
-    - Leave this tab open (Tab 1)
-
-> [!Important] **Note:** You need a to log into GitHub account to use GitHub Codespaces in the next section. If you can't log into your GitHub account here, or you don't have one, you can [create a free GitHub account](https://github.com/signup) if needed. The free tier of GitHub Codespaces is sufficient for this lab.
-
-> [+alert]
-> Corporate GitHub accounts may not be able to sign in or launch CodeSpaces from within the Virtual Machine. You can use a personal GitHub account that does not require Single-Sign-On, create a new GitHub account, or use the browser directly on the desktop (and cut and paste text from the instructions) instead.
-
-* []  **03** | Open a new tab for the **Azure Portal**.
-    - Navigate to  +++**https://portal.azure.com**+++ in a new tab.
-    - You should see - _A Microsoft Azure login dialog_.
-    - Enter Username: +++**@lab.CloudPortalCredential(User1).Username**+++
-    - Enter Password: +++**@lab.CloudPortalCredential(User1).Password**+++ and click.
-    - You should see - A menu bar in the left pane, and an (empty) list of recent projects in the main pane.
-    - Leave this tab open 
-    
-* []  **04** | Open a new tab for **Azure AI Studio.**
-    - Navigate to +++**https://ai.azure.com**+++ in a new tab.
-    - **Click _Sign in_** - no need to re-enter Username/Password.
-    - You should see: _You are logged in with your Azure profile._
-    - Leave this tab open. 
-
-> [!tip] 
-> **Full Screen Mode:** You may find screen real estate limited in the Virtual Machine. Running Edge in Full Screen Mode (press F11) may help.
-
-> [!tip] 
-> **Full Screen Mode:** You may find screen real estate limited in the Virtual Machine. Running Edge in Full Screen Mode (press F11) may help.
-
-
----
-
-🚀 | **Next** -  Let's get GitHub Codespaces setup for development in the browser!
-
-===
-
-[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
-
----
-
-## 4. Launch GitHub Codespaces 
-
-
-* []  **01** | Switch to Tab 1 (GitHub)
-    - Return to your GitHub tab (Tab 1). If necessary, navigate to +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
-    - Verify you are logged into GitHub
-
-> [!Important] **Note:** You **must** uncheck the "Copy the main branch only" when forking the repo in the next step.
-
-* []  **02** | Fork repo into your profile
-    - Click the fork button on the repo.
-    - **Uncheck** the _"Copy the 'main' branch" only_ (forks all branches)
-    - Click "Create fork" and wait for process to complete.
-    - **You should see** - a fork of the repo in your personal profile.
-
-* []  **03** | Launch GitHub Codespaces on `msbuild-lab322` branch
-    - Click branches dropdown - select _msbuild-lab322_ branch.
-    - Click _Code_ dropdown - select the _Codespaces_ tab
-    - Click "Create codespace on msbuild-lab322"
-    - **You should see** - a new browser tab (Tab 2) with _'Setting up your codespace'_
-
-This process takes a few minutes to complete. Let's keep going on the next task, and we'll check back on status later.
+> **Codespaces as Default Development Environment:** We forked the [#msbuild-lab322](https://aka.ms/contoso-chat/msbuild2024-lab) branch of the Contoso Chat repository. Then we launched this in the browser with GitHub Codespaces, to get a ready-to-use dev environment for the lab.
 
 ---
 
 🚀 | **Next** - Let's verify Azure resources are provisioned while we wait ..
-
-
-===
-
-[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
-
----
-
-## 5. Verify Azure Provisioning
-
-> [!tip] 
-> **Verify Azure Resources Were Provisioned**
-
-* []  **01** | Switch to Tab 3 (Azure Portal) 
-    - Navigate to +++**https://portal.azure.com**+++
-    - Click _'Resource Groups'_ (bottom of page)
-    - You should see - a resource group: **contoso-chat-rg**
-
-* []  **02** | Click the resource group name. This will show the Overview of the resource group, with 10 resources. Look at the Type column and check you have the following resources:
-        - "Azure AI hub" 
-        - "Azure AI services"
-        - "Azure AI project"
-        - "Search service" (Azure AI Search)
-        - "Azure Cosmos DB account" 
-
-> [!tip] 
-> **Verify required OpenAI Models were deployed**. 
-
-* []  **03** | Switch to Tab 4 (Azure AI Studio) 
-    - Navigate to +++**https://ai.azure.com/build**+++
-    - Click listed AI project for details. 
-    - Click **Deployments** in sidebar (_Refresh_ if needed)
-    - Verify that the following models are listed
-        - gpt-35-turbo (for chat completion)
-        - gpt-4 (for chat evaluation)
-        - text-embedding-ada-002 (for text embedding)
-    - (The deployments will be listed more than once. That's OK.)
-
-* []  **04** | Check that Promptflow connections exist
-    - Click **Settings** in the AI projects page sidebar
-    - Look for **Connected Resources** - click _View All_.
-    - Verify these connections exist (by name):
-        - contoso-search
-        - aoai-connection
-    - There may be additional connections listed. We will create another one (contoso-cosmos) manually later.
-
----
-
-🚀 | **Next** - Let's see if our GitHub Codespaces enviornment is ready for development...
 
 ===
 
@@ -214,7 +215,7 @@ This process takes a few minutes to complete. Let's keep going on the next task,
 > [!tip] 
 > **Connect VSCode To Azure:** Let's configure the VS Code IDE to talk to Azure.
 
-* []  **01** |  Switch to Tab 2 (GitHub Codespaces launched earlier) 
+* []  **01** |  Return to the GitHub Codespaces View (Tab 2)
     - ⏳ | You may need to wait a few minutes if setup is still ongoing ...
     - On completion, tab will refresh automatically
         - You should see - a Visual Studio Code editor 
@@ -440,11 +441,45 @@ This defines the _processing pipeline_ for your LLM application from user input 
 
 ## 11. Run Promptflow In Azure
 
-> [!warning]
-> 🚨 Work in Progress - FIX THESE INSTRUCTIONS
+> [!hint]
+> You already uploaded the Promptflow application to Azure during setup. Did you know you can also modify, debug and run the application on Azure AI Studio? Let's see that in action.
 
-Needs Some Content
+* []  **01** | Locate our uploaded flow
+    - Return to Azure AI Studio (Tab 4) +++**https://ai.azure.com/build**+++
+    - Click on the listed project to view details
+    - Click on the _Prompt Flow_ option in the sidebar
+    - Select the listed flow in the _Flows_ panel
+    - You should see - the visual editor for your app.
 
+* [] **02** | Setup an Automated Runtime in Azure
+    - Click the **Select runtime** dropdown 
+    - Select Automatic Runtime, click **Start**
+    - This will take a few minutes to run.
+
+* []  **04** | Run Prompt Flow in Azure
+    - On runtime setup being complete, you should see a ✅
+    - Now click the blue **Chat** button (visible at the end of that row)
+    - Run should complete in a few minutes.
+    - Verify that all graph nodes are green (success)
+
+> [!alert]
+> **Troubleshooting** - You may get different Azure OpenAI errors on occasion
+
+ * **01** | You see red validation errors in the left part of the editor
+    - Wait till runtime is green before doing anything
+    - Click _Validate and parse input_ in every node widge (left of screen)
+    - Click _Save_ to save the flow, then click **Chat** again
+    - Verify that all graph nodes are green (success)
+
+ * **02** | You see Azure OpenAI erros in the right side of the editor
+    - Visit the _question-embedding_ node 
+    - Click the `aoai-connection` to get a drop-down
+    - Verify that `deployment name` is filled in 
+    - Else select the `text-embedding-ada-002` value from dropdown
+    - Repeat the check for the _llm response_ node
+    - Here, select the `gpt-35-turbo` for deployment name if empty
+    - Click _Save_ to save the flow, then click **Chat** again
+    - Verify that all graph nodes are green (success)
 
 ===
 
@@ -511,68 +546,24 @@ Here are some questions to try, or try one of your own:
 
 ## 13. Deploy Promptflow in Azure
 
-> [!warning]
-> 🚨 Work in Progress - FIX THESE INSTRUCTIONS
-
->[!note] 
-> We are automating push in previous step so add instructions to verify here
-
-* []  **03** | Setup Automated Runtime in Azure
-    - Click **Select runtime** dropdown 
-    - Select Automatic Runtime, click **Start**
-    - Takes a few mins, watch progress indicator.chat
-
-> [!hint]
-> Till now, you've explored, built, tested, and evaluated, the prompt flow _from Visual Studio Code_, as a developer. Now it's time to _deploy the flow to production_ so applications can use the endpoint to make requests and receive responses in real time.
-
-**Deployment Options**: We will be [using Azure AI Studio](https://learn.microsoft.com/azure/ai-studio/how-to/flow-deploy?tabs=azure-studio) to deploy our prompt flow from a UI. You can also deploy the flow programmatically [using the Azure AI Python SDK](https://learn.microsoft.com/azure/ai-studio/how-to/flow-deploy?tabs=python). 
-
-**Deployment Process**: The deployment consists of these steps.
- - Upload the prompt flow to Azure AI Studio
- - Create a runtime and run the flow in Azure, to test it works
- - Deploy the prompt flow, to get a hosted endpoint
- - Use deployed endpoint (from built-in test in Azure AI Studio)
- - Optionally, use deployed endpoint (from a real app).
-
->[!note] **1: Upload Prompt Flow** to Azure AI Studio. 
-
-We completed this in the previous step.
-
->[!note] **2: Create a runtime** and run the flow in Azure.
-
-We started this process in the previous step, and were waiting on the automatic runtime creation to complete. Let's continue from there.
-
-* []  **01** | Run Prompt Flow in Azure
-    - On runtime setup being complete, you should see a ✅
-    - Now click the blue **Run** or **Chat** button (visible at the end of that row)
-    - Run should complete in a few minutes.
-    - Verify that all graph nodes are green (success)
-
->[!note] **3: Deploy the prompt flow** to get a hosted endpoint
+>[!note] You build, evaluated, and ran your application. Now, let's deploy it!
 
 * []  **01** | Click the **Deploy** option in flow page
     - Opens a Deploy wizard flow
     - Keep defaults, click **Review+Create**.
     - Review configuration, click **Create**.
 
-* []  **02-A** | Check **Deployment status** (option A)
-    - Navigate to +++https://ai.azure.com+++
-    - Click Build > Your AI Project (_contoso-chat-aiproj_)
-    - Click **Deployments** and hit Refresh
-    - You should see "Endpoint" listing with _Updating_
-    - Refresh periodically till it shows _Succeeded_
-
-* []  **02-B** | Check **Deployment status** (option B)
-    - Navigate to +++https://ml.azure.com+++
-    - Click the notifications icon (bell) in navbar
-    - This should slide out a list of status items
-    - Watch for all pending tasks to go green.
+* []  **02** | Check **Deployment status** (option A)
+    - Navigate to +++https://ai.azure.com/build+++
+    - Click the listed AI Project, visit **Deployments**
+    - Hit _Refresh_ until you see a new Deployment record
+    - Hit _Refresh_ till that Deployment status reads "Succeeded"
 
 > [!alert]
-> The deployment process **can take 10 minutes or more**. Use the time to explore other things. Note that the deployment **may** fail with an _image_ related error. This is due to ongoing updates to the platform that cannot be anticipated in advance. If that happens, you will **not be able to complete the next steps today** but we encourage you to revisit the lab on your own later, when the update issue may be resolved.
+> The deployment process **can take 10 minutes or more**. There is a chance you may not get to see the final deployment status within the lab time limit. We encourage you to try the extended lab version at home!
 
 * []  **03** | Deployment succeeded
-    - Go back to the Deployments list in step **02-A**
+    - If Deployment succeeded, you can test in in Azure AI Studio
     - Click your deployment to view details page.
     - **Wait** till page loads and menu items update
     - You should see a menu with these items
@@ -589,7 +580,7 @@ We started this process in the previous step, and were waiting on the automatic 
         - code snippets for key languages
     - Use this if testing from an app. In the next step, we'll explore using a built-in test instead.
 
->[!note] **4: Use Deployed Endpoint** with a built-in test. 
+>[!note] You can validate the deployment with a built-in test
 
 * []  **05** | Click the **Test** option in deployment page
      - Enter +++What can you tell me about your jackets?+++ for **question**
@@ -600,7 +591,7 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 ---
 
-🥳 **Congratulations!** <br/> You made it!! You just _setup, built, ran, evaluated, and deployed_ a RAG-based LLM application using Azure AI Studio and Prompt Flow.
+🥳 **Congratulations!** <br/> You just _built, evaluated, and deployed_ a RAG-based retail copilot on Azure AI.
 
 ===
 
@@ -611,44 +602,27 @@ Explore this with other questions or by using different customer Id or chat_hist
 ## Lab Recap
 
 > [!warning] **DON'T FORGET TO DELETE YOUR GITHUB CODESPACES TO SAVE QUOTA!**. 
-> - Visit https://github.com/codespaces
-> - Find the codespace you created in the "Owned by..." panel
-> - Click the "..." menu at the end of codespace listing
-> - Select "Delete Codespace"
 
+ - Visit https://github.com/codespaces
+ - Find the codespace you created in the "Owned by..." panel
+ - Click the "..." menu at the end of codespace listing
+ - Select "Delete Codespace"
 
-> [!hint] What We Learned Today
+> [!hint] What You Can Do Now
 
-**We started with a simple goal:** Build an LLM-based chat app that used Retrieval Augmented Generation (RAG) to answer questions relevant to a product catalog.
+ - [X] Describe the Contoso Chat retail copilot (Application)
+ - [X] Explain retrieval augmented generation (Architecture)
+ - [X] Describe the Azure AI Studio (Platform)
+ - [X] Describe the Promptflow tools & usage (Framework)
+ - [X] Build, evaluate, and deploy, a copilot app end-to-end (on Azure)
 
-**We learned about LLM Ops:** Specifically, we identified a number of steps that need to be chained together in a workflow, to build, deploy & use **performant LLM Apps**.
+> [!hint] What You Can Do Next
 
-**We learned about Azure AI Studio:** Specifically, we learned how to provision an Azure AI project using an Azure AI resource with selected Model deployments. We learned to build a RAG solution with Azure AI Search and Azure Cosmos DB. And we learned to upload, deploy, run, and test, prompt flows in Azure.
-
-**We learned about Prompt Flow:** Specifically, we learned how to create, evalute, test, and deploy, a prompt flow using a VS Code extension to streamline end-to-end development for an LLM-based app. And we learned how to upload the flow to Azure AI Studio, and replicate the steps completely in the cloud.
-
-Along the way, we learned what LLM Ops is and why having these tools to simplify and orchestrate end-to-end development workflows is critical for building the next generation of Generative AI applications at cloud scale.
-
-> [!hint] What We Can Try Next
-
-- **Explore Next Steps for LLMOpss**. 
-    - Add GitHub Actions, Explore Intents 
-    - See README: +++https://github.com/Azure-Samples/contoso-chat+++ README 
-- **Explore Usage in Real Application.** 
-    - Integrate & use deployed endpoint in web app
-    - See README: +++https://github.com/Azure-Samples/contoso-web+++
-
-> [!hint] Where Can You Learn More?
-
-- **View Learning Resources**: [Azure AI Developer Hub](https://learn.microsoft.com/ai)
-- **Join The Community**: [Azure AI Discord](https://aka.ms/aitour/contoso-chat/discord) (and grab a copy of slides)
-
----
-
-⭐️ | **GIVE THE REPO A STAR ON GITHUB!** 
-
-If you found this workshop useful, please give us a star on GitHub and help us make it better! 
- - **Repo**: +++https://github.com/Azure-Samples/contoso-chat+++ 
+ - [X] Found this lab useful? Give us a ⭐️ on +++https://github.com/Azure-Samples/contoso-chat+++ 
+ - [X] Join our [Discord Community](https://aka.ms/aitour/contoso-chat/discord)
+ - [X] Read our blog post on [Code-First Development on Azure](https://aka.ms/ai-studio/code-first-blog)
+ - [X] Read our blog series on [Building Intelligent Apps on Azure AI](https://aka.ms/ai-studio/intelligent-apps)
+ - [X] Explore our learn collection on [Code-First Development with Azure AI](https://aka.ms/ai-studio/collection)
 
 ===
 
@@ -658,12 +632,12 @@ If you found this workshop useful, please give us a star on GitHub and help us m
 
 ## Table Of Contents
 
-- [**Lab Overview**](#lab-overview)
+- [**Pre-Requisites**](#pre-requisites)
     - [01. Get Started](#1-get-started)
-    - [02. Lab Overview](#2-lab-overview)
-    - [03. Setup Browser Tabs](#3-setup-browser-tabs)
-    - [04. Launch GitHub Codespaces](#4-launch-github-codespaces)
-    - [05. Verify Azure Provisioning](#5-verify-azure-provisioning)
+    - [02. Launch GitHUb Codespaces](#2-launch-github-codespaces)
+    - [03. Visit Azure Portal](#3-visit-azure-portal)
+    - [04. Visit Azure AI Studio](#4-visit-azure-ai-studio)
+    - [05. Lab Overview](#5-lab-overview)
     - [06. Connect VSCode To Azure](#6-connect-vscode-to-azure)
     - [07. Automate Azure Upload Tasks](#7-automate-azure-upload-tasks)
     - [08. Add Custom Connection](#8-add-custom-connection)
@@ -674,21 +648,9 @@ If you found this workshop useful, please give us a star on GitHub and help us m
     - [13. Deploy PromptFlow in Azure ](#13-deploy-promptflow-in-azure)
 - [**Lab Recap**](#lab-recap)
 
-
-
 ---
 
-## Appendix
-
-
-> [!tip]
-> This is a blank space for capturing any troubleshooting instructions or guidance for proctors.
-
-
-* **01** | Users are on a device with smaller display or resolution
-    - The screenshots and walkthrough will show the sidebar in the same screen since they used a large display.
-    - Users with smaller displays will find these are hidden behind the **hamburger menu** option at top-left. 
-    - They will need to click that to see the slide-out menu.
+🎉 **Pro Tip** Use the Table Of Contents to navigate quickly to sections!
 
 ===
 
