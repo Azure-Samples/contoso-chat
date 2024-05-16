@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 120
+target-version = ['py311']
+
+[tool.ruff]
+select = ["E", "F", "I", "UP"]
+target-version = "py311"
+line-length = 120
+
+[tool.pytest.ini_options]
+addopts = "-ra --cov --cov-fail-under=100"
+pythonpath = "src"

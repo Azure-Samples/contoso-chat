@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-# Check if running in GitHub Workspace
-if [ -z "$GITHUB_WORKSPACE" ]; then
-    # The GITHUB_WORKSPACE is not set, meaning this is not running in a GitHub Action
-    DIR=$(dirname "$(realpath "$0")")
-    "$DIR/login.sh"
-fi
+echo  "Building contosochatapi:latest..."
+az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatapi:latest ./src/
+image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatapi:latest"
+az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${RESOURCE_GROUP_NAME} --image ${image_name}
+az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${RESOURCE_GROUP_NAME} --target-port 8080
+
 
 # Retrieve service names, resource group name, and other values from environment variables
 resourceGroupName=$AZURE_RESOURCE_GROUP
@@ -13,7 +13,6 @@ searchService=$AZURE_SEARCH_NAME
 openAiService=$AZURE_OPENAI_NAME
 cosmosService=$AZURE_COSMOS_NAME
 subscriptionId=$AZURE_SUBSCRIPTION_ID
-mlProjectName=$AZUREAI_PROJECT_NAME
 
 # Ensure all required environment variables are set
 if [ -z "$resourceGroupName" ] || [ -z "$searchService" ] || [ -z "$openAiService" ] || [ -z "$cosmosService" ] || [ -z "$subscriptionId" ] || [ -z "$mlProjectName" ]; then

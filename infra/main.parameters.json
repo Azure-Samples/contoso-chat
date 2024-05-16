@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "location": {
+      "value": "${AZURE_LOCATION}"
+    },
+    "openAiResourceName": {
+      "value": "${AZURE_OPENAI_RESOURCE_NAME}"
+    },
+    "openAiResourceLocation": {
+      "value": "${AZURE_OPENAI_RESOURCE_LOCATION}"
+    },
+    "openAiApiVersion": {
+      "value": "${AZURE_OPENAI_API_VERSION=2023-07-01-preview}"
+    },
+    "openAiEmbeddingDeploymentName": {
+      "value": "${AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME=text-embedding-ada-002}"
+    },
+    "openAiDeploymentName": {
+      "value": "${AZURE_OPENAI_DEPLOYMENT_NAME=chatgpt}"
+    },
+    "principalId": {
+      "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "runningOnGh": {
+      "value": "${GITHUB_ACTIONS}"
+    },
+    "runningOnAdo": {
+      "value": "${TF_BUILD}"
+    }
+  }
+}

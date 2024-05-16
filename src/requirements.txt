@@ -1,0 +1,13 @@
+Flask==2.3.2
+gunicorn==21.2.0
+azure-cosmos
+azure-search-documents==11.4.0
+azure-identity
+azure-keyvault-secrets
+azure-monitor-opentelemetry-exporter --pre
+promptflow-tools==1.4.0
+openai==1.30.0
+promptflow[azure]==1.10.1
+aiohttp==3.9.5
+python-dotenv==1.0.1
+azure-cognitiveservices-speech==1.37.0
