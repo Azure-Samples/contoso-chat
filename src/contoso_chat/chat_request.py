@@ -5,7 +5,7 @@ from azure.cosmos import CosmosClient
 from sys import argv
 import os
 import pathlib
-from contoso_chat.ai_search import retrieve_documentation
+from ai_search import retrieve_documentation
 from azure.identity import DefaultAzureCredential
 from promptflow.tools.common import init_azure_openai_client
 from promptflow.connections import AzureOpenAIConnection
