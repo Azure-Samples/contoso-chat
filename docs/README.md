@@ -1,59 +1,246 @@
-# Deconstructing Contoso Chat: Self-Guided Workshop 
+---
+name: Contoso Chat - RAG-based Retail copilot with Azure AI Studio
+description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with Promptflow.
+languages:
+- python
+- bicep
+- azdeveloper
+- prompty
+products:
+- azure-openai
+- azure-cognitive-search
+- azure
+- azure-cosmos-db
+page_type: sample
+urlFragment: contoso-chat
+---
+ 
+# Contoso Chat: RAG-based Retail copilot with Azure AI Studio
 
-[Contoso Chat](https://github.com/Azure-Samples/contoso-chat) is an open-source application sample that teaches you how to build a modern generative AI application using the Azure AI platform (development) and the Azure Developer CLI (deployment) to streamline your end-to-end developer experience.
+Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio using Promptflow (flex-flow) with Prompty assets.
 
-This document walks you through the steps needed to understand the application scenario, architecture, codebase (v1 vs. v2), and developer workflow (setup-develop-evaluate-deploy-iterate) required for building a retail copilot application end-to-end on the Azure AI platform.
-
-## 1. Application Scenario
-
-This sample teaches you how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI Studio with promptflow. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:
-- A site product catalog (with indexes stored in Azure AI Search)
-- A customer orders database (with data stored in Azure Cosmos DB)
-
-![Contoso Outdoors](./img/00-app-scenario-ui.png)
-
-The _Contoso Chat_ application implements the copilot AI backend that integrates with this front-end, allowing customers to "chat with the copilot" to get answers about the products and recommendations based on their order history - _simply by clicking the chat icon seen at the bottom right corner of the website_. This chat experience is powered by the Contoso Chat API endpoint that you will be deploying by the end of this workshop, allowing customer requests to be responded to in real-time using a custom model that is grounded in the product catalog and customer history data.
-
-![Contoso Chat](./img/00-app-scenario-ai.png)
-
-## 2. Copilot Implementation
-
-The _basic copilot_ implementation is shown at a high level in the diagram below. the Contoso Chat API (copilot API) exposes a _managed online endpoint_ that receives requests from remote clients like the website. 
-- The requests are handled by your _chat application_ which implements the "chat function" block seen below.
-- This uses a Retrieval Augmented Generation pattern on input prompt (_user question_) to enhance the request (_model prompt_).
-- The model prompt is sent to a chat model (_Azure OpenAI service_) which returns a response (_answer_).
-- The answer is then presented to the user on the chat UI (_website_) to complete the interaction.
-
-The Contoso Chat scenario extends this basic copilot implementation with **an additional "customer lookup" step** that retrieves relevant customer orders related to the user question. This information is added into the previously created model prompt, to generate a new _model prompt_ that is send to the chat model. The final response will now reflect both the product catalog and customer history data.
-
-![Copilot Architecture](./img/00-app-architecture-copilot.png)
-
-## 3. End-to-End Workflow
-
-The Contoso Chat application sample reflects the end-to-end developer workflow for building a generative AI application on the Azure AI platform. You'll go from from _prompt engineering_ (ideation using the RAG pattern with promptflow) to _LLM Ops_ (iterative evaluation for response quality, and deployment for operationalization) as shown below.
-
-![LLM Ops](./img/00-llmops-lifecycle.png)
-
-## 4. Developer Experience
-
-The end-to-end developer experience is streamlined by the use of four core components in our developer platform:
-- **Azure AI Studio**: A unified platform for exploring AI models, managing AI application resources, and building AI projects. It supports both code-first (SDK) and low-code (UI) approaches for building generative AI applications end-to-end.
-- **Promptflow**: An open-source framework that simplifies the ideation and evaluation phases of this workflow with support for
-  - _prompty assets_ for simplifying your prompt engineering process
-  - _dag-flow_ option for building applications as a directed acyclic graph
-  - _flex-flow_ option (new) that supports more flexibility in tool integrations
-  - _pf tools_ with CLI and IDE based options for simplifed developer experience
-- **Azure Developer CLI**: A command-line tool that supports _infrastructure-as-code_ configuration for consistent and repeatable deployments of AI applications on Azure - that can also be version controlled and shared across teams. It provides three key features:
-  - _azd-template_ configuration for managing application resources
-  - _azd_ CLI for managing resource provisioning & deployments from command-line
-  - _azd extension_ for Visual Studio Code, achieving the same goals from the IDE
-- **Dev Containers**: These enforce a _configuration-as-code_ approach by defining the required development dependencies in a "development container" that can be launched in the cloud (with GitHub Codespaces) or in your local device (with Docker Desktop). It has 3 key features:
-  - Python runtime with all required tools (`azd`, `pf`, `az`) and packages (`pip` dependencies) pre-installed.
-  - Visual Studio Code IDE with required extensions - for local development
-  - GitHub Codespaces support - for local development in a cloud-hosted VM
-
-To get started, the easiest way is to fork the Contoso Chat repository, and launch a development container to get a pre-built development environment. Then follow these instructions for next steps.
- - [README-v1](README-v1.md) for v1 using DAG flow
- - [README-v2](README-v2.md) for v2 using Flex flow
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
+[![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
 
 ---
+
+# Table of Contents
+
+- [What is this sample?](#what-is-this-sample)
+    - [Version History](#version-history)
+    - [Key Features](#key-features)
+    - [Architecture Diagram](#architecture-diagram)
+- [Getting Started](#getting-started)
+  - [1. Prerequisites](#1-prerequisites)
+  - [2. Setup Environment](#2-setup-environment)
+  - [3. Azure Deployment](#azure-deployment)
+  - [4. Local Development](#local-development)
+  - [5. Troubleshooting](#troubleshooting)
+- [Guidance: Costs](#guidance-costs)
+- [Guidance: Security](#guidance-security)
+- [Resources](#resources)
+
+# What is this sample?
+
+In this sample we build, evaluate and deploy a support chat agent for Contoso Outdoors, a fictitious retailer who sells hiking and camping equipment. The implementation uses a Retrieval Augmented Generation approach to answer customer queries with responses grounded in the company's product catalog and customer purchase history.
+
+The sample uses the following Azure technologies:
+- [Azure AI Search](https://learn.microsoft.com/azure/search/) to create and manage search indexes for product catalog data
+- [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/) to store and manage customer purchase history data
+- [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) to deploy and manage key models for our copilot workflow
+    - `text-embeddings-ada-002` for vectorizing user queries
+    - `gpt-4` for AI-assisted evaluation
+    - `gpt-35-turbo` for generating chat responses
+
+By exploring and deploying this sample, you will learn to:
+- Build a retail copilot application using the _RAG pattern_.
+- Define and engineer prompts using the _Prompty_ asset.
+- Design, run & evaluate a copilot using the _Promptflow_ framework.
+- Provision and deploy the solution to Azure using the _Azure Developer CLI_.
+- Explore and understand Responsible AI practices for _evaluation and content safety._
+
+## Version History
+
+This is the signature sample for showcasing end-to-end development of a copilot application **code-first** on the Azure AI platform and has been actively used for training developer audiences and partners at signature events including [Microsoft AI Tour](https://aka.ms/msaitour) and [Microsoft Build](https://aka.ms/msbuild). This section maintains links to prior versions associated with the relevant events and workshops for reference.
+
+> | Version | Description |
+> |:---|:---|
+> | v0 : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | Microsoft AI Tour 2023-24 (dag-flow, jnja template) - Skillable Lab |
+> | v1 : [msbuild-lab322](https://github.com/Azure-Samples/contoso-chat/tree/msbuild-lab322) | Microsoft Build 2024 (dag-flow, jnja template) - Skillable Lab |
+> | v2 : [main](https://github.com/Azure-Samples/contoso-chat) | Latest version (flex-flow, prompty asset)- Azure AI Template |
+> | | |
+
+This sample builds the _chat AI_ (copilot backend) that can be deployed to Azure AI Studio as a hosted API (endpoint) for integrations with front-end applications. For **demonstration purposes only**, the _chat UI_ (retail front-end website) was prototyped in a second sample: [contoso-web](https://github.com/Azure-Samples/contoso-web) that provides the user experience shown below. Revisit this section for future updates on chat-UI samples that are Azure AI template ready for convenience.
+
+![Image shows a retailer website with backpacks - and a chat session with a customer](./img/00-app-scenario-ai.png)
+
+## Key Features
+
+The project comes with:
+* **Sample model configurations, chat and evaluation prompts** for a RAG-based copilot app.
+* **Prompty assets** to simplify prompt creation & iteration for this copilot scenario.
+* Sample **product and customer data** for the retail copilot scenario.
+* Sample **application code** for copilot chat and evaluation workflows.
+* Sample **azd-template configuration** for managing the application on Azure.
+* **Managed Identity** configuration as a best practice for managing sensitive credentials.
+
+This is also a **signature sample** for demonstrating the end-to-end capabilities of the Azure AI platform. Expect regular updates to showcase cutting-edge features and best practices for generative AI development. 
+
+ 
+## Architecture Diagram
+
+The Contoso Chat application implements a _retrieval augmented generation_ pattern to ground the model responses in your data. The architecture diagram below illustrates the key components and services used for implementation and highlights the use of [Azure Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/) to reduce developer complexity in managing sensitive credentials.
+
+![Architecture Diagram](./img/architecture-diagram-contoso-retail-aistudio.png)
+
+ 
+# Getting Started
+
+## 1. Pre-Requisites
+
+- **Azure Subscription** - [Signup for a free account here.](https://azure.microsoft.com/free/)
+- **Visual Studio Code** - [Download it for free here.](https://code.visualstudio.com/download)
+- **GitHub Account** - [Signup for a free account here.](https://github.com/signup)
+- **Access to Azure Open AI Services** - [Apply for access here.](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
+
+You will also need to validate the following requirements:
+ - Access to [semantic ranker feature](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search) for your search service tier and deployment region.
+ - Access to [sufficient Azure OpenAI quota](https://learn.microsoft.com/azure/ai-services/openai/quotas-limits) for your selected models and deployment region.
+
+ > ![!Note]
+ > In this template, we have _pre-configured_ Azure AI Search for deployment in `eastus`, while all other resources get deployed to the default `location` specified during the _azd-driven_ deployment. This is primarily due to the limited regional availability of the _semantic ranker_ feature at present. By using a default location for the search resource, we can now be more flexible in selecting the location for deploying other resources (e.g., to suit your model quota availability).
+ 
+## 2. Setup Environment
+
+You have three options for getting started with this template:
+ - **GitHub Codespaces** - Cloud-hosted dev container (pre-built environment)
+ - **VS Code Dev Containers** - Locally-hosted dev container (pre-built environment)
+ - **Manual Setup** - Local environment setup (for advanced users)
+
+We recommend the first option for the quickest start with minimal effort required. The last option requires the most user effort offers maximum control over your setup. All three options are documented below - **pick one**. 
+
+Once you complete setup, use these commands to validate the install:
+
+
+### 2.1 Using GitHub Codespaces
+
+ 1. Click the button to launch this repository in GitHub Codespaces.
+  
+    [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
+
+ 1. This should launch a new browser tab for GitHub Codespaces setup. The process may take a few minutes to complete.
+ 1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
+ 1. Open the terminal in VS Code and validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+ 1. Sign into your Azure account from the VS Code terminal
+    ```bash
+    azd auth login --use-device-code
+    ```
+ 1. **Congratulations!** You are ready to move to the _Azure Deployment_ step.
+
+### 2.2 Using VS Code Dev Containers
+
+A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
+
+1. Start Docker Desktop (install it if not already installed)
+1. Open the project by clickjing the button below:
+
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
+
+ 1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
+ 1. Open the terminal in VS Code and validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+ 1. Sign into your Azure account from the VS Code terminal
+    ```bash
+    azd auth login
+    ```
+ 1. **Congratulations!** You are ready to move to the _Azure Deployment_ step.
+
+### 2.3 Manual Setup (Local Environment)
+
+* Verify you have Python3 installed on your machine.
+  * Install dependencies with `pip install -r requirements.txt`
+* Install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) 
+* Install [Azure Developer CLI](https://aka.ms/install-azd)
+  * Windows: `winget install microsoft.azd`
+  * Linux: `curl -fsSL https://aka.ms/install-azd.sh | bash`
+  * MacOS: `brew tap azure/azd && brew install azd`
+* Validate install with these commands:
+    - `azd version` - Azure Developer CLI is installed (v1.8.2+)
+    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `az version` - Azure CLI is installed (v2.60+)
+    - `python3 --version` - Python3 is installed (v3.11+)
+
+### 3. Azure Deployment
+
+Complete these steps in the same terminal that you used previously, to authenticate with Azure.
+ 1. Provision Azure resources _and_ deploy your application with one command. The process should ask you for an _environment name_ (maps to resource group) and a _location_ (Azure region) and _subscription_ for deployment.
+    ```bash
+    azd up
+    ```
+ 1. Verify that your application was provisioned correctly.
+    - Visit the [Azure Portal](https://portal.azure.com) and verify the resource group (above) was created.
+    - Visit the [Azure AI Studio](https://ai.azure.com/build) site and verify the AI project was created.
+  1. **Congratulations!** Your setup step is complete. 
+ 
+### Local Development
+
+The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
+
+🚨 **TODO**
+
+More details can be found in the [documentation](README_more.md) section of this repo.
+ 
+## Costs
+You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
+
+- Azure OpenAI - Standard tier, GPT-4, GPT-35-turbo and Ada models.  [See Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
+- Azure AI Search - Basic tier, Semantic Ranker enabled [See Pricing](https://azure.microsoft.com/en-us/pricing/details/search/)
+- Azure Cosmos DB for NoSQL - Serverless, Free Tier [See Pricing](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/autoscale-provisioned/#pricing)
+
+## Security Guidelines
+
+We recommend using keyless authentication for this project. Read more about why you should use managed identities on [our blog](https://techcommunity.microsoft.com/t5/microsoft-developer-community/using-keyless-authentication-with-azure-openai/ba-p/4111521).
+
+## Resources
+ 
+- [Azure AI Studio Documentation](https://learn.microsoft.com/azure/ai-studio/)
+- [Promptflow Documentation](https://github.com/microsoft/promptflow)
+- [Prompty Assets](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
+- [Flex Flow](https://microsoft.github.io/promptflow/tutorials/flex-flow-quickstart.html)
+- [Link to similar sample] 🚧
+ 
+<br/>
+
+## Troubleshooting
+
+Have questions or issues to report? Please [open a new issue](https://github.com/Azure-Samples/contoso-chat/issues) after first verifying that the same question or issue has not already been reported. In the latter case, please add any additional comments you may have, to the existing issue.
+
+
+## Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Trademarks
+
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
+trademarks or logos is subject to and must follow 
+[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
+Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
+Any use of third-party trademarks or logos are subject to those third-party's policies.

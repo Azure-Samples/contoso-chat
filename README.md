@@ -1,20 +1,3 @@
----
-name: Contoso Chat - RAG-based Retail copilot with Azure AI Studio
-description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with Promptflow.
-languages:
-- python
-- bicep
-- azdeveloper
-- prompty
-products:
-- azure-openai
-- azure-cognitive-search
-- azure
-- azure-cosmos-db
-page_type: sample
-urlFragment: contoso-chat
----
- 
 # Contoso Chat: RAG-based Retail copilot with Azure AI Studio
 
 Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio using Promptflow (flex-flow) with Prompty assets.
@@ -195,7 +178,7 @@ The core functionality of the copilot application is developed using the Promptf
 
 🚨 **TODO**
 
-More details can be found in the [documentation](docs/README.md) section of this repo.
+More details can be found in the [documentation](docs/README_more.md) section of this repo.
  
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
