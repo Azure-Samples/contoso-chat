@@ -1,5 +1,5 @@
 ---
-name: Contoso Chat - RAG-based Retail copilot with Azure AI Studio
+name: Contoso Chat - RAG-based Retail copilot with Azure Container Apps
 description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with Promptflow.
 languages:
 - python
@@ -15,9 +15,9 @@ page_type: sample
 urlFragment: contoso-chat
 ---
  
-# Contoso Chat: RAG-based Retail copilot with Azure AI Studio
+# Contoso Chat: RAG-based Retail copilot with Azure Container Apps
 
-Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure AI Studio using Promptflow (flex-flow) with Prompty assets.
+Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure Container Apps using Promptflow (flex-flow) with Prompty assets.
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
@@ -70,7 +70,7 @@ This is the signature sample for showcasing end-to-end development of a copilot 
 > | v2 : [main](https://github.com/Azure-Samples/contoso-chat) | Latest version (flex-flow, prompty asset)- Azure AI Template |
 > | | |
 
-This sample builds the _chat AI_ (copilot backend) that can be deployed to Azure AI Studio as a hosted API (endpoint) for integrations with front-end applications. For **demonstration purposes only**, the _chat UI_ (retail front-end website) was prototyped in a second sample: [contoso-web](https://github.com/Azure-Samples/contoso-web) that provides the user experience shown below. Revisit this section for future updates on chat-UI samples that are Azure AI template ready for convenience.
+This sample builds the _chat AI_ (copilot backend) that can be deployed to Azure Container Apps as a hosted API (endpoint) for integrations with front-end applications. For **demonstration purposes only**, the _chat UI_ (retail front-end website) was prototyped in a second sample: [contoso-web](https://github.com/Azure-Samples/contoso-web) that provides the user experience shown below. Revisit this section for future updates on chat-UI samples that are Azure AI template ready for convenience.
 
 ![Image shows a retailer website with backpacks - and a chat session with a customer](./docs/img/00-app-scenario-ai.png)
 
@@ -91,7 +91,7 @@ This is also a **signature sample** for demonstrating the end-to-end capabilitie
 
 The Contoso Chat application implements a _retrieval augmented generation_ pattern to ground the model responses in your data. The architecture diagram below illustrates the key components and services used for implementation and highlights the use of [Azure Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/) to reduce developer complexity in managing sensitive credentials.
 
-![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aistudio.png)
+![Architecture Diagram](./docs/img/aca.png)
 
  
 # Getting Started
@@ -186,7 +186,7 @@ Complete these steps in the same terminal that you used previously, to authentic
     ```
  1. Verify that your application was provisioned correctly.
     - Visit the [Azure Portal](https://portal.azure.com) and verify the resource group (above) was created.
-    - Visit the [Azure AI Studio](https://ai.azure.com/build) site and verify the AI project was created.
+    - Visit the [Azure Container Apps](https://ai.azure.com/build) site and verify the AI project was created.
   1. **Congratulations!** Your setup step is complete. 
  
 ### Local Development
@@ -210,7 +210,7 @@ We recommend using keyless authentication for this project. Read more about why 
 
 ## Resources
  
-- [Azure AI Studio Documentation](https://learn.microsoft.com/azure/ai-studio/)
+- [Azure Container Apps Documentation](https://learn.microsoft.com/azure/ai-studio/)
 - [Promptflow Documentation](https://github.com/microsoft/promptflow)
 - [Prompty Assets](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
 - [Flex Flow](https://microsoft.github.io/promptflow/tutorials/flex-flow-quickstart.html)
