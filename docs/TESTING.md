@@ -34,13 +34,14 @@
 
 > To test this locally, you need to have completed at least an `azd provision` step so Azure resources are available for client-side access to relevant Azure AI services, Azure AI search indexes and Azure CosmosDB databases.
 
-1. Explore prompts locally
+1. Explore prompts locally 
+    Make sure you are in the ./contoso-chat/src file before running the below command. 
     ```bash
-    pf flow test --flow ./contoso-chat --inputs question="Tell me about hiking shoes" chat_history=[] customerId="2"
+    pf flow test --flow contoso_chat --inputs question="Tell me about hiking shoes" chat_history=[] customerId="2"
     ```
 1. Test flow locally with UO
     ```bash
-    pf flow test --flow ./contoso-chat --inputs question="Tell me about hiking shoes" chat_history=[] customerId="2" --ui
+    pf flow test --flow contoso_chat --inputs question="Tell me about hiking shoes" chat_history=[] customerId="2" --ui
     ```
 
 ## Then Deploy to Production
