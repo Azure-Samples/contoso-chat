@@ -3,8 +3,8 @@
 Write-Output  "Building contosochatapi:latest..."
 az acr build --subscription $env:AZURE_SUBSCRIPTION_ID --registry $env:AZURE_CONTAINER_REGISTRY_NAME --image contosochatapi:latest ./src/
 $image_name = $env:AZURE_CONTAINER_REGISTRY_NAME + '.azurecr.io/contosochatapi:latest'
-az containerapp update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:RESOURCE_GROUP_NAME --image $image_name
-az containerapp ingress update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:RESOURCE_GROUP_NAME --target-port 8080
+az containerapp update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --image $image_name
+az containerapp ingress update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --target-port 8080
 
 Write-Host "Starting postprovisioning..."
 
@@ -45,7 +45,7 @@ azd env get-values > .env
 Write-Host "Script execution completed successfully."
 
 Write-Host 'Installing dependencies from "requirements.txt"'
-python -m pip install -r contoso_chat/requirements.txt > $null
+python -m pip install -r ./src/requirements.txt > $null
 
 # populate data
 Write-Host "Populating data ...."

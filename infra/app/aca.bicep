@@ -81,7 +81,7 @@ module app '../core/host/container-app-upsert.bicep' = {
       }
 
     ]
-    targetPort: 50505
+    targetPort: 80
   }
 }
 
