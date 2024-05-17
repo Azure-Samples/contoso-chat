@@ -346,3 +346,4 @@ output COSMOS_ENDPOINT string = cosmos.outputs.endpoint
 output AZURE_COSMOS_NAME string = cosmosDatabaseName
 output COSMOS_CONTAINER string = cosmosContainerName
 output AZURE_SEARCH_ENDPOINT string = search.outputs.endpoint
+output AZURE_SEARCH_NAME string = search.outputs.name
