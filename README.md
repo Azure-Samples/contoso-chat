@@ -193,9 +193,7 @@ Complete these steps in the same terminal that you used previously, to authentic
 
 The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
 
-🚨 **TODO**
 
-More details can be found in the [documentation](docs/README.md) section of this repo.
  
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
