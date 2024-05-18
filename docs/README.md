@@ -5,7 +5,6 @@ languages:
 - python
 - bicep
 - azdeveloper
-- prompty
 products:
 - azure-openai
 - azure-cognitive-search
