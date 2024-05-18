@@ -339,8 +339,8 @@ output AZURE_CONTAINER_REGISTRY_NAME string = containerApps.outputs.registryName
 
 output APPINSIGHTS_CONNECTIONSTRING string = monitoring.outputs.applicationInsightsConnectionString
 
-output OpenAI__Type string = 'azure'
-output OpenAI__Embedding_Deployment string = openAiEmbeddingDeploymentName
+output OPENAI_TYPE string = 'azure'
+output AZURE_EMBEDDING_NAME string = openAiEmbeddingDeploymentName
 
 output COSMOS_ENDPOINT string = cosmos.outputs.endpoint
 output AZURE_COSMOS_NAME string = cosmosDatabaseName

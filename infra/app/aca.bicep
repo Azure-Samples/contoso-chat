@@ -36,19 +36,19 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: identityId
       }
       {
-        name: 'COSMOSDB__ENDPOINT'
+        name: 'COSMOS_ENDPOINT'
         value: cosmosEndpoint
       }
       {
-        name: 'COSMOSDB__DATABASENAME'
+        name: 'AZURE_COSMOS_NAME'
         value: cosmosDatabaseName
       }
       {
-        name: 'COSMOSDB__CONTAINERNAME'
+        name: 'COSMOS_CONTAINER'
         value: cosmosContainerName
       }
       {
-        name: 'AZUREAISEARCH__ENDPOINT'
+        name: 'AZURE_SEARCH_ENDPOINT'
         value: aiSearchEndpoint
       }
       {
@@ -56,27 +56,27 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: aiSearchIndexName
       }
       {
-        name: 'OPENAI__TYPE'
+        name: 'OPENAI_TYPE'
         value: openAiType
       }
       {
-        name: 'OPENAI__API_VERSION'
+        name: 'AZURE_OPENAI_API_VERSION'
         value: openAiApiVersion
       }
       {
-        name: 'OPENAI__ENDPOINT'
+        name: 'AZURE_OPENAI_ENDPOINT'
         value: openAiEndpoint
       }
       {
-        name: 'OPENAI__DEPLOYMENT'
+        name: 'AZURE_OPENAI_CHATGPT_DEPLOYMENT'
         value: openAiDeploymentName
       }
       {
-        name: 'OPENAI__EMBEDDING_DEPLOYMENT'
+        name: 'AZURE_EMBEDDING_NAME'
         value: openAiEmbeddingDeploymentName
       }
       {
-        name: 'APPLICATIONINSIGHTS__CONNECTIONSTRING'
+        name: 'APPINSIGHTS_CONNECTIONSTRING'
         value: appinsights_Connectionstring
       }
 
