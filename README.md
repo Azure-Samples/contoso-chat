@@ -193,6 +193,11 @@ Complete these steps in the same terminal that you used previously, to authentic
 
 The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
 
+Run this command to get a result locally
+
+```
+ pf flow test --flow ./src/contoso_chat --inputs question="tell me about your jackets" customerId="3" chat_history=[]
+```
 
  
 ## Costs

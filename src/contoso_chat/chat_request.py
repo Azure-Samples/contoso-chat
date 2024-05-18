@@ -66,7 +66,7 @@ def get_response(customerId, question, chat_history):
 
     configuration = AzureOpenAIModelConfiguration(
         #azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
-        azure_deployment="gpt-35-turbo",
+        azure_deployment=os.environ["AZURE_OPENAI_CHATGPT_DEPLOYMENT"],
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
     )

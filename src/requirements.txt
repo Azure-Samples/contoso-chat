@@ -6,12 +6,12 @@ azure-keyvault-secrets
 azure-monitor-opentelemetry-exporter --pre
 promptflow-tools==1.4.0
 openai==1.30.0
-promptflow[azure]==1.10.1
+promptflow[azure]==1.11.0
 aiohttp==3.9.5
 python-dotenv==1.0.1
 azure-cognitiveservices-speech==1.37.0
 azure-identity==1.16.0
-promptflow==1.10.1
+promptflow==1.11.0
 jsonlines
 promptflow.evals
 nbconvert
