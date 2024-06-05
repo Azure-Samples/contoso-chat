@@ -54,15 +54,6 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' =
     discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
   }
 
-  resource openAiDefaultEndpoint 'endpoints' = {
-    name: 'Azure.OpenAI'
-    properties: {
-      name: 'Azure.OpenAI'
-      endpointType: 'Azure.OpenAI'
-      associatedResourceId: openAi.id
-    }
-  }
-
   resource contentSafetyDefaultEndpoint 'endpoints' = {
     name: 'Azure.ContentSafety'
     properties: {
