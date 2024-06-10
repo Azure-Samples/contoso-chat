@@ -1,0 +1,12 @@
+azure-cosmos
+azure-ai-ml
+azure-ai-resources
+azure-search-documents==11.4.0
+promptflow==1.11.0
+promptflow[azure]==1.11.0
+promptflow-tools==1.4.0
+azure-identity==1.16.0
+python-dotenv==1.0.1
+jsonlines
+promptflow.evals
+nbconvert
