@@ -1,6 +1,8 @@
 $schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
-image: mcr.microsoft.com/azureml/promptflow/promptflow-runtime:latest
-  # inference config is used to build a serving container for online deployments
+build:
+  path: image_build_with_requirements
+  dockerfile_path: Dockerfile
+# inference config is used to build a serving container for online deployments
 inference_config:
   liveness_route:
     path: /health
