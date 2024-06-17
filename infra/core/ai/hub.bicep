@@ -27,7 +27,8 @@ param publicNetworkAccess string = 'Enabled'
 param location string = resourceGroup().location
 param tags object = {}
 
-resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' = {
+// NN:TODO resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' = {
+resource hub 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   name: name
   location: location
   tags: tags
@@ -54,6 +55,7 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' =
     discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
   }
 
+/* NN:TODO
   resource contentSafetyDefaultEndpoint 'endpoints' = {
     name: 'Azure.ContentSafety'
     properties: {
@@ -62,8 +64,16 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' =
       associatedResourceId: openAi.id
     }
   }
+*/
 
-  resource openAiConnection 'connections' = {
+/*
+  NN:TODO
+  Connections are not in the GA Swagger - they are only in public preview of 2024-04-01-preview version
+  That is what you specify with the workspace@ version for AML API version
+  The ApiVersion specified in the metadata is for the Azure Cognitive Services version (that wraps the OpenAPI call)
+ */
+
+  resource openAiConnection 'connections@2024-04-01-preview' = { // NN:TODO Add @version to ensure resource is correctly versioned
     name: 'aoai-connection'
     properties: {
       category: 'AzureOpenAI'
@@ -71,7 +81,8 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' =
       isSharedToAll: true
       target: openAi.properties.endpoints['OpenAI Language Model Instance API']
       metadata: {
-        ApiVersion: '2023-07-01-preview'
+        //ApiVersion: '2023-07-01-preview'
+        ApiVersion: '2024-02-01'
         ApiType: 'azure'
         ResourceId: openAi.id
       }
