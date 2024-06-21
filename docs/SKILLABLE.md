@@ -621,8 +621,8 @@ Here are some questions to try, or try one of your own:
     - **Wait** till page loads and menu items update
     - You should see a menu with these items
         - **Details** - status & endpoint info
-        - **Consume** - code samples, URL & keys
         - **Test** - interactive testing UI
+        - **Consume** - code samples, URL & keys
         - **Monitoring** and **Logs** - for LLMOps
 
 * []  **04** | Consume Deployment
@@ -636,11 +636,15 @@ Here are some questions to try, or try one of your own:
 >[!note] You can validate the deployment with a built-in test
 
 * []  **05** | Click the **Test** option in deployment page
-     - Enter +++What can you tell me about your jackets?+++ for **question**
-     - Click **Test** and watch _Test result_ pane
-     - Test result output should show LLM app response
-
-Explore this with other questions or by using different customer Id or chat_history values if time permits.
+     - Enter +++What can you tell me about your jackets?+++ for **Input question** and press Enter
+     - Observe the response
+     - Enter +++Who am I+++ for **Input question** and press Enter
+     - Observe the response
+     - Change the **customerId* input to +++11+++
+     - Enter +++Who am I+++ for **Input question** and press Enter
+     - Observe the response
+   
+Explore this with other questions or by using different customer if time permits.
 
 ===
 
@@ -668,7 +672,7 @@ Explore this with other questions or by using different customer Id or chat_hist
 * [] **03** | Confirm customer information
     - Look at the top-left corner of the website
     - The logged-in customer name, email address, and profile photo is shown
-    - Customer information and purchase history is stored in Cosmos DB and retrieved during the RAG process in the **customer_lookup** node
+      - Customer information and purchase history is stored in Cosmos DB and retrieved during the RAG process in the **customer_lookup** node
 
 * [] **04** | Use the chatbot tool
     - Click on the "Chat" icon in the bottom right of the window
@@ -689,10 +693,12 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 > [!warning] **DON'T FORGET TO DELETE YOUR GITHUB CODESPACES TO SAVE QUOTA!**. 
 
- - Visit https://github.com/codespaces
+ - Visit +++https://github.com/codespaces+++
  - Find the codespace you created in the "Owned by..." panel
  - Click the "..." menu at the end of codespace listing
- - Select "Delete Codespace"
+ - Select "Delete"
+
+> [!tip] Deleting the Codespace won't delete the repository, which is already forked in your GitHub account.
 
 > [!hint] What You Can Do Now
 
@@ -704,11 +710,14 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 > [!hint] What You Can Do Next
 
+ - [X] Review the lab contents when you're at home. The latest version is already in your GitHub account, as the repository **contoso-chat**
  - [X] Found this lab useful? Give us a ⭐️ on +++https://github.com/Azure-Samples/contoso-chat+++ 
  - [X] Join our [Discord Community](https://aka.ms/aitour/contoso-chat/discord)
  - [X] Read our blog post on [Code-First Development on Azure](https://aka.ms/ai-studio/code-first-blog)
  - [X] Read our blog series on [Building Intelligent Apps on Azure AI](https://aka.ms/ai-studio/intelligent-apps)
  - [X] Explore our learn collection on [Code-First Development with Azure AI](https://aka.ms/ai-studio/collection)
+
+Thank you for taking part in this workshop!
 
 ===
 
