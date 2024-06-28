@@ -670,7 +670,7 @@ Explore this with other questions or by using different customer if time permits
 > The images in the tilea were created by Dall-E 3!
 
 * [] **03** | Confirm customer information
-    - Look at the top-left corner of the website
+    - Look at the top-right corner of the website
     - The logged-in customer name, email address, and profile photo is shown
       - Customer information and purchase history is stored in Cosmos DB and retrieved during the RAG process in the **customer_lookup** node
 
