@@ -5,7 +5,6 @@ languages:
 - python
 - bicep
 - azdeveloper
-- prompty
 products:
 - azure-openai
 - azure-cognitive-search
@@ -39,27 +38,31 @@ By exploring and deploying this sample, you will learn to:
 
 ## Table of Contents
 
-1. [Features](#features)
-    * [Architecture Diagram](#architecture-diagram)
-    * [Demo Video](#demo-video-optional)
-    * [Versions](#versions)
-1. [Getting Started](#getting-started)
-    * [Pre-Requisites](#pre-requisites)
-    * [GitHub Codespaces](#1-github-codespaces)
-    * [VS Code Dev Containers](#2-vs-code-dev-containers)
-    * [Manual Setup (Local)](#3-manual-setup-local)
-1. [Azure Deployment](#azure-deployment)
-1. [Local Development](#local-development)
-    * [Exploring the Prompty Asset](#exploring-the-prompty-asset)
-    * [Testing the Application Flow](#testing-the-application-flow)
-1. [Guidance](#guidance)
-    * [Region Availability](#region-availability)
-    * [Costs](#costs)
-    * [Security](#security)
-1. [Troubleshooting](#troubleshooting)
-1. [Resources](#resources)
-1. [Contributing](#contributing)
-1. [Trademarks](#trademarks)
+- [Contoso Chat Retail with Azure AI Studio and Promptflow](#contoso-chat-retail-with-azure-ai-studio-and-promptflow)
+- [About This Sample](#about-this-sample)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [Architecture Diagram](#architecture-diagram)
+    - [Demo Video](#demo-video)
+    - [Versions](#versions)
+  - [Getting Started](#getting-started)
+    - [Pre-Requisites](#pre-requisites)
+    - [Setup Environment](#setup-environment)
+    - [1. GitHub Codespaces](#1-github-codespaces)
+    - [2. VS Code Dev Containers](#2-vs-code-dev-containers)
+    - [3. Manual Setup (Local)](#3-manual-setup-local)
+  - [Azure Deployment](#azure-deployment)
+  - [Local Development](#local-development)
+    - [Exploring the Prompty Asset](#exploring-the-prompty-asset)
+    - [Testing the Application Flow](#testing-the-application-flow)
+  - [Guidance](#guidance)
+    - [Region Availability](#region-availability)
+    - [Costs](#costs)
+    - [Security](#security)
+  - [Resources](#resources)
+  - [Troubleshooting](#troubleshooting)
+  - [Contributing](#contributing)
+  - [Trademarks](#trademarks)
 
 
 ## Features
