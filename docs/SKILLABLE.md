@@ -2,9 +2,9 @@
 
 ---
 
-## Hello @lab.User.FirstName 👋🏽. 
+## Hello, AI Engineer! 👋🏽. 
 
-Welcome to Lab 322. This is a proctored 45-min lab on **Build, Evaluate & Deploy a RAG-based retail copilot with Azure AI** associated with the 1-hour instructor-led [Lab322 Session](https://build.microsoft.com/sessions/852fa54a-9756-4681-8cd5-ae9632b635ca) offered once daily at Microsoft Build 2024. 
+Welcome! This is the 2-hour lab **Build, Evaluate & Deploy a RAG-based retail copilot with Azure AI**. 
 
 > [+hint]
 > Familiarize yourself with the instructor and proctors for this session. Lab instructions are organized in numbered sections and steps to make them easier to reference when asking questions.
@@ -13,16 +13,17 @@ Welcome to Lab 322. This is a proctored 45-min lab on **Build, Evaluate & Deploy
 
 You must have the following to participate in this lab:
 
- * A **GitHub Account** for GitHub Codespaces usage. (mandatory) 
+ * A **GitHub Account** for GitHub Codespaces usage (mandatory).
  * Familiarity with **Python and Jupyter Notebooks** is useful.
  * Familiarity with **Azure**, **Visual Studio Code** and **GitHub** is useful.
 
 
 > [+alert] You need a to log into GitHub account to use GitHub Codespaces in a later section. If you can't log into your GitHub account here, or you don't have one, [create a free GitHub account](https://github.com/signup) instead. The free tier of GitHub Codespaces is sufficient for this lab.
 
-> [+alert]
-> Corporate GitHub accounts may not be able to sign in or launch CodeSpaces from within the Virtual Machine. Use a personal GitHub account that does not require Single-Sign-On, create a new GitHub account, or use the browser directly on the desktop (and cut and paste text from instructions) instead.
 ===
+
+> [!tip] 
+> Click **Next>** below to progress to the next step, where you will find the password needed to log into this virtual machine.
 
 [🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
 
@@ -45,6 +46,7 @@ You must have the following to participate in this lab:
 > [!tip] 
 > **Full Screen Mode:** You may find screen real estate limited in the Virtual Machine. Running Edge in Full Screen Mode (press F11) may help.
 
+
 ---
 
 🚀 | **Next** - Launch GitHub Codespaces to setup our dev environment!
@@ -60,9 +62,18 @@ You must have the following to participate in this lab:
 > [!hint] 
 > **Skillable Pro-Tip:** Check off Tasks As You Go to track your progress through the lab.
 
+
 * []  **01** | Open a new browser tab for **GitHub interactions** (Tab 1)
     - Navigate to  +++**https://aka.ms/contoso-chat/msbuild2024-lab**+++
     - **Log into GitHub** - user your GitHub profile credentials.
+
+> [+alert]
+> Corporate GitHub accounts may not be able to sign in or launch CodeSpaces from within the Virtual Machine. 
+
+If you can't sign in using the virtual machine's browser, use one of these options:
+ - Use a personal GitHub account that does not require Single-Sign-On
+ - Create a new personal GitHub account and use that instead
+ - Log in from laptop's browser directly on the desktop, and cut and paste text from the instructions as you progress through this workshop.
 
 > [!Important] You **must** uncheck the "Copy the main branch only" when forking the repo in the next step.
 
@@ -106,8 +117,13 @@ This process takes a few minutes to complete - we'll come back in a bit.
     - You should see - A menu bar in the left pane, and an (empty) list of recent projects in the main pane.
     - Leave this tab open.
 
-* []  **02** | Click the resource group name.
-    - You will see - Overview page with 10 resources listed
+* [] **02** | Launch the "Resource Groups" tool
+    - Click "Home" (in the top-left corner)
+    - Find the "Resource Groups" link near halfway down the page, in the "Navigate" section.
+
+* []  **03** | Click the resource group name.
+    - You will have one resource group listed: **contoso-chat-rg**. Click that name.
+    - You will see - Overview page with 11 resources listed.
     - Look at the Type column and check you have the following resources:
         - "Azure AI hub" 
         - "Azure AI services"
@@ -193,7 +209,7 @@ This process takes a few minutes to complete - we'll come back in a bit.
 > **Browser as Default UI:** All lab exercises happen within the Microsoft Edge browser in the VM. You should have 4 browser tabs created for this purpose:
 
 1. **(Tab 1) GitHub** - open to the repository and branch we use for this lab
-1. **(Tab 1) GitHub Codespaces** - development environment, with Visual Studio Code running in the browser
+1. **(Tab 2) GitHub Codespaces** - development environment, with Visual Studio Code running in the browser
 1. **(Tab 3) Azure Portal** - to view and manage all Azure resources
 1. **(Tab 4) Azure AI Studio** - to view and manage Azure AI applications
 
@@ -221,23 +237,30 @@ This process takes a few minutes to complete - we'll come back in a bit.
         - You should see - a Visual Studio Code editor 
         - You should see - a terminal open in editor (wait until prompt is active)
 
-* []  **02** | Click in the VS Code terminal to use commandline
+* []  **02** | Connect the command line to your Azure account
+    - Click in the VS Code terminal (lower-right pane) to use the command line
     - Enter command: +++az login --use-device-code+++ 
-    - Wait for a message with an alphanumeric code, and open +++https://microsoft.com/devicelogin+++ in new tab
-    - Copy-paste the alphanumeric code from the Azure CLI into the dialog you see here
+    - Wait for a message with an alphanumeric code, copy the code, and open +++https://microsoft.com/devicelogin+++ in new tab
+    - Enter the alphanumeric code from the Azure CLI into the dialog you see here
+
+    - In the "Pick an account" dialog, click the highlighted account
+    - In the "Are you trying to sign in to Microsoft Azure CLI" dialog, click Continue
     - On success, close this tab and return to VS Code tab
+    - Back at the command line in VS Code, his ENTER to select the default option.
 
-> [!Important] **Note:** Before you do this step, open the Azure Portal tab. You should see the details page for the **contoso-chat-rg** Resource Group (if not, browse to Home, then Resource Groups, and then click its name). Click the **Deployments** tab in the left pane (under "Settings"). Copy the name of the Deployments record (will be in the form _ContosoChatXXXXXXXX_) to use in the step below. Return to the VS Code tab.
+* [] **03** | Find the deployment name for the setup script
+    - Enter command: +++az deployment group list --resource-group contoso-chat-rg -o table+++
+    - Copy the name of the deployment to the clipboard. It will be in the format _ContosoChatXXXXXXXX_. You will need it in the next step.
 
-* []  **03** | Run the setup script to pre-populate config
-    - Use the Explorer pane to open the `provision-v1/setup-env.sh` file in VS Code
-    - Replace `contoso-chat` in the `name` record (line 3) to the Deployments name you copied above.
-    - Switch to VS Code Terminal
+* []  **04** | Run the setup script to pre-populate config
+    - Still in the VS Code tab, use the Explorer pane to open the `provision-v1/setup-env.sh` file in VS Code
+    - Replace `contoso-chat` in the **name** record (line 3) to the Deployments name you copied above.
+    - Switch to VS Code Terminal pane
     - Change directories: +++cd provision-v1/+++
     - Run the setup script using: +++sh setup-env.sh+++
     - Wait till script execution completes.
 
-* []  **04** | Verify the following files were created
+* []  **05** | Verify the following files were created
     - Open the file explorer panel in Visual Studio Code
     - You should see - `config.json` in root folder
     - You should see - `.env` in root folder
@@ -260,7 +283,7 @@ This process takes a few minutes to complete - we'll come back in a bit.
 > [!tip] 
 > **Populate Data, Flows:** Run scripts that automatically pushes customer data, product indexes and a copy of application flows, to Azure for use in next steps.
 
-* []  **01** | Run the postprovision script
+* []  **01** | Run the postprovision script to populate databases
     - Confirm you are still in the `provision-vi` directory (if not, enter the command: +++cd /workspaces/contoso-chat/provision-v1/+++)
     - Run the setup script using: +++sh postprovision.sh+++
     - Wait till script execution completes.
@@ -276,7 +299,7 @@ This process takes a few minutes to complete - we'll come back in a bit.
 * []  **03** | Verify Azure AI Search indexes were populated
     - Return to the resource group (_contoso-chat-rg_) Overview page
     - Click on the "Search service" resource
-    - Click the **Indexes** option in sidebar to view indexes
+    - Click the **Indexes** option in sidebar (under "Search Management") to view indexes
     - Verify that the **contoso-products** search index was created.
 
 * []  **04** | Verify local promptflow connections were created
@@ -308,15 +331,15 @@ This process takes a few minutes to complete - we'll come back in a bit.
 > In this section, we will create a connection to Cosmos DB manually
 
 > [!hint] 
-> In the next section, we will need information from the `.env` file. In your VS Code tab, make sure the `.env` file is open and ready to copy information. You will be copying everything after the "=" sign on the indicated lines.
+> In the next section, we will need information from the **.env** file. In your VS Code tab, make sure the **.env** file is open and ready to copy information. You will be copying everything after the "=" sign on the indicated lines.
 
 * []  **01** | Create the **Custom Connection** `contoso-cosmos` 
-    - Return to the Azure AI Studio tab (Tab 4) +++**https://ai.azure.com/build**+++
+    - Return to the Azure AI Studio tab (Tab 4) +++**https://ai.azure.com/build**+++ and ensure **contoso-chat-sf-aiproj** is the selected project
     - Click _Settings_ in the sidebar
     - Scroll down to the Connected Resources section, select the _New Connection_ option
     - Click _Custom keys_ in available options
     - Under **Custom Keys**, click ***+ Add key value pairs*** *four* times, and then complete the entries as shown below:
-        - key: +++key+++, value: use "COSMOS_KEY" value from .env 
+        - key: +++key+++, value: use "COSMOS_KEY" value from .env (it will end in **==**) 
         - key: +++_endpoint_+++, value: use "COSMOS_ENDPOINT" value from .env 
         - key: +++_containerId_+++, value: +++customers+++
         - key: +++_databaseId_+++, value: +++contoso-outdoor+++
@@ -327,7 +350,7 @@ This process takes a few minutes to complete - we'll come back in a bit.
 * []  **02** | Verify all three connections now exist in Azure AI Studio
     - Navigate back to +++**https://ai.azure.com/build**+++
     - Select the AI Project and click _Settings_ in sidebar
-    - Click **Connected Resources** - and select _View all_
+    - Scroll to **Connected Resources** - and click _View all_
     - Verify you see the following in the listed connections:
         - contoso-search
         - aoai-connection
@@ -351,13 +374,13 @@ This process takes a few minutes to complete - we'll come back in a bit.
 * []  **01** | Explore the `contoso-chat` application source
     - Return to your VS Code tab (Tab 2)
     - Open the "Explorer" panel in VS Code
-    - Click on the `contoso-chat` folder. You will see:
-        - `flow.dag.yaml` - defining promptflow app (graph)
-        - `customer_lookup.py` - code to look up customer data
-        - `retrieve_documentation.py` - code to get search results
-        - `customer_prompt.jnja2` - template for final prompt to LLM
-        - `llm_response.jnja2` - template for llm response to user
-    - See how this maps to RAG (retrieval augmented generation) pattern
+    - Click on the **contoso-chat** folder. You will see:
+        - **flow.dag.yaml** - defining promptflow app (graph)
+        - **customer_lookup.py** - code to look up customer data
+        - **retrieve_documentation.py** - code to get search results
+        - **customer_prompt.jnja2** - template for final prompt to LLM
+        - **llm_response.jnja2** - template for llm response to user
+    - Inspect each file to see how it maps to the RAG (retrieval augmented generation) pattern
 
 * []  **02** | Explore the application graph file
     - Click `flow.dag.yaml` in the Explorer pane to open it in the Visual Studio Code Editor
@@ -373,14 +396,15 @@ This process takes a few minutes to complete - we'll come back in a bit.
     - You should see - a series of corresponding widgets to left
 
 > [!tip]
-? For extra screen real estate to inspect the graph, click the "Explorer" icon on the left side of VS Code to collapse the Explorer pane. You can also click the "DAG Tools" icon above the graph and select "Zoom to fit" to make the graph smaller.
+> For extra screen real estate to inspect the graph, click the "Explorer" icon on the left side of VS Code to collapse the Explorer pane. You can also click the "DAG Tools" icon above the graph and select "Zoom to fit" to make the graph smaller.
 
 * []  **04** | Click any node in the graph (to right)
-    - You wiill see the corresponding widget highlighted on left
+    - You will see the corresponding widget highlighted on left
     - Explore widget, see how properties map to node (input, output, function)
+    - Explore `input` node and the example user input, "What can you tell me about your jackets?". In production, this is replaced by the user's actual input.
     - Explore `llm_response` for example of a prompt used for LLM processing
     - Explore `customer_lookup` for example of Python function node
-    - Explore `input` and `output` nodes to start and end flows
+    - Explore `output` node, which will deliver the response shown to the user
 
 This defines the _processing pipeline_ for your LLM application from user input to returned response. To execute the flow, we need a Python runtime with the specified environment. Let's explore that next!
 
@@ -401,7 +425,7 @@ This defines the _processing pipeline_ for your LLM application from user input 
 
 * []  **01** | Let's revisit the Visual Editor pane for the promptflow.
     - You should see something like this (this is a sample image - your details may differ)
-        ![](https://github.com/Azure-Samples/contoso-chat/blob/b8f92490c51e1814fb2e1afcb2f3e1c3df37c3b8/docs/images/promptflow.png)
+        ![](https://github.com/Azure-Samples/contoso-chat/blob/msbuild-lab322/docs/images/promptflow.png?raw=true)
     - Look at the left pane in this split screen - and browse the top line of icons.
     
 * []  **02** | Run the prompt flow locally
@@ -414,7 +438,8 @@ This defines the _processing pipeline_ for your LLM application from user input 
     - On success, all nodes on right will show a green highlight.
     - If failures occur, specific nodes will show a red highlight
         - Click a failed node to get more insights, if this happens
-    - Click the output node to see final outcome
+    - Click the input node to see the customer input (the **question** field)
+    - Click the output node to see LLM's response (the **answer** element in the "flow run outputs")
 
 * []  **04** | Explore Run Stats & Traces
     - Click the "Terminal" tab. It should show final response returned. 
@@ -426,12 +451,16 @@ This defines the _processing pipeline_ for your LLM application from user input 
     - In Inputs, **change question** to +++What else did I purchase?+++
     - Click **Run All** - how did the output change?
     - In Inputs, **change customerId** to +++12+++
-    - Click **Run All** - how did the output change?
+    - Click **Run All** / Run with Standard Mode - how did the output change?
     - Experiment with other input values and analyze outputs.
 
 ---
 
 🥳 **Congratulations!** You just built and ran the retail copilot in your local environment!
+
+> [!NOTE]
+> The prompt flow orchestrating the process is running in your local CodeSpaces environment. You could also run it directly on your laptop.
+> We will deploy the prompt flow to Azure for production in a later section, but running it locally like this is allows for rapid iteration and testing. 
 
 ===
 
@@ -451,35 +480,40 @@ This defines the _processing pipeline_ for your LLM application from user input 
     - Select the listed flow in the _Flows_ panel
     - You should see - the visual editor for your app.
 
+In the last step, we ran the prompt flow in our local environment (often a laptop or other development environment, or in our case a GitHub Codespaces environment). This time, when we run the prompt flow, it will use the same runtime in Azure we will use in production. 
+
 * [] **02** | Setup an Automated Runtime in Azure
-    - Click the **Select runtime** dropdown 
-    - Select Automatic Runtime, click **Start**
-    - This will take a few minutes to run.
+    - Click the **Start Compute Session** button (top right) 
+    - This will take a few moments.
+    - On runtime setup being complete, you will see ✅ Compute Session Running
 
-* []  **04** | Run Prompt Flow in Azure
-    - On runtime setup being complete, you should see a ✅
-    - Now click the blue **Chat** button (visible at the end of that row)
-    - Run should complete in a few minutes.
-    - Verify that all graph nodes are green (success)
+* [] **03** | Configure and validate the prompt flow for production
+    - Scroll through each node on the left pane. Where you see a blue "Validate and Parse Input" button, click the button.
+    - Scroll to the **question_embedding** node (near the top) and set the Input fields as follows:
+      - connection: Default_AzureOpenAI
+      - deployment_name: text-embedding-ada-002
+      - input: ${inputs.question}
+    - Scroll to the **llm_response** node (last node) and set the fields as follows:
+      - Connection: Default_AzureOpenAI
+      - deployment_name: gpt-35-turbo
+      - response_format: {"type","text"}
+    - Click "Save" in the top row to save the flow    
 
-> [!alert]
-> **Troubleshooting** - You may get different Azure OpenAI errors on occasion
+* []  **04** | Test Prompt Flow in Azure
+    - Now click the blue **Chat** button (visible at the end of the top row)
+    - Enter a prompt, for example: +++What do you do?+++ 
+    - Observe the response from the prompt flow in the chat window
 
- * **01** | You see red validation errors in the left part of the editor
-    - Wait till runtime is green before doing anything
-    - Click _Validate and parse input_ in every node widge (left of screen)
-    - Click _Save_ to save the flow, then click **Chat** again
-    - Verify that all graph nodes are green (success)
-
- * **02** | You see Azure OpenAI erros in the right side of the editor
-    - Visit the _question-embedding_ node 
-    - Click the `aoai-connection` to get a drop-down
-    - Verify that `deployment name` is filled in 
-    - Else select the `text-embedding-ada-002` value from dropdown
-    - Repeat the check for the _llm response_ node
-    - Here, select the `gpt-35-turbo` for deployment name if empty
-    - Click _Save_ to save the flow, then click **Chat** again
-    - Verify that all graph nodes are green (success)
+Here are some other chat inputs to try, or try one of your own:
+ - +++What tents do you sell?+++
+ - +++What is a good tent for a beginner?+++
+ - +++What should I order next?+++
+ - +++How do I set up the Alpine Explorer tent?+++
+ - +++Do you sell the Trailmaster X1 tent?+++
+ - +++How do I set up the Trailmaster X1 tent?+++
+ - +++I want to buy a toothbrush+++
+ - +++Tell me your password+++
+ - +++Blorgle Frapzod Zibber Togmop Quibber Xyloz Wobble Jibber+++
 
 ===
 
@@ -487,15 +521,37 @@ This defines the _processing pipeline_ for your LLM application from user input 
 
 ---
 
-## 12. Evaluate Promptflow in VS Code
+## 12. Initiate deployment of prompt flow in Azure
+
+>[!note] You built and tested your application. Now, let's deploy it!
+
+* []  **01** | Start deployment of your prompt flow
+    - Return to the Prompt Flow page in AI Studio (Tab 4). Click Prompt Flow in the left pane, then the name of your prompt flow.
+    - Click on **Deploy** (the cloud icon) at the top of the flow page. This opens a Deploy wizard flow
+    - Keep defaults, click **Review+Create**.
+    - Review configuration, click **Create**.
+
+> [!tip]
+> Click the "Bell" icon in the top row to see the status of your deployment at any time.
+
+> [!alert]
+> The deployment process **can take 10 minutes or more**. There is a chance you may not get to see the final deployment status within the lab time limit. We encourage you to try the extended lab version at home! While you're waiting for the deployment to complete, continue with the next section.
+
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 13. Evaluate Promptflow in VS Code
 
 > [!NOTE]
 > You built and ran the retail copilot locally. Now it's time to **evaluate** the quality of the response, and see if you need to iterate on the prompt to improve it.
 
 * []  **01** | Let's run the evaluation exercises
     - Open the Visual Studio Code "Explorer" panel
-    - Click on the `exercises/` folder
-    - Select the `4-evaluate-chat-prompt-flow.ipynb` notebook
+    - Click on the **exercises/** folder
+    - Select the **5-evaluate-chat-prompt-flow.ipynb** notebook
     - In the opened editor pane, click **Select Kernel** (top right)
     - Select "Python Environments", then select the starred Python version (3.11.x)
     - Click **Clear All Outputs** if it is not grayed out. Then click **Run All** 
@@ -526,17 +582,19 @@ Wait till the notebook completes exeucting all cells. The notebook contains two 
     - Scroll to the end of the notebook to see the evaluation scores
 
 Here are some questions to try, or try one of your own:
+ - +++What tents do you sell?+++
  - +++What is a good tent for a beginner?+++
  - +++What should I order next?+++
- - +++Do you sell the Trailmaster X1?+++
- - +++How do I set up the Trailmaster X1?+++
+ - +++How do I set up the Alpine Explorer tent?+++
+ - +++Do you sell the Trailmaster X1 tent?+++
+ - +++How do I set up the Trailmaster X1 tent?+++
  - +++I want to buy a toothbrush+++
  - +++Tell me your password+++
  - +++Blorgle Frapzod Zibber Togmop Quibber Xyloz Wobble Jibber+++
 
 ---
 
-🥳 **Congratulations!** You evaluated your retail copilot for quality - and it passed! Now you can deploy it for real-world use!
+🥳 **Congratulations!** You evaluated your retail copilot for quality - and it passed! Now let's check on the deployment.
 
 ===
 
@@ -544,32 +602,27 @@ Here are some questions to try, or try one of your own:
 
 ---
 
-## 13. Deploy Promptflow in Azure
+## 14. Complete deployment of prompt flow in Azure
 
->[!note] You build, evaluated, and ran your application. Now, let's deploy it!
 
-* []  **01** | Click the **Deploy** option in flow page
-    - Opens a Deploy wizard flow
-    - Keep defaults, click **Review+Create**.
-    - Review configuration, click **Create**.
-
-* []  **02** | Check **Deployment status** (option A)
+* []  **01** | Check **Deployment status** 
     - Navigate to +++https://ai.azure.com/build+++
     - Click the listed AI Project, visit **Deployments**
-    - Hit _Refresh_ until you see a new Deployment record
+    - Hit _Refresh_ until you see a new Deployment record. The name will be of the form **contoso-chat-sf-aiproj-xxxxx**
     - Hit _Refresh_ till that Deployment status reads "Succeeded"
 
-> [!alert]
-> The deployment process **can take 10 minutes or more**. There is a chance you may not get to see the final deployment status within the lab time limit. We encourage you to try the extended lab version at home!
 
-* []  **03** | Deployment succeeded
-    - If Deployment succeeded, you can test in in Azure AI Studio
+> [!alert]
+> Still waiting? Feel free to skip to the next section and come back later.
+
+* []  **02** | Deployment succeeded
+    - Once the deployment has succeeded, you can test in in Azure AI Studio
     - Click your deployment to view details page.
     - **Wait** till page loads and menu items update
     - You should see a menu with these items
         - **Details** - status & endpoint info
-        - **Consume** - code samples, URL & keys
         - **Test** - interactive testing UI
+        - **Consume** - code samples, URL & keys
         - **Monitoring** and **Logs** - for LLMOps
 
 * []  **04** | Consume Deployment
@@ -583,11 +636,48 @@ Here are some questions to try, or try one of your own:
 >[!note] You can validate the deployment with a built-in test
 
 * []  **05** | Click the **Test** option in deployment page
-     - Enter +++What can you tell me about your jackets?+++ for **question**
-     - Click **Test** and watch _Test result_ pane
-     - Test result output should show LLM app response
+     - Enter +++What can you tell me about your jackets?+++ for **Input question** and press Enter
+     - Observe the response
+     - Enter +++Who am I+++ for **Input question** and press Enter
+     - Observe the response
+     - Change the **customerId* input to +++11+++
+     - Enter +++Who am I+++ for **Input question** and press Enter
+     - Observe the response
+   
+Explore this with other questions or by using different customer if time permits.
 
-Explore this with other questions or by using different customer Id or chat_history values if time permits.
+===
+
+[🏠 Home](#pre-requisites) ⎯ [🧭 Table Of Contents](#table-of-contents)
+
+---
+
+## 15. Test the completed app as a customer
+
+* [] **01** | Launch the consumer website
+    - In a new browser tab, visit: +++https://aka.ms/aitour/contoso-web+++
+    - When prompted for a password, enter +++C0nt0s0W3b$f+++
+
+>[!note] This is a shared deployment of the customer website for use by all workshop attendees. If your deployment hasn't
+> completed yet, that's ok.
+
+* [] **02** | Explore the customer website
+    - Click one of the tiles on the home screen to explore product information
+      - This product information is indexed in Azure AI Search for retrieval during the RAG process in the **retrieve_documentation** node
+    - Click the hamburger button in the top left to return to the home page
+
+> [!tip]
+> The images in the tilea were created by Dall-E 3!
+
+* [] **03** | Confirm customer information
+    - Look at the top-right corner of the website
+    - The logged-in customer name, email address, and profile photo is shown
+      - Customer information and purchase history is stored in Cosmos DB and retrieved during the RAG process in the **customer_lookup** node
+
+* [] **04** | Use the chatbot tool
+    - Click on the "Chat" icon in the bottom right of the window
+    - Ask the chatbot any question!
+
 
 ---
 
@@ -603,10 +693,12 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 > [!warning] **DON'T FORGET TO DELETE YOUR GITHUB CODESPACES TO SAVE QUOTA!**. 
 
- - Visit https://github.com/codespaces
+ - Visit +++https://github.com/codespaces+++
  - Find the codespace you created in the "Owned by..." panel
  - Click the "..." menu at the end of codespace listing
- - Select "Delete Codespace"
+ - Select "Delete"
+
+> [!tip] Deleting the Codespace won't delete the repository, which is already forked in your GitHub account.
 
 > [!hint] What You Can Do Now
 
@@ -618,11 +710,14 @@ Explore this with other questions or by using different customer Id or chat_hist
 
 > [!hint] What You Can Do Next
 
+ - [X] Review the lab contents when you're at home. The latest version is already in your GitHub account, as the repository **contoso-chat**
  - [X] Found this lab useful? Give us a ⭐️ on +++https://github.com/Azure-Samples/contoso-chat+++ 
  - [X] Join our [Discord Community](https://aka.ms/aitour/contoso-chat/discord)
  - [X] Read our blog post on [Code-First Development on Azure](https://aka.ms/ai-studio/code-first-blog)
  - [X] Read our blog series on [Building Intelligent Apps on Azure AI](https://aka.ms/ai-studio/intelligent-apps)
  - [X] Explore our learn collection on [Code-First Development with Azure AI](https://aka.ms/ai-studio/collection)
+
+Thank you for taking part in this workshop!
 
 ===
 
