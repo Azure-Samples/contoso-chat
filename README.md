@@ -216,7 +216,7 @@ This sample contains an example [chat.prompty](./contoso_chat/chat.prompty) asse
 
 This specific prompty takes 3 inputs: a `customer` object, a `documentation` object (that could be chat history) and a `question` string that represents the user query. You can now _load_, _execute_, and _trace_ individual prompty assets for a more granular prompt engineering solution.
 
- * See the [prompty specification](https://github.com/Azure/prompty) for more details on format.
+ * See the [prompty specification](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html#prompty-specification) for more details on the format.
  * Read the [prompty examples](https://github.com/microsoft/promptflow/tree/main/examples/prompty) for usage guidance from SDK or CLI.
 
 ### Testing the Application Flow
