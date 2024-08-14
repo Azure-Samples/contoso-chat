@@ -1,5 +1,4 @@
-# End to End LLM App development with Azure AI Studio and Prompt Flow
-
+# (Legacy) AITOUR 23 - v1
 > [!WARNING]  
 > This sample is under active development to showcase new features and evolve with the Azure AI Studio (preview) platform.  Keep in mind that the latest build may not be rigorously tested for all environments (local development, GitHub Codespaces, Skillable VM). 
 > 
