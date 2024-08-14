@@ -1,0 +1,44 @@
+site_name: "WRK550: Build a Retail Copilot Code-First on Azure AI"
+# red, pink, purple, deep purple, indigo, 
+# blue, light blue, cyan, teal, green, light green, 
+# lime, yellow, amber, orange, deep orange, brown, 
+# grey, blue grey , black, white
+#    primary: pink # teal
+#    accent: indigo
+
+theme:
+  name: material
+
+  # Change Font: https://squidfunk.github.io/mkdocs-material/setup/changing-the-fonts/?h=fonts
+  # Google Fonts Supported By Default: https://fonts.google.com/
+  font:
+    code: Roboto Mono #Monospaced
+    text: Roboto #Regular
+  logo: assets/aistudio.svg
+  palette: 
+    - scheme: default  # Light Mode
+      primary: black # black
+      accent: pink
+      toggle:
+        icon: material/brightness-2
+        name: Switch to dark mode
+    - scheme: slate # Dark Mode
+      primary: amber # amber
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+
+#  features:
+#    - navigation.tabs
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
