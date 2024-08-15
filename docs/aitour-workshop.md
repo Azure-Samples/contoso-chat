@@ -64,7 +64,23 @@ TIP: Open the "hamburger" menu in the top-right of this window, and choose "Spli
 
 We have created a temporary Azure subscription for you to use during this workshop. 
 
-TODO: ADD CREDENTIALS
+Login to your VM with the following credentials...
+
+**Username: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Username+++**
+
+**Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
+
+Cloud log in
+
+++portal.azure.com++
+
+++azd auth login --use-device-code++
+
+++azd up --no-prompt --e AITOUR++
+
+++@lab.CloudPortalCredential(User1).Username++
+
+++@lab.CloudPortalCredential(User1).Password++
 
 ## Continue the workshop
 
