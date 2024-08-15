@@ -168,12 +168,18 @@ This is a related option that opens the project in your local VS Code using the 
     ```bash
     azd up
     ```
+ 1. You will be asked a couple of questions.
+    - For Environment Name, enter: CONTOSOCHAT
+      - (You are free to choose a different name, for example if you already have resources with that name.)
+    - For Subscription, select the default (your logged-in Azure subscription)    
+    - For Azure Region we recommend: France Central (francecentral)
  1. This step will take some time to complete. 
     - Visit the [Azure Portal](https://portal.azure.com) to monitor progress.
     - Look for a new resource group matching the environment name
     - Click `Deployments` to track the status of the provisioning process
  1. Once provisioning completes, monitor progress for app deployment.
-    - Visit the [Azure AI Studio](https://ai.azure.com/build)
+    - Visit [Azure AI Studio](https://ai.azure.com/build), and click "Sign in"
+    - Click "View all projects"
     - Look for an AI Project associated with the above resource group
     - Click `Deployments` to track the status of the application deployment
  1. Once deployment completes, test the deployed endpoint from Azure AI Studio
@@ -189,9 +195,11 @@ You can find your deployed retail copilot's _Endpoint_ and _Primary Key_ informa
 
 ## Local Development
 
+With the necessary dependencies installed, you can use your local machine to interact with the deployed endpoint. Or, you can use Codespaces or a devcontainer on this repository, which will work out of the box.
+
 ### Exploring the Prompty Asset
 
-This sample contains an example [chat.prompty](./contoso_chat/chat.prompty) asset that you can explore, to understand this new capability. The file has the following components:
+The [contoso_chat](./contoso_chat) sample contains an example [chat.prompty](./contoso_chat/chat.prompty) asset that you can explore, to understand this new capability. The file has the following components:
 
 1. A frontmatter section that defines the following attributes:
     - `name` of the application
@@ -241,7 +249,7 @@ This template uses `gpt-35-turbo` for chat completion, `gpt-4` for chat evaluati
 
 This template uses the `Semantic Ranker` feature of Azure AI Search which may be available only in certain regions. Check for [up-to-date region availability](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search) and select a region accordingly.
 
-  * We recommend using `sweden-central` for the OpenAI Models
+  * We recommend using `francecentral` for the OpenAI Models
   * We recommend using `eastus` for the Azure AI Search Resource
 
 > [!NOTE]
