@@ -11,7 +11,11 @@ This instructions are for participants of the Workshop "Build a Retail Copilot C
     - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
     - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
 
-If you're not a workshop participant at AI Tour, visit [github.com/Azure-Samples/contoso-chat](https://github.com/Azure-Samples/contoso-chat/blob/main/README.md) for a version of this workshop you can run using your own Azure subscription. TODO: UPDATE FOR SELF-GUIDED WORKSHOP LINK.
+If you're not a workshop participant at AI Tour, visit [github.com/Azure-Samples/contoso-chat](https://github.com/Azure-Samples/contoso-chat/blob/main/README.md) for a version of this workshop you can run using your own Azure subscription. 
+
+TODO: UPDATE FOR SELF-GUIDED WORKSHOP LINK.
+
+TODO: UPDATE SKILLABLE LAB TO POINT TO github.com/Azure-Samples/contoso-chat/docs/aitour-workshop.md
 
 ## Pre-Requisites
 
@@ -32,21 +36,20 @@ To participate in this workshop, you will need:
 
 ## Get Started
 
-We won't be using the virtual machine you see to the left to these instructions. **There is no need to log in.**
+We won't be using the Azure Portal window to the left of these instructions. **You can close that window now.**
 
-TIP: Open the "hamburger" menu in the top-right of this window, and choose "Split Windows". You can then minimize (but **do not close**) the virtual machine window.
+1. **Open a new browser window** on your laptop. 
 
-1. Open a new browser window on your laptop. 
+1. **Click the link** in green below to copy it to your clipboard: 
+    * ++https://github.com/Azure-Samples/contoso-chat++
 
-1. Click the link in green to copy it to your clipboard: ++https://github.com/Azure-Samples/contoso-chat++
+1. **Paste the link in your browser** to open the GitHub repository.
 
-1. Paste the link in your browser to open the GitHub repository.
-
-1. **Sign in** to GitHub if you aren't logged in already, using your own GitHub account credentials.
+1. **Sign in to GitHub** if you aren't logged in already, using your own GitHub account credentials.
 
 1. Click **Fork** in the top-right corner of the page
 
-1. In the **Create a new fork** page, scroll down and **uncheck** the option "Copy the `main` branch only", and then click **Create Fork**.
+1. In the "Create a new fork" page, scroll down and **uncheck** the option "Copy the `main` branch only", and then click **Create Fork**.
 
    * **Important**: If you forgot to uncheck that option, you will need to delete your fork and try again. Ask a proctor for assistance.
 
@@ -68,14 +71,31 @@ Login to your VM with the following credentials...
 
 **Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
 
-## Deploying assets (not needed for in-room students)
+## Deploying contoso-chat (for Skillable - not needed for in-room students)
 
-From main branch root:
+From **main** branch root:
 
 ++azd up -e AITOUR++
 
+* Create workspace?: Yes
 * Subscription: Choose default
 * Region: France Central (20)
+
+## Deploying contoso-web (for Skillable)
+
+TODO: Nitya to update these instructions/repo. Needs to be run in an environment with node and next.js, and that can access the resources deployed by contoso-chat
+
+```
+git clone https://github.com/nitya/contoso-web
+cd contoso-web
+npm run dev
+```
+
+Update local.env to point to the contoso-chat deployed resources
+* AI Search
+* CosmosDB
+* AI Services
+* Prompt Flow endpoint
 
 ## Azure Credentials
 
@@ -94,4 +114,5 @@ We have created a temporary Azure subscription for you to use during this worksh
 In your Codespace, use the VS Code Online File Explorer on the left to open the file `docs\index.md`.
 
 Follow the instructions in that file to continue. 
+
 

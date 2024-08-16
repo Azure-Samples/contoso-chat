@@ -117,82 +117,58 @@ In this workshop, you will learn how to:
 
 * Customize the sample to suit your application scenario (data, functions, frameworks, models)
 
-## 3. Provision Infrastructure
+If you've gotten this far, you have already:
 
-If you are participating in a live AI Tour workshop, you can skip ahead to Section 4.
+* Launched the Lab instructions
+* Reviewed pre-requisites for this workshop
+* Forked the repository for this workshop
+* Launched GitHub Codespaces
+* Opened this file in VS Code Online
 
-### 3.0 Pre-Requisites
+## 2. Log into your Azure account from the terminal
 
-These are the resources and skill requirements for the workshop. **Note that in the case of the AI Tour, the subscription and infrastructure requirements will be taken care of for you.** For all others, you will need to verify you can meet all requirements. 
+We have provided you with a temporary Azure subscription for you to use with this workshop. It is pre-deployed with all the resources you will need.
 
-1. Azure Subscription - Signup for a free account.
-1. Visual Studio Code - Download it for free.
-1. GitHub Account - Signup for a free account.
-1. [Access to Azure Open AI Services](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview#how-do-i-get-access-to-azure-openai) - Learn about requirements.
-1. [Azure OpenAI Model Quota](https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits) - We use `gpt-4`, `gpt-35-turbo` and `text-embedded-ada-002`
-1. Standard tier of Azure AI Service - Required for Semantic Ranker
-1. Machine to run deployment commands. You can launch Codespaces on this repository, or use your own hardware with a `bash` shell.
+You can find the username and password at the bottom of the Lab Instructions window titled "Build a Retail Copilot Code-First on Azure AI".
 
-### 4.1 Fork Contoso Chat Repo
+* Find the username and password for your Azure subscription in the Lab Instructions window.
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+* Click the Terminal Pane in the VS Code online window
 
-### 4.2 Launch GitHub Codespaces
+    * It's just below these instructions, in the bottom-right corner of your browser
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+* Copy the command below and paste it into the command line, and hit ENTER:
 
-### 4.3 Authenticate with Azure
+    * azd auth login --use-device-code
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+* Copy the code show to your clipboard, and then click enter. 
 
+    * A new browser window will open
 
-### 3.1 Clone the GitHub repository
+* If you are prompted to select an account, click "Use another account"
 
-```
-git clone https://github.com/Azure-Samples
-```
+    * This can happen if you have previously used this browser to log Azure using yout own account, for example
 
-### 3.2 Self-Deploy Option
+* Copy your username from the Lab Instructions window, paste it in, and click Next
 
-Execute the following commands a `bash` shell from the root directory of your cloned repository.
+* Copy your username from the Lab Instructions window, paste it in, and click Sign In
 
-1. Log in using your Azure subscription credentials
+* At the prompt "Are you trying to sign in to Microsoft Azure CLI?", click Continue
 
-```
-azd auth login --use-device-code
-```
+* Close the "Microsoft Azure Cross-platform Command Line Interface" tab
 
-Log into the Azure subscription you will use to deploy resources. 
+## 3. Try out the completed app
 
-```
-azd up
-```
-    - For Environment Name, enter: CONTOSOCHAT
-      - (You are free to choose a different name, for example if you already have resources with that name.)
-    - For Subscription, select the default (your logged-in Azure subscription)    
-    - For Azure Region we recommend: France Central (francecentral)
+There is a complete working contoso-web app deployed by Skillable
 
-This process will take around 30--40 minutes to complete.
+* Click on the URL to launch the contoso-web app
 
-### 3.3 Pre-Provision Option 
+* 
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+## 3. Explore the resources
 
-## 4. Setup Dev Environment
+We have deployed several resources to your Azure Subscription that will be used in this RAG architecture.
 
-### 4.4 Verify Environment Vars
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
 
 ## 5. Build A Custom Copilot
 
