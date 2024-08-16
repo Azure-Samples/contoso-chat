@@ -60,9 +60,7 @@ TIP: Open the "hamburger" menu in the top-right of this window, and choose "Spli
 
 1. This step takes a few minutes. The instructor will give you an overview of the session, and then you can begin work on your own in the Codespaces environment in your browser when it's ready.
 
-## Azure Credentials
-
-We have created a temporary Azure subscription for you to use during this workshop. 
+## Virtual Machine (not needed)
 
 Login to your VM with the following credentials...
 
@@ -70,13 +68,22 @@ Login to your VM with the following credentials...
 
 **Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
 
-Cloud log in
+## Deploying assets (not needed for in-room students)
+
+From main branch root:
+
+++azd up -e AITOUR++
+
+* Subscription: Choose default
+* Region: France Central (20)
+
+## Azure Credentials
+
+We have created a temporary Azure subscription for you to use during this workshop. 
 
 ++portal.azure.com++
 
 ++azd auth login --use-device-code++
-
-++azd up --no-prompt --e AITOUR++
 
 ++@lab.CloudPortalCredential(User1).Username++
 
@@ -85,7 +92,6 @@ Cloud log in
 ## Continue the workshop
 
 In your Codespace, use the VS Code Online File Explorer on the left to open the file `docs\index.md`.
-
 
 Follow the instructions in that file to continue. 
 
