@@ -163,11 +163,58 @@ There is a complete working contoso-web app deployed by Skillable
 
 * Click on the URL to launch the contoso-web app
 
-* 
+* Observe logged-in state of Sarah Lee
 
+* Scroll through the page to see the product catalog
+
+* Click on the Cozy Nights Sleeping Bag to see the product information page
+
+    * Description, features, reviews, FAQ, return policy, cautions, user guide, warranty, technical specifications
+
+* Click Back to return to home page
+
+* Click "chat" icon
+
+* Questions to ask:
+
+```
+What can you do?
+What is a good sleeping bag for winter use?
+How much is the Cozy Nights Sleeping bag?
+How should I take care of it?
+What did I order last time?
+```
 ## 3. Explore the resources
 
 We have deployed several resources to your Azure Subscription that will be used in this RAG architecture.
+
+### Customer data: CosmosDB
+
+Customer data is sourced from a collection of JSON files and then loaded into Cosmos DB.
+
+* Explore the JSON files in [../data/customer_info](../data/customer_info), for example [customer_info_1.json](../data/customer_info/customer_info_1.json)
+    * Customer id, name, age, contact info, membership tier
+    * Product Purchase history
+        * Product info, purchase date, price
+* The script used to load the data into Cosmos DB has already been run for you. Take a look at the Notebook version [../data/customer_info/create-cosmos-db.ipynb](../data/customer_info/create-cosmos-db.ipynb), but don't run any cells
+* Open the notebook [../data/customer_info/investigate-cosmos-db.ipynb](../data/customer_info/investigate-cosmos-db.ipynb)
+* Run each of the cells to take a look at the data in Cosmos DB
+
+### Product purchases
+
+Product data is sourced from a CSV file:
+
+* Open [../data/product_info/products.csv](../data/product_info/products.csv)
+  * Product id
+  * Name
+  * Price
+  * Category
+  * Brand
+  * Description
+
+These details are included in the customer order history stored in Cosmos DB, which you saw in the previous step.
+
+### Product information: Azure AI Search
 
 
 ## 5. Build A Custom Copilot
@@ -283,7 +330,7 @@ We have deployed several resources to your Azure Subscription that will be used 
 
 ## 8. Deploy & Test the Copilot
 
-### 8.1 Understant Azure AI Studio 
+### 8.1 Understand Azure AI Studio 
 
 <details> 
 <summary> Click to view instructions </summary>
