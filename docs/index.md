@@ -1,4 +1,40 @@
+<style>
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+
+<script>
+function copyToClipboard() {
+  const code = document.getElementById('codeBlock').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert('Code copied to clipboard!');
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+</script>
+
+
+
 # Workshop Instructions
+
+<pre>
+<code id="codeBlock">
+TEST
+</code>
+</pre>
+
+<button onclick="copyToClipboard()">Copy to Clipboard</button>
 
 !!! note "Microsoft AI Tour 2024 Registration Is Live"
 
@@ -67,14 +103,27 @@ Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes.
 
 _If you find this sample useful, consider giving us a star on GitHub! If you have any questions or comments, consider filing an Issue on the [source repo](https://github.com/Azure-Samples/contoso-chat)_.
 
-
-
 ## 1. Learning Objectives
 
+In this workshop, you will learn how to:
 
-## 2. Pre-Requisites
+* Use Azure AI Studio as a code-first platform for building custom copilots​
 
-These are the resource and skill requirements for the workshop. **Note that in the case of the AI Tour, the subscription and infrastructure requirements will be taken care of for you.** For all others, you will need to verify you can meet all requirements. 
+* Prototype a custom copilot on VS Code with powerful tools (Prompty, Promptflow, Codespaces)​
+
+* Optimize your custom copilot with manual testing & AI-assisted evaluation (Quality, Safety)​
+
+* Operationalize your custom copilot by deploying to Azure AI Studio (Monitoring, Filters, Logs)​
+
+* Customize the sample to suit your application scenario (data, functions, frameworks, models)
+
+## 3. Provision Infrastructure
+
+If you are participating in a live AI Tour workshop, you can skip ahead to Section 4.
+
+### 3.0 Pre-Requisites
+
+These are the resources and skill requirements for the workshop. **Note that in the case of the AI Tour, the subscription and infrastructure requirements will be taken care of for you.** For all others, you will need to verify you can meet all requirements. 
 
 1. Azure Subscription - Signup for a free account.
 1. Visual Studio Code - Download it for free.
@@ -82,28 +131,7 @@ These are the resource and skill requirements for the workshop. **Note that in t
 1. [Access to Azure Open AI Services](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview#how-do-i-get-access-to-azure-openai) - Learn about requirements.
 1. [Azure OpenAI Model Quota](https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits) - We use `gpt-4`, `gpt-35-turbo` and `text-embedded-ada-002`
 1. Standard tier of Azure AI Service - Required for Semantic Ranker
-
-## 3. Provision Infrastructure
-
-### 3.1 Pre-Provision Option 
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-### 3.2 Self-Deploy Option
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-### 3.3 Validate Infrastructure
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-## 4. Setup Dev Environment
+1. Machine to run deployment commands. You can launch Codespaces on this repository, or use your own hardware with a `bash` shell.
 
 ### 4.1 Fork Contoso Chat Repo
 
@@ -123,12 +151,48 @@ These are the resource and skill requirements for the workshop. **Note that in t
 <summary> Click to view instructions </summary>
 </details>
 
-### 4.4 Verify Environment Vars
+
+### 3.1 Clone the GitHub repository
+
+```
+git clone https://github.com/Azure-Samples
+```
+
+### 3.2 Self-Deploy Option
+
+Execute the following commands a `bash` shell from the root directory of your cloned repository.
+
+1. Log in using your Azure subscription credentials
+
+```
+azd auth login --use-device-code
+```
+
+Log into the Azure subscription you will use to deploy resources. 
+
+```
+azd up
+```
+    - For Environment Name, enter: CONTOSOCHAT
+      - (You are free to choose a different name, for example if you already have resources with that name.)
+    - For Subscription, select the default (your logged-in Azure subscription)    
+    - For Azure Region we recommend: France Central (francecentral)
+
+This process will take around 30--40 minutes to complete.
+
+### 3.3 Pre-Provision Option 
 
 <details> 
 <summary> Click to view instructions </summary>
 </details>
 
+## 4. Setup Dev Environment
+
+### 4.4 Verify Environment Vars
+
+<details> 
+<summary> Click to view instructions </summary>
+</details>
 
 ## 5. Build A Custom Copilot
 
