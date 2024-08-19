@@ -75,6 +75,10 @@ Login to your VM with the following credentials...
 
 From **main** branch root:
 
+++git clone https://github.com/Azure-Samples/contoso-chat++
+
+++azd auth login --use-device-code++
+
 ++azd up -e AITOUR++
 
 * Create workspace?: Yes
