@@ -71,6 +71,26 @@ Login to your VM with the following credentials...
 
 **Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
 
+## Deploying WRK550 (for content owners -- temporary until Skillable automates deployment)
+
+Launch WRK550 Lab
+
+Launch CodeSpaces on main branch of ++https://github.com/revodavd/contoso-chat++
+
+From **main** branch root:
+
+++azd auth login --use-device-code++
+
+++azd up -e AITOUR++
+
+* Create workspace?: Yes
+* Subscription: Choose default
+* Region: France Central (20)
+
+Switch to aitour-fy25 branch
+
+Follow instructions in docs/index.md
+
 ## Deploying contoso-chat (for Skillable - not needed for in-room students)
 
 From **main** branch root:
