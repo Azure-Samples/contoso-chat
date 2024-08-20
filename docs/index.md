@@ -186,25 +186,47 @@ What did I order last time?
 ```
 ## 3. Explore the resources
 
-We have deployed several resources to your Azure Subscription that will be used in this RAG architecture.
+We have deployed several resources to your Azure Subscription that will be used in this RAG architecture. 
+
+First, lets take a look at the resources as they appear in the Azure Portal. Then, we'll use the Codespaces terminal to take a look at some of them in a little more detail.
+
+### 3.1 Visit Azure Portal
+
+* Open a new browser tab for the Azure Portal 
+    - **Navigate to** https://portal.azure.com **in a new tab**.
+    - You may be prompted to **log in**, in which case use the Username and Password provided in the Skillable Lab window.
+ 
+* Launch the "Resource Groups" tool
+    - **Click the hamburger menu** (in the top-left corner)
+    - Select **Resource Groups**
+
+* Explore the contents of the resource group
+    - **Click** the name of the resource group: **rg-AITOUR**
+    - You will see: Overview page with 14 resources listed.
+    - Look at the Type column and see that you have the following resources deployed:
+        - **Search service**: (Azure AI Search, a vector database to store product information)
+        - **Azure Cosmos DB account**(Azure CosmosDB, a relational database to store customer data and orders)    
+        - **Azure AI services** (endpoints for OpenAI models used in the application)
+        - **Azure AI hub** (a hub in Azure AI Studio collecting the shared resources used in the app)
+        - **Azure AI project** (the project in Azure AI Studio containing the assets for the RAG application)
 
 ### Customer data: CosmosDB
 
 Customer data is sourced from a collection of JSON files and then loaded into Cosmos DB.
 
-* Explore the JSON files in [../data/customer_info](../data/customer_info), for example [customer_info_1.json](../data/customer_info/customer_info_1.json)
+* **Explore** the JSON files in [../data/customer_info](../data/customer_info), for example [customer_info_1.json](../data/customer_info/customer_info_1.json)
     * Customer id, name, age, contact info, membership tier
     * Product Purchase history
         * Product info, purchase date, price
 * The script used to load the data into Cosmos DB has already been run for you. Take a look at the Notebook version [../data/customer_info/create-cosmos-db.ipynb](../data/customer_info/create-cosmos-db.ipynb), but don't run any cells
-* Open the notebook [../data/customer_info/investigate-cosmos-db.ipynb](../data/customer_info/investigate-cosmos-db.ipynb)
-* Run each of the cells to take a look at the data in Cosmos DB
+* **Open the notebook** [../data/customer_info/investigate-cosmos-db.ipynb](../data/customer_info/investigate-cosmos-db.ipynb)
+* **Run each of the cells** to take a look at the data in Cosmos DB
 
-### Product purchases
+### Product purchase history: CosmosDB
 
-Product data is sourced from a CSV file:
+The product data you see in CosmosD was sourced from a CSV file:
 
-* Open [../data/product_info/products.csv](../data/product_info/products.csv)
+* **Open** [../data/product_info/products.csv](../data/product_info/products.csv)
   * Product id
   * Name
   * Price
@@ -212,9 +234,14 @@ Product data is sourced from a CSV file:
   * Brand
   * Description
 
-These details are included in the customer order history stored in Cosmos DB, which you saw in the previous step.
+Observe that these details match those in the customer order history stored in Cosmos DB.
 
 ### Product information: Azure AI Search
+
+TODO: Have the user use the CLI to do some test searches on the Azure AI Search.
+
+### Model endpoints: Azure AI Studio
+
 
 
 ## 5. Build A Custom Copilot
