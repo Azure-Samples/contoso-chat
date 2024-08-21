@@ -2,15 +2,6 @@
 
 This instructions are for participants of the Workshop "Build a Retail Copilot Code-First on Azure AI" at Microsoft AI Tour 2024-2025.
 
-!!! note "Microsoft AI Tour 2024 Registration Is Live"
-
-    The workshop is offered as an **instructor-led** session (WRK550) on the **Prototype to Production** track:
-
-    > Use Azure AI Studio to build, evaluate, and deploy a customer support chat app. This custom copilot uses a RAG architecture built with Azure AI Search, Azure CosmosDB and Azure OpenAI to return responses grounded in the product and customer data.
-
-    - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
-    - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
-
 If you're not a workshop participant at AI Tour, visit [github.com/Azure-Samples/contoso-chat](https://github.com/Azure-Samples/contoso-chat/blob/main/README.md) for a version of this workshop you can run using your own Azure subscription. 
 
 TODO: UPDATE FOR SELF-GUIDED WORKSHOP LINK.
@@ -33,10 +24,14 @@ To participate in this workshop, you will need:
    * If you are familiar with running Codespaces within VS Code Desktop on your laptop, feel free to do so. 
 1. (preferred) Familiarity with the `bash` shell. 
     * We'll be using `bash` to run commands in the VS Code terminal.
+1. (preferred) Familiarity with Python and Jupyter Notebooks
+    * We'll be creating Python scripts and running them from the command line and from Notebooks.
 
 ## Get Started
 
 We won't be using the Azure Portal window to the left of these instructions. **You can close that window now.**
+
+Instead, use your own browser to log into GitHub and Azure. (**Tip**: if you have your own Azure account, you might want to open the Azure Portal in a new profile or an incognito window, to avoid conflicts with the temporary Azure account used in this lab.)
 
 1. **Open a new browser window** on your laptop. 
 
@@ -49,9 +44,11 @@ We won't be using the Azure Portal window to the left of these instructions. **Y
 
 1. Click **Fork** in the top-right corner of the page
 
-1. In the "Create a new fork" page, scroll down and **uncheck** the option "Copy the `main` branch only", and then click **Create Fork**.
+1. In the "Create a new fork" page, scroll down and **uncheck** the option "Copy the main branch only".
 
-   * **Important**: If you forgot to uncheck that option, you will need to delete your fork and try again. Ask a proctor for assistance.
+   * **Important**: If you forget to uncheck that option, you will need to delete your fork and try again. Ask a proctor for assistance.
+
+1. Click the **Create Fork** button.
 
    * You should now be at the page `https://github.com/YOURUSERNAME/contoso-chat` within your own GitHub account.
    
@@ -63,7 +60,7 @@ We won't be using the Azure Portal window to the left of these instructions. **Y
 
 1. This step takes a few minutes. The instructor will give you an overview of the session, and then you can begin work on your own in the Codespaces environment in your browser when it's ready.
 
-## Virtual Machine (not needed)
+## Virtual Machine (not needed TODO delete)
 
 Login to your VM with the following credentials...
 
@@ -71,63 +68,31 @@ Login to your VM with the following credentials...
 
 **Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
 
-## Deploying WRK550 (for content owners -- temporary until Skillable automates deployment)
+## Deploying WRK550 (instructions for Skillable TODO delete when automated)
 
 Launch WRK550 Lab
 
-Launch CodeSpaces on main branch of ++https://github.com/revodavid/contoso-chat++
+Launch CodeSpaces on the aitour-fy25 branch of ++https://github.com/revodavid/contoso-chat++
 
-From **main** branch root:
+From branch root:
+
+++mkdir .azure++
+
+++mkdir .azure/AITOUR++
+
+edit ./skillable.env to include the subscription ID
+
+++cp skillable.env .azure/AITOUR/.env++
 
 ++azd auth login --use-device-code++
 
-++azd up -e AITOUR++
+++azd up -e AITOUR --no-prompt++
 
 * Create workspace?: Yes
 * Subscription: Choose default
 * Region: France Central (20)
 
-Switch to aitour-fy25 branch
-
-Follow instructions in docs/index.md
-
-## Deploying contoso-chat (for Skillable - not needed for in-room students)
-
-From **main** branch root:
-
-++git clone https://github.com/Azure-Samples/contoso-chat++
-
-++azd auth login --use-device-code++
-
-++mkdir .azure/AITOUR++
-
-++cp skillable.env .azure/AITOUR++
-
-edit .env with subscription ID
-
-++azd up -e AITOUR++
-
-* Create workspace?: Yes
-* Subscription: Choose default
-* Region: France Central (20)0
-
 Capture `./.env` - students will need this
-
-## Deploying contoso-web (for Skillable)
-
-TODO: Nitya to update these instructions/repo. Needs to be run in an environment with node and next.js, and that can access the resources deployed by contoso-chat
-
-```
-git clone https://github.com/nitya/contoso-web
-cd contoso-web
-npm run dev
-```
-
-Update local.env to point to the contoso-chat deployed resources
-* AI Search
-* CosmosDB
-* AI Services
-* Prompt Flow endpoint
 
 ## Azure Credentials
 
