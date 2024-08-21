@@ -28,10 +28,12 @@ RUN ipython kernel install --name "python3" --user
 RUN curl -fsSL https://aka.ms/install-azd.sh | bash -s -- --version daily
 
 # Install Node.js 20
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - \
     && apt-get install -y nodejs
  
-# Install contoso-web
-RUN git clone https://github.com/Azure-Samples/contoso-chat
-CD contoso-chat
+# TODO: Install contoso-web
+RUN git clone https://github.com/Azure-Samples/contoso-web
+WORKDIR /contoso-web
 RUN npm install next
+WORKDIR /
+COPY contoso-web contoso-web
