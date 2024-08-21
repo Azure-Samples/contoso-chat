@@ -242,7 +242,21 @@ TODO: Have the user use the CLI to do some test searches on the Azure AI Search.
 
 ### Model endpoints: Azure AI Studio
 
+ 1. Once provisioning completes, monitor progress for app deployment.
+    - Visit the [Azure AI Studio](https://ai.azure.com/build)
+    - Click Sign In if necessary
+    - Look for an AI Project associated with the above resource group
+    - Click `Deployments` to track the status of the application deployment
+ 1. Test the deployed endpoint from Azure AI Studio
+    - Click the newly-created `chat-deployment-xx` endpoint listed
+    - In the details page, click the `Test` tab for a built-in testing sandbox
+    - In the `Input` box, enter a new query in this format and submit it:
+        ```
+        {"question": "Tell me about hiking shoes", "customerId": "2", "chat_history": []}
+        ```
+    - If successful, the response will be printed in the area below this prompt.
 
+You can find your deployed retail copilot's _Endpoint_ and _Primary Key_ information on the deployment details page in the last step. Use them to configure your preferred front-end application (e.g., web app) to support a customer support chat UI capability that interacts with the deployed copilot in real time.  
 
 ## 5. Build A Custom Copilot
 
