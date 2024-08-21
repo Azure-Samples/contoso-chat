@@ -32,8 +32,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - \
     && apt-get install -y nodejs
  
 # TODO: Install contoso-web
-RUN git clone https://github.com/Azure-Samples/contoso-web
-WORKDIR /contoso-web
-RUN npm install next
-WORKDIR /
-COPY contoso-web contoso-web
+# WORKDIR /workspaces/contoso-chat
+# RUN git clone https://github.com/Azure-Samples/contoso-web
+# WORKDIR /workspaces/contoso-chat/contoso-web
+# RUN npm install next
+# COPY . . 

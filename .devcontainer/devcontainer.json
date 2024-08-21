@@ -29,7 +29,8 @@
                 "ms-toolsai.jupyter",
                 "ms-azuretools.vscode-bicep",
                 "rogalmic.bash-debug",
-                "shd101wyy.markdown-preview-enhanced"
+                "shd101wyy.markdown-preview-enhanced",
+                "ms-toolsai.prompty"
             ]
         }
     }

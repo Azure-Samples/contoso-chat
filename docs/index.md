@@ -1,49 +1,11 @@
-<style>
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-</style>
+# Lab Instructions: Build a Retail Copilot Code-First on Azure AI
 
-<script>
-function copyToClipboard() {
-  const code = document.getElementById('codeBlock').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    alert('Code copied to clipboard!');
-  }).catch(err => {
-    console.error('Failed to copy: ', err);
-  });
-}
-</script>
+This lab is offered as an **instructor-led** session on the Prototype to Production track: **Build a Retail Copilot Code-First on Azure AI**.
 
+If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
 
-
-# Workshop Instructions
-
-<pre>
-<code id="codeBlock">
-TEST
-</code>
-</pre>
-
-<button onclick="copyToClipboard()">Copy to Clipboard</button>
-
-!!! note "Microsoft AI Tour 2024 Registration Is Live"
-
-    The workshop is offered as an **instructor-led** session (WRK550) on the **Prototype to Production** track:
-
-    > Use Azure AI Studio to build, evaluate, and deploy a customer support chat app. This custom copilot uses a RAG architecture built with Azure AI Search, Azure CosmosDB and Azure OpenAI to return responses grounded in the product and customer data.
-
-    - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
-    - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
+- [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
+- [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
 
 The workshop supports 3 delivery formats:
  
@@ -52,6 +14,8 @@ The workshop supports 3 delivery formats:
 1. **Self-guided** 👉🏽 Bring your laptop and your own subscription. You must self-deploy infra.
 
 Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes. The workshop itself can be completed in **60-75 minutes** in-venue. The self-guided option allows you to explore this at your own pace beyond the default workshop scope.
+
+NOTE: We have installed the [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) extension so that you can copy code to your clipboard with a single click. Click the green circle with "..." to enable the copy button.
 
 ---
 
@@ -138,8 +102,9 @@ You can find the username and password at the bottom of the Lab Instructions win
     * It's just below these instructions, in the bottom-right corner of your browser
 
 * Copy the command below and paste it into the command line, and hit ENTER:
-
-    * azd auth login --use-device-code
+```
+azd auth login --use-device-code
+```
 
 * Copy the code show to your clipboard, and then click enter. 
 
@@ -157,11 +122,40 @@ You can find the username and password at the bottom of the Lab Instructions win
 
 * Close the "Microsoft Azure Cross-platform Command Line Interface" tab
 
-## 3. Try out the completed app
+## 3. Our goal: build a retail website with an AI-powered chat assistant
 
-There is a complete working contoso-web app deployed by Skillable
+Let's install the website now. To do this we will:
 
-* Click on the URL to launch the contoso-web app
+ - Copy the contents of https://github.com/Azure-Samples/contoso-web to the Codespace
+ - Install Next.js into the app (this is a Next app)
+ - Launch the web app in Codespace
+
+1. Click to activate VS Code Terminal pane (below these intructions)
+1. Enter these commands in turn
+```
+git clone https://github.com/Azure-Samples/contoso-web
+cd contoso-web
+npm install 
+```
+
+3. Now, create a file called `.env` in the current (contoso-web) folder with the following contents:
+
+```
+PROMPTFLOW_ENDPOINT=https://ACTUAL-ENDPOINT-GOES-HERE.francecentral.inference.ml.azure.com/score
+PROMPTFLOW_KEY=ACTUAL-KEY-GOES-HERE
+```
+
+4. Edit the `.env` file with the REST Endpoint and Primary Key found in the Consume tab of AI Studio. (TODO: Check sequencing.)
+
+```bash
+npm run dev
+```
+
+VS Code will generate a popup like this. Click "Open in Browser".
+
+![Dialog box](img/port-popup.png)
+
+You now have the complete working contoso-web app deployed!
 
 * Observe logged-in state of Sarah Lee
 
@@ -179,9 +173,17 @@ There is a complete working contoso-web app deployed by Skillable
 
 ```
 What can you do?
+```
+```
 What is a good sleeping bag for winter use?
+```
+```
 How much is the Cozy Nights Sleeping bag?
+```
+```
 How should I take care of it?
+```
+```
 What did I order last time?
 ```
 ## 3. Explore the resources
@@ -256,7 +258,90 @@ TODO: Have the user use the CLI to do some test searches on the Azure AI Search.
         ```
     - If successful, the response will be printed in the area below this prompt.
 
-You can find your deployed retail copilot's _Endpoint_ and _Primary Key_ information on the deployment details page in the last step. Use them to configure your preferred front-end application (e.g., web app) to support a customer support chat UI capability that interacts with the deployed copilot in real time.  
+You can find your deployed retail copilot's _Endpoint_ and _Primary Key_ information on the deployment details page in the last step. Use them to configure your preferred front-end application (e.g., web app) to support a customer support chat UI capability that interacts with the deployed copilot in real time.
+
+Now let's try calling the endpoint from a Python script.
+
+1. Click the Consume tab
+1. Under "Consumption types", choose Python
+1. Copy the contents of the sample file provided to a file called "test-endpoint.py" in the /workspaces/contoso-chat folder
+1. Replace Line 18 with the following:
+```
+data = {"question": "What is a good sleeping bag?", "customerId": "2", "chat_history": []}
+```
+5. Replace Line 24 with text like the following, but replace the text between the quotes with Primary Key shown in AI Studio between the quotes
+```
+api_key = 'PRIMARY-KEY-GOES-HERE'
+```
+6. Run your test script with the command
+```
+python test-endpoint.py
+```
+
+## 4. Build a basic chat endpoint
+
+@revodavid ➜ /workspaces/contoso-chat (aitour-fy25) $ mkdir mychat
+@revodavid ➜ /workspaces/contoso-chat (aitour-fy25) $ cd mychat/
+Right-click mychat -> New Prompty
+Edit basic.prompty
+Add endpoint
+Add deployment_name (model name)
+Click Run in basic.prompty window
+Authenticate using Skillable Azure ID
+- It will now run
+
+Add some examples of changing fields and seeing impacts. Use Run button to see changes.
+
+Rename to mychat.prompty 
+Right click, choose "Add Prompt flow code"
+
+Open mychat_promptflow.py
+Click run
+
+Edit mychat_promptflow.py
+
+Delete everything below @tool and replace with
+
+```python
+@tool
+def get_response(customerId, question, chat_history):
+    print("inputs:", customerId, question)
+    #customer = get_customer(customerId)
+    #embedding = get_embedding(question)
+    #context = get_context(question, embedding)
+    #print("context:", context)
+    #print("getting result...")
+
+    configuration = AzureOpenAIModelConfiguration(
+        #azure_deployment=os.environ["AZURE_DEPLOYMENT_NAME"],
+        azure_deployment="gpt-35-turbo",
+        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"]
+    )
+    override_model = {
+        "configuration": configuration,
+        "parameters": {"max_tokens": 512}
+    }
+    # get cwd
+    data_path = os.path.join(pathlib.Path(__file__).parent.resolve(), "./chat.prompty")
+    prompty_obj = Prompty.load(data_path, model=override_model)
+
+    result = prompty_obj(question = question, customer = customer, documentation = context)
+
+    print("result: ", result)
+
+    return {"answer": result, "context": context}
+
+# if __name__ == "__main__":
+#     get_response(4, "What hiking jackets would you recommend?", [])
+#     #get_response(argv[1], argv[2], argv[3])
+```
+
+
+
+
+
+
 
 ## 5. Build A Custom Copilot
 
