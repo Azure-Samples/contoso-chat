@@ -99,11 +99,19 @@ From **main** branch root:
 
 ++azd auth login --use-device-code++
 
+++mkdir .azure/AITOUR++
+
+++cp skillable.env .azure/AITOUR++
+
+edit .env with subscription ID
+
 ++azd up -e AITOUR++
 
 * Create workspace?: Yes
 * Subscription: Choose default
-* Region: France Central (20)
+* Region: France Central (20)0
+
+Capture `./.env` - students will need this
 
 ## Deploying contoso-web (for Skillable)
 

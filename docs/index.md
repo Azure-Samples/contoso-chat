@@ -17,6 +17,10 @@ Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes.
 
 NOTE: We have installed the [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) extension so that you can copy code to your clipboard with a single click. Click the green circle with "..." to enable the copy button.
 
+## resources
+
+[Azure-Samples/contoso-chat-rag-aca (github.com)](https://github.com/Azure-Samples/contoso-chat-rag-aca)
+
 ---
 
 **Table of Contents**
