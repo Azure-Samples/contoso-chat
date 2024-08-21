@@ -76,21 +76,16 @@ Launch CodeSpaces on the aitour-fy25 branch of ++https://github.com/revodavid/co
 
 From branch root:
 
-++mkdir .azure++
-
-++mkdir .azure/AITOUR++
+++mkdir -p .azure/AITOUR++
 
 edit ./skillable.env to include the subscription ID
+- get it from ++az login --use-device-code++
 
 ++cp skillable.env .azure/AITOUR/.env++
 
 ++azd auth login --use-device-code++
 
 ++azd up -e AITOUR --no-prompt++
-
-* Create workspace?: Yes
-* Subscription: Choose default
-* Region: France Central (20)
 
 Capture `./.env` - students will need this
 
