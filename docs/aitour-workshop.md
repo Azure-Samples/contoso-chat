@@ -75,7 +75,7 @@ Login to your VM with the following credentials...
 
 Launch WRK550 Lab
 
-Launch CodeSpaces on main branch of ++https://github.com/revodavd/contoso-chat++
+Launch CodeSpaces on main branch of ++https://github.com/revodavid/contoso-chat++
 
 From **main** branch root:
 

@@ -2,11 +2,16 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
     "name": "Contoso Chat (v2)",
+
+
     "build": {
         "dockerfile": "Dockerfile",
         "context": ".."
     },
+
+
     "features": {
+
         "ghcr.io/devcontainers/features/azure-cli:1": {
             "installBicep": true,
             "extensions": "ml"

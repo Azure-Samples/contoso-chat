@@ -9,6 +9,7 @@ RUN sudo apt-get update && sudo apt-get install -y \
     pkg-config \
     libdbus-1-dev \
     libglib2.0-dev \
+    nodejs npm \
  && python -m pip install --upgrade pip \
  && sudo apt-get clean \
  && sudo rm -rf /var/lib/apt/lists/*
@@ -25,3 +26,12 @@ RUN ipython kernel install --name "python3" --user
 # Install daily version of azd for latest changes
 # See: https://github.com/Azure/azure-dev/tree/main/cli/installer#download-from-daily-builds
 RUN curl -fsSL https://aka.ms/install-azd.sh | bash -s -- --version daily
+
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    && apt-get install -y nodejs
+ 
+# Install contoso-web
+RUN git clone https://github.com/Azure-Samples/contoso-chat
+CD contoso-chat
+RUN npm install next
