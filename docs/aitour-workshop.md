@@ -87,7 +87,7 @@ edit ./skillable.env to include the subscription ID
 
 ++azd up -e AITOUR --no-prompt++
 
-Capture `./.env` - students will need this
+Capture `.azure/AITOUR/.env` - students will need this
 
 ## Azure Credentials
 
