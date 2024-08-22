@@ -1,23 +1,13 @@
-# Lab Instructions: Build a Retail Copilot Code-First on Azure AI
+# AI Tour Lab: Build a Retail Copilot Code-First on Azure AI
 
-This lab is offered as an **instructor-led** session on the Prototype to Production track: **Build a Retail Copilot Code-First on Azure AI**.
+This lab is offered as an **instructor-led** session at Microsoft AI Tour 2024-2025 on the Prototype to Production track.
 
 If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
 
 - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
 - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
 
-The workshop supports 3 delivery formats:
- 
-1. **Instructor Led** 👉🏽 Bring your laptop. You get a subscription with pre-provisioned infra.
-1. **Partner Led** 👉🏽 Bring your laptop. You may need your own subscription and self-deploy infra.
-1. **Self-guided** 👉🏽 Bring your laptop and your own subscription. You must self-deploy infra.
-
-Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes. The workshop itself can be completed in **60-75 minutes** in-venue. The self-guided option allows you to explore this at your own pace beyond the default workshop scope.
-
-NOTE: We have installed the [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) extension so that you can copy code to your clipboard with a single click. Click the green circle with "..." to enable the copy button.
-
-## resources
+## Resources
 
 [Azure-Samples/contoso-chat-rag-aca (github.com)](https://github.com/Azure-Samples/contoso-chat-rag-aca)
 

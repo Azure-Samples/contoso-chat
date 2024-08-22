@@ -4,6 +4,15 @@
 
 This document walks you through the steps needed to understand the application scenario, architecture, codebase (v1 vs. v2), and developer workflow (setup-develop-evaluate-deploy-iterate) required for building a retail copilot application end-to-end on the Azure AI platform.
 
+The workshop supports 3 delivery formats:
+ 
+1. **Instructor Led** 👉🏽 Bring your laptop. You get a subscription with pre-provisioned infra.
+1. **Partner Led** 👉🏽 Bring your laptop. You may need your own subscription and self-deploy infra.
+1. **Self-guided** 👉🏽 Bring your laptop and your own subscription. You must self-deploy infra.
+
+Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes. The workshop itself can be completed in **60-75 minutes** in-venue. The self-guided option allows you to explore this at your own pace beyond the default workshop scope.
+
+
 ## 1. Application Scenario
 
 This sample teaches you how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI Studio with promptflow. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:

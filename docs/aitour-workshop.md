@@ -89,17 +89,19 @@ edit ./skillable.env to include the subscription ID
 
 Capture `.azure/AITOUR/.env` - students will need this
 
-## Azure Credentials
-
-We have created a temporary Azure subscription for you to use during this workshop. 
-
-++portal.azure.com++
+## TODO delete
 
 ++azd auth login --use-device-code++
 
-++@lab.CloudPortalCredential(User1).Username++
+++portal.azure.com++
 
-++@lab.CloudPortalCredential(User1).Password++
+## Azure Credentials
+
+We have created a temporary Azure subscription for you to use during this workshop. You will need these credentials shortly to log into Azure.
+
+Username: ++@lab.CloudPortalCredential(User1).Username++
+
+Password: ++@lab.CloudPortalCredential(User1).Password++
 
 ## Continue the workshop
 
