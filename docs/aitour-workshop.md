@@ -18,7 +18,7 @@ To participate in this workshop, you will need:
 1. A GitHub Account.
    * If you don't have one, you can [signup for a free account](https://github.com/signup) now.
    * After this workshop is complete, you will have a fork of the "contoso-chat" repository in your GitHub account, which includes all the materials you will need to reproduce this workshop at home.
-1. Familiarity with Visual Studio Code. 
+1. (recommended) Familiarity with Visual Studio Code. 
    * We will run all code in GitHub Codespaces, a virtualized Linux machine, instead of your local laptop. We won't be running anything on your laptop directly.
    * VS Code Online will be our development environment in GitHub Codespaces.
    * If you are familiar with running Codespaces within VS Code Desktop on your laptop, feel free to do so. 
@@ -76,18 +76,17 @@ Launch CodeSpaces on the aitour-fy25 branch of ++https://github.com/revodavid/co
 
 From branch root:
 
-++mkdir -p .azure/AITOUR++
-
-edit ./skillable.env to include the subscription ID
-- get it from ++az login --use-device-code++
-
-++cp skillable.env .azure/AITOUR/.env++
-
 ++azd auth login --use-device-code++
+
+++azd env new AITOUR --location francecentral --subscription $(az account show --query id --output tsv)++
+
+* May need to ++az login --use device code++ first?
 
 ++azd up -e AITOUR --no-prompt++
 
 Capture `.azure/AITOUR/.env` - students will need this
+
+* Upload to Azure storage, or embed in the lab instructions as a variable
 
 ## TODO delete
 

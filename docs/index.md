@@ -1,6 +1,6 @@
 # AI Tour Lab: Build a Retail Copilot Code-First on Azure AI
 
-This lab is offered as an **instructor-led** session at Microsoft AI Tour 2024-2025 on the Prototype to Production track.
+These are participant instructions for the **instructor-led** session at Microsoft AI Tour 2024-2025 on the Prototype to Production track.
 
 If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
 
@@ -92,112 +92,112 @@ If you've gotten this far, you have already:
 
 ## 2. Log into your Azure account from the terminal
 
-We have provided you with a temporary Azure subscription for you to use with this workshop. It is pre-deployed with all the resources you will need.
+We have provided you with a temporary Azure subscription for you to use with this workshop. It is pre-deployed with all the resources you will need. Let's get you logged in.
 
-You can find the username and password at the bottom of the Lab Instructions window titled "Build a Retail Copilot Code-First on Azure AI".
+* **Find your username and password** at the bottom of the Lab Instructions window titled "Build a Retail Copilot Code-First on Azure AI".
 
-* Find the username and password for your Azure subscription in the Lab Instructions window.
+* Click to **activate the Terminal Pane** in the VS Code online window.
 
-* Click the Terminal Pane in the VS Code online window
+    * It's just below these instructions, in the bottom-right corner of your browser.
 
-    * It's just below these instructions, in the bottom-right corner of your browser
-
-* Copy the command below and paste it into the command line, and hit ENTER:
+* **Copy** the command below and **paste it into the command line**, and hit **ENTER**:
 ```
 azd auth login --use-device-code
 ```
 
-* Copy the code show to your clipboard, and then click enter. 
+* **Copy** the code show to your clipboard, and then click **ENTER**. 
 
-    * A new browser window will open
+    * A new browser window will open.
 
-* If you are prompted to select an account, click "Use another account"
+* If you are prompted to select an account, click "Use another account".
 
-    * This can happen if you have previously used this browser to log Azure using yout own account, for example
+    * This can happen if you have previously used this browser to log Azure using your own account, for example.
 
-* Copy your username from the Lab Instructions window, paste it in, and click Next
+* **Copy your username** from the Lab Instructions window, **paste** it in, and click **Next**.
 
-* Copy your username from the Lab Instructions window, paste it in, and click Sign In
+* **Copy your password** from the Lab Instructions window, **paste** it in, and click **Sign In**.
 
-* At the prompt "Are you trying to sign in to Microsoft Azure CLI?", click Continue
+* At the prompt "Are you trying to sign in to Microsoft Azure CLI?", click **Continue**.
 
-* Close the "Microsoft Azure Cross-platform Command Line Interface" tab
+* **Close the tab** called "Microsoft Azure Cross-platform Command Line Interface".
+
+**Tip:** if you take a break, you may be automatically logged out of Azure from the terminal. If later you get unexpected errors related to authentication or "Azure AD", repeat the process in this section.
+
+### See information about your Azure environment
+
+We have stored key values you will need in the environment for you. Run this command from the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/) to take a look:
+
+```
+azd env show
+```
+
+Here you will find endpoint URLs, identifiers, and other information about your deployed resources that will be needed later. One thing you won't find here are any keys or passwords -- those are stored for you in Azure Key Vault and retrieved for you as needed. In line with best security practices, you won't need to handle any secrets yourself.
 
 ## 3. Our goal: build a retail website with an AI-powered chat assistant
 
-Let's install the website now. To do this we will:
+Your instructor showed you your goal for this workshop: create a Copilot (a chatbot) for a retail website. Let's install the content for the website to your Codespace now. To do this we will:
 
  - Copy the contents of https://github.com/Azure-Samples/contoso-web to the Codespace
  - Install Next.js into the app (this is a Next app)
- - Launch the web app in Codespace
+ - Launch the web app in your Codespace
 
-1. Click to activate VS Code Terminal pane (below these intructions)
-1. Enter these commands in turn
+1. Click to activate the VS Code Terminal pane (below these intructions).
+1. Enter these commands in turn.
 ```
 git clone https://github.com/Azure-Samples/contoso-web
+```
+```
 cd contoso-web
+```
+```
 npm install 
 ```
 
-3. Now, create a file called `.env` in the current (contoso-web) folder with the following contents:
-
-```
-PROMPTFLOW_ENDPOINT=https://ACTUAL-ENDPOINT-GOES-HERE.francecentral.inference.ml.azure.com/score
-PROMPTFLOW_KEY=ACTUAL-KEY-GOES-HERE
-```
-
-4. Edit the `.env` file with the REST Endpoint and Primary Key found in the Consume tab of AI Studio. (TODO: Check sequencing.)
+3. Launch the website as follows:
 
 ```bash
 npm run dev
 ```
 
-VS Code will generate a popup like this. Click "Open in Browser".
+**Note:** This command takes over your VS code terminal and renames it "npm". Don't worry, we'll create a new one shortly.
+
 
 ![Dialog box](img/port-popup.png)
 
-You now have the complete working contoso-web app deployed!
+You now have the content deployed to the website, and it's running. Let's explore it now. Click **Open in Browser** in the VS Code popup as shown above to launch te a new tab called "Contoso Outdoor Company".
 
-* Observe logged-in state of Sarah Lee
+### Explore the Contoso Outdoor Company Website
 
-* Scroll through the page to see the product catalog
+**Scroll through the homepage** to explore the product catalog.
 
-* Click on the Cozy Nights Sleeping Bag to see the product information page
+* Contoso Outdoor Company sells tents, backpacks, hiking clothing, hiking footwear, camping tables, camping stoves, and sleeping bags.
 
-    * Description, features, reviews, FAQ, return policy, cautions, user guide, warranty, technical specifications
+* **Tip**: return to the home page at any time by clicking the "hamburger" control in the top left corner.
 
-* Click Back to return to home page
+**Click on one of the product images** (for example: RainGuard Hiking Jacket) to get more information about the product.
 
-* Click "chat" icon
+* Product details include: description, features, reviews, FAQ, return policy, cautions, user guide, warranty, and technical specifications.
 
-* Questions to ask:
+* **Fun Fact:** Since Contoso Outdoor is a fictitious company, the product images and all of the detailed product information on this page were created using by Generative AI (specifically, Dall-E 3 and GPT-4).
 
-```
-What can you do?
-```
-```
-What is a good sleeping bag for winter use?
-```
-```
-How much is the Cozy Nights Sleeping bag?
-```
-```
-How should I take care of it?
-```
-```
-What did I order last time?
-```
-## 3. Explore the resources
+**Click the  "hamburger" control** in the top left to return to the home page.
 
-We have deployed several resources to your Azure Subscription that will be used in this RAG architecture. 
+Take a look at the top-left corner of this page, and notice that a user is logged into the page.
 
-First, lets take a look at the resources as they appear in the Azure Portal. Then, we'll use the Codespaces terminal to take a look at some of them in a little more detail.
+* The back-end database includes 12 users, but you can't switch users from this page.
 
-### 3.1 Visit Azure Portal
+This website features a copilot to assist customers -- see the **chat bubble** in the lower-right corner. This feature isn't working yet. We'll fix that later by creating an endpoint that accepts the user's latest chat and the chat history as input, and generates the chatbot's response as output. For now, let's take a look at the resources we have deployed so you can implement the endpoint.
+
+## 4. Explore your Azure resources
+
+We have deployed several resources to your Azure Subscription that will be used in the Retrieval Augmented Generation (RAG) architecture described by your lab instructor. First, lets take a look at the resources as they appear in the Azure Portal. Then, we'll use the Codespaces terminal to take a look at some of them in a little more detail.
+
+### Visit Azure Portal
 
 * Open a new browser tab for the Azure Portal 
     - **Navigate to** https://portal.azure.com **in a new tab**.
-    - You may be prompted to **log in**, in which case use the Username and Password provided in the Skillable Lab window.
+    - You should be prompted to **log in**. Use the Username and Password provided in the Skillable Lab window.
+    - If you're not prompted to log in, you may have been automatically logged in under your own Azure subscription. In that case, log out or use a incognito browser window instead, and try again.
  
 * Launch the "Resource Groups" tool
     - **Click the hamburger menu** (in the top-left corner)
@@ -221,9 +221,12 @@ Customer data is sourced from a collection of JSON files and then loaded into Co
     * Customer id, name, age, contact info, membership tier
     * Product Purchase history
         * Product info, purchase date, price
-* The script used to load the data into Cosmos DB has already been run for you. Take a look at the Notebook version [../data/customer_info/create-cosmos-db.ipynb](../data/customer_info/create-cosmos-db.ipynb), but don't run any cells
+* The script used to load the data into Cosmos DB has already been run for you. Take a look at the Notebook version [../data/customer_info/create-cosmos-db.ipynb](../data/customer_info/create-cosmos-db.ipynb), but **don't run** any cells
 * **Open the notebook** [../data/customer_info/investigate-cosmos-db.ipynb](../data/customer_info/investigate-cosmos-db.ipynb)
 * **Run each of the cells** to take a look at the data in Cosmos DB
+  * Click the "Run" button next to each code cell to run it.
+  * If you are prompted to choose a Python kernel, choose **Python 3.11**.
+
 
 ### Product purchase history: CosmosDB
 
@@ -243,23 +246,177 @@ Observe that these details match those in the customer order history stored in C
 
 TODO: Have the user use the CLI to do some test searches on the Azure AI Search.
 
-### Model endpoints: Azure AI Studio
+### Deployed model endpoint: Azure AI Studio
 
- 1. Once provisioning completes, monitor progress for app deployment.
-    - Visit the [Azure AI Studio](https://ai.azure.com/build)
-    - Click Sign In if necessary
-    - Look for an AI Project associated with the above resource group
-    - Click `Deployments` to track the status of the application deployment
- 1. Test the deployed endpoint from Azure AI Studio
-    - Click the newly-created `chat-deployment-xx` endpoint listed
-    - In the details page, click the `Test` tab for a built-in testing sandbox
-    - In the `Input` box, enter a new query in this format and submit it:
-        ```
-        {"question": "Tell me about hiking shoes", "customerId": "2", "chat_history": []}
-        ```
-    - If successful, the response will be printed in the area below this prompt.
+We have deployed for you a complete version of the chat endpoint, that uses RAG to provide context to the copilot to answer customer questions. Specifically, it provides:
 
-You can find your deployed retail copilot's _Endpoint_ and _Primary Key_ information on the deployment details page in the last step. Use them to configure your preferred front-end application (e.g., web app) to support a customer support chat UI capability that interacts with the deployed copilot in real time.
+* Chat personality instructions
+* Safety instructions
+* Customer data
+* Customer purchase history
+* Product information relevant to the customer query
+
+Let's find that deployed endpoint in Azure AI Studio now.
+
+#### Log into Azure AI Studio
+  * Open a **new browser tab**
+  * **Browse to** [https://ai.azure.com](https://ai.azure.com)
+  * Click the **Sign In** link in the top right
+  * You won't need to re-enter your credentials, since you've already logged into the Azure Portal.
+
+#### Find your deployed project
+  * Click the **View all projects** link (top right).
+  * You will have one project linked. **Click the name** under "Resource Name" (it will begin with `ai-project-`). This displays the Project Overview page.
+  * Click **Deployments** in the left navigation pane to see the deployments associated with this project.
+  * In the section "Endpoints" you will see one deployment with a name starting with `chat-deployment`. **Click its name** to inspect the deployed endpoint.
+
+#### Test the deployed endpoint
+  * Click the **Test** tab for a built-in testing sandbox
+  * In the **Input** box, enter the JSON string below, and click **Test**.
+```
+{"question": "Tell me about hiking shoes", "customerId": "2", "chat_history": []}
+```
+  * The response will be printed in the area below this prompt.
+
+The JSON input to the endpoint has three keys:
+  * **question**: the customer's most recent chat prompt. Here: "Tell me about hiking shoes"
+  * **customerId**: the Customer ID of the logged in customer (for lookup in the CosmosDB customer database). Here, Customer 2.
+  * **chat_history**: The prior customer prompts and chatbot responses in the conversation. Here, no history is provided (as if this were the first interaction of the conversation).
+
+The JSON repsonse includes two keys:
+  * **answer**: The chatbot's response. Here, it provides information about TrailWalker Hiking Shoes.
+  * **context**: Various information provided via the RAG process, that the AI model used as context to create its response. This includes customer information and summarized information about products relevant to the customer query.
+
+Try editing the **question** field or the **customerId** field (valid values are 1 to 12) and observe:
+  * How did the response change?
+  * What context was used to create the response? Was it relevant to the customer's query?
+
+
+## 4. Build a basic chat endpoint
+
+Let's use Prompty to and VS Code to start building our own copilot. We have already installed the [Prompty extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.prompty) for VS Code to help us. 
+
+We'll need a new Terminal in VS Code, so let's create that first.
+* **Click the New Terminal button** (+) in the VS Code terminal pane
+
+### Create your first prompty file
+
+First, let's create a new folder for our new Prompty.
+
+```
+mkdir mychat; cd mychat
+```
+
+In the Exporer pane (on the left side of VS Code) you can see a filesystem tree including the just-added `mychat` folder.
+
+* **Right-click** on the `mychat` folder and choose **New Prompty**.
+
+A new file `basic.prompty` in your `mychat` folder was created. The [prompty file spec](https://prompty.ai/docs/prompty-file-spec) allows you to define everything you need for a RAG-based copilot. 
+
+Let's edit the file my changing the some of the attributes:
+
+#### Basic information
+
+* **name**: Call this prompty `ContosoCopilot`
+* **description**: Use:
+```
+A prompt to respond to a customer question grounded in product and customer data.
+```
+* **authors**: Replace the provided name with your own.
+
+#### The "sample" section
+
+The **sample** section specifies the inputs to the prompty, and supplies default values to use if the inputs are not provided. Let's edit that section as well.
+
+* **firstName**: Choose any name other than your own (for example, `Sara`).
+
+* **context**: Replace the provided text with the below:
+```
+   Contoso Outdoor Company is your ultimate partner in exploring the unseen!
+   Choose from a variety of products to help you explore the outdoors. 
+   From camping to hiking, we have you covered with the best gear and the best prices.
+```
+
+* **question**: Replace the provided text with:
+```
+Tell me about this company.
+```
+#### The "system" section
+
+The **sytem** section specifies the meta-prompt added to the user's actual question to provide the context necessary to answer accurately. With some AI models like the GPT family, this is passed to the "system prompt", which guides the AI model in its response to the but does not generate a model directly. You can use this section to provide direct instructions to the model, and to provide information the model can use as context.
+
+Prompty files construct the meta-prompt from the inputs before passing it to the model. Parameters like ``{{firstName}}`` are replaced by the corresponsding input.
+
+Update the system section of `basic.prompty` with the text below. Note that the commented lines (like "`# Customer`") are not part of the Prompty file specification -- that text is passed directly to the Generative AI model. (Experience suggests AI models perform more reliably if you organize the meta-prompt with Markdown-style headers.)
+
+```
+system:
+You are the copilot for the Contoso Outdoors Company website. 
+You provide helpful information to customers, reply in a friendly tone, and use 
+language appropriate for an outdoors enthusiast customer base.
+ 
+# Customer
+You are helping {{firstName}} to find answers to their questions.
+Use their name to address them in your responses.
+
+# Context
+Use the following context to provide a more personalized response to {{firstName}}:
+{{context}}
+```
+
+We didn't change the Customer and Context section, but observe how the parameters will insert the input customer name and context into the meta-prompt.
+
+#### The "user" section
+This section describes the input to the Generative AI model prompt. Don't change this section, which provide the user's entered chat, unmodified.
+
+### Run your prompty
+
+With the **basic.prompty** window active in VS Code, click the "Run" button in the tab row (the leftmost button here):
+
+![alt text](img/prompty-menubar.png)
+
+The first time you run a Prompty you will be prompted to log into your temporary Azure account. Click **Allow** in the popup that appears.
+
+![alt text](img/prompty-login.png)
+
+Once logged in your prompty will execute. Specifically the Prompty extension will:
+
+* Call the AI model you specified (gpt-35-turbo, an Azure OpenAI model),
+* at the endpoint URL you provided (here, our endpoing in Azure OpenAI, taken from the environment we looked at earlier),
+* with a System Prompt assembled from the `firstName` and `context` default values provided, and
+* with a prompt matching the `question` default value provided.
+
+The output will appear in the **OUTPUT** tab in the VS Code terminal pane.
+
+Click Run again. Do you get the same output?
+
+* **Remember**: Generative AI models are non-deterministic. Unless you set the "Temperature" parameter of the model to zero (not recommended!) you will likely get a different response each time.
+
+### Try changing the name
+
+Change the `firstName` field in `basic.prompty` as follows:
+```
+  firstName: Bluey
+```
+Run the prompt again. How does the response addresss the customer?
+
+* The customer's name is inserted into the system prompt, which is provided to the model. Even though the customer doesn't provide their name in the question, it's available to the model to craft the response.
+
+### Try changing the question
+
+Change the `question` field as follows:
+```  
+  question: How much is the ATV, and how many people can ride it?
+```
+Try running it a few times. Are the responses appropriate? (Hint: Contoso Outdoor does not sell all-terrain vehicles.)
+
+* There's no context provided to the model to answer this question so it just ... confabulates an answer. That's why it's important to provide relevant context to the model -- that's what the RAG process is for. It's also a good idea to provide instuctions to the AI model in the `system` section giving guidance about how to handle inappropriate inputs.
+
+## 5. Build A Custom Copilot
+
+Editing a prompty file in VS Code and clicking the Run button to try it out is a great way to iterate. Experiment with different models (and model parameters) and meta-prompts until you're confident your endpoint will behave in the way you intend. The next step is to convert your prompty into an endpoint. In this lab we will use Python to script the endpoint. 
+
+### Create the python script
 
 Now let's try calling the endpoint from a Python script.
 
@@ -279,14 +436,7 @@ api_key = 'PRIMARY-KEY-GOES-HERE'
 python test-endpoint.py
 ```
 
-## 4. Build a basic chat endpoint
 
-@revodavid ➜ /workspaces/contoso-chat (aitour-fy25) $ mkdir mychat
-@revodavid ➜ /workspaces/contoso-chat (aitour-fy25) $ cd mychat/
-Right-click mychat -> New Prompty
-Edit basic.prompty
-Add endpoint
-Add deployment_name (model name)
 Click Run in basic.prompty window
 Authenticate using Skillable Azure ID
 - It will now run
@@ -338,31 +488,23 @@ def get_response(customerId, question, chat_history):
 #     #get_response(argv[1], argv[2], argv[3])
 ```
 
+* Questions to ask:
 
-
-
-
-
-
-## 5. Build A Custom Copilot
-
-### 5.1 Install VS Code Extensions
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-### 5.2 Create `chat.prompty` (v1)
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-### 5.3 Create `chat_request.py` (v1)
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+```
+What can you do?
+```
+```
+What is a good sleeping bag for winter use?
+```
+```
+How much is the Cozy Nights Sleeping bag?
+```
+```
+How should I take care of it?
+```
+```
+What did I order last time?
+```
 
 ### 5.4 Create `flex.flow.yaml` (app)
 
@@ -375,6 +517,14 @@ def get_response(customerId, question, chat_history):
 <details> 
 <summary> Click to view instructions </summary>
 </details>
+
+
+
+
+
+
+
+
 
 
 ## 6. Evaluate A Custom Copilot
@@ -477,35 +627,20 @@ def get_response(customerId, question, chat_history):
 
 
 ## 9. Integrate with Contoso Web
-### 9.1 Fork Contoso-Web Repo
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+## TODO. Test out the working application
 
-### 9.2 Launch GitHub Codespaces
+TODO: We have already deployed an endpoint...
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+3. Now, create a file called `.env` in the current (contoso-web) folder with the following contents:
 
-### 9.3 Set Environment Variables
+```
+PROMPTFLOW_ENDPOINT=https://ACTUAL-ENDPOINT-GOES-HERE.francecentral.inference.ml.azure.com/score
+PROMPTFLOW_KEY=ACTUAL-KEY-GOES-HERE
+```
 
-<details> 
-<summary> Click to view instructions </summary>
-</details>
+4. Edit the `.env` file with the REST Endpoint and Primary Key found in the Consume tab of AI Studio. (TODO: Check sequencing.)
 
-### 9.4 Preview Contoso Web 
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
-
-### 9.5 Test Contoso Web UI
-
-<details> 
-<summary> Click to view instructions </summary>
-</details>
 
 ## 10. Wrap-Up
 
