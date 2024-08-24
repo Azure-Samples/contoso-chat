@@ -4,6 +4,13 @@ These instructions are for participants of the Workshop "Build a Retail Copilot 
 
 TODO: UPDATE SKILLABLE LAB TO POINT TO github.com/Azure-Samples/contoso-chat/docs/skillable-getstarted.md
 
+## Note to Skillable (TODO delete)
+
+To preprovision resources:
+
+- Launch CodeSpaces on ++https://github.com/revodavid/contoso-chat/tree/aitour-fy25++
+- Follow the instructions in [0-Preprovision.md](0-Preprovision.md)
+
 ## Pre-Requisites
 
 To participate in this workshop, you will need:

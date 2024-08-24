@@ -27,6 +27,8 @@ If not using Azure Cloud Shell, you can use the commands below (both are require
 
 ```
 azd auth login --use-device-code
+```
+```
 az login --use-device-code
 ```
 
@@ -52,10 +54,10 @@ Wait until provisioning completes. This can take 30-40 minutes depending on regi
 
 ## Capture environment
 
-If participants are not going to use the same filesystem just used to deploy (for example, they will log into a different machine, or launch a new instance of CodeSpaces), you will need to capture the environment file and provide it to their workspace.
+If the participant is not going to use the same filesystem just used to deploy (for example, they will log into a different machine, or launch a new instance of CodeSpaces), you will need to capture the environment file and provide it to their workspace.
 
 1. Capture the file `.azure/AITOUR/.env` after deployment is complete
-2. Install the file to `.azure/AITOUR/.env` in each student's filesystem
+2. Install the file to `.azure/AITOUR/.env` in the student's filesystem
 
 How you do this depends on lab format. Options include:
 
