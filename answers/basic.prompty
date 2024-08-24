@@ -1,6 +1,6 @@
 ---
 name: ContosoCopilot
-description: A prompt that uses context to ground an incoming question
+description: A prompt to respond to a customer question grounded in product and customer data.
 authors:
   - David Smith
 model:
