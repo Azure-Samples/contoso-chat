@@ -1,27 +1,59 @@
-# Deconstructing Contoso Chat: Self-Guided Workshop 
+# Deconstructing Contoso Chat: An Interactive Workshop 
 
-[Contoso Chat](https://github.com/Azure-Samples/contoso-chat) is an open-source application sample that teaches you how to build a modern generative AI application using the Azure AI platform (development) and the Azure Developer CLI (deployment) to streamline your end-to-end developer experience.
+[Contoso Chat](https://github.com/Azure-Samples/contoso-chat) is an open-source application sample that teaches you how to build a modern generative AI application using the Azure AI platform (development) and the Azure Developer CLI (deployment) to streamline your end-to-end developer experience. 
 
-This document walks you through the steps needed to understand the application scenario, architecture, codebase (v1 vs. v2), and developer workflow (setup-develop-evaluate-deploy-iterate) required for building a retail copilot application end-to-end on the Azure AI platform.
+This is an interactive workshop that walks you through the steps needed to understand the application scenario, architecture, codebase, and developer workflow (setup-develop-evaluate-deploy-iterate) required for building a retail copilot application end-to-end on the Azure AI platform.
 
 The workshop supports 3 delivery formats:
  
-1. **Instructor Led** 👉🏽 Bring your laptop. You get a subscription with pre-provisioned infra.
-1. **Partner Led** 👉🏽 Bring your laptop. You may need your own subscription and self-deploy infra.
-1. **Self-guided** 👉🏽 Bring your laptop and your own subscription. You must self-deploy infra.
+1. **Instructor-Led** 👉🏽 Bring your laptop or use a provided laptop. You will have access to a temporary Azure subscription with pre-provisioned resources. (This is the format used at Microsoft AI Tour.)
+1. **Partner-Led** 👉🏽 Bring your own laptop. You may need your own Azure subscription and to self-deploy resoources.
+1. **Self-guided** 👉🏽 Bring your laptop and your own Azure subscription. You must self-deploy resources.
 
-Provisioning infrastructure (e.g., in self-deploy mode) takes **35-40** minutes. The workshop itself can be completed in **60-75 minutes** in-venue. The self-guided option allows you to explore this at your own pace beyond the default workshop scope.
+This workshop uses Codespaces as the developer interface for particpants. We recommend participants will be directed to **fork this repository**.
 
+## Requirements for participants
 
-## 1. Application Scenario
+To participate in this workshop, particpants will need:
 
-This sample teaches you how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI Studio with promptflow. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:
+1. A laptop.
+   * It need only be capable of running a browser and GitHub Codespaces, so almost any laptop will do.
+   * A recent version of Edge, Chrome or Safari is recommended.
+1. An Azure subscription.
+   * Self-guided participants will use their own Azure subscription. Instructor-led labs may provide temporary Azure subscrptions to use.   
+1. A GitHub Account.
+   * If you don't have one, [sign up for a free account](https://github.com/signup) now.
+   * After this workshop is complete, you will have a fork of the "contoso-chat" repository in your GitHub account, which includes all the materials you will need to reproduce this workshop at home.
+1. (recommended) Familiarity with Visual Studio Code. 
+   * We will run all code in GitHub Codespaces, a virtualized Linux machine, instead of your local laptop. We won't be running anything on the laptop directly.
+   * VS Code Online will be our development environment in GitHub Codespaces.
+   * If you are familiar with running Codespaces within VS Code Desktop on your laptop, feel free to do so. 
+1. (preferred) Familiarity with the `bash` shell. 
+    * We'll be using `bash` to run commands in the VS Code terminal.
+1. (preferred) Familiarity with Python and Jupyter Notebooks.
+    * We'll be creating Python scripts and running them from the command line and from Notebooks.
+
+## Using these materials
+
+There are several steps required to run or participate in this workshop content. Depending on the workshop format, you will need to follow some or all of guides below:
+
+* [0-Preprovision.md](0-Preprovision.md) (40 minutes): Pre-provision resources into an Azure subscription. 
+  * If you are a participant in an instructor-led workshop, this step has already been done for you. Your instructor will explain how access your resources.
+* [1-GetStarted.md](1-GetStarted.md) (5 minutes)
+  * Launch a GitHub Codespaces environment to run the workshop in.
+* [2-Instructions.md](1-Instructions.md) (60-75 minutes): Instructions for workshop participants. 
+  * Follow this guide on your own or in an instructor-led workshop to explore and how to build the Contoso Chat RAG application.
+* [2-Post-workshop.md](2-Post-workshop.md) (10 minutes): Instructions for deleting resources after the workshop is over. In an instructor-led workshop this may be done for you.
+
+## Application Scenario
+
+This workshop teaches participants how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI platform. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:
 - A site product catalog (with indexes stored in Azure AI Search)
 - A customer orders database (with data stored in Azure Cosmos DB)
 
 ![Contoso Outdoors](./img/00-app-scenario-ui.png)
 
-The _Contoso Chat_ application implements the copilot AI backend that integrates with this front-end, allowing customers to "chat with the copilot" to get answers about the products and recommendations based on their order history - _simply by clicking the chat icon seen at the bottom right corner of the website_. This chat experience is powered by the Contoso Chat API endpoint that you will be deploying by the end of this workshop, allowing customer requests to be responded to in real-time using a custom model that is grounded in the product catalog and customer history data.
+Participants will build the _Contoso Chat_ RAG application. This implements the copilot AI backend that integrates with the website front-end, allowing customers to "chat with the copilot" to get answers about the products and recommendations based on their order history - _simply by clicking the chat icon seen at the bottom right corner of the website_. This chat experience is powered by the Contoso Chat API endpoint that you will be deploying by the end of this workshop, allowing customer requests to be responded to in real-time using a custom model that is grounded in the product catalog and customer history data.
 
 ![Contoso Chat](./img/00-app-scenario-ai.png)
 
@@ -60,9 +92,5 @@ The end-to-end developer experience is streamlined by the use of four core compo
   - Python runtime with all required tools (`azd`, `pf`, `az`) and packages (`pip` dependencies) pre-installed.
   - Visual Studio Code IDE with required extensions - for local development
   - GitHub Codespaces support - for local development in a cloud-hosted VM
-
-To get started, the easiest way is to fork the Contoso Chat repository, and launch a development container to get a pre-built development environment. Then follow these instructions for next steps.
- - [README-v1](README-v1.md) for v1 using DAG flow
- - [README-v2](README-v2.md) for v2 using Flex flow
 
 ---

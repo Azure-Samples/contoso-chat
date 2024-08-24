@@ -1,13 +1,13 @@
-# AI Tour Lab: Build a Retail Copilot Code-First on Azure AI
+# Part 2: Workshop Instructions (Deconstructing Contoso Chat - An Interactive Workshop)
 
-These are participant instructions for the **instructor-led** session at Microsoft AI Tour 2024-2025 on the Prototype to Production track.
+If you've gotten this far, you have already:
 
-If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
+* Reviewed pre-requisites for this workshop
+* Forked the repository for this workshop
+* Launched GitHub Codespaces
+* Opened this file in VS Code Online
 
-- [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
-- [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
-
----
+Let's continue.
 
 **Table of Contents**
 
@@ -60,32 +60,6 @@ If you're not at an AI Tour event right now, you can register for an upcoming ev
 
 _If you find this sample useful, consider giving us a star on GitHub! If you have any questions or comments, consider filing an Issue on the [source repo](https://github.com/Azure-Samples/contoso-chat)_.
 
-## Learning Objectives
-
-In this workshop, you will learn how to:
-
-* Use Azure AI Studio as a code-first platform for building custom copilots​
-
-* Prototype a custom copilot on VS Code with powerful tools (Prompty, Promptflow, Codespaces)​
-
-* Optimize your custom copilot with manual testing & AI-assisted evaluation (Quality, Safety)​
-
-* Operationalize your custom copilot by deploying to Azure AI Studio (Monitoring, Filters, Logs)​
-
-* Customize the sample to suit your application scenario (data, functions, frameworks, models)
-
-
-## 1. Get Started
-
-If you've gotten this far, you have already:
-
-* Launched the Lab instructions
-* Reviewed pre-requisites for this workshop
-* Forked the repository for this workshop
-* Launched GitHub Codespaces
-* Opened this file in VS Code Online
-
-Let's continue.
 
 ### 1. Log into your Azure account from the terminal
 
