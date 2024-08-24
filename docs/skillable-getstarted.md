@@ -27,13 +27,36 @@ To participate in this workshop, you will need:
 
 We won't be using the Azure Portal window to the left of these instructions. **You can close that window now.**
 
-## Virtual Machine (not needed TODO delete)
+## Log into GitHub Codespaces
 
-Login to your VM with the following credentials...
+GitHub Codespaces will be our development environment for this workshop. You will need to log into your own GitHub account and copy (fork) the workshop materials to your account. Let's do that now.
 
-**Username: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Username+++**
+1. **Open a new browser window** on your laptop. 
 
-**Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
+1. **Click the link** below to your clipboard: 
+    * `https://github.com/Azure-Samples/contoso-chat`
+
+1. **Paste the link in your browser** to open the GitHub repository.
+
+1. **Sign in to GitHub** if you aren't logged in already, using your own GitHub account credentials.
+
+1. Click **Fork** in the top-right corner of the page
+
+1. In the "Create a new fork" page, scroll down and **uncheck** the option "Copy the main branch only".
+
+   * **Important**: If you forget to uncheck that option, you will need to delete your fork and try again. Ask a proctor for assistance.
+
+1. Click the **Create Fork** button.
+
+   * You should now be at the page `https://github.com/YOURUSERNAME/contoso-chat` within your own GitHub account.
+   
+   * You now have a copy (known as a fork) of this workshop repository in your own GitHub account! Feel free to play with it, you won't break anything.
+
+1. Use the branch selection drop-down on the left side that now reads **main** and select the branch **aitour-fy25**.
+
+1. Click the green **<> Code** button in the top-right part of the page, click the **Codespaces** tab, and then click **Create codespace on aitour-fy25**.
+
+1. This step takes a few minutes. The instructor will give you an overview of the session, and then you can begin work on your own in the Codespaces environment in your browser when it's ready.
 
 ## Azure Credentials
 
@@ -42,6 +65,14 @@ We have created a temporary Azure subscription for you to use during this worksh
 Username: ++@lab.CloudPortalCredential(User1).Username++
 
 Password: ++@lab.CloudPortalCredential(User1).Password++
+
+## Virtual Machine (not needed TODO delete)
+
+Login to your VM with the following credentials...
+
+**Username: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Username+++**
+
+**Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
 
 ## Continue the workshop
 
