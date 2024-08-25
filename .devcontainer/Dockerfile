@@ -19,7 +19,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt \
     && pip install keyrings.alt dbus-python ipython ipykernel
 
-Configure the IPython kernel
+# Configure the IPython kernel
 RUN ipython kernel install --name "python3" --user
 
 # Install daily version of azd for latest changes
