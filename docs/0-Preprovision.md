@@ -52,6 +52,47 @@ azd up -e AITOUR --no-prompt
 
 Wait until provisioning completes. This can take 30-40 minutes depending on region.
 
+### Troubleshooting
+
+#### Failed: Key Vault
+
+If you get an error like this:
+
+```
+  (x) Failed: Key Vault: kv-ga6xwbwbqulka
+```
+
+during `azd up`, it may be because a prior deployment in the same region used the same name, and the key-vault has been soft-deleted but not purged. You will need to purge the keyvault:
+
+```
+az keyvault purge -n kv-ga6xwbwbqulka
+```
+
+Once the purge completes, run the `azd up` command again.
+
+#### InvalidTemplateDeployment: The template deployment 'cognitiveServices' is not valid according to the validation procedure.
+
+If you get an error like:
+```
+FlagMustBeSetForRestore: An existing resource with ID '/subscriptions/265d8bce-3441-475d-8ee1-a1037b8c3eae/resourceGroups/rg-AITOUR/providers/Microsoft.CognitiveServices/accounts/aoai-ga6xwbwbqulka' has been soft-deleted. To resto1re the resource, you must specify 'restore' to be 'true' in the property. If you don't want to restore existing resource, please purge it first.
+```
+
+Purge the resource as follows:
+* Go to the portal
+* search for "Azure AI Service" and select the one with the logo (not the one with the cloud)
+* click Manage Deleted Resources
+* select the named resource
+* click purge.
+
+You should be able to purge with this command, but it doesn't seem to work.
+```
+az resource delete --ids /subscriptions/265d8bce-3441-475d-8ee1-a1037b8c3eae/resourceGroups/rg-AITOUR/providers/Microsoft.CognitiveServices/accounts/aoai-ga6xwbwbqulka
+```
+
+You can also search for 
+
+
+
 ## Capture environment
 
 If the participant is not going to use the same filesystem just used to deploy (for example, they will log into a different machine, or launch a new instance of CodeSpaces), you will need to capture the environment file and provide it to their workspace.
@@ -70,3 +111,5 @@ How you do this depends on lab format. Options include:
 If you are a self-guided student, congratulations! You have completed the provisioning step.
 
 Continue to [1-GetStarted.md](1-GetStarted.md) to start the workshop experience.
+
+Once you've finished with the workshop, visit [3-CleanUp.md](3-CleanUp.md) for information on how to delete the Azure resources.
