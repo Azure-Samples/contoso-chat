@@ -75,16 +75,22 @@ Password: ++@lab.CloudPortalCredential(User1).Password++
 
 ## Virtual Machine (not needed TODO delete)
 
-Login to your VM with the following credentials...
++++@lab.VirtualMachine(WRK550-Win11(NEW)).Username+++
 
-**Username: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Username+++**
++++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
 
-**Password: +++@lab.VirtualMachine(Win11-Pro-Base-VM).Password+++** 
++++cd C:\Users\LabUser\contoso-chat+++
+
++++azd auth login --use-device-code+++
+
++++az login --use-device-code+++
+
+++az account show --query id --output tsv+++
+
++++azd env new AITOUR --location francecentral +++
 
 ## Continue the workshop
 
 In your Codespace, use the VS Code Online File Explorer on the left to open the file `docs\2-Instructions.md`.
 
 Follow the instructions in that file to continue. 
-
-
