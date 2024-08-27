@@ -95,21 +95,21 @@ module ai 'core/host/ai-environment.bicep' = {
   }
 }
 
-module machineLearningEndpoint './core/host/ml-online-endpoint.bicep' = {
-  name: 'endpoint'
-  scope: resourceGroup(!empty(aiResourceGroupName) ? aiResourceGroupName : rg.name)
-  params: {
-    name: !empty(endpointName) ? endpointName : 'mloe-${resourceToken}'
-    location: location
-    tags: tags
-    serviceName: 'chat'
-    aiHubName: ai.outputs.hubName
-    aiProjectName: ai.outputs.projectName
-    keyVaultName: ai.outputs.keyVaultName
-    roleDefinitionId: cosmos.outputs.roleDefinitionId
-    accountName: cosmos.outputs.accountName
-  }
-}
+// module machineLearningEndpoint './core/host/ml-online-endpoint.bicep' = {
+//   name: 'endpoint'
+//   scope: resourceGroup(!empty(aiResourceGroupName) ? aiResourceGroupName : rg.name)
+//   params: {
+//     name: !empty(endpointName) ? endpointName : 'mloe-${resourceToken}'
+//     location: location
+//     tags: tags
+//     serviceName: 'chat'
+//     aiHubName: ai.outputs.hubName
+//     aiProjectName: ai.outputs.projectName
+//     keyVaultName: ai.outputs.keyVaultName
+//     roleDefinitionId: cosmos.outputs.roleDefinitionId
+//     accountName: cosmos.outputs.accountName
+//   }
+// }
 
 module workspaceConnections 'app/workspace-connections.bicep' = {
   name: 'workspace-connections'
