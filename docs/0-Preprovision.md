@@ -42,6 +42,11 @@ Choose a **region** that provides the required resources and in which the subscr
 azd env new AITOUR --location francecentral --subscription $(az account show --query id --output tsv)
 ```
 
+TODO: Does this work? If so we won't need the `az login` step.
+```
+azd env new AITOUR --location francecentral --subscription $(azd env get-value AZURE_SUBSCRIPTION_ID)
+```
+
 **Deploy resources**
 
 Now that yo have selected a region, begin the deployment with the command below. 

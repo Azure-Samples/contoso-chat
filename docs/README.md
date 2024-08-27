@@ -43,7 +43,7 @@ There are several steps required to run or participate in this workshop content.
   * Launch a GitHub Codespaces environment to run the workshop in.
 * [2-Instructions.md](1-Instructions.md) (60-75 minutes): Instructions for workshop participants. 
   * Follow this guide on your own or in an instructor-led workshop to explore and how to build the Contoso Chat RAG application.
-* [2-Post-workshop.md](2-Post-workshop.md) (10 minutes): Instructions for deleting resources after the workshop is over. In an instructor-led workshop this may be done for you.
+* [3-CleanUp.md](2-CleanUp.md) (10 minutes): Instructions for deleting resources after the workshop is over. In an instructor-led workshop this may be done for you.
 
 ## Application Scenario
 

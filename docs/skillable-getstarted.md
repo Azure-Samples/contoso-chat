@@ -40,7 +40,7 @@ GitHub Codespaces will be our development environment for this workshop. You wil
 
 1. **Open a new browser window** on your laptop. 
 
-1. **Click the link** below to your clipboard: 
+1. **Click the link** below to copy it to your clipboard: 
     * `https://github.com/Azure-Samples/contoso-chat`
 
 1. **Paste the link in your browser** to open the GitHub repository.

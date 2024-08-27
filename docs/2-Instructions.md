@@ -99,7 +99,7 @@ azd auth login --use-device-code
 We have stored key values you will need in the environment for you. Run this command from the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/) to take a look:
 
 ```
-azd env show
+azd env get-values
 ```
 
 Here you will find endpoint URLs, identifiers, and other information about your deployed resources that will be needed later. One thing you won't find here are any keys or passwords -- those are stored for you in Azure Key Vault and retrieved for you as needed. In line with best security practices, you won't need to handle any secrets yourself.
@@ -438,9 +438,45 @@ Run the prompty a few times and observe that it now gives the same response each
 
 Editing a prompty file in VS Code and clicking the Run button to try it out is a great way to iterate. You can experiment with different models, model parameters and meta-prompts until you're confident your application will behave in the way you intend. 
 
-The next step is to convert your prompty into an endpoint that can be called from the RAG application. In this lab we will use Python to script the endpoint. 
+The next step is to convert your prompty into an endpoint that can be called from the RAG application. In this lab we will use Python to script the endpoint.
 
-### 1. Create the python script
+### 0. Clone the ACA repository
+
+TODO: Remove
+
+```
+git clone https://github.com/revodavid/contoso-chat-rag-aca
+```
+
+### TODO Delete 1. Create the python script
+
+```
+mkdir mychat
+cd mychat
+cp ../contoso-chat-rag-aca/src/contoso_chat/chat.prompty .
+```
+
+### Deploy the Python script as an endpoint
+
+TLDR: Follow the directions in https://learn.microsoft.com/en-us/azure/container-apps/quickstart-code-to-cloud?tabs=bash%2Cpython&pivots=with-dockerfile
+
+```
+cd contoso-chat-rag-aca
+az login --use-device-code
+AZURE_SUBSCRIPTION_ID=$(azd env get-value AZURE_SUBSCRIPTION_ID)
+
+
+Use these commands:
+```
+az acr build --subscription $env:AZURE_SUBSCRIPTION_ID --registry $env:AZURE_CONTAINER_REGISTRY_NAME --image creativeagentapi:latest ./src/
+$image_name = $env:AZURE_CONTAINER_REGISTRY_NAME + '.azurecr.io/creativeagentapi:latest'
+az containerapp update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --image $image_name
+az containerapp ingress update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --target-port 5000
+```
+
+
+### X. TODO:DELETE
+
 
 First, let's create a new prompty file based on the basic one we just created.
 
@@ -552,6 +588,9 @@ How should I take care of it?
 ```
 What did I order last time?
 ```
+
+
+
 
 ### 5.4 Create `flex.flow.yaml` (app)
 
@@ -719,6 +758,8 @@ You already have a copy of the `contoso-chat` repository as a fork in your own G
 If you still have time, here are some links to resources you might want to take a look at now. These resources are also linked at https://github.com/microsoft/aitour-build-a-copilot-on-azure-ai . 
 
 Version of contoso-chat application that deploys with Azure Container Service instead of AI Studio: https://github.com/Azure-Samples/contoso-chat-rag-aca
+
+Tutorial: Deploy your first container app https://learn.microsoft.com/azure/container-apps/tutorial-deploy-first-app-cli?tabs=bash
 
 https://learn.microsoft.com/en-us/azure/container-apps/containerapp-up
 

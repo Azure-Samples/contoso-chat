@@ -32,19 +32,18 @@
                 "ms-azuretools.vscode-bicep",
 //                "rogalmic.bash-debug",
                 "ms-toolsai.prompty"
-            ],
-            "settings": {
-                "workbench.editorAssociations": {
-                    "*.md": "vscode.markdown.preview.editor"
-                }     
+            ]
         },
         "codespaces": {
             "openFiles": [
               "docs/2-Instructions.md"
             ]
-          }   
         }    
-    }
+    }   
 }
 
-
+//            "settings": {
+//                "workbench.editorAssociations": {
+//                    "*.md": "vscode.markdown.preview.editor"
+//                }     
+//        },
