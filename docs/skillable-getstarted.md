@@ -8,7 +8,12 @@ TODO: UPDATE SKILLABLE LAB TO POINT TO github.com/Azure-Samples/contoso-chat/doc
 
 To preprovision resources:
 
+```
+
+```
+
 - Launch CodeSpaces on ++https://github.com/revodavid/contoso-chat/tree/aitour-fy25++
+  - or, `git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat`
 - Follow the instructions in [0-Preprovision.md](0-Preprovision.md)
 
 ## Pre-Requisites

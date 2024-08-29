@@ -767,6 +767,8 @@ azd documentation: https://learn.microsoft.com/en-us/azure/developer/azure-devel
 
 Prompty documentation: https://prompty.ai/docs 
 
+Basic azd template for AI Studio: https://github.com/Azure-Samples/azd-aistudio-starter/tree/main 
+
 ### 4. Thank you for attending! Please rate your lab experience
 
 Thank you for attending the AI Tour Lab **Build a Retail Copilot Code-First on Azure AI**. We hope you enjoyed the experience and learned useful information about building RAG applications.
