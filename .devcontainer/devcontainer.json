@@ -1,30 +1,49 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-    "name": "Contoso Chat (v2)",
+    "name": "Contoso Chat (AITOUR25)",
+
     "build": {
         "dockerfile": "Dockerfile",
         "context": ".."
     },
+
     "features": {
+        "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/azure-cli:1": {
             "installBicep": true,
             "extensions": "ml"
         },
-        "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/azure/azure-dev/azd:latest": {},
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/python:1": {
+            "installJupyterlab": true
+        },
+        "ghcr.io/devcontainers/features/node:1": {}
     },
+
     "customizations": {
         "vscode": {
             "extensions": [
-                "prompt-flow.prompt-flow",
-                "ms-azuretools.vscode-docker",
+//                "prompt-flow.prompt-flow",
+//                "ms-azuretools.vscode-docker",
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "ms-azuretools.vscode-bicep",
-                "rogalmic.bash-debug"
+//                "rogalmic.bash-debug",
+                "ms-toolsai.prompty"
             ]
-        }
-    }
+        },
+        "codespaces": {
+            "openFiles": [
+              "docs/2-Instructions.md"
+            ]
+        }    
+    }   
 }
+
+//            "settings": {
+//                "workbench.editorAssociations": {
+//                    "*.md": "vscode.markdown.preview.editor"
+//                }     
+//        },

@@ -24,4 +24,5 @@ RUN ipython kernel install --name "python3" --user
 
 # Install daily version of azd for latest changes
 # See: https://github.com/Azure/azure-dev/tree/main/cli/installer#download-from-daily-builds
-RUN curl -fsSL https://aka.ms/install-azd.sh | bash -s -- --version daily
+# RUN curl -fsSL https://aka.ms/install-azd.sh | bash -s -- --version daily
+

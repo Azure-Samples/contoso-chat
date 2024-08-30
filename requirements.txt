@@ -10,6 +10,16 @@ python-dotenv==1.0.1
 jsonlines
 promptflow.evals
 nbconvert
+prompty
 
 # For worskhop docs
 mkdocs-material
+
+## For ACA
+Flask==2.3.2
+gunicorn==21.2.0
+azure-keyvault-secrets
+azure-monitor-opentelemetry-exporter --pre
+aiohttp==3.9.5
+python-dotenv==1.0.1
+openai==1.30.0
