@@ -59,7 +59,7 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
       }
     )
     keyVaultName: ai.outputs.keyVaultName
-    aiServicePrincipalId: ai.outputs.projectPrincipalId
+    principalIds: [ai.outputs.projectPrincipalId]
     containers: [
       {
         name: 'customers'
@@ -81,7 +81,7 @@ module ai 'core/host/ai-environment.bicep' = {
     logAnalyticsName: !empty(logAnalyticsName)
       ? logAnalyticsName
       : '${abbrs.operationalInsightsWorkspaces}${resourceToken}'
-    appInsightsName: !empty(appInsightsName) ? appInsightsName : '${abbrs.insightsComponents}${resourceToken}'
+    applicationInsightsName: !empty(appInsightsName) ? appInsightsName : '${abbrs.insightsComponents}${resourceToken}'
     containerRegistryName: !empty(containerRegistryName)
       ? containerRegistryName
       : '${abbrs.containerRegistryRegistries}${resourceToken}'
@@ -90,8 +90,9 @@ module ai 'core/host/ai-environment.bicep' = {
       ? storageAccountName
       : '${abbrs.storageStorageAccounts}${resourceToken}'
     openAiName: !empty(openAiName) ? openAiName : 'aoai-${resourceToken}'
+    openAiConnectionName: 'aoai-connection-${resourceToken}'
     openAiModelDeployments: openAiModelDeployments
-    searchName: !empty(searchServiceName) ? searchServiceName : 'srch-${resourceToken}'
+    searchServiceName: !empty(searchServiceName) ? searchServiceName : 'srch-${resourceToken}'
   }
 }
 
@@ -255,8 +256,8 @@ output AZURE_OPENAI_ENDPOINT string = ai.outputs.openAiEndpoint
 output AZURE_COSMOS_NAME string = cosmos.outputs.accountName
 output COSMOS_ENDPOINT string = cosmos.outputs.endpoint
 
-output AZURE_SEARCH_NAME string = ai.outputs.searchName
-output AZURE_SEARCH_ENDPOINT string = ai.outputs.searchEndpoint
+output AZURE_SEARCH_NAME string = ai.outputs.searchServiceName
+output AZURE_SEARCH_ENDPOINT string = ai.outputs.searchServiceEndpoint
 
 output AZURE_CONTAINER_REGISTRY_NAME string = ai.outputs.containerRegistryName
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = ai.outputs.containerRegistryEndpoint
