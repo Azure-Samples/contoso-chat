@@ -75,17 +75,27 @@ GitHub Codespaces will be our development environment for this workshop. You wil
 
 From Powershell:
 
+Log into VM:
+
 +++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
+
+Launch `cmd` in VM.
+
+Delete an existing contoso-chat folder if it exists.
 
 +++git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat+++
 
-+++cd contoso-chat++
++++cd contoso-chat+++
 
-+++azd env new AITOUR --location francecentral++
++++azd env new AITOUR --location francecentral+++
+
+Log in with Azure Credentials below:
 
 +++azd auth login+++
 
 +++azd up -e AITOUR+++
+
+Select default subscription, press ENTER.
 
 ## Full Virtual Machine (not needed TODO delete)
 
