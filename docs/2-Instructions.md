@@ -245,6 +245,8 @@ Let's find that deployed endpoint in Azure AI Studio now.
   * Click **Deployments** in the left navigation pane to see the deployments associated with this project.
   * In the section "Endpoints" you will see one deployment with a name starting with `chat-deployment`. **Click its name** to inspect the deployed endpoint.
 
+  TODO: This part won't work because chat-deployment is no longer deployed. We'll adapt the course to have the student deploy to ACA manually.
+
 #### 3. Test the deployed endpoint
   * Click the **Test** tab for a built-in testing sandbox
   * In the **Input** box, enter the JSON string below, and click **Test**.

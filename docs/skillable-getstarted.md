@@ -82,15 +82,19 @@ Password: ++@lab.CloudPortalCredential(User1).Password++
 
 From Powershell:
 
-++@lab.VirtualMachine(WRK550-Win11(NEW)).Password++
++++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
 
-++git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat++
++++Remove-Item -Path .\contoso-chat -Recurse -Force+++
 
-++cd contoso-chat++
++++git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat+++
 
-++azd auth login++
++++cd contoso-chat++
 
-++azd up -e AITOUR --location francecentral++
++++azd env new AITOUR --location francecentral++
+
++++azd auth login+++
+
++++azd up -e AITOUR --location francecentral+++
 
 ## Full Virtual Machine (not needed TODO delete)
 
