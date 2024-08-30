@@ -1,20 +1,8 @@
 # Build a Retail Copilot Code-First on Azure AI
 
-These instructions are for participants of the Workshop "Build a Retail Copilot Code-First on Azure AI" at Microsoft AI Tour 2024-2025.
+These instructions are forcontent owners of the Workshop "Build a Retail Copilot Code-First on Azure AI" at Microsoft AI Tour 2024-2025.
 
-TODO: UPDATE SKILLABLE LAB TO POINT TO github.com/Azure-Samples/contoso-chat/docs/skillable-getstarted.md
-
-## Note to Skillable (TODO delete)
-
-To preprovision resources:
-
-```
-
-```
-
-- Launch CodeSpaces on ++https://github.com/revodavid/contoso-chat/tree/aitour-fy25++
-  - or, `git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat`
-- Follow the instructions in [0-Preprovision.md](0-Preprovision.md)
+TODO: UPDATE SKILLABLE LAB TO POINT TO github.com/Azure-Samples/contoso-chat/docs/skillable-getstarted-deploy.md
 
 ## Pre-Requisites
 
