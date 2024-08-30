@@ -46,7 +46,8 @@ GitHub Codespaces will be our development environment for this workshop. You wil
 1. **Open a new browser window** on your laptop. 
 
 1. **Click the link** below to copy it to your clipboard: 
-    * `https://github.com/Azure-Samples/contoso-chat`
+    * ++https://github.com/Azure-Samples/contoso-chat++
+    * TODO FIX: for the WIP version, fork ++https://github.com/Azure-Samples/contoso-chat++ instead.
 
 1. **Paste the link in your browser** to open the GitHub repository.
 
@@ -70,21 +71,11 @@ GitHub Codespaces will be our development environment for this workshop. You wil
 
 1. This step takes a few minutes. The instructor will give you an overview of the session, and then you can begin work on your own in the Codespaces environment in your browser when it's ready.
 
-## Azure Credentials
-
-We have created a temporary Azure subscription for you to use during this workshop. You will need these credentials shortly to log into Azure.
-
-Username: ++@lab.CloudPortalCredential(User1).Username++
-
-Password: ++@lab.CloudPortalCredential(User1).Password++
-
 ## Blank deployment (TODO delete)
 
 From Powershell:
 
 +++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
-
-+++Remove-Item -Path .\contoso-chat -Recurse -Force+++
 
 +++git clone -b aitour-fy25 --single-branch https://github.com/revodavid/contoso-chat+++
 
@@ -94,7 +85,7 @@ From Powershell:
 
 +++azd auth login+++
 
-+++azd up -e AITOUR --location francecentral+++
++++azd up -e AITOUR+++
 
 ## Full Virtual Machine (not needed TODO delete)
 
@@ -102,15 +93,13 @@ From Powershell:
 
 +++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
 
-+++cd C:\Users\LabUser\contoso-chat+++
+## Azure Credentials
 
-+++azd auth login --use-device-code+++
+We have created a temporary Azure subscription for you to use during this workshop. You will need these credentials shortly to log into Azure.
 
-+++az login --use-device-code+++
+Username: ++@lab.CloudPortalCredential(User1).Username++
 
-++az account show --query id --output tsv+++
-
-+++azd env new AITOUR --location francecentral +++
+Password: ++@lab.CloudPortalCredential(User1).Password++
 
 ## Continue the workshop
 
