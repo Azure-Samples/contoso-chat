@@ -308,9 +308,9 @@ output AZURE_OPENAI_NAME string = ai.outputs.openAiName
 output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
-output API_SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
-output API_SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
-output API_SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
+output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
+output SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
+output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
 
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.registryLoginServer
