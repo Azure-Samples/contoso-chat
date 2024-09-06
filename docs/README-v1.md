@@ -230,7 +230,7 @@ You will need to have your local Prompt Flow extension configured to have the fo
  - `contoso-search` to Azure AI Search endpoint
  - `aoai-connection` to Azure OpenAI endpoint
 
-Verify if these were created by using the [pf tool](https://microsoft.github.io/promptflow/reference/pf-command-reference.html#pf-connection) from the VS Code terminal as follows:
+Verify if these were created by using the [pf tool](https://microsoft.github.io/prompty/reference/pf-command-reference.html#pf-connection) from the VS Code terminal as follows:
 
 ```bash
 pf connection list
@@ -293,7 +293,7 @@ A prompt flow is a DAG (directed acyclic graph) that is made up of nodes that ar
     ![Visual editor button](./images/visualeditorbutton.png)
 
 - This will open up the prompt flow in the visual editor as shown:  - 
-    ![Alt text](./images/promptflow.png)
+    ![Alt text](./images/prompty.png)
 
 ### 6.2 Understand Prompt Flow components
 
@@ -320,7 +320,7 @@ Let's run the flow to see what happens.  **Note that the input node is pre-confi
 - Click any node to open the declarative version showing details of execution
 - Click the `Prompt Flow` tab in the Visual Studio Code terminal window for execution times
 
-For more details on running the prompt flow, [follow the instructions here](https://microsoft.github.io/promptflow/how-to-guides/init-and-test-a-flow.html#test-a-flow).
+For more details on running the prompt flow, [follow the instructions here](https://microsoft.github.io/prompty/how-to-guides/init-and-test-a-flow.html#test-a-flow).
 
 **Congratulations!! You ran the prompt flow and verified it works!**
 
@@ -359,11 +359,11 @@ Just follow the instructions and steps in the notebook `push_and_deploy_pf.ipynb
 
 ### 9.1. Create Connection to Azure in GitHub
 - Login to [Azure Shell](https://shell.azure.com/)
-- Follow the instructions to [create a service principal here](hhttps://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
-- Follow the [instructions in steps 1 - 8  here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#steps) to add create and add the user-assigned managed identity to the subscription and workspace.
+- Follow the instructions to [create a service principal here](hhttps://github.com/microsoft/llmops-prompty-template/blob/main/docs/github_workflows_how_to_setup.md#create-azure-service-principal)
+- Follow the [instructions in steps 1 - 8  here](https://github.com/microsoft/llmops-prompty-template/blob/main/docs/github_workflows_how_to_setup.md#steps) to add create and add the user-assigned managed identity to the subscription and workspace.
 
 - Assign `Data Science Role` and the `Azure Machine Learning Workspace Connection Secrets Reader` to the service principal. Complete this step in the portal under the IAM.
-- Setup authentication with Github [here](https://github.com/microsoft/llmops-promptflow-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github)
+- Setup authentication with Github [here](https://github.com/microsoft/llmops-prompty-template/blob/main/docs/github_workflows_how_to_setup.md#set-up-authentication-with-azure-and-github)
 
 ```bash
 {

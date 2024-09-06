@@ -7,7 +7,9 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    azure_deployment: gpt-35-turbo
+    azure_deployment: gpt
+    azure_endpoint: ${ENV:AZURE_OPENAI_ENDPOINT}
+    api_version: 2023-07-01-preview
   parameters:
     max_tokens: 128
     temperature: 0.2
@@ -18,7 +20,7 @@ inputs:
     type: object
   question:
     type: string
-sample: chat.json
+sample: ${file:chat.json}
 ---
 system:
 You are an AI agent for the Contoso Outdoors products retailer. As the agent, you answer questions briefly, succinctly, 

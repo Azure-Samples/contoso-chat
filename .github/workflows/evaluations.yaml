@@ -1,4 +1,4 @@
-name: Evaluate Chat Relevance, Fluency, Coherence, and Groundedness
+name: Evaluate
 
 on:
   workflow_dispatch:
@@ -7,7 +7,6 @@ on:
     # Set this to the mainline branch you are using
     branches:
       - main
-      - azd
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
@@ -23,16 +22,23 @@ jobs:
       AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-      AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
-      AZURE_DEPLOYMENT_NAME: "gpt-4"
-      AZURE_EMBEDDING_NAME: "text-embedding-ada-002"
-      COSMOS_ENDPOINT: "${{ secrets.CONTOSO_SEARCH_ENDPOINT }}"
-      AZURE_SEARCH_ENDPOINT: "${{ secrets.AZURE_SEARCH_ENDPOINT }}"
+      AZURE_OPENAI_ENDPOINT: ${{ vars.AZURE_OPENAI_ENDPOINT }}
+      AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+      AZURE_OPENAI_4_EVAL_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_4_EVAL_DEPLOYMENT_NAME }}
+      AZURE_OPENAI_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_DEPLOYMENT_NAME }}
+      AZURE_OPENAI_35_TURBO_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_35_TURBO_DEPLOYMENT_NAME }}
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      AZURE_SEARCH_ENDPOINT: ${{ vars.AZURE_SEARCH_ENDPOINT }}
+      AZURE_OPENAI_NAME: ${{ vars.AZURE_OPENAI_NAME }}
+      BING_SEARCH_ENDPOINT: ${{ vars.BING_SEARCH_ENDPOINT }}
+      BING_SEARCH_KEY: ${{ secrets.BING_SEARCH_KEY }}
 
     steps:
       - name: checkout repo content
         uses: actions/checkout@v4 # checkout the repository content
+
+      - name: Install azd
+        uses: Azure/setup-azd@v1.0.0
 
       - name: setup python
         uses: actions/setup-python@v5
@@ -42,24 +48,7 @@ jobs:
       - name: install python packages
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      
-      - name: install promptflow dev bits
-        run: |
-          # unstall old promptflow
-          pip uninstall -y promptflow promptflow-azure promptflow-core promptflow-devkit promptflow-tools promptflow-evals
-
-          # install dev packages
-          pip install promptflow-evals==0.2.0.dev125831637 --extra-index-url https://azuremlsdktestpypi.azureedge.net/promptflow
-          pip install azure_ai_ml==1.16.0a20240501004 --extra-index-url https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/
-
-          pip install azure-cli
-          pip install bs4
-          pip install ipykernel
-          pip install azure-cosmos==4.6.0
-          pip install azure-search-documents==11.4.0
-
-          pf version
+          pip install -r src/api/requirements.txt
 
       - name: Azure login
         uses: azure/login@v2
@@ -67,39 +56,30 @@ jobs:
           client-id: ${{ env.AZURE_CLIENT_ID }}
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
-
+  
       - name: Set az account
         uses: azure/CLI@v2
         with:
           inlineScript: |
             az account set --subscription ${{env.AZURE_SUBSCRIPTION_ID}}
 
-      - name: Set Promptflow config
+      - name: evaluate orchestrator
+        working-directory: ./src/api
         run: |
-          pf config set trace.destination=azureml://subscriptions/${{ env.AZURE_SUBSCRIPTION_ID }}/resourceGroups/rg-${{ vars.AZURE_ENV_NAME }}/providers/Microsoft.MachineLearningServices/workspaces/${{ vars.ML_WORKSPACE_NAME }}
-
-      - name: evaluate chat data using the eval sdk
-        working-directory: ./evaluations
-        run: |
-          python evaluations_chat.py
+          python -m evaluate.evaluate
       
       - name: Upload eval results as build artifact
         uses: actions/upload-artifact@v4
         with:
           name: eval_result
-          path: ./evaluations/eval_result.jsonl
+          path: ./src/api/evaluate/eval_results.jsonl
 
       - name: GitHub Summary Step
         if: ${{ success() }}
-        working-directory: ./evaluations
+        working-directory: ./src/api
         run: |
-          studio_url=$(cat studio_url.txt)
-          echo $studio_url 
-
-          echo "🔗 [View in Azure Studio Here]($studio_url)" >> $GITHUB_STEP_SUMMARY
-
           echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "📊 Promptflow Evaluation Results" >> $GITHUB_STEP_SUMMARY
-          cat eval_result.md >> $GITHUB_STEP_SUMMARY
+          cat evaluate/eval_results.md >> $GITHUB_STEP_SUMMARY
         

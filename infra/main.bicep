@@ -321,7 +321,7 @@ module userCosmosAccountRole 'core/security/role-cosmos.bicep' = if (!empty(prin
 output AZURE_LOCATION string = location
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
-output AZURE_OPENAI_CHATGPT_DEPLOYMENT string = openAiDeploymentName
+output AZURE_OPENAI_DEPLOYMENT string = openAiDeploymentName
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
 output AZURE_OPENAI_ENDPOINT string = openAi.outputs.endpoint
 output AZURE_OPENAI_NAME string = openAi.outputs.name

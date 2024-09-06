@@ -23,10 +23,10 @@
 
     pf version
     {
-    "promptflow": "1.10.0",
-    "promptflow-core": "1.10.0",
-    "promptflow-devkit": "1.10.0",
-    "promptflow-tracing": "1.10.0"
+    "prompty": "1.10.0",
+    "prompty-core": "1.10.0",
+    "prompty-devkit": "1.10.0",
+    "prompty-tracing": "1.10.0"
     }
     ```
 

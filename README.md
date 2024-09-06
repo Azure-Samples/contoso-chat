@@ -1,6 +1,6 @@
 ---
 name: Contoso Chat - RAG-based Retail copilot with Azure Container Apps
-description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with Promptflow.
+description: Build, evaluate, and deploy, a RAG-based retail copilot using Azure AI with prompty.
 languages:
 - python
 - bicep
@@ -17,7 +17,7 @@ urlFragment: contoso-chat
  
 # Contoso Chat: RAG-based Retail copilot with Azure Container Apps
 
-Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure Container Apps using Promptflow (flex-flow) with Prompty assets.
+Contoso Chat is the signature Python sample demonstrating how to build, evaluate, and deploy, a retail copilot application end-to-end with Azure Container Apps using prompty (flex-flow) with Prompty assets.
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
@@ -132,7 +132,7 @@ Once you complete setup, use these commands to validate the install:
  1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
  1. Open the terminal in VS Code and validate install with these commands:
     - `azd version` - Azure Developer CLI is installed (v1.8.2+)
-    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `pf version` - prompty is installed (v1.10.0+)
     - `az version` - Azure CLI is installed (v2.60+)
     - `python3 --version` - Python3 is installed (v3.11+)
  1. Sign into your Azure account from the VS Code terminal
@@ -153,7 +153,7 @@ A related option is VS Code Dev Containers, which will open the project in your 
  1. Once ready, the tab will refresh to show a Visual Studio Code editor in the browser.
  1. Open the terminal in VS Code and validate install with these commands:
     - `azd version` - Azure Developer CLI is installed (v1.8.2+)
-    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `pf version` - prompty is installed (v1.10.0+)
     - `az version` - Azure CLI is installed (v2.60+)
     - `python3 --version` - Python3 is installed (v3.11+)
  1. Sign into your Azure account from the VS Code terminal
@@ -173,7 +173,7 @@ A related option is VS Code Dev Containers, which will open the project in your 
   * MacOS: `brew tap azure/azd && brew install azd`
 * Validate install with these commands:
     - `azd version` - Azure Developer CLI is installed (v1.8.2+)
-    - `pf version` - Promptflow is installed (v1.10.0+)
+    - `pf version` - prompty is installed (v1.10.0+)
     - `az version` - Azure CLI is installed (v2.60+)
     - `python3 --version` - Python3 is installed (v3.11+)
 
@@ -191,7 +191,7 @@ Complete these steps in the same terminal that you used previously, to authentic
  
 ### Local Development
 
-The core functionality of the copilot application is developed using the Promptflow framework with Python. In this project, we use the Promptflow extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
+The core functionality of the copilot application is developed using the prompty framework with Python. In this project, we use the prompty extension in Visual Studio Code, with its `pf` commandline tool, for all our local development needs. 
 
 Run this command to get a result locally
 
@@ -214,9 +214,9 @@ We recommend using keyless authentication for this project. Read more about why 
 ## Resources
  
 - [Azure Container Apps Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- [Promptflow Documentation](https://github.com/microsoft/promptflow)
-- [Prompty Assets](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html)
-- [Flex Flow](https://microsoft.github.io/promptflow/tutorials/flex-flow-quickstart.html)
+- [prompty Documentation](https://github.com/microsoft/prompty)
+- [Prompty Assets](https://microsoft.github.io/prompty/how-to-guides/develop-a-prompty/index.html)
+- [Flex Flow](https://microsoft.github.io/prompty/tutorials/flex-flow-quickstart.html)
 - [Link to similar sample] 🚧
  
 <br/>
