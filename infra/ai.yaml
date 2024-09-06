@@ -5,7 +5,7 @@ deployments:
     model:
       format: OpenAI
       name: gpt-35-turbo
-      version: "1106"
+      version: "0613"
     sku:
       name: Standard
       capacity: 20
@@ -29,7 +29,7 @@ deployments:
     model:
       format: OpenAI
       name: gpt-4
-      version: "0613"
+      version: "1106-Preview"
     sku:
       name: "Standard"
       capacity: 10
