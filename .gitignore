@@ -20,3 +20,5 @@ src/api/contoso_chat/.runs/*
 src/api/.runs/*
 .runs/*
 evaluations/.runs/*
+evaluations/result_evaluated.jsonl
+evaluations/result.jsonl
