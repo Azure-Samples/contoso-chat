@@ -1,5 +1,5 @@
 ---
-name: Contoso Chat Retail with Azure AI Studio and Promptflow
+name: Contoso Chat Retail with Azure AI Studio and Prompty
 description: A retail copilot that answers customer queries with responses grounded in retailer's product and customer data.
 languages:
 - python
@@ -15,7 +15,7 @@ page_type: sample
 urlFragment: contoso-chat
 ---
 
-# Contoso Chat Retail with Azure AI Studio and Promptflow
+# Contoso Chat Retail with Azure AI Studio and Prompty
 
 This sample creates a customer support chat agent for an online retailer called Contoso Outdoors. The solution uses a _retrieval-augmented generation pattern_ to ground responses in the company's product and customer data. Customers can ask questions about the retailer's product catalog, and also get recommendations based on their prior purchases.
 
@@ -32,8 +32,8 @@ The sample uses [Azure AI Search](https://learn.microsoft.com/azure/search/) to 
 
 By exploring and deploying this sample, you will learn to:
 - Build a retail copilot application using the [_RAG pattern_](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation).
-- Define and engineer prompts using the [_Prompty_ asset](https://microsoft.github.io/promptflow/tutorials/prompty-quickstart.html?highlight=prompty#).
-- Design, run & evaluate a copilot using the [_Promptflow_ framework](https://microsoft.github.io/promptflow/tutorials/flex-flow-quickstart.html).
+- Define and engineer prompts using the Prompty
+- Design, run & evaluate a copilot
 - Provision and deploy the solution to Azure using the [_Azure Developer CLI_](https://learn.microsoft.com/azure/developer/azure-developer-cli/).
 - Understand and apply Responsible AI practices like [_evaluation and content safety_](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext).
 
@@ -103,7 +103,6 @@ This has been the signature sample used to showcase end-to-end development of a 
 * [Visual Studio Code](https://code.visualstudio.com) - recommended IDE for local development.
 * [Azure Developer CLI (azd)](https://aka.ms/install-azd) - to manage Azure deployment.
 * [Python 3.10+](https://www.python.org/downloads/) - to run, test & evaluate application.
-* [Promptflow 1.10+](https://microsoft.github.io/promptflow/) - to build, evaluate, and deploy application flows.
 
 You will also need:
 * [Azure Subscription](https://azure.microsoft.com/free/) - sign up for a free account.
@@ -222,26 +221,7 @@ The [contoso_chat](./contoso_chat) sample contains an example [chat.prompty](./c
     - `question` section to embed user query
     - `Instructions` section to reference related product recommendations
 
-This specific prompty takes 3 inputs: a `customer` object, a `documentation` object (that could be chat history) and a `question` string that represents the user query. You can now _load_, _execute_, and _trace_ individual prompty assets for a more granular prompt engineering solution.
-
- * See the [prompty specification](https://microsoft.github.io/promptflow/how-to-guides/develop-a-prompty/index.html#prompty-specification) for more details on the format.
- * Read the [prompty examples](https://github.com/microsoft/promptflow/tree/main/examples/prompty) for usage guidance from SDK or CLI.
-
-### Testing the Application Flow
-
-This sample uses a [flex-flow](https://microsoft.github.io/promptflow/how-to-guides/develop-a-flex-flow/index.html) feature that lets you "create LLM apps using a Python class or function as the entry point" - making it easier to test and run them using a code-first experience.
-  - This sample implements a _Function based flow_ 
-  - The entry point is the _get_response_ functionin `chat_request.py`
-
-You can now [test the flow](https://microsoft.github.io/promptflow/how-to-guides/develop-a-flex-flow/function-based-flow.html#flow-test) in different ways:
- - Run it directly, like any Python script
- - Convert it to a flow, then use `pf flow test --flow ...`
- - Start a UI to chat with the flow using `pf flow test --flow ... --ui`
-
-🌟 | Watch this space for more testing guidance.
-
-
-## Guidance
+This specific prompty takes 3 inputs: a `customer` object, a `documentation` object (that could be chat history) and a `question` string that represents the user query. You can now _load_, _execute_, and _trace_ individual prompty assets for a more granular prompt 
 
 ### Region Availability
 
@@ -269,14 +249,6 @@ Pricing for services may vary by region and usage and exact costs cannot be esti
 This template uses [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for authentication with key Azure services including Azure OpenAI, Azure AI Search, and Azure Cosmos DB. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. This also removes the need for developers to manage these credentials themselves and reduces their complexity.
 
 Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repo.
-
-
-## Resources
-
-* [Azure AI Studio Documentation](https://learn.microsoft.com/azure/ai-studio/)
-* [Promptflow/Prompty Documentation](https://microsoft.github.io/promptflow/reference/python-library-reference/promptflow-core/promptflow.core.html?highlight=prompty#promptflow.core.Prompty)
-* [Develop Python apps that use Azure AI services](https://learn.microsoft.com/azure/developer/python/azure-ai-for-python-developers)
-* Related Sample: [Process Automation: Speech to Text and Summarization with ACA](https://github.com/Azure-Samples/summarization-openai-python-promptflow/blob/main/README.md)
 
 ## Troubleshooting
 
