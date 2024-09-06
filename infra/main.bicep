@@ -14,9 +14,6 @@ param environmentName string
 })
 param location string
 
-@description('The name of the OpenAI resource')
-param openAiResourceName string = ''
-
 @description('The name of the resource group for the OpenAI resource')
 param openAiResourceGroupName string = ''
 
@@ -40,8 +37,31 @@ param openAiResourceGroupName string = ''
 })
 param openAiResourceLocation string
 
-@description('The SKU name of the OpenAI resource')
-param openAiSkuName string = ''
+param containerRegistryName string = ''
+param aiHubName string = ''
+@description('The Azure AI Studio project name. If ommited will be generated')
+param aiProjectName string = ''
+@description('The application insights resource name. If ommited will be generated')
+param applicationInsightsName string = ''
+@description('The Open AI resource name. If ommited will be generated')
+param openAiName string = ''
+@description('The Open AI connection name. If ommited will use a default value')
+param openAiConnectionName string = ''
+@description('The Open AI content safety connection name. If ommited will use a default value')
+param openAiContentSafetyConnectionName string = ''
+param keyVaultName string = ''
+@description('The Azure Storage Account resource name. If ommited will be generated')
+param storageAccountName string = ''
+
+@description('The Azure Search connection name. If ommited will use a default value')
+param searchConnectionName string = ''
+var abbrs = loadJsonContent('./abbreviations.json')
+@description('The log analytics workspace name. If ommited will be generated')
+param logAnalyticsWorkspaceName string = ''
+param useApplicationInsights bool = true
+param useContainerRegistry bool = true
+param useSearch bool = true
+var aiConfig = loadYamlContent('./ai.yaml')
 
 @description('The API version of the OpenAI resource')
 param openAiApiVersion string = ''
@@ -106,53 +126,35 @@ module managedIdentity 'core/security/managed-identity.bicep' = {
   }
 }
 
-module openAi 'core/ai/cognitiveservices.bicep' = {
-  name: 'openai'
-  scope: openAiResourceGroup
-  params: {
-    name: !empty(openAiResourceName) ? openAiResourceName : '${resourceToken}-cog'
-    location: !empty(openAiResourceLocation) ? openAiResourceLocation : location
-    tags: tags
-    sku: {
-      name: !empty(openAiSkuName) ? openAiSkuName : 'S0'
-    }
-    deployments: [
-      {
-        name: openAiDeploymentName
-        model: {
-          format: 'OpenAI'
-          name: 'gpt-35-turbo'
-          version: '0613'
-        }
-        sku: {
-          name: 'Standard'
-          capacity: 30
-        }
-      }
-      {
-        name: openAiEmbeddingDeploymentName
-        model: {
-          format: 'OpenAI'
-          name: 'text-embedding-ada-002'
-          version: '2'
-        }
-        sku: {
-          name: 'Standard'
-          capacity: 20
-        }
-      }
-    ]
-  }
-}
-
-module search 'core/search/search-services.bicep' = {
-  name: 'search'
+module ai 'core/host/ai-environment.bicep' = {
+  name: 'ai'
   scope: resourceGroup
   params: {
-    name: !empty(searchServiceName) ? searchServiceName : '${prefix}-search-contoso'
     location: location
-    semanticSearch: 'standard'
-    disableLocalAuth: true
+    tags: tags
+    hubName: !empty(aiHubName) ? aiHubName : 'ai-hub-${resourceToken}'
+    projectName: !empty(aiProjectName) ? aiProjectName : 'ai-project-${resourceToken}'
+    keyVaultName: !empty(keyVaultName) ? keyVaultName : '${abbrs.keyVaultVaults}${resourceToken}'
+    storageAccountName: !empty(storageAccountName)
+      ? storageAccountName
+      : '${abbrs.storageStorageAccounts}${resourceToken}'
+    openAiName: !empty(openAiName) ? openAiName : 'aoai-${resourceToken}'
+    openAiConnectionName: !empty(openAiConnectionName) ? openAiConnectionName : 'aoai-connection'
+    openAiContentSafetyConnectionName: !empty(openAiContentSafetyConnectionName) ? openAiContentSafetyConnectionName : 'aoai-content-safety-connection'
+    openAiModelDeployments: array(contains(aiConfig, 'deployments') ? aiConfig.deployments : [])
+    logAnalyticsName: !useApplicationInsights
+      ? ''
+      : !empty(logAnalyticsWorkspaceName)
+          ? logAnalyticsWorkspaceName
+          : '${abbrs.operationalInsightsWorkspaces}${resourceToken}'
+    applicationInsightsName: !useApplicationInsights
+      ? ''
+      : !empty(applicationInsightsName) ? applicationInsightsName : '${abbrs.insightsComponents}${resourceToken}'
+    containerRegistryName: !useContainerRegistry
+      ? ''
+      : !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
+    searchServiceName: !useSearch ? '' : !empty(searchServiceName) ? searchServiceName : '${abbrs.searchSearchServices}${resourceToken}'
+    searchConnectionName: !useSearch ? '' : !empty(searchConnectionName) ? searchConnectionName : 'search-service-connection'
   }
 }
 
@@ -177,28 +179,6 @@ module cosmos 'core/database/cosmos/sql/cosmos-sql-db.bicep' = {
   }
 }
 
-module logAnalyticsWorkspace 'core/monitor/loganalytics.bicep' = {
-  name: 'loganalytics'
-  scope: resourceGroup
-  params: {
-    name: '${prefix}-loganalytics'
-    location: location
-    tags: tags
-  }
-}
-
-module monitoring 'core/monitor/monitoring.bicep' = {
-  name: 'monitoring'
-  scope: resourceGroup
-  params: {
-    location: location
-    tags: tags
-    logAnalyticsName: logAnalyticsWorkspace.name
-    applicationInsightsName: '${prefix}-appinsights'
-    applicationInsightsDashboardName: '${prefix}-dashboard'
-  }
-}
-
 // Container apps host (including container registry)
 module containerApps 'core/host/container-apps.bicep' = {
   name: 'container-apps'
@@ -208,8 +188,8 @@ module containerApps 'core/host/container-apps.bicep' = {
     location: location
     tags: tags
     containerAppsEnvironmentName: '${prefix}-containerapps-env'
-    containerRegistryName: '${replace(prefix, '-', '')}registry'
-    logAnalyticsWorkspaceName: logAnalyticsWorkspace.outputs.name
+    containerRegistryName: ai.outputs.containerRegistryName
+    logAnalyticsWorkspaceName: ai.outputs.logAnalyticsWorkspaceName
   }
 }
 
@@ -226,15 +206,15 @@ module aca 'app/aca.bicep' = {
     containerRegistryName: containerApps.outputs.registryName
     openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-35-turbo'
     openAiEmbeddingDeploymentName: openAiEmbeddingDeploymentName
-    openAiEndpoint: openAi.outputs.endpoint
+    openAiEndpoint: ai.outputs.openAiEndpoint
     openAiType: openAiType
     openAiApiVersion: openAiApiVersion
-    aiSearchEndpoint: search.outputs.endpoint
+    aiSearchEndpoint: ai.outputs.searchServiceEndpoint
     aiSearchIndexName: aiSearchIndexName
     cosmosEndpoint: cosmos.outputs.endpoint
     cosmosDatabaseName: cosmosDatabaseName
     cosmosContainerName: cosmosContainerName
-    appinsights_Connectionstring: monitoring.outputs.applicationInsightsConnectionString
+    appinsights_Connectionstring: ai.outputs.applicationInsightsConnectionString
   }
 }
 
@@ -323,21 +303,20 @@ output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
 output AZURE_OPENAI_DEPLOYMENT string = openAiDeploymentName
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
-output AZURE_OPENAI_ENDPOINT string = openAi.outputs.endpoint
-output AZURE_OPENAI_NAME string = openAi.outputs.name
+output AZURE_OPENAI_ENDPOINT string = ai.outputs.openAiEndpoint
+output AZURE_OPENAI_NAME string = ai.outputs.openAiName
 output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
-output AZURE_OPENAI_SKU_NAME string = openAi.outputs.skuName
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
-output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
+output API_SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
 output API_SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
-output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
+output API_SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
 
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.registryLoginServer
 output AZURE_CONTAINER_REGISTRY_NAME string = containerApps.outputs.registryName
 
-output APPINSIGHTS_CONNECTIONSTRING string = monitoring.outputs.applicationInsightsConnectionString
+output APPINSIGHTS_CONNECTIONSTRING string = ai.outputs.applicationInsightsConnectionString
 
 output OPENAI_TYPE string = 'azure'
 output AZURE_EMBEDDING_NAME string = openAiEmbeddingDeploymentName
@@ -345,5 +324,5 @@ output AZURE_EMBEDDING_NAME string = openAiEmbeddingDeploymentName
 output COSMOS_ENDPOINT string = cosmos.outputs.endpoint
 output AZURE_COSMOS_NAME string = cosmosDatabaseName
 output COSMOS_CONTAINER string = cosmosContainerName
-output AZURE_SEARCH_ENDPOINT string = search.outputs.endpoint
-output AZURE_SEARCH_NAME string = search.outputs.name
+output AZURE_SEARCH_ENDPOINT string = ai.outputs.searchServiceEndpoint
+output AZURE_SEARCH_NAME string = ai.outputs.searchServiceName
