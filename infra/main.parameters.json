@@ -21,7 +21,7 @@
       "value": "${AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME=text-embedding-ada-002}"
     },
     "openAiDeploymentName": {
-      "value": "${AZURE_OPENAI_DEPLOYMENT_NAME=chatgpt}"
+      "value": "${AZURE_OPENAI_DEPLOYMENT_NAME=gpt-35-turbo}"
     },
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"

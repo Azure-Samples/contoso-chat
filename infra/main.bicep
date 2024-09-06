@@ -330,7 +330,7 @@ output AZURE_OPENAI_SKU_NAME string = openAi.outputs.skuName
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
 output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
-output SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
+output API_SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
 output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
 
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName

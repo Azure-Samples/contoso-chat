@@ -49,7 +49,7 @@ async def root():
 @app.post("/api/create_response")
 @trace
 def create_response(question: str, customer_id: str, chat_history: str) -> dict:
-    result = get_response(question, customer_id, chat_history)
+    result = get_response(customer_id, question, chat_history)
     return result
 
 # TODO: fix open telemetry so it doesn't slow app so much
