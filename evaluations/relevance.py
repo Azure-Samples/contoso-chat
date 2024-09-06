@@ -1,10 +1,13 @@
 import json
+import os
 import prompty
 # to use the azure invoker make 
 # sure to install prompty like this:
 # pip install prompty[azure]
 import prompty.azure
 from prompty.tracer import trace, Tracer, console_tracer, PromptyTracer
+from dotenv import load_dotenv
+load_dotenv()
 
 # add console and json tracer:
 # this only has to be done once
@@ -21,13 +24,18 @@ def relevance_evaluation(
 ) -> str:
 
   # execute the prompty file
+  model_config = {
+        "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
+        "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
+  }
   result = prompty.execute(
     "relevance.prompty", 
     inputs={
       "question": question,
       "context": context,
       "answer": answer
-    }
+    },
+    configuration=model_config
   )
 
   return result

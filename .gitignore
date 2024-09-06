@@ -18,3 +18,4 @@ evaluations/studio_url.txt
 src/contoso_chat/.runs/*
 src/api/contoso_chat/.runs/*
 src/api/.runs/*
+.runs/*

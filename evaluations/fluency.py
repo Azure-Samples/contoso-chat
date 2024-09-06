@@ -5,6 +5,9 @@ import prompty
 # pip install prompty[azure]
 import prompty.azure
 from prompty.tracer import trace, Tracer, console_tracer, PromptyTracer
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 # add console and json tracer:
 # this only has to be done once
@@ -21,13 +24,18 @@ def fluency_evaluation(
 ) -> str:
 
   # execute the prompty file
+  model_config = {
+        "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
+        "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
+  }
   result = prompty.execute(
     "fluency.prompty", 
     inputs={
       "question": question,
       "context": context,
       "answer": answer
-    }
+    },
+    configuration=model_config
   )
 
   return result
