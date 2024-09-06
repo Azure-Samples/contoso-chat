@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo  "Building contosochatapi:latest..."
-az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatapi:latest ./src/
+az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatapi:latest ./src/api/
 image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatapi:latest"
 az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${image_name}
 az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 5000
@@ -34,7 +34,7 @@ echo "--- ✅ | 1. Post-provisioning - env configured ---"
 
 # Setup to run notebooks
 echo 'Installing dependencies from "requirements.txt"'
-python -m pip install -r requirements.txt > /dev/null
+python -m pip install -r ./src/api/requirements.txt > /dev/null
 python -m pip install ipython ipykernel > /dev/null      # Install ipython and ipykernel
 ipython kernel install --name=python3 --user > /dev/null # Configure the IPython kernel
 jupyter kernelspec list > /dev/null                      # Verify kernelspec list isn't empty

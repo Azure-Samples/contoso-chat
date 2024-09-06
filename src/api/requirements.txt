@@ -1,6 +1,5 @@
 fastapi
 fastapi[standard]
-openai==1.30.0
 requests
 gunicorn==21.2.0
 azure-cosmos
