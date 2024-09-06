@@ -1,0 +1,7 @@
+azure-cosmos
+azure-identity==1.16.0
+azure-search-documents==11.4.0
+promptflow==1.11.0
+promptflow-tools==1.4.0
+promptflow[azure]==1.11.0
+python-dotenv==1.0.1

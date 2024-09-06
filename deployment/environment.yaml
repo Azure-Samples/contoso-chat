@@ -1,0 +1,15 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+build:
+  path: image_build_with_requirements
+  dockerfile_path: Dockerfile
+# inference config is used to build a serving container for online deployments
+inference_config:
+  liveness_route:
+    path: /health
+    port: 8080
+  readiness_route:
+    path: /health
+    port: 8080
+  scoring_route:
+    path: /score
+    port: 8080
