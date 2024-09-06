@@ -63,16 +63,16 @@ jobs:
           inlineScript: |
             az account set --subscription ${{env.AZURE_SUBSCRIPTION_ID}}
 
-      - name: evaluate orchestrator
+      - name: evaluate
         working-directory: ./src/api
         run: |
-          python -m evaluate.evaluate
+          python -m evaluators.evaluate
       
       - name: Upload eval results as build artifact
         uses: actions/upload-artifact@v4
         with:
           name: eval_result
-          path: ./src/api/evaluate/eval_results.jsonl
+          path: ./src/api/evaluators/eval_results.jsonl
 
       - name: GitHub Summary Step
         if: ${{ success() }}
