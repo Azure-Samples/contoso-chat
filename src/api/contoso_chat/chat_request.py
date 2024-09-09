@@ -5,7 +5,7 @@ from azure.cosmos import CosmosClient
 from sys import argv
 import os
 import pathlib
-from product import product
+from .product import product
 from azure.identity import DefaultAzureCredential
 import prompty
 import prompty.azure
