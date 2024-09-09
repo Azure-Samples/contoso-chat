@@ -8,7 +8,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
-from contoso_chat.chat_request import get_response
+from .contoso_chat.chat_request import get_response
 
 base = Path(__file__).resolve().parent
 
@@ -46,7 +46,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/api/create_response")
+@app.get("/api/create_response")
 @trace
 def create_response(question: str, customer_id: str, chat_history: str) -> dict:
     result = get_response(customer_id, question, chat_history)
