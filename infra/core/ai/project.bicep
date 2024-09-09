@@ -36,8 +36,6 @@ resource project 'Microsoft.MachineLearningServices/workspaces@2024-01-01-previe
     hbiWorkspace: false
     v1LegacyMode: false
     publicNetworkAccess: publicNetworkAccess
-    discoveryUrl: 'https://${location}.api.azureml.ms/discovery'
-    // most properties are not allowed for a project workspace: "Project workspace shouldn't define ..."
     hubResourceId: hub.id
   }
 }

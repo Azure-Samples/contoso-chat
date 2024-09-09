@@ -12,16 +12,22 @@ param keyVaultName string
 param storageAccountName string
 @description('The Open AI resource name.')
 param openAiName string
+@description('The Open AI connection name.')
+param openAiConnectionName string
 @description('The Open AI model deployments.')
 param openAiModelDeployments array = []
+@description('The Open AI content safety connection name.')
+param openAiContentSafetyConnectionName string
 @description('The Log Analytics resource name.')
 param logAnalyticsName string = ''
 @description('The Application Insights resource name.')
-param appInsightsName string = ''
+param applicationInsightsName string = ''
 @description('The Container Registry resource name.')
 param containerRegistryName string = ''
 @description('The Azure Search resource name.')
-param searchName string = ''
+param searchServiceName string = ''
+@description('The Azure Search connection name.')
+param searchConnectionName string = ''
 param tags object = {}
 
 module hubDependencies '../ai/hub-dependencies.bicep' = {
@@ -32,11 +38,11 @@ module hubDependencies '../ai/hub-dependencies.bicep' = {
     keyVaultName: keyVaultName
     storageAccountName: storageAccountName
     containerRegistryName: containerRegistryName
-    appInsightsName: appInsightsName
+    applicationInsightsName: applicationInsightsName
     logAnalyticsName: logAnalyticsName
     openAiName: openAiName
     openAiModelDeployments: openAiModelDeployments
-    searchName: searchName
+    searchServiceName: searchServiceName
   }
 }
 
@@ -50,9 +56,12 @@ module hub '../ai/hub.bicep' = {
     keyVaultId: hubDependencies.outputs.keyVaultId
     storageAccountId: hubDependencies.outputs.storageAccountId
     containerRegistryId: hubDependencies.outputs.containerRegistryId
-    appInsightsId: hubDependencies.outputs.appInsightsId
+    applicationInsightsId: hubDependencies.outputs.applicationInsightsId
     openAiName: hubDependencies.outputs.openAiName
-    aiSearchName: hubDependencies.outputs.searchName
+    openAiConnectionName: openAiConnectionName
+    openAiContentSafetyConnectionName: openAiContentSafetyConnectionName
+    aiSearchName: hubDependencies.outputs.searchServiceName
+    aiSearchConnectionName: searchConnectionName
   }
 }
 
@@ -85,7 +94,8 @@ output keyVaultName string = hubDependencies.outputs.keyVaultName
 output keyVaultEndpoint string = hubDependencies.outputs.keyVaultEndpoint
 
 // Application Insights
-output appInsightsName string = hubDependencies.outputs.appInsightsName
+output applicationInsightsName string = hubDependencies.outputs.applicationInsightsName
+output applicationInsightsConnectionString string = hubDependencies.outputs.applicationInsightsConnectionString
 output logAnalyticsWorkspaceName string = hubDependencies.outputs.logAnalyticsWorkspaceName
 
 // Container Registry
@@ -100,5 +110,5 @@ output openAiName string = hubDependencies.outputs.openAiName
 output openAiEndpoint string = hubDependencies.outputs.openAiEndpoint
 
 // Search
-output searchName string = hubDependencies.outputs.searchName
-output searchEndpoint string = hubDependencies.outputs.searchEndpoint
+output searchServiceName string = hubDependencies.outputs.searchServiceName
+output searchServiceEndpoint string = hubDependencies.outputs.searchServiceEndpoint

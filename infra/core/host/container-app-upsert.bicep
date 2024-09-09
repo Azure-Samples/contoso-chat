@@ -39,9 +39,6 @@ param daprEnabled bool = false
 @description('The Dapr app ID')
 param daprAppId string = containerName
 
-@description('Specifies if the resource already exists')
-param exists bool = false
-
 @description('Specifies if Ingress is enabled for the container app')
 param ingressEnabled bool = true
 
@@ -71,10 +68,6 @@ param serviceBinds array = []
 @description('The target port for the container')
 param targetPort int = 80
 
-resource existingApp 'Microsoft.App/containerApps@2023-05-02-preview' existing = if (exists) {
-  name: name
-}
-
 module app 'container-app.bicep' = {
   name: '${deployment().name}-update'
   params: {
@@ -98,7 +91,7 @@ module app 'container-app.bicep' = {
     secrets: secrets
     external: external
     env: env
-    imageName: !empty(imageName) ? imageName : exists ? existingApp.properties.template.containers[0].image : ''
+    imageName: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
     targetPort: targetPort
     serviceBinds: serviceBinds
   }

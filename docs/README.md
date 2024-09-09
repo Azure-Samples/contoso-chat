@@ -6,7 +6,7 @@ This document walks you through the steps needed to understand the application s
 
 ## 1. Application Scenario
 
-This sample teaches you how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI Studio with promptflow. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:
+This sample teaches you how to design, develop, evaluate, and deploy, a _retail copilot application_ using the Azure AI Studio with prompty. The application scenario focuses on a fictional retailer (Contoso Outdoor Company) that has a website where outdoor enthusiasts can purchase hiking and camping equipment as shown below. The company has two data sources:
 - A site product catalog (with indexes stored in Azure AI Search)
 - A customer orders database (with data stored in Azure Cosmos DB)
 
@@ -30,7 +30,7 @@ The Contoso Chat scenario extends this basic copilot implementation with **an ad
 
 ## 3. End-to-End Workflow
 
-The Contoso Chat application sample reflects the end-to-end developer workflow for building a generative AI application on the Azure AI platform. You'll go from from _prompt engineering_ (ideation using the RAG pattern with promptflow) to _LLM Ops_ (iterative evaluation for response quality, and deployment for operationalization) as shown below.
+The Contoso Chat application sample reflects the end-to-end developer workflow for building a generative AI application on the Azure AI platform. You'll go from from _prompt engineering_ (ideation using the RAG pattern with prompty) to _LLM Ops_ (iterative evaluation for response quality, and deployment for operationalization) as shown below.
 
 ![LLM Ops](./img/00-llmops-lifecycle.png)
 
@@ -38,7 +38,7 @@ The Contoso Chat application sample reflects the end-to-end developer workflow f
 
 The end-to-end developer experience is streamlined by the use of four core components in our developer platform:
 - **Azure AI Studio**: A unified platform for exploring AI models, managing AI application resources, and building AI projects. It supports both code-first (SDK) and low-code (UI) approaches for building generative AI applications end-to-end.
-- **Promptflow**: An open-source framework that simplifies the ideation and evaluation phases of this workflow with support for
+- **prompty**: An open-source framework that simplifies the ideation and evaluation phases of this workflow with support for
   - _prompty assets_ for simplifying your prompt engineering process
   - _dag-flow_ option for building applications as a directed acyclic graph
   - _flex-flow_ option (new) that supports more flexibility in tool integrations

@@ -1,3 +1,11 @@
+#!/usr/bin/env pwsh
+
+Write-Output  "Building contosochatapi:latest..."
+az acr build --subscription $env:AZURE_SUBSCRIPTION_ID --registry $env:AZURE_CONTAINER_REGISTRY_NAME --image contosochatapi:latest ./src/api/
+$image_name = $env:AZURE_CONTAINER_REGISTRY_NAME + '.azurecr.io/contosochatapi:latest'
+az containerapp update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --image $image_name
+az containerapp ingress update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:SERVICE_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --target-port 5000
+
 Write-Host "Starting postprovisioning..."
 
 # Retrieve service names, resource group name, and other values from environment variables
@@ -10,19 +18,19 @@ Write-Host "openAiService: $openAiService"
 $subscriptionId = $env:AZURE_SUBSCRIPTION_ID
 Write-Host "subscriptionId: $subscriptionId"
 
-$aiProjectName = $env:AZUREAI_PROJECT_NAME
-Write-Host "aiProjectName: $aiProjectName"
-
-$searchService = $env:AZURE_SEARCH_NAME
-Write-Host "searchService: $searchService"
-
 $cosmosService = $env:AZURE_COSMOS_NAME
-Write-Host "cosmosService: $cosmosService"
+Write-Host "cosmosServiceName: $cosmosService"
+
+$cosmosService = $env:COSMOS_ENDPOINT
+Write-Host "cosmosServiceEndpoint: $cosmosService"
+
+$azureSearchEndpoint = $env:AZURE_SEARCH_ENDPOINT
+Write-Host "azureSearchEndpoint: $azureSearchEndpoint"
 
 # Ensure all required environment variables are set
-if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($openAiService) -or [string]::IsNullOrEmpty($subscriptionId) -or [string]::IsNullOrEmpty($aiProjectName)) {
+if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($openAiService) -or [string]::IsNullOrEmpty($subscriptionId)) {
     Write-Host "One or more required environment variables are not set."
-    Write-Host "Ensure that AZURE_RESOURCE_GROUP, AZURE_OPENAI_NAME, AZURE_SUBSCRIPTION_ID, and AZUREAI_PROJECT_NAME are set."
+    Write-Host "Ensure that AZURE_RESOURCE_GROUP, AZURE_OPENAI_NAME, AZURE_SUBSCRIPTION_ID are set."
     exit 1
 }
 
@@ -37,7 +45,7 @@ azd env get-values > .env
 Write-Host "Script execution completed successfully."
 
 Write-Host 'Installing dependencies from "requirements.txt"'
-python -m pip install -r contoso_chat/requirements.txt > $null
+python -m pip install -r ./src/api/requirements.txt > $null
 
 # populate data
 Write-Host "Populating data ...."

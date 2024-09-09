@@ -1,6 +1,6 @@
 # Contoso Chat (v2)
 
-> This documentation reflects the version of Contoso Chat released at Microsoft Build 2024 with support for [_prompty_](https://microsoft.github.io/promptflow/tutorials/prompty-quickstart.html) for templating, [_flex-flow_](https://microsoft.github.io/promptflow/tutorials/flex-flow-quickstart.html) for development, and [_azd_](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/) for deployment. Refer to the [Contoso Chat v1](./README-v1.md) docs for the pre-Build version that used _dag-flow_ for development with _jnja_ templates.
+> This documentation reflects the version of Contoso Chat released at Microsoft Build 2024 with support for [_prompty_](https://microsoft.github.io/prompty/tutorials/prompty-quickstart.html) for templating, [_flex-flow_](https://microsoft.github.io/prompty/tutorials/flex-flow-quickstart.html) for development, and [_azd_](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/) for deployment. Refer to the [Contoso Chat v1](./README-v1.md) docs for the pre-Build version that used _dag-flow_ for development with _jnja_ templates.
 
 ## 1. Quickstart: Provision & Deploy
 
