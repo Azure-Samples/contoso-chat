@@ -1,7 +1,7 @@
 fastapi
 fastapi[standard]
 requests
-gunicorn==21.2.0
+gunicorn==22.0.0
 azure-cosmos
 azure-search-documents==11.4.0
 azure-keyvault-secrets
