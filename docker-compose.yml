@@ -1,0 +1,10 @@
+services:
+  api:
+    build:
+      context: src/api
+    ports:
+      - "5000:80"
+    env_file: 
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
