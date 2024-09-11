@@ -64,7 +64,7 @@ param useSearch bool = true
 var aiConfig = loadYamlContent('./ai.yaml')
 
 @description('The API version of the OpenAI resource')
-param openAiApiVersion string = ''
+param openAiApiVersion string = '2023-03-15-preview'
 
 @description('The type of the OpenAI resource')
 param openAiType string = 'azure'
@@ -76,7 +76,7 @@ param searchServiceName string = ''
 param cosmosAccountName string = ''
 
 @description('The name of the OpenAI embedding deployment')
-param openAiEmbeddingDeploymentName string = ''
+param openAiEmbeddingDeploymentName string = 'text-embedding-ada-002'
 
 @description('The name of the AI search index')
 param aiSearchIndexName string = 'contoso-products'
@@ -301,7 +301,7 @@ module userCosmosAccountRole 'core/security/role-cosmos.bicep' = if (!empty(prin
 output AZURE_LOCATION string = location
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
-output AZURE_OPENAI_DEPLOYMENT string = openAiDeploymentName
+output AZURE_OPENAI_CHAT_DEPLOYMENT string = openAiDeploymentName
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
 output AZURE_OPENAI_ENDPOINT string = ai.outputs.openAiEndpoint
 output AZURE_OPENAI_NAME string = ai.outputs.openAiName
