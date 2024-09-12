@@ -8,3 +8,4 @@ jsonlines
 prompty
 prompty[azure]
 nbconvert
+azure-core-tracing-opentelemetry

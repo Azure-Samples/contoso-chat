@@ -1,16 +1,15 @@
+import logging
 import os
 from pathlib import Path
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from prompty.tracer import trace
-from prompty.core import PromptyStream, AsyncPromptyStream
-from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry import metrics
 
 from contoso_chat.chat_request import get_response
+from telemetry import setup_telemetry
 
-base = Path(__file__).resolve().parent
 
 load_dotenv()
 
@@ -22,9 +21,12 @@ app_insights = os.getenv("APPINSIGHTS_CONNECTIONSTRING")
 if code_space: 
     origin_8000= f"https://{code_space}-8000.app.github.dev"
     origin_5173 = f"https://{code_space}-5173.app.github.dev"
-    ingestion_endpoint = app_insights.split(';')[1].split('=')[1]
+    origins = [origin_8000, origin_5173, os.getenv("API_SERVICE_ACA_URI"), os.getenv("WEB_SERVICE_ACA_URI")]
     
-    origins = [origin_8000, origin_5173, os.getenv("API_SERVICE_ACA_URI"), os.getenv("WEB_SERVICE_ACA_URI"), ingestion_endpoint]
+    if app_insights:
+        ingestion_endpoint = app_insights.split(';')[1].split('=')[1]
+        origins.append(ingestion_endpoint)
+    
 else:
     origins = [
         o.strip()
@@ -40,9 +42,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+setup_telemetry(app)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# sample metrics, this can be removed for something more meaningful later
+meter = metrics.get_meter_provider().get_meter("contoso-chat")
+root_counter = meter.create_counter("root-hits")
+
 
 @app.get("/")
 async def root():
+    root_counter.add(1)
+    logger.info("Hello from root endpoint")
     return {"message": "Hello World"}
 
 
@@ -51,6 +64,3 @@ async def root():
 def create_response(question: str, customer_id: str, chat_history: str) -> dict:
     result = get_response(customer_id, question, chat_history)
     return result
-
-# TODO: fix open telemetry so it doesn't slow app so much
-FastAPIInstrumentor.instrument_app(app)
