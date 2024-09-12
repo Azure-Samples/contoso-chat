@@ -68,7 +68,7 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: openAiEndpoint
       }
       {
-        name: 'AZURE_OPENAI_DEPLOYMENT'
+        name: 'AZURE_OPENAI_CHAT_DEPLOYMENT'
         value: openAiDeploymentName
       }
       {
