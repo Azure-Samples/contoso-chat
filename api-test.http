@@ -1,0 +1,2 @@
+
+post https://[CONTAINER_APP_URL]/api/create_response?customer_id=2&question=Tell%20me%20about%20hiking%20shoes&chat_history=[]
