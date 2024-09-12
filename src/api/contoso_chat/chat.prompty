@@ -3,6 +3,7 @@ name: Contoso Chat Prompt
 description: A retail assistent for Contoso Outdoors products retailer.
 authors:
   - Cassie Breviu
+  - Seth Juarez
 model:
   api: chat
   configuration:
