@@ -7,8 +7,8 @@ from prompty.tracer import trace
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
 
-from contoso_chat.chat_request import get_response
-from telemetry import setup_telemetry
+from .contoso_chat.chat_request import get_response
+from .telemetry import setup_telemetry
 
 
 load_dotenv()

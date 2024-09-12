@@ -22,7 +22,7 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 
 def setup_azure_monitor_exporters(conn_str: str):
-    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "contoso-chat-dev")
+    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "contoso-chat")
     resource = Resource(attributes={
         SERVICE_NAME: OTEL_SERVICE_NAME
     })
@@ -38,7 +38,7 @@ def setup_azure_monitor_exporters(conn_str: str):
     # Metrics
     exporter = AzureMonitorMetricExporter.from_connection_string(conn_str)
     reader = PeriodicExportingMetricReader(exporter,export_interval_millis=60000)
-    meter_provider = MeterProvider(metric_readers=[reader])
+    meter_provider = MeterProvider(metric_readers=[reader], resource=resource)
     metrics.set_meter_provider(meter_provider)
 
     # Logs
@@ -50,12 +50,47 @@ def setup_azure_monitor_exporters(conn_str: str):
     logging.getLogger().addHandler(handler)
 
 
+def setup_otlp_traces_exporter(endpoint: str):
+    from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+    from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
+    from opentelemetry.exporter.otlp.proto.grpc._log_exporter import OTLPLogExporter
+    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "contoso-chat-dev")
+    resource = Resource(attributes={
+        SERVICE_NAME: OTEL_SERVICE_NAME
+    })
+
+    # Traces
+    tracer_provider = TracerProvider(resource=resource)
+    trace.set_tracer_provider(tracer_provider)
+    processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint))
+    tracer_provider.add_span_processor(processor)
+
+    # Metrics
+    exporter = OTLPMetricExporter(endpoint=endpoint)
+    reader = PeriodicExportingMetricReader(exporter,export_interval_millis=60000)
+    meter_provider = MeterProvider(metric_readers=[reader], resource=resource)
+    metrics.set_meter_provider(meter_provider)
+
+    # Logs
+    logger_provider = LoggerProvider(resource=resource)
+    set_logger_provider(logger_provider)
+    exporter = OTLPLogExporter(endpoint=endpoint)
+    logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
+    handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
+    handler.setFormatter(logging.Formatter("Python: %(message)s"))
+    logging.getLogger().addHandler(handler)
+
+
 def setup_telemetry(app: FastAPI):
     settings.tracing_implementation = OpenTelemetrySpan
     app_insights_conn_str = os.getenv("APPINSIGHTS_CONNECTIONSTRING")
+    otel_exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+
     # Set up exporters
     if app_insights_conn_str:
         setup_azure_monitor_exporters(conn_str=app_insights_conn_str)
+    elif otel_exporter_endpoint:
+        setup_otlp_traces_exporter(endpoint=otel_exporter_endpoint)
 
     # Instrumentations
     FastAPIInstrumentor.instrument_app(app)
