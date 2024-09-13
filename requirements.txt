@@ -12,3 +12,4 @@ azure-core-tracing-opentelemetry
 opentelemetry-api
 opentelemetry-sdk
 opentelemetry-exporter-otlp-proto-grp
+Jinja2==3.1.4

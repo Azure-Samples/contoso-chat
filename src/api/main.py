@@ -18,15 +18,16 @@ app = FastAPI()
 code_space = os.getenv("CODESPACE_NAME")
 app_insights = os.getenv("APPINSIGHTS_CONNECTIONSTRING")
 
-if code_space: 
-    origin_8000= f"https://{code_space}-8000.app.github.dev"
+if code_space:
+    origin_8000 = f"https://{code_space}-8000.app.github.dev"
     origin_5173 = f"https://{code_space}-5173.app.github.dev"
-    origins = [origin_8000, origin_5173, os.getenv("API_SERVICE_ACA_URI"), os.getenv("WEB_SERVICE_ACA_URI")]
-    
+    origins = [origin_8000, origin_5173, os.getenv(
+        "API_SERVICE_ACA_URI"), os.getenv("WEB_SERVICE_ACA_URI")]
+
     if app_insights:
         ingestion_endpoint = app_insights.split(';')[1].split('=')[1]
         origins.append(ingestion_endpoint)
-    
+
 else:
     origins = [
         o.strip()
