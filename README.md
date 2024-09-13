@@ -84,7 +84,7 @@ This is also a **signature sample** for demonstrating new capabilities in the Az
 
 The Contoso Chat application implements a _retrieval augmented generation_ pattern to ground the model responses in your data. The architecture diagram below illustrates the key components and services used for implementation and highlights the use of [Azure Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/) to reduce developer complexity in managing sensitive credentials.
 
-![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aistudio.png)
+![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aca.png)
 
 ### Demo Video
 
