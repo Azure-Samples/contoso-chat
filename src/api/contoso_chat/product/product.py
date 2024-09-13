@@ -17,23 +17,30 @@ from azure.search.documents.models import (
 )
 from azure.core.credentials import AzureKeyCredential
 
+from azure.ai.inference import ChatCompletionsClient, EmbeddingsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.core.credentials import AzureKeyCredential
+from jinja2 import Template
+
+
 load_dotenv()
+
 
 @trace
 def generate_embeddings(queries: List[str]) -> str:
-    token_provider = get_bearer_token_provider(
-        DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+    endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
+    key = os.environ["AZUREAI_EMBEDDING_KEY"]
+    client = EmbeddingsClient(
+        endpoint=endpoint,
+        credential=AzureKeyCredential(""),  # Pass in an empty value.
+        headers={"api-key": key},
+        api_version="2023-05-15",
+        logging_enable=True,
     )
-
-    client = AzureOpenAI(
-        azure_endpoint = os.environ["AZURE_OPENAI_ENDPOINT"], 
-        api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-        azure_ad_token_provider=token_provider
-    )
-    print("client:", client)
-    embeddings = client.embeddings.create(input=queries, model="text-embedding-ada-002")
-    embs = [emb.embedding for emb in embeddings.data]
-    items = [{"item": queries[i], "embedding": embs[i]} for i in range(len(queries))]
+    response = client.embed(input=queries)
+    embs = [emb.embedding for emb in response.data]
+    items = [{"item": queries[i], "embedding": embs[i]}
+             for i in range(len(queries))]
 
     return items
 
@@ -72,7 +79,8 @@ def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
         ]
 
         # Remove duplicates
-        products.extend([i for i in docs if i["id"] not in [x["id"] for x in products]])
+        products.extend([i for i in docs if i["id"] not in [
+                        x["id"] for x in products]])
 
     return products
 
@@ -80,15 +88,49 @@ def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
 def find_products(context: str) -> Dict[str, any]:
     # Get product queries
     print("context:", context)
-    model_config = {
-        "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
-        "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
+
+    endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
+    key = os.environ["AZUREAI_ENDPOINT_KEY"]
+
+    client = ChatCompletionsClient(
+        endpoint=endpoint,
+        credential=AzureKeyCredential(""),  # Pass in an empty value.
+        headers={"api-key": key},
+        api_version="2023-03-15-preview",
+        logging_enable=True,
+    )
+
+    # Get the base directory (the directory of the current file)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the full path to the file
+    file_path = os.path.join(base_dir, 'product.txt')
+
+    # Open the file using the constructed path
+    with open(file_path, 'r') as file:
+        template_string = file.read()
+
+    # Step 3: Create a Jinja template object
+    template = Template(template_string)
+    template_input = {
+        "context": context
     }
-    queries = prompty.execute(
-        "product.prompty", 
-        configuration=model_config,
-        inputs={"context":context}
+
+    rendered_template = template.render(template_input)
+
+    try:
+        response = client.complete(
+            messages=[
+                SystemMessage(content=rendered_template),
+                UserMessage(content=context),
+            ]
         )
+
+        queries = response.choices[0].message.content
+
+    except Exception as e:
+        print(f"Error getting response: {e}")
+
     print("queries:", queries)
     qs = json.loads(queries)
     # Generate embeddings

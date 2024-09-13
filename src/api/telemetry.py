@@ -1,7 +1,6 @@
 import os
 import logging
 from azure.core.settings import settings
-from azure.core.tracing.ext.opentelemetry_span import OpenTelemetrySpan
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter, AzureMonitorMetricExporter, AzureMonitorLogExporter
 from fastapi import FastAPI
 from opentelemetry import metrics
@@ -37,7 +36,8 @@ def setup_azure_monitor_exporters(conn_str: str):
 
     # Metrics
     exporter = AzureMonitorMetricExporter.from_connection_string(conn_str)
-    reader = PeriodicExportingMetricReader(exporter,export_interval_millis=60000)
+    reader = PeriodicExportingMetricReader(
+        exporter, export_interval_millis=60000)
     meter_provider = MeterProvider(metric_readers=[reader], resource=resource)
     metrics.set_meter_provider(meter_provider)
 
@@ -45,8 +45,10 @@ def setup_azure_monitor_exporters(conn_str: str):
     logger_provider = LoggerProvider(resource=resource)
     set_logger_provider(logger_provider)
     exporter = AzureMonitorLogExporter.from_connection_string(conn_str)
-    logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter, schedule_delay_millis=60000))
-    handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
+    logger_provider.add_log_record_processor(
+        BatchLogRecordProcessor(exporter, schedule_delay_millis=60000))
+    handler = LoggingHandler(level=logging.NOTSET,
+                             logger_provider=logger_provider)
     logging.getLogger().addHandler(handler)
 
 
@@ -67,7 +69,8 @@ def setup_otlp_traces_exporter(endpoint: str):
 
     # Metrics
     exporter = OTLPMetricExporter(endpoint=endpoint)
-    reader = PeriodicExportingMetricReader(exporter,export_interval_millis=60000)
+    reader = PeriodicExportingMetricReader(
+        exporter, export_interval_millis=60000)
     meter_provider = MeterProvider(metric_readers=[reader], resource=resource)
     metrics.set_meter_provider(meter_provider)
 
@@ -76,13 +79,14 @@ def setup_otlp_traces_exporter(endpoint: str):
     set_logger_provider(logger_provider)
     exporter = OTLPLogExporter(endpoint=endpoint)
     logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
-    handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
+    handler = LoggingHandler(level=logging.NOTSET,
+                             logger_provider=logger_provider)
     handler.setFormatter(logging.Formatter("Python: %(message)s"))
     logging.getLogger().addHandler(handler)
 
 
 def setup_telemetry(app: FastAPI):
-    settings.tracing_implementation = OpenTelemetrySpan
+    settings.tracing_implementation = "OpenTelemetry"
     app_insights_conn_str = os.getenv("APPINSIGHTS_CONNECTIONSTRING")
     otel_exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
 
