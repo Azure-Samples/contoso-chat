@@ -1,19 +1,22 @@
 ---
-name: Contoso Chat Retail with Azure AI Studio and Prompty
-description: A retail copilot that answers customer queries with responses grounded in retailer's product and customer data.
+name: Contoso Chat - Retail RAG Copilot with Azure AI Studio and Prompty
+description: Build, evaluate, and deploy, a RAG-based retail copilot that responds to customer questions with responses grounded in retailer product and customer data.
 languages:
-- python
-- bicep
 - azdeveloper
+- python
+- bash
+- bicep
 - prompty
 products:
+- azure
 - azure-openai
 - azure-cognitive-search
-- azure
 - azure-cosmos-db
+- azure-container-apps
 page_type: sample
 urlFragment: contoso-chat
 ---
+<!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
 > [!WARNING]  
 > **This sample is being actively updated at present and make have breaking changes**. We are refactoring the code to use new Azure AI platform features and moving deployment from Azure AI Studio to Azure Container Apps. We will remove this notice once the migration is complete. Till then, please pause on submitting new issues as codebase is changing.
@@ -21,9 +24,18 @@ urlFragment: contoso-chat
 > **Some of the features used in this repository are in preview.** Preview versions are provided without a service level agreement, and they are not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/).**
 
 
-# Contoso Chat Retail with Azure AI Studio and Prompty
+# Contoso Chat: Retail RAG Copilot with Azure AI Studio and Prompty
 
 This sample creates a customer support chat agent for an online retailer called Contoso Outdoors. The solution uses a _retrieval-augmented generation pattern_ to ground responses in the company's product and customer data. Customers can ask questions about the retailer's product catalog, and also get recommendations based on their prior purchases.
+
+This sample illustrates the complete end-to-end process for creating a RAG-based copilot **code-first** with Azure AI Studio and Prompty. It includes application code for all three stages of the GenAIOps application lifecycle:
+- Ideation using Prompty assets and Azure OpenAI model deployments.
+- Evaluation using Prompty assets with custom evaluators and quality metrics.
+- Deployment using Azure Developer CLI with Azure Container Apps hosting.
+
+It also showcases observability (with tracing, monitoring and app insights) and automation with GitHub Actions (for evaluation and deployment) and responsible AI practices in the context of a real-world user scenario.
+
+
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
@@ -31,17 +43,6 @@ This sample creates a customer support chat agent for an online retailer called 
 ---
 
 # About This Sample
-
-In this sample we build, evaluate and deploy a customer support chat AI for Contoso Outdoors, a fictitious retailer who sells hiking and camping equipment. The implementation uses a Retrieval Augmented Generation (RAG) architecture to implement a retail copilot solution that responds to customer queries with answers grounded in the company's product catalog and customer purchase history.
-
-The sample uses [Azure AI Search](https://learn.microsoft.com/azure/search/) to create and manage search indexes for product catalog data, [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/) to store and manage customer purchase history data, and [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) to deploy and manage the core models required for our RAG-based architecture.
-
-By exploring and deploying this sample, you will learn to:
-- Build a retail copilot application using the [_RAG pattern_](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation).
-- Define and engineer prompts using the Prompty
-- Design, run & evaluate a copilot
-- Provision and deploy the solution to Azure using the [_Azure Developer CLI_](https://learn.microsoft.com/azure/developer/azure-developer-cli/).
-- Understand and apply Responsible AI practices like [_evaluation and content safety_](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext).
 
 ## Table of Contents
 
@@ -66,6 +67,14 @@ By exploring and deploying this sample, you will learn to:
 1. [Resources](#resources)
 1. [Contributing](#contributing)
 1. [Trademarks](#trademarks)
+
+
+By exploring and deploying this sample, you will learn to:
+- Build a retail copilot application using the [_RAG pattern_](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation).
+- Define and engineer prompts using the Prompty
+- Design, run & evaluate a copilot
+- Provision and deploy the solution to Azure using the [_Azure Developer CLI_](https://learn.microsoft.com/azure/developer/azure-developer-cli/).
+- Understand and apply Responsible AI practices like [_evaluation and content safety_](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext).
 
 
 ## Features
