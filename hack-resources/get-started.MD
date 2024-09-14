@@ -5,7 +5,7 @@
 
 1. Clone the repository to your local machine and create a your new working branch with "alias/feature"
 2. Open the project in VS Code and reopen the project in dev container. VS Code will ask for it 
-3. Copy the .env file to the root of the project
+3. Rename the file `.env.sample` to `.env` and update the values for the environment variables
 4. Run in VS Code Terminal 'pip install -r requirements.txt' this will install additional dependencies required for the project
 5. Az login in the terminal and select the subscription(ms-ignite-24)
 6. Add your account to cosmos DB built in role <br>
