@@ -9,6 +9,7 @@ from opentelemetry import metrics
 
 from .contoso_chat.chat_request import get_response
 from .telemetry import setup_telemetry
+from azure.core.tracing.decorator import distributed_trace
 
 
 load_dotenv()
@@ -61,7 +62,7 @@ async def root():
 
 
 @app.post("/api/create_response")
-@trace
+@distributed_trace(name_of_span="create_response")
 def create_response(question: str, customer_id: str, chat_history: str) -> dict:
     result = get_response(customer_id, question, chat_history)
     return result

@@ -12,20 +12,12 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
+from azure.core.tracing.decorator import distributed_trace
 
 
 load_dotenv()
 
 
-# add console and json tracer:
-# this only has to be done once
-# at application startup
-Tracer.add("console", console_tracer)
-json_tracer = PromptyTracer()
-Tracer.add("PromptyTracer", json_tracer.tracer)
-
-
-@trace
 def get_customer(customerId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
@@ -41,7 +33,6 @@ def get_customer(customerId: str) -> str:
         return None
 
 
-@trace
 def get_response(customerId, question, chat_history):
 
     endpoint = os.environ["AZUREAI_ENDPOINT_URL"]

@@ -21,12 +21,11 @@ from azure.ai.inference import ChatCompletionsClient, EmbeddingsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
-
+from azure.core.tracing.decorator import distributed_trace
 
 load_dotenv()
 
 
-@trace
 def generate_embeddings(queries: List[str]) -> str:
     endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
     key = os.environ["AZUREAI_EMBEDDING_KEY"]
@@ -45,7 +44,7 @@ def generate_embeddings(queries: List[str]) -> str:
     return items
 
 
-@trace
+@distributed_trace(name_of_span="retrieve_products")
 def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
     search_client = SearchClient(
         endpoint=os.environ["AZURE_SEARCH_ENDPOINT"],
