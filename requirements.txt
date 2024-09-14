@@ -8,8 +8,11 @@ jsonlines
 prompty
 prompty[azure]
 nbconvert
-azure-core-tracing-opentelemetry
-opentelemetry-api
-opentelemetry-sdk
-opentelemetry-exporter-otlp-proto-grp
 Jinja2==3.1.4
+azure-ai-inference
+opentelemetry-sdk 
+azure-monitor-opentelemetry
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation
+opentelemetry-exporter-otlp-proto-grpc
+./hack-resources/azure_core-1.31.0-py3-none-any.whl
