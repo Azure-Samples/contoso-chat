@@ -27,5 +27,6 @@
                 "humao.rest-client"
             ]
         }
-    }
+    },
+    "postStartCommand": "pip install -r ./src/api/requirements.txt"
 }
