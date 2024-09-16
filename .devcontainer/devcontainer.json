@@ -23,7 +23,8 @@
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "ms-azuretools.vscode-bicep",
-                "rogalmic.bash-debug"
+                "rogalmic.bash-debug",
+                "humao.rest-client"
             ]
         }
     }
