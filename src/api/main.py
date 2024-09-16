@@ -7,7 +7,7 @@ from prompty.tracer import trace
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
 
-from .contoso_chat.chat_request import get_response
+from .contoso_chat.chat_request import get_response, provide_feedback
 from .telemetry import setup_telemetry
 from azure.core.tracing.decorator import distributed_trace
 
@@ -65,4 +65,10 @@ async def root():
 @distributed_trace(name_of_span="create_response")
 def create_response(question: str, customer_id: str, chat_history: str) -> dict:
     result = get_response(customer_id, question, chat_history)
+    return result
+
+@app.post("/api/give_feedback")
+@distributed_trace(name_of_span="provide_feedback")
+def give_feedback(customer_id: str, responseId: str, feedback: str) -> dict:
+    result = provide_feedback(customer_id, responseId, feedback)
     return result

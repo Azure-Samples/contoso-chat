@@ -87,6 +87,8 @@ def get_response(customerId, question, chat_history):
 
     return {"question": question, "answer": response_content, "context": context}
 
+def provide_feedback(customerId, responseId, feedback): 
+    return {"customerId": customerId, "ResponseId": responseId, "Feedback": feedback}
 
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
