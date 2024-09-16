@@ -9,13 +9,14 @@ RUN sudo apt-get update && sudo apt-get install -y \
     pkg-config \
     libdbus-1-dev \
     libglib2.0-dev \
- && python -m pip install --upgrade pip \
- && sudo apt-get clean \
- && sudo rm -rf /var/lib/apt/lists/*
+    && python -m pip install --upgrade pip \
+    && sudo apt-get clean \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 # Copy requirements.txt and install the Python packages
 # Install keyring-related and IPython packages in the same layer to reduce the image size and build time
 COPY requirements.txt .
+COPY ./hack-resources/azure_core-1.31.0-py3-none-any.whl ./hack-resources/azure_core-1.31.0-py3-none-any.whl
 RUN pip install -r requirements.txt \
     && pip install keyrings.alt dbus-python ipython ipykernel
 
