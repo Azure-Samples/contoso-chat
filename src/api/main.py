@@ -1,16 +1,16 @@
 import logging
 import os
+
 from pathlib import Path
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from prompty.tracer import trace
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
+from pydantic import BaseModel
 
-from .contoso_chat.chat_request import get_response
-from .telemetry import setup_telemetry
+from contoso_chat.chat_request import get_response
+from telemetry import setup_telemetry
 from azure.core.tracing.decorator import distributed_trace
-
 
 load_dotenv()
 
@@ -53,6 +53,14 @@ logger.setLevel(logging.INFO)
 meter = metrics.get_meter_provider().get_meter("contoso-chat")
 root_counter = meter.create_counter("root-hits")
 
+# TODO Move ChatRequestModel to a separate file and figure out import issues.
+
+
+class ChatRequestModel(BaseModel):
+    question: str
+    customerId: str
+    chat_history: list[str]
+
 
 @app.get("/")
 async def root():
@@ -63,6 +71,6 @@ async def root():
 
 @app.post("/api/create_response")
 @distributed_trace(name_of_span="create_response")
-def create_response(question: str, customer_id: str, chat_history: str) -> dict:
-    result = get_response(customer_id, question, chat_history)
+def create_response(body: ChatRequestModel) -> dict:
+    result = get_response(body.customerId, body.question, body.chat_history)
     return result

@@ -1,2 +1,13 @@
+@Host=http://localhost:8000
 
-post http://localhost:8000/api/create_response?customer_id=2&question=Tell%20me%20about%20hiking%20shoes&chat_history=[]
+POST {{Host}}/api/create_response?customer_id=2&question=Tell%20me%20about%20hiking%20shoes&chat_history=[]
+
+###
+POST {{Host}}/api/create_response HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id": "2",
+    "question": "Tell me about hiking shoes",
+    "chat_history": []
+}
