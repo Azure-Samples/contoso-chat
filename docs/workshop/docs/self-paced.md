@@ -20,17 +20,20 @@ These are the instructions for a **self-guided** tour of the Contoso Chat sample
 Let's setup our development environment and kickstart the self-deployment process:
 
 
-??? note "Step 1: Launch GitHub Codespaces in tab 2️⃣"
+??? note "Step 0: Launch Browser, Fork Sample in tab 1️⃣ "
 
     1. Open a browser tab 1️⃣ 
     1. Navigate to ([Contoso Chat](https://aka.ms/aitour/contoso-chat)) sample
     1. Log into GitHub - use a personan login for optimal experience
     1. Fork the sample to your profile - uncheck `main` to get branches
+    1. ✅ | You forked the sample successfully!
+
+
+??? note "Step 1: Launch GitHub Codespaces in tab 2️⃣"
+
     1. Switch to `aitour-fy25` branch in your fork - click the **Code** button
     1. Select `Codespaces` tab - click `Create new codespaces on aitour-fy25`
-    
-    This should launch Codespaces in a new browser tab 2️⃣,
-
+    1. This will launch Codespaces in a new browser tab - tab 2️⃣,
     1. Verify that the tab shows a Visual Studio Code editor
     1. GitHub Codespaces is loading .. this will take a while.
     1. ✅ | Your Codespaces tab is live!
@@ -41,7 +44,7 @@ Let's setup our development environment and kickstart the self-deployment proces
     1. Open new browser tab 2️⃣
     1. Navigate to the [Azure Portal](https://portal.azure.com)
     1. Login with **your Azure username and password**
-    1. Click on `Resource Groups` - leave this open for later review.
+    1. Click on `Resource Groups` - leave this page open for now.
     1. ✅ | Your Azure Portal tab is live!
 
 ??? note "Step 4: View Azure AI Studio in tab 4️⃣"
@@ -49,13 +52,13 @@ Let's setup our development environment and kickstart the self-deployment proces
     1. Open new browser tab 4️⃣
     1. Navigate to the [Azure AI Studio](https://ai.azure.com)
     1. Click `Sign in` - should auto-login with prior Azure credentials
-    1. Click `All resources`  - leave this open for later review
+    1. Click `All resources`  - leave this page open for now.
     1. ✅ | Your Azure AI Project tab is live!
 
 ??? note "Step 5: Authenticate with Azure from tab 2️⃣"
 
     1. Return to GitHub Codespaces tab 2️⃣
-    1. Verify that terminal is visible and extensions installed
+    1. Verify that terminal is visible - and cursor is ready
     1. Authenticate with Azure CLI
         - `az login --use-device-code`
         -  follow instructions and complete auth workflow
@@ -68,13 +71,14 @@ Let's setup our development environment and kickstart the self-deployment proces
         - ✅ | You are logged into Azure Developer CLI
 
 ??? note "Step 6: Provision Azure with `azd` tab 2️⃣"
-    1. Stay in tab 2️⃣ - enter `azd up`
-    1. Enter a new environment name - use `AITOUR`
-    1. Select a subscription - pick the one from step 5.
-    1. Select a location - pick `francecentral` or `swedencentral`
-    1. You should see: _You can view detailed progress in the Azure Portal .._
-    1. When done you see: **SUCCESS: Your up workflow to provision and deploy to Azure completed in 16 minutes 35 seconds.**
-    1. ✅ | Your Azure infra is being provisioned ..
+    1. Stay in tab 2️⃣ - enter `azd up` and follow prompts
+        1. Enter a new environment name - use `AITOUR`
+        1. Select a subscription - pick the one from step 5.
+        1. Select a location - pick `francecentral` or `swedencentral`
+        1. You should see: _You can view detailed progress in the Azure Portal .._
+    1. Process can take 15-20 minutes - when complete, you should get this message:
+        1. **SUCCESS: Your up workflow to provision and deploy to Azure completed in 16 minutes 35 seconds.**
+    1. ✅ | Your Azure infra is currently being provisioned..
 
 ??? note "Step 7: Track provisioning status in tab 3️⃣"
     1. Switch to the Azure Portal in tab 3️⃣
@@ -84,7 +88,7 @@ Let's setup our development environment and kickstart the self-deployment proces
     1. Wait till all deployments complete - **this can take 20-25 minutes**
     1. See `Overview` page - **you should have 35 Deployment Items**
     1. See `Overview` page - **you should have 15 Deployed Resources**
-    1. ✅ | Your Azure infra and application are ready!
+    1. ✅ | Your Azure infra is ready and application is deployed!
 
 ??? note "Step 8: Validate Azure Cosmos DB is ready in tab 3️⃣"
     1. Switch to the Azure Portal tab 3️⃣ - `rg-AITOUR` resource Overview
@@ -115,7 +119,6 @@ Let's setup our development environment and kickstart the self-deployment proces
         - each has 3 model deployments - we care about three of these
             -gpt-35-turbo, gpt-4, text-embedding-ada-002
     1. ✅ | Your Azure AIProject resource is ready!
-
 
 ??? note "Step 11: Validate Azure Container Apps is ready in tab 3️⃣"
     1. Switch to the Azure Portal tab 3️⃣ - `rg-AITOUR` resource Overview
@@ -149,7 +152,7 @@ Let's setup our development environment and kickstart the self-deployment proces
     1. ✅ | Contoso Chat is deployed to ACA endpoint
 
 
-We can now get to work on exploring the codebase in 3 stages,
+We can now get to work on exploring the codebase and understanding how the application is architected, developed, evaluated, and deployed.
 
 
 ---
@@ -161,18 +164,19 @@ We can now get to work on exploring the codebase in 3 stages,
     - create an empty folder in root of repo (e.g., `sandbox`)
     - switch to that directory in terminal: `cd sandbox`
     - right click to create `New Prompty` - you see: `basic.prompty`
-    - run the prompty: you will be prompted to sign into Azure - do it.
-    - Result: **You should get an Error**
+    - run the prompty: you will be prompted to sign into Azure - complete auth flow.
+    - Result: **You should get an Error** since model configuration is invalid
         - ❌ | ` Error: 404 The API deployment for this resource does not exist.`
 
-??? success "Step 2: Update model configuration"
+??? info "Step 2: Update model configuration"
     - Copy the previous prompty to a new one: `cp basic.prompty chat-0.prompty`
     - Update this line as shown: `azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}`
     - Run the prompty - should run immediately.
     - Result: **You should get a valid response**
-        - ✅ | "[info] Hello Seth! I'd be happy to tell you about our tents ..."
+        - Example: "[info] Hello Seth! I'd be happy to tell you about our tents ..."
+    - ✅ | Your prompty model configuration is working
 
-??? success "Step 3: Update prompt template, add sample"
+??? info "Step 3: Update prompt template, add sample for testing"
     - Let's start refactoring the prompt in steps, till we get to the Contoso Chat version
     - First: `cp ../docs/workshop/src/chat-1.* .` to get the next iteration
         - `chat-1.prompty` has customized frontmatter and starter template for Contoso chat
@@ -181,38 +185,46 @@ We can now get to work on exploring the codebase in 3 stages,
         - You see: **valid response**
         - Try changing max_tokens to 3000 - what happens?
         - Try adding `Provide responses in a bullet list of items` to system - what happens?
+    - ✅ | Your prompty template is updated & uses sample test file
 
-??? success "Step 4: Update prompt template, add Safety"
+??? info "Step 4: Update prompt template, add Safety instructions"
 
-    - Next: `cp ../docs/workshop/src/chat-2.* .` to get the next iteration
-        - This adds: Safety section
-        - Run default prompt and sample: Works as expected
-        - Update sample; `cp ../docs/workshop/src/chat-2-jailbreak.json  chat-2.json`
-        - Run it - the new input tries to jailbreak the app. What happens?
-        - You should see: ` I'm sorry, but I'm not able to change my rules. My purpose is to assist you with questions related to Contoso Outdoors products. If you have any questions about our products or services, feel free to ask! 😊`
+    - Let's add a `Safety` guidance section
+    - Run: `cp ../docs/workshop/src/chat-2.* .` to get version with Safety
+        - Run default prompt and safe sample: Works as expected
+        - Update to jailbreak sample; `cp ../docs/workshop/src/chat-2-jailbreak.json  chat-2.json`
+        - Run it - the new input tries to jailbreak the app. 
+        - What happens? You should see: 
+            - ` I'm sorry, but I'm not able to change my rules. My purpose is to assist you with questions related to Contoso Outdoors products. If you have any questions about our products or services, feel free to ask! 😊`
+    - ✅ | Your prompty now has Safety guidance built-in
 
-??? success "Step 5: Update prompt template, run as code"
-    - Update sample; `cp ../docs/workshop/src/chat-3* .`
+??? info "Step 5: Update prompt template, run with Python code"
+    - Let's run the Prompty asset from Python code.
+    - Copy these files; `cp ../docs/workshop/src/chat-3* .`
     - Right-click on the `chat-3.prompty` file: select `Add Prompty Code`
-    - You should see `chat-3.py` - open it and add these lines at the top
+    - It creates: `chat-3.py` - open it and add these lines at the top
         ```python
         ## Load environment variables
         from dotenv import load_dotenv
         load_dotenv()
         ```
-    - Run it from within file by clicking the play icon.
-    - you should see: valid result
+    - Run the file by clicking the play icon. You should see a valid result.
 
-You've learned how to explore prompt engineering iteratively with Prompty. Note that the `chat-3.prompty` file is getting closer to the `contoso_chat/chat.prompty` file. 
+??? success "Congratulations 🎉 - You learned prompt engineering with Prompty!"
 
- - Try thinking about what other changes you can make and iterate as time permits. 
- - Delete your `sandbox/` folder when done, to keep original app source in focus
+    - First, create a base prompt and configure the model, parameters
+    - Next, modify frontmatter to personalize usage, define inputs & test sample
+    - Then, modify body to reflect system context, instructions and template structure
+    - Last, create code to run Prompty from command-line or in automated workflows
+
+
+    Iterate and explore changes and their impact on prompt response quality & cost. With each iteration, you should get closer to the `contoso_chat/chat.prompty` final version. Delete your `sandbox/` folder when done, to keep original app source in focus
 
 ---
 
 ## 3. Evaluation With AI Assistance
 
-??? success "Step 1: Understand custom Prompty Evaluators"
+??? info "Step 1: Understand custom Prompty Evaluators"
 
     - Switch to `src/api/evaluators/custom_evals`
     - You should see 4 prompty files. Open each in order, and run them
@@ -241,7 +253,7 @@ You've learned how to explore prompt engineering iteratively with Prompty. Note 
         - Relevance = does answer address the main elements of question
     - **Take a minute to open each prompty and understand the template setup.**
 
-??? success "Step 2: Run AI-Assisted Evaluation Flow"
+??? info "Step 2: Execute AI-Assisted Evaluation"
     - Click on `src/api/evaluate-chat-flow.ipynb`
     - You should see: a Jupyter notebook
         - `pip install tabulate` if not already installed
@@ -253,7 +265,7 @@ You've learned how to explore prompt engineering iteratively with Prompty. Note 
         - **Evaluated Results** = `result_evaluated.jsonl`
         - **Evaliation Summary** = computed from `eval_results.jsonl`
 
-??? success "Step 3: Explore AI-Assisted Evaluation Flow"
+??? info "Step 3: Understand Evaluation Workflow"
 
     - Walk through the steps in the notebook
         - Load test data - from JSONL file
@@ -268,13 +280,14 @@ You've learned how to explore prompt engineering iteratively with Prompty. Note 
         - Modify a custom evaluator prompty - change how it scores that criteria
         - Modify data.jsonl - add new test prompts to evaluate for edge cases
 
-??? success "Step 4: Understand observability and tracing (optional)"
+??? info "Step 4: Understand Observability with Tracer (optional)"
 
     - Revisit the `contoso_chat/chat_request.py` and `evaluators/coherence.py` files
     - Explain the `PromptyTracer` and `@trace` decoration features
     - Look for the `src/api/.runs` folder and click on a `.tracy` file
     - Explore the traces to understand the telemetry captured for debugging
 
+??? success "Congratulations 🎉 - You used AI-Assisted Evaluation with custom evaluators!"
 
 ---
 
@@ -285,16 +298,17 @@ You've learned how to explore prompt engineering iteratively with Prompty. Note 
     - The Contoso Chat app is deployed as an Azure Container App (shown prior)
     - It is implemented as a FASTAPI endpoint with two routes ("/" and "/api/create_response")
     - View the `src/api/main.py` to learn about the parameters expected by the latter
-
+    - View the `src/api/product/product.py` to see information retrieval for RAG pattern usage
+    - View the `src/api/contoso_chat/chat_request.py` to see main chat AI workflow orchestration
 
 ??? success "Step 2: Test Endpoint Locally"
 
     1. Let's run the server locally, for testing:
-        - go to the root of your repo
-        - use this command: `fastapi dev src/api/main.py`
-        - you should see popup dialog - click "Open in Browser"
-        - you should see: 
-    1. Add a `/docs` suffix to that path - you should see: **FastAPI** page
+        - change directories to the root of your repo
+        - run this command: `fastapi dev src/api/main.py`
+        - you should see a popup dialog - click "Open in Browser"
+        - you should see: the default "Hello World" page (route=`/`)
+    1. Add a `/docs` suffix to page URL - you should see: **FastAPI** page
     1. Expand the `POST` section by clicking the arrow
         - click `Try it out` to make inputs editable
         - enter `Tell me about your tents` for **question**
@@ -315,11 +329,13 @@ You've learned how to explore prompt engineering iteratively with Prompty. Note 
 
 ## 5. Wrap-up and shut down
 
-??? info "End the Skillable Session"
+??? danger "Don't Forget - End the Skillable Session"
 
     Visit the Skillable launch page and click `End Session` to end the session and release all resources. This allows the lab to be run again without quota issues for others.
 
 
-??? info "Stop Your Codespaces"
+??? danger "Don't Forget - Stop Your Codespaces"
 
     Visit [https://github.com/codespaces](https://github.com/codespaces) - locate the Codespaces instance you are currently running, and stop or delete it to prevent continued usage of the storage or processing quotas.
+
+??? success "Congratulations 🎉 - you provisioned, built, evaluated, and deployed, a retail RAG copilot!"
