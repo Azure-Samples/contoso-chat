@@ -122,6 +122,7 @@ From a tooling perspective, familiarity with the following is useful:
  - Python and Jupyter Notebooks
  - Azure CLI, Azure Developer CLI and commandline usage
 
+
 ## Getting Started
 
 You have three options for setting up your development environment:
@@ -183,7 +184,8 @@ Once you have set up the development environment, it's time to get started with 
 
 Regardless of the setup route you chose, you should at this point have a _Visual Studio Code_ IDE running, with the required tools and package dependencies met in the associated dev environment.
 
-### Authenticate With Azure
+<details>
+<summary> 1️⃣ | Authenticate With Azure </summary>
 
 1. Open a VS Code terminal and authenticate with Azure CLI. Use the `--use-device-code` option if authenticating from GitHub Codespaces. Complete the auth workflow as guided.
 
@@ -195,7 +197,10 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     ```bash
     azd auth login
     ```
-### Provision-Deploy with AZD
+</details>
+
+<details>
+<summary> 2️⃣ |  Provision-Deploy with AZD </summary>
 
 1. Run `azd up` to provision infrastructure _and_ deploy the application, with one command. (You can also use `azd provision`, `azd deploy` separately if needed)
 
@@ -207,8 +212,10 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     - The location should be `swedencentral` or `francecentral` for model quota
     - The subscription should be an active subscription meeting pre-requistes
 1. The `azd up` command can take 15-20 minutes to complete. Successful completion sees a **`SUCCESS: ...`** messages posted to the console. We can now validate the outcomes.
+</details>
 
-### Validate the Infrastructure
+<details>
+<summary> 3️⃣ | Validate the Infrastructure </summary>
 
 1. Visit the [Azure Portal](https://portal.azure.con) - look for the `rg-ENVNAME` resource group created above
 1. Click the `Deployments` link in the **Essentials** section - wait till all are completed.
@@ -228,8 +235,11 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     - Click the hub resource - you should see an `AI Project` resource listed
     - Click the project resource - look at Deployments page to verify models
 1. ✅ | **Congratulations!** - Your Azure project infrastructure is ready!
+</details>
 
-### Validate the Deployment
+
+<details>
+<summary> 4️⃣ | Validate the Deployment </summary>
 
 1. The `azd up` process also deploys the application as an Azure Container App
 1. Visit the ACA resource page - click on `Application Url` to view endpoint
@@ -241,13 +251,15 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     - Click **Execute** to see results: _You should see a valid response with a list of matching tents from the product catalog with additional details_.
 1. ✅ | **Congratulations!** - Your Chat AI Deployment is working! 
 
+</details>
+
 ## Testing
 
-There are two kinds of _testing_ we need to think about, when assessing the quality and safety of our generative AI applications.
-1. Interactive testing - typically testing manually with a single prompt.
-1. Evaluation flow - typically testing with a dataset of test prompts.
+We can think about two levels of testing - _manual_ validation and _automated_ evaluation. The first is interactive, using a single test prompt to validate the prototype as we iterate. The second is code-driven, using a test prompt dataset to assess quality and safety of prototype responses for a diverse set of prompt inputs - and score them for criteria like _coherence_, _fluency_, _relevance_ and _groundedness_ based on built-in or custom evaluators.
 
-### Interactive Testing
+<details>
+<summary> 1️⃣ | Manual Testing (interactive) </summary>
+<br/>
 
 The Contoso Chat application is implemented as a _FastAPI_ application that can be deployed to a hosted endpoint in Azure Container Apps. The API implementation is defined in `src/api/main.py` and currently exposes 2 routes:
  - `/` - which shows the default "Hello World" message
@@ -269,7 +281,11 @@ To test locally, we run the FastAPI dev server, then use the Swagger endpoint at
     - Click **Execute** to see results: _You should see a valid response with a list of matching tents from the product catalog with additional details_.
 1. ✅ | **Congratulations!** - You successfully tested the app locally
 
-### Evaluation
+</details>
+
+<details>
+<summary> 2️⃣ | AI-Assisted Evaluation (code-driven) </summary>
+<br/>
 
 Testing a single prompt is good for rapid prototyping and ideation. But once we have our application designed, we want to validate the _quality and safety_ of responses against diverse test prompts. The sample shows you how to do **AI-Assisted Evaluation** using custom evaluators implemented with Prompty.
 
@@ -285,11 +301,11 @@ Want to get a better understanding of how custom evaluators work? Check out the 
 
 The Prompty tooling also has support for built-in _tracing_ for observability. Look for a `.runs/` subfolder to be created during the evaluation run, with `.tracy` files containing the trace data. Click one of them to get a _trace-view_ display in Visual Studio Code to help you drill down or debug the interaction flow. _This is a new feature so look for more updates in usage soon_.
 
+</details>
+
 ## Deployment
 
-As mentioned, the solution is deployed using `azd up` which effectively calls `azd provision` and then `azd deploy`. The deployment to ACA happens as part of the `post-provisioning` script at present. _Look for some refactoring of this approach in the near future_. 
-
-To deploy changes, simply re-run `azd up` from the command-line and it should detect and re-run only the sections that are impacted by the changes.
+The solution is deployed using the Azure Developer CLI. The `azd up` command effectively calls `azd provision` and then `azd deploy` - allowing you to provision infrastructure and deploy the application with a single command. Subsequent calls to `azd up` (e.g., ,after making changes to the application) should be faster, re-deploying the application and updating infrastructure provisioning only if required. You can then test the deployed endpoint as described earlier.
 
 ## Costs
 
