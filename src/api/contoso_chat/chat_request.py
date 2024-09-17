@@ -1,9 +1,4 @@
-from prompty.tracer import trace, Tracer, console_tracer, PromptyTracer
-import prompty.azure
-import prompty
 from azure.identity import DefaultAzureCredential
-from .product import product
-import pathlib
 import os
 from sys import argv
 from azure.cosmos import CosmosClient
@@ -12,11 +7,14 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
-from azure.core.tracing.decorator import distributed_trace
+from opentelemetry import trace
+
+from .product import product
 
 
 load_dotenv()
 
+tracer = trace.get_tracer("contoso.chat.products")
 
 def get_customer(customerId: str) -> str:
     try:
@@ -73,12 +71,13 @@ def get_response(customerId, question, chat_history):
     rendered_template = template.render(template_input)
 
     try:
-        response = client.complete(
-            messages=[
-                SystemMessage(content=rendered_template),
-                UserMessage(content=question),
-            ]
-        )
+        with tracer.start_as_current_span("llm", attributes={"task": "get_response"}):
+            response = client.complete(
+                messages=[
+                    SystemMessage(content=rendered_template),
+                    UserMessage(content=question),
+                ]
+            )
 
         response_content = response.choices[0].message.content
 

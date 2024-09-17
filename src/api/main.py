@@ -1,16 +1,15 @@
 import logging
 import os
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from dotenv import load_dotenv
-from prompty.tracer import trace
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
+from opentelemetry import trace
 
 from .contoso_chat.chat_request import get_response
 from .telemetry import setup_telemetry
 from azure.core.tracing.decorator import distributed_trace
-
 
 load_dotenv()
 
@@ -53,6 +52,7 @@ logger.setLevel(logging.INFO)
 meter = metrics.get_meter_provider().get_meter("contoso-chat")
 root_counter = meter.create_counter("root-hits")
 
+tracer = trace.get_tracer("contoso.chat.main")
 
 @app.get("/")
 async def root():
@@ -62,7 +62,11 @@ async def root():
 
 
 @app.post("/api/create_response")
-@distributed_trace(name_of_span="create_response")
-def create_response(question: str, customer_id: str, chat_history: str) -> dict:
+@tracer.start_as_current_span("create_response")
+def create_response(question: str, customer_id: str, chat_history: str, request: Request) -> dict:
+    session_id = request.cookies.get('sessionid')
+    if session_id:
+        span = trace.get_current_span()
+        span.set_attribute("session.id", session_id)
     result = get_response(customer_id, question, chat_history)
     return result
