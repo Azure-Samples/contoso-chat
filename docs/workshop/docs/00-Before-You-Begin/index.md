@@ -39,7 +39,7 @@ Offered as instructor-led sessions on the [Microsoft AI Tour](https://aka.ms/ait
 - [X] The infrastructure will be pre-provisioned for you to save you time (just launch lab VM)
 - [X] You will have a fixed time (**75 minutes**) to complete the workshop (in venue)
 
-    !!! info "Start Here: 01 | Tour Guided: Setup → [1️⃣ | Getting Started](./../01%20|%20Tour%20Guided%20:%20Setup/01-setup.md)"
+    !!! info "Start Here: 01 | Tour Guided: Setup → [1️⃣ | Getting Started](./../01-Tour-Guide-Setup/01-setup.md)"
 
 ## Self-Guided Version
 
@@ -49,4 +49,4 @@ Work through the instructions on your own
 - [X] You will provision Azure infrastructure and deploy the application yourself. 
 - [X] You can work at your own pace and explore todebase with no time constraints.
 
-    !!! info "Start Here: 02 | Self Guided: Setup → [1️⃣ | Getting Started](./../02%20|%20Self%20Guided%20:%20Setup/01-setup.md)"
+    !!! info "Start Here: 02 | Self Guided: Setup → [1️⃣ | Getting Started](./../02-Self-Guide-Setup/01-setup.md)"

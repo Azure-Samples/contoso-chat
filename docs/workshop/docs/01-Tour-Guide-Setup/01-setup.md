@@ -6,7 +6,7 @@ Thie instructions are for participants of the instructor-led **"WRK550: Build a 
 - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
 - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
 
-!!! info "First → Review [ 0️⃣ | Pre-requisites](./../00%20|%20Before%20You%20Begin/index.md) before you begin setup"
+!!! info "First → Review [ 0️⃣ | Pre-requisites](./../00-Before-You-Begin/index.md) before you begin setup"
 
 ## 1. Launch Skillable Lab
 
