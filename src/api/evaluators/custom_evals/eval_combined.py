@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import prompty
 import prompty.azure
 import logging
-
+import sys
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -18,6 +18,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 load_dotenv()
 
 
+# required environment variables
+required_openai_env_vars = ["AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_VERSION"]
+missing_vars = [var for var in required_openai_env_vars if var not in os.environ]
+
+if missing_vars:
+    print(f"Error: The following required environment variables are not set: {', '.join(missing_vars)}")
+    print("Please set these variables before running the script.")
+    sys.exit(1)
 
 # Configuration for the Azure OpenAI endpoint
 model_config = {
@@ -37,7 +45,6 @@ def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> L
     Extracts data from Azure Application Insights for multiple interactions.
 
     Args:
-        workspace_id (str): The workspace ID to query.
         timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
         take_count (int, optional): Number of interactions to retrieve. Defaults to 5.
 
@@ -45,10 +52,6 @@ def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> L
         List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
     try:
-        # Authenticate using DefaultAzureCredential
-        credential = DefaultAzureCredential()
-        client = LogsQueryClient(credential)
-
         # Define the query to get the last 'take_count' interactions
         query_dependencies = f"""
         AppDependencies
@@ -58,7 +61,7 @@ def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> L
         | project OperationId, Id
         """
 
-        response = client.query_workspace(workspace_id, query_dependencies, timespan=timedelta(days=timespan_days))
+        response = logs_client.query_workspace(workspace_id, query_dependencies, timespan=timedelta(days=timespan_days))
         if response.status != LogsQueryStatus.SUCCESS:
             error = response.partial_error
             logging.error(f"Initial query failed: {error}")
@@ -87,7 +90,7 @@ def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> L
                 | project OperationId, Id, Properties["gen_ai.response.id"]
                 """
 
-                response2 = client.query_workspace(workspace_id, query_response_ids, timespan=timedelta(days=timespan_days))
+                response2 = logs_client.query_workspace(workspace_id, query_response_ids, timespan=timedelta(days=timespan_days))
                 if response2.status != LogsQueryStatus.SUCCESS:
                     error = response2.partial_error
                     logging.error(f"Query for response IDs failed for dependency {dependency_id}: {error}")
@@ -111,7 +114,7 @@ def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> L
                 | where ParentId == "{operation_id}"
                 """
 
-                response3 = client.query_workspace(workspace_id, query_traces, timespan=timedelta(days=timespan_days))
+                response3 = logs_client.query_workspace(workspace_id, query_traces, timespan=timedelta(days=timespan_days))
                 if response3.status != LogsQueryStatus.SUCCESS:
                     error = response3.partial_error
                     logging.error(f"Query for traces failed for operation {operation_id}: {error}")
@@ -320,11 +323,11 @@ def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool =
 if __name__ == "__main__":
 
     groundedness_eval = True
-    coherence_eval = True
-    relevance_eval = True
+    coherence_eval = False
+    relevance_eval = False
 
     timespan_days =2 # number of days you want to select for queries
-    take_count =5 # number of interactions you want to evaluate
+    take_count =2 # number of interactions you want to evaluate
     
     results = evaluation_run(timespan_days,take_count, 
     groundedness_eval, coherence_eval, relevance_eval)
