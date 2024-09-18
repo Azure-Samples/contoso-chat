@@ -70,8 +70,8 @@ COSMOSDB_RESOURCE_ID=
 
 # Cosmos DB Built-in Data Contributor - grant access to specific db
 az cosmosdb sql role assignment create \
-        --account-name "cosmos-contoso-xxxx" \
-        --resource-group "rg-AITOUR" \
+        --account-name "${COSMOSDB_NAME}" \
+        --resource-group "${AZURE_OPENAI_RESOURCE_GROUP}" \
         --role-definition-name "Cosmos DB Built-in Data Contributor" \
         --scope "/dbs/contoso-outdoor/colls/customers" \
         --principal-id "${PRINCIPAL_ID}"

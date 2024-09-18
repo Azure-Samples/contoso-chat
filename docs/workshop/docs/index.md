@@ -3,9 +3,9 @@
 This website contains the step-by-step instructions for a hands-on workshop that teaches you how to **build, evaluate, and deploy, a retail copilot code-first on Azure AI**. 
 
 - The solution uses the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) to ground chat AI responses in the retailer's product catalog and cusomer data.
-- The implementation uses the [Prompty](https://prompty.ai) asset and tooling, with the [Azure AI Studio](https://ai.azure.com) platform for streamlining the end-to-end developer workflow.
+- The implementation uses [Prompty](https://prompty.ai) for ideation, [Azure AI Studio](https://ai.azure.com) as the underlying platform for GenAIOps, and [Azure Container Apps](https://aka.ms/azcontainerapps) for hosting the deployed copilot.
 
-In this section, we briefly discuss the application scenario, the Retrieval Augmented Generation (RAG) pattern, and the application architecture used for this implementation.
+This section introduces you to the application scenario (retail copilot), briefly reviews the Retrieval Augmented Generation (RAG) design pattern implemented, and illustrates the Azure AI application architecture used for solution deployment - with a link to resources for the key developer tools and services used.
 
 ---
 
@@ -36,19 +36,28 @@ Many foundation models are trained on massive quantities of public data, giving 
 
 Implementing this design pattern requires:
 
- - an information retrieval service (data indexing, similarity search, semantic ranking)
- - a data container service (databases) for storing raw data
- - model deployments (for chat, embeddings - and AI-assisted evaluation)
- - copilot hosting (for real-world access to deployed endpoint)
+ - an **information retrieval** service (data indexing, similarity search, semantic ranking)
+ - a **database** service for storing other data (customer orders)
+ - a **model deployments** capability (for chat, embeddings - and AI-assisted evaluation)
+ - a **copilot hosting** capability (for real-world access to deployed endpoint)
 
 The figure below shows the Azure application architecture for the Contoso Chat Retail Copilot, showcasing these elements. The copilot is deployed to Azure Container Apps, providing a hosted API endpoint for client integration. Requests to that endpoint are processed with:
 
- - Azure OpenAI Services - provides model deployments for chat and text embeddings
- - Azure CosmosDB - stores the customer order data (JSON) in a noSQL database
- - Azure AI Search - indexes the product catalog with search-retrieval capability. 
+ - **Azure OpenAI Services**  - provides model deployments for chat and text embeddings
+ - **Azure CosmosDB**  - stores the customer order data (JSON) in a noSQL database
+ - **Azure AI Search**  - indexes the product catalog with search-retrieval capability. 
 
 ![ACA Architecture](./img/aca-architecture.png)
 
-The _orchestration_ of RAG workflow steps is achieved using [Prompty](https://prompty.ai) assets configured with relevant Azure OpenAI models and executed code-first with a relevant runtime (here, Python). The solution supports _multi-turn conversations_ and _responsible AI_ practices, to deliver responses that meet desired quality and safety standards.
+The _orchestration_ of RAG workflow steps is achieved using **Prompty** assets configured with relevant Azure OpenAI models and executed in a Prompty runtime (Python). This solution can support _multi-turn conversations_ and illustrates usage of _responsible AI_ practices (i.e., evaluation, content safety) to deliver responses that meet desired quality and safety standards.
+
+## 4. Related Resources
+
+1. **Prompty** | [Documentation](https://prompty.ai) · [Specification](https://github.com/microsoft/prompty/blob/main/Prompty.yaml)  · [Tooling](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.prompty) · [SDK](https://pypi.org/project/prompty/)
+1. **Azure AI Studio**  | [Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/)  · [Architecture](https://learn.microsoft.com/azure/ai-studio/concepts/architecture) · [SDKs](https://learn.microsoft.com/azure/ai-studio/how-to/develop/sdk-overview) ·  [Evaluation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+1. **Azure AI Search** | [Documentation](https://learn.microsoft.com/azure/search/)  · [Semantic Ranking](https://learn.microsoft.com/azure/search/semantic-search-overview) 
+1. **Azure Container Apps**  | [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/)  · [Deploy from code](https://learn.microsoft.com/en-us/azure/container-apps/quickstart-repo-to-cloud?tabs=bash%2Ccsharp&pivots=with-dockerfile)
+1. **Responsible AI**  | [Overview](https://www.microsoft.com/ai/responsible-ai)  · [With AI Services](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext)  · [Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/)
+
 
 ---
