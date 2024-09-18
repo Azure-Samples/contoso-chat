@@ -14,7 +14,7 @@ import sys
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
 # required environment variables
 required_openai_env_vars = ["AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_VERSION"]
@@ -66,12 +66,12 @@ def execute_query(query, timespan_days):
         logging.error(f"Error in execute_query: {e}")
         return None
 
-def get_interactions(timespan_days, take_count):
+def get_interactions(timespan_days, batch_size):
     query = f"""
     AppDependencies
     | where Properties["task"] == "get_response"
     | order by TimeGenerated desc
-    | take {take_count}
+    | take {batch_size}
     | project OperationId, Id
     """
     return execute_query(query, timespan_days)
@@ -188,20 +188,20 @@ def process_dependency(dependency_row, dependency_columns, timespan_days):
 
 
 
-def extract_app_insights_data(timespan_days: int = 2, take_count: int = 5) -> List[Dict[str, Any]]:
+def extract_app_insights_data(timespan_days: int = 2, batch_size: int = 5) -> List[Dict[str, Any]]:
 
     """
     Extracts data from Azure Application Insights for multiple interactions.
 
     Args:
         timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
-        take_count (int, optional): Number of interactions to retrieve. Defaults to 5.
+        batch_size (int, optional): Number of interactions to retrieve. Defaults to 5.
 
     Returns:
         List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
     try:
-        dependencies_table = get_interactions(timespan_days, take_count)
+        dependencies_table = get_interactions(timespan_days, batch_size)
         
         if dependencies_table is None:
             logging.error("No data returned from get_interactions")
@@ -314,7 +314,7 @@ def relevance_evaluation(question: str, context: str, answer: str) -> str:
 
 
 
-def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool = True, 
+def evaluation_run(timespan_days: int, batch_size:int, groundedness_eval: bool = True, 
      coherence_eval: bool = True, relevance_eval: bool = True) -> str:
     
     """
@@ -322,7 +322,7 @@ def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool =
 
     Args:
         timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
-        take_count (int, optional): Number of interactions to retrieve. Defaults to 5.
+        batch_size (int, optional): Number of interactions to retrieve. Defaults to 5.
 
     Returns:
         str: A JSON string containing a list of dictionaries with the evaluation results.
@@ -331,7 +331,7 @@ def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool =
     results = []  # Initialize a list to store results for all IDs
 
     try:
-        app_insights_data = extract_app_insights_data(timespan_days, take_count)
+        app_insights_data = extract_app_insights_data(timespan_days, batch_size)
         
         logging.info(f"Extracted {len(app_insights_data)} interactions from App Insights.")
 
@@ -350,19 +350,19 @@ def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool =
                 # Perform evaluations
                 if groundedness_eval:
                     groundedness_result = groundedness_evaluation(question, context, answer)
-                    result["groundedness_result"] = groundedness_result
+                    result["groundedness"] = groundedness_result
                     logging.info("Groundedness Evaluation:")
                     logging.info(groundedness_result)
 
                 if coherence_eval:
                     coherence_result = coherence_evaluation(question, context, answer)
-                    result["coherence_result"] = coherence_result
+                    result["coherence"] = coherence_result
                     logging.info("Coherence Evaluation:")
                     logging.info(coherence_result)
 
                 if relevance_eval:
                     relevance_result = relevance_evaluation(question, context, answer)
-                    result["relevance_result"] = relevance_result
+                    result["relevance"] = relevance_result
                     logging.info("Relevance Evaluation:")
                     logging.info(relevance_result)
 
@@ -387,9 +387,9 @@ if __name__ == "__main__":
     relevance_eval = True
 
     timespan_days =2 # number of days you want to select for queries
-    take_count =4 # number of interactions you want to evaluate
+    batch_size = 4# number of interactions you want to evaluate
     
-    results = evaluation_run(timespan_days,take_count, 
+    results = evaluation_run(timespan_days,batch_size, 
     groundedness_eval, coherence_eval, relevance_eval)
 
     print(results)
