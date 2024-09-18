@@ -122,7 +122,6 @@ export const sendVisualMessage = async (
   const newTurn: ChatTurn = {
     name: "Jane Doe",
     message: data["answer"],
-    // TODO: use chat history
     chat_history: body.chat_history,
     status: "done",
     type: "assistant",
