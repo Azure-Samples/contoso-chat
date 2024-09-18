@@ -14,7 +14,7 @@ from .product import product
 
 load_dotenv()
 
-tracer = trace.get_tracer("contoso.chat.products")
+tracer = trace.get_tracer(__name__)
 
 def get_customer(customerId: str) -> str:
     try:

@@ -23,7 +23,7 @@ from opentelemetry import trace
 
 load_dotenv()
 
-tracer = trace.get_tracer("contoso.chat.products")
+tracer = trace.get_tracer(__name__)
 
 def generate_embeddings(queries: List[str]) -> str:
     endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
