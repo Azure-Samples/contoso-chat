@@ -27,5 +27,12 @@
                 "humao.rest-client"
             ]
         }
-    }
+    },
+    "postCreateCommand": "pip install -r ./src/api/requirements.txt",
+    "forwardPorts": [
+        8000
+    ],
+    "runArgs": [
+        "--network=host"
+    ]
 }

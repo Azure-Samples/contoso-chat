@@ -1,3 +1,4 @@
+import logging
 from azure.identity import DefaultAzureCredential
 import os
 from sys import argv
@@ -15,6 +16,8 @@ from .product import product
 load_dotenv()
 
 tracer = trace.get_tracer(__name__)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 def get_customer(customerId: str) -> str:
     try:
@@ -31,7 +34,7 @@ def get_customer(customerId: str) -> str:
         return None
 
 
-def get_response(customerId, question, chat_history):
+def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
     key = os.environ["AZUREAI_ENDPOINT_KEY"]
@@ -43,14 +46,14 @@ def get_response(customerId, question, chat_history):
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
-
-    print("getting customer...")
+    
+    logger.info("getting customer...")
     customer = get_customer(customerId)
-    print("customer complete")
+    logger.info("customer complete")
     context = product.find_products(question)
-    print(context)
-    print("products complete")
-    print("getting result...")
+    logger.info(context)
+    logger.info("products complete")
+    logger.info("getting result...")
 
     # Get the base directory (the directory of the current file)
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -81,11 +84,18 @@ def get_response(customerId, question, chat_history):
 
         response_content = response.choices[0].message.content
 
+        response_back = {"question": question, "answer": response_content, "context": context}
+        metadata = {"responseId": response.id, "model": response.model, "usage": response.usage}
+
     except Exception as e:
-        print(f"Error getting response: {e}")
+        logger.error(f"Error getting response: {e}")
 
-    return {"question": question, "answer": response_content, "context": context}
+    return response_back, metadata
 
+def provide_feedback(responseId: str, feedback: int, extra: any) -> dict:
+    feedback = {"responseId": responseId, "feedback": feedback, "extra": extra}
+    logger.info("Feedback Provided", extra=feedback)
+    return feedback
 
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
