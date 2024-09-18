@@ -1,7 +1,7 @@
 import logging
 from azure.identity import DefaultAzureCredential
 import json
-
+from opentelemetry import trace
 from contoso_chat.models import FeedbackItem
 from .product import product
 import os
