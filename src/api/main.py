@@ -2,6 +2,7 @@ import logging
 import os
 from pathlib import Path
 from fastapi import FastAPI
+from fastapi.responses import Response, JSONResponse
 from dotenv import load_dotenv
 from prompty.tracer import trace
 from fastapi.middleware.cors import CORSMiddleware
@@ -60,15 +61,17 @@ async def root():
     logger.info("Hello from root endpoint")
     return {"message": "Hello World"}
 
-
 @app.post("/api/create_response")
 @distributed_trace(name_of_span="create_response")
-def create_response(question: str, customer_id: str, chat_history: str) -> dict:
-    result = get_response(customer_id, question, chat_history)
-    return result
+def create_response(question: str, customer_id: str, chat_history: str, response: Response) -> dict:
+    result, metadata = get_response(customer_id, question, chat_history)
+    response.headers.append("gen_ai.response.id", metadata['responseId'])
+    response.headers.append("gen_ai.response.model", metadata['model'])
+    response_body = {"question": result['question'], "answer": result['answer'], "context": result['context']}
+    return response_body
 
 @app.post("/api/give_feedback")
 @distributed_trace(name_of_span="provide_feedback")
-def give_feedback(customer_id: str, responseId: str, feedback: str) -> dict:
-    result = provide_feedback(customer_id, responseId, feedback)
+def give_feedback(responseId: str, feedback: bool, extra: str) -> dict:
+    result = provide_feedback(responseId, feedback, extra)
     return result
