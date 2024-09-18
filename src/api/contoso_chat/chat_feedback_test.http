@@ -1,0 +1,1 @@
+post http://127.0.0.1:8000/api/give_feedback?customer_id=2&responseId=AResponseIDHere&feedback=1&extra=%7B"additionalInfo"%3A"data"%7D

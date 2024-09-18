@@ -3,13 +3,15 @@ import os
 
 from pathlib import Path
 from fastapi import FastAPI
+from fastapi.responses import Response, JSONResponse
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
 from pydantic import BaseModel
 
-from contoso_chat.chat_request import get_response
-from telemetry import setup_telemetry
+from .contoso_chat.chat_request import get_response, provide_feedback
+from .telemetry import setup_telemetry
+
 from azure.core.tracing.decorator import distributed_trace
 
 load_dotenv()
@@ -68,9 +70,19 @@ async def root():
     logger.info("Hello from root endpoint")
     return {"message": "Hello World"}
 
-
 @app.post("/api/create_response")
 @distributed_trace(name_of_span="create_response")
-def create_response(body: ChatRequestModel) -> dict:
-    result = get_response(body.customerId, body.question, body.chat_history)
+
+def create_response(question: str, customer_id: str, chat_history: str, response: Response) -> dict:
+    result, metadata = get_response(customer_id, question, chat_history)
+    response.headers.append("gen_ai.response.id", metadata['responseId'])
+    response.headers.append("gen_ai.response.model", metadata['model'])
+    response_body = {"question": result['question'], "answer": result['answer'], "context": result['context']}
+    return response_body
+
+@app.post("/api/give_feedback")
+@distributed_trace(name_of_span="provide_feedback")
+def give_feedback(responseId: str, feedback: bool, extra: str) -> dict:
+    result = provide_feedback(responseId, feedback, extra)
     return result
+
