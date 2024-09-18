@@ -1,9 +1,7 @@
 import os
 import json
 from typing import Dict, List
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from prompty.tracer import trace
-import prompty
+from azure.identity import DefaultAzureCredential
 import prompty.azure
 from openai import AzureOpenAI
 from dotenv import load_dotenv
@@ -21,10 +19,11 @@ from azure.ai.inference import ChatCompletionsClient, EmbeddingsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
-from azure.core.tracing.decorator import distributed_trace
+from opentelemetry import trace
 
 load_dotenv()
 
+tracer = trace.get_tracer(__name__)
 
 def generate_embeddings(queries: List[str]) -> str:
     endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
@@ -44,7 +43,6 @@ def generate_embeddings(queries: List[str]) -> str:
     return items
 
 
-@distributed_trace(name_of_span="retrieve_products")
 def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
     search_client = SearchClient(
         endpoint=os.environ["AZURE_SEARCH_ENDPOINT"],
@@ -118,14 +116,15 @@ def find_products(context: str) -> Dict[str, any]:
     rendered_template = template.render(template_input)
 
     try:
-        response = client.complete(
-            messages=[
-                SystemMessage(content=rendered_template),
-                UserMessage(content=context),
-            ]
-        )
+        with tracer.start_as_current_span("llm", attributes={"task": "find_products"}):
+            response = client.complete(
+                messages=[
+                    SystemMessage(content=rendered_template),
+                    UserMessage(content=context),
+                ]
+            )
 
-        queries = response.choices[0].message.content
+            queries = response.choices[0].message.content
 
     except Exception as e:
         print(f"Error getting response: {e}")
