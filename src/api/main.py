@@ -3,15 +3,15 @@ import os
 import uuid
 
 from pathlib import Path
+from contoso_chat.models import ChatRequestModel, FeedbackItem
 from fastapi import FastAPI, Request
+from fastapi.responses import Response
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
 from opentelemetry import trace
-from fastapi.responses import Response, JSONResponse
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 from contoso_chat.chat_request import get_response, provide_feedback
 from telemetry import setup_telemetry
@@ -58,14 +58,6 @@ meter = metrics.get_meter_provider().get_meter("contoso-chat")
 root_counter = meter.create_counter("root-hits")
 
 tracer = trace.get_tracer(__name__)
-# TODO Move ChatRequestModel to a separate file and figure out import issues.
-
-
-class ChatRequestModel(BaseModel):
-    question: str
-    customerId: str
-    chat_history: list[str]
-
 
 @app.get("/")
 async def root():
@@ -73,10 +65,10 @@ async def root():
     logger.info("Hello from root endpoint")
     return {"message": "Hello World"}
 
-
 @app.post("/api/create_response")
 @tracer.start_as_current_span("create_response")
-def create_response(question: str, customer_id: str, chat_history: str, request: Request, response: Response) -> dict:
+def create_response(chat_request: ChatRequestModel, request: Request, response: Response) -> dict:
+
     session_id = request.cookies.get('sessionid')
     if not session_id:
         session_id = str(uuid.uuid4())
@@ -84,16 +76,15 @@ def create_response(question: str, customer_id: str, chat_history: str, request:
     span = trace.get_current_span()
     span.set_attribute("session.id", session_id)
 
-    result, metadata = get_response(customer_id, question, chat_history)
+    result, metadata = get_response(chat_request.customer_id, chat_request.question, chat_request.chat_history)
+
     response.headers.append("gen_ai.response.id", metadata['responseId'])
     response.headers.append("gen_ai.response.model", metadata['model'])
     response_body = {"question": result['question'], "answer": result['answer'], "context": result['context']}
     return response_body
 
-
 @app.post("/api/give_feedback")
 @tracer.start_as_current_span("provide_feedback")
-def give_feedback(responseId: str, feedback: bool, extra: str) -> dict:
-    result = provide_feedback(responseId, feedback, extra)
+def give_feedback(feedback_item: FeedbackItem) -> dict:
+    result = provide_feedback(feedback_item)
     return result
-

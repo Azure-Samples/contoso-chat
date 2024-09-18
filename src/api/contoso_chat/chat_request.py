@@ -1,17 +1,16 @@
 import logging
 from azure.identity import DefaultAzureCredential
+import json
+from opentelemetry import trace
+from contoso_chat.models import FeedbackItem
+from .product import product
 import os
-from sys import argv
 from azure.cosmos import CosmosClient
 from dotenv import load_dotenv
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
-from opentelemetry import trace
-
-from .product import product
-
 
 load_dotenv()
 
@@ -47,13 +46,8 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
         logging_enable=True,
     )
     
-    logger.info("getting customer...")
     customer = get_customer(customerId)
-    logger.info("customer complete")
     context = product.find_products(question)
-    logger.info(context)
-    logger.info("products complete")
-    logger.info("getting result...")
 
     # Get the base directory (the directory of the current file)
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -92,11 +86,18 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     return response_back, metadata
 
-def provide_feedback(responseId: str, feedback: int, extra: any) -> dict:
-    feedback = {"responseId": responseId, "feedback": feedback, "extra": extra}
-    logger.info("Feedback Provided", extra=feedback)
-    return feedback
+def provide_feedback(feedback_item: FeedbackItem) -> dict:
+    extra_info = validate_extra_feedback(feedback_item.extra)
+    feedback_context = {"gen_ai.response.id": feedback_item.responseId, "feedback": feedback_item.feedback, "extra": extra_info}
+    logger.info("user_feedback", extra=feedback_context)
+    return {"result": "success"}
+
+def validate_extra_feedback(extra: dict) -> str:
+    if extra is None:
+        return {}
+    return json.dumps(extra)
 
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
     # get_response(argv[1], argv[2], argv[3])
+    
