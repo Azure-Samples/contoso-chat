@@ -26,6 +26,8 @@ export const sendGroundedMessage = async (
   const newTurn: ChatTurn = {
     name: "Jane Doe",
     message: data.message,
+    // TODO: Update chat history
+    chat_history: [],
     status: "done",
     type: "assistant",
     avatar: "",
@@ -40,27 +42,39 @@ export const sendPromptFlowMessage = async (
   customerId: string = "4" // Sarah Lee is Customer 4
 ): Promise<ChatTurn> => {
   const body = {
-    chat_history: [],
+    chat_history: turn.chat_history,
     question: turn.message,
     customer_id: customerId.toString(),
   };
 
   console.log(body);
 
-  const response = await fetch("/api/chat/vnext", {
+  let answer = ""
+
+  await fetch("/api/chat/vnext", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+  }).then(r => {
+    return r.json()
+  }).then(data => {
+    answer = data["answer"]
+  }).catch(e => {
+    console.log(e)
+    answer =  "There was a problem."
   });
 
-  const data = await response.json();
-  console.log(data);
+  const userMessage = {"role": "user", "content": turn.message}
+  const assistantMessage = {"role": "assistant", "content": answer}
+
+  const latestHistory = [...turn.chat_history, userMessage, assistantMessage]
 
   const newTurn: ChatTurn = {
     name: "Jane Doe",
-    message: data["answer"],
+    message: answer,
+    chat_history: latestHistory,
     status: "done",
     type: "assistant",
     avatar: "",
@@ -108,6 +122,8 @@ export const sendVisualMessage = async (
   const newTurn: ChatTurn = {
     name: "Jane Doe",
     message: data["answer"],
+    // TODO: use chat history
+    chat_history: body.chat_history,
     status: "done",
     type: "assistant",
     avatar: "",
@@ -116,3 +132,19 @@ export const sendVisualMessage = async (
 
   return newTurn;
 };
+
+
+export async function clearSession() {
+  console.log("CLEARING THE SESSION")
+  const headers = {
+    "Content-Type": "application/json"
+  };
+  const response = await fetch("/api/chat/session", {
+    method: "POST",
+    headers: headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+}

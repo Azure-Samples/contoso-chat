@@ -1,8 +1,14 @@
+export interface ChatMessage {
+  role: string;
+  content: string;
+}
+
 export interface ChatTurn {
   name: string;
   avatar: string;
   image: string | null;
   message: string;
+  chat_history: ChatMessage[];
   status: "waiting" | "done";
   type: "user" | "assistant";
 };
