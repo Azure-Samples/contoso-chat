@@ -15,6 +15,12 @@ page_type: sample
 urlFragment: contoso-chat
 ---
 
+> [!WARNING]  
+> **This sample is being actively updated at present and make have breaking changes**. We are refactoring the code to use new Azure AI platform features and moving deployment from Azure AI Studio to Azure Container Apps. We will remove this notice once the migration is complete. Till then, please pause on submitting new issues as codebase is changing.
+>
+> **Some of the features used in this repository are in preview.** Preview versions are provided without a service level agreement, and they are not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/).**
+
+
 # Contoso Chat Retail with Azure AI Studio and Prompty
 
 This sample creates a customer support chat agent for an online retailer called Contoso Outdoors. The solution uses a _retrieval-augmented generation pattern_ to ground responses in the company's product and customer data. Customers can ask questions about the retailer's product catalog, and also get recommendations based on their prior purchases.
@@ -78,7 +84,7 @@ This is also a **signature sample** for demonstrating new capabilities in the Az
 
 The Contoso Chat application implements a _retrieval augmented generation_ pattern to ground the model responses in your data. The architecture diagram below illustrates the key components and services used for implementation and highlights the use of [Azure Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/) to reduce developer complexity in managing sensitive credentials.
 
-![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aistudio.png)
+![Architecture Diagram](./docs/img/architecture-diagram-contoso-retail-aca.png)
 
 ### Demo Video
 

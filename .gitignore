@@ -28,3 +28,7 @@ src/api/evaluators/result.jsonl
 src/api/evaluators/eval_results.jsonl
 src/api/evaluators/eval_results.md
 src/api/evaluators/.runs/*
+src/api/result_evaluated.jsonl
+src/api/result.jsonl
+src/api/eval_results.jsonl
+src/api/eval_results.md
