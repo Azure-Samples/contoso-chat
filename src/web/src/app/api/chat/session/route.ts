@@ -4,8 +4,7 @@ const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
 
 export async function POST(req: NextRequest) {
     const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "localhost:8000"
+        "Content-Type": "application/json"
     };
 
     const response = await fetch(`${api_endpoint}/api/clear_session`, {
