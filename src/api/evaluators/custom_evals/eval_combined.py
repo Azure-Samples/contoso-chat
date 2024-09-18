@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import timedelta
-from typing import Any, Dict
+from typing import Any, Dict, List
 from azure.core.exceptions import HttpResponseError
 from azure.identity import DefaultAzureCredential
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
@@ -32,109 +32,141 @@ logs_client = LogsQueryClient(credential)
 workspace_id= os.environ["APPINSIGHTS_WORKSPACE_ID"]
 
 
-def app_insights_data_extraction(k: int = 0) -> str:
+def extract_app_insights_data( timespan_days: int = 2, take_count: int = 5) -> List[Dict[str, Any]]:
     """
-    Extracts data from Azure Application Insights.
+    Extracts data from Azure Application Insights for multiple interactions.
 
     Args:
-        k (int): The index of the row to process.
+        workspace_id (str): The workspace ID to query.
+        timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
+        take_count (int, optional): Number of interactions to retrieve. Defaults to 5.
 
     Returns:
-        str: A JSON string containing the extracted id, question, context, and answer.
+        List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
-    query_dependencies = """
-    AppDependencies
-    | where Properties["task"] == "get_response"
-    | project OperationId, Id
-    """
-
     try:
-        response = logs_client.query_workspace(workspace_id, query_dependencies, timespan=timedelta(days=1))
-        if response.status != LogsQueryStatus.SUCCESS:
-            raise HttpResponseError(f"Query failed with status: {response.status}")
-        
-        dependencies_table = response.tables[0]
-        if k >= len(dependencies_table.rows):
-            raise IndexError(f"Index {k} out of range for dependencies data.")
+        # Authenticate using DefaultAzureCredential
+        credential = DefaultAzureCredential()
+        client = LogsQueryClient(credential)
 
-        # Convert the specific row to a dictionary
-        dependency_row = dependencies_table.rows[k]
-        dependency_dict = dict(zip(dependencies_table.columns, dependency_row))
-        dependency_id = dependency_dict["Id"]
-
-        logging.info(f"Dependency ID extracted: {dependency_id}")
-
-        query_response_ids = f"""
+        # Define the query to get the last 'take_count' interactions
+        query_dependencies = f"""
         AppDependencies
-        | where ParentId == "{dependency_id}"
-        | project OperationId, Id, Properties["gen_ai.response.id"]
+        | where Properties["task"] == "get_response"
+        | order by TimeGenerated desc
+        | take {take_count}
+        | project OperationId, Id
         """
 
-        response2 = logs_client.query_workspace(workspace_id, query_response_ids, timespan=timedelta(days=1))
-        if response2.status != LogsQueryStatus.SUCCESS:
-            raise HttpResponseError(f"Second query failed with status: {response2.status}")
+        response = client.query_workspace(workspace_id, query_dependencies, timespan=timedelta(days=timespan_days))
+        if response.status != LogsQueryStatus.SUCCESS:
+            error = response.partial_error
+            logging.error(f"Initial query failed: {error}")
+            return []
 
-        response_table = response2.tables[0]
-        if not response_table.rows:
-            raise ValueError("No data returned for the second query.")
+        dependencies_table = response.tables[0]
+        if not dependencies_table.rows:
+            logging.warning("No dependencies found in the initial query.")
+            return []
 
-        # Convert the first row to a dictionary
-        response_id_row = response_table.rows[0]
-        response_id_dict = dict(zip(response_table.columns, response_id_row))
-        operation_id = response_id_dict["Id"]
-        response_id = response_id_dict.get("Properties_gen_ai.response.id", "")
+        all_results = []
 
-        logging.info(f"Response ID extracted: {response_id}")
-
-        query_traces = f"""
-        AppTraces
-        | where ParentId == "{operation_id}"
-        """
-
-        response3 = logs_client.query_workspace(workspace_id, query_traces, timespan=timedelta(days=1))
-        if response3.status != LogsQueryStatus.SUCCESS:
-            raise HttpResponseError(f"Third query failed with status: {response3.status}")
-
-        traces_table = response3.tables[0]
-        if not traces_table.rows:
-            raise ValueError("No data returned for the third query.")
-
-        result: Dict[str, Any] = {
-            "id": response_id,
-            "question": "",
-            "context": "",
-            "answer": ""
-        }
-
-        for idx, row in enumerate(traces_table.rows):
-            # Convert LogsTableRow to a dictionary
-            row_dict = dict(zip(traces_table.columns, row))
-            logging.debug(f"Processing row {idx}: {row_dict}")
-
-            event_type = row_dict.get('Message', '')
-            properties = row_dict.get('Properties', '')
-
+        for idx, dependency_row in enumerate(dependencies_table.rows):
+            dependency_id = None  # Initialize dependency_id for error handling
             try:
-                content_json = json.loads(properties)
-                gen_ai_content = json.loads(content_json.get('gen_ai.event.content', '{}'))
-            except (json.JSONDecodeError, KeyError, TypeError) as e:
-                logging.warning(f"Failed to parse JSON content in row {idx}: {e}")
+                # Extract dependency information
+                # Corrected line: Use columns directly as they are already strings
+                dependency_dict = dict(zip(dependencies_table.columns, dependency_row))
+                dependency_id = dependency_dict.get("Id", "")
+                logging.info(f"Processing dependency {idx + 1}/{len(dependencies_table.rows)}: {dependency_id}")
+
+                # Query to get the response IDs
+                query_response_ids = f"""
+                AppDependencies
+                | where ParentId == "{dependency_id}"
+                | project OperationId, Id, Properties["gen_ai.response.id"]
+                """
+
+                response2 = client.query_workspace(workspace_id, query_response_ids, timespan=timedelta(days=timespan_days))
+                if response2.status != LogsQueryStatus.SUCCESS:
+                    error = response2.partial_error
+                    logging.error(f"Query for response IDs failed for dependency {dependency_id}: {error}")
+                    continue
+
+                response_table = response2.tables[0]
+                if not response_table.rows:
+                    logging.warning(f"No response IDs found for dependency {dependency_id}.")
+                    continue
+
+                response_id_row = response_table.rows[0]
+                # Corrected line
+                response_id_dict = dict(zip(response_table.columns, response_id_row))
+                operation_id = response_id_dict.get("Id", "")
+                response_id = response_id_dict.get("Properties_gen_ai.response.id", "")
+                logging.info(f"Response ID extracted: {response_id}")
+
+                # Query to get the traces
+                query_traces = f"""
+                AppTraces
+                | where ParentId == "{operation_id}"
+                """
+
+                response3 = client.query_workspace(workspace_id, query_traces, timespan=timedelta(days=timespan_days))
+                if response3.status != LogsQueryStatus.SUCCESS:
+                    error = response3.partial_error
+                    logging.error(f"Query for traces failed for operation {operation_id}: {error}")
+                    continue
+
+                traces_table = response3.tables[0]
+                if not traces_table.rows:
+                    logging.warning(f"No traces found for operation {operation_id}.")
+                    continue
+
+                result: Dict[str, Any] = {
+                    "id": response_id,
+                    "question": "",
+                    "context": "",
+                    "answer": ""
+                }
+
+                column_names = traces_table.columns  # Use columns directly
+
+                for trace_idx, trace_row in enumerate(traces_table.rows):
+                    row_dict = dict(zip(column_names, trace_row))
+
+                    event_type = row_dict.get('Message', '')
+                    content_str = row_dict.get('Properties', '')
+
+                    try:
+                        content_json = json.loads(content_str)
+                        gen_ai_content_str = content_json.get('gen_ai.event.content', '{}')
+                        gen_ai_content = json.loads(gen_ai_content_str)
+
+                        if event_type == "gen_ai.system.message" and 'content' in gen_ai_content:
+                            result["context"] = gen_ai_content['content']
+                        elif event_type == "gen_ai.user.message" and 'content' in gen_ai_content:
+                            result["question"] = gen_ai_content['content']
+                        elif event_type == "gen_ai.choice" and 'message' in gen_ai_content:
+                            result["answer"] = gen_ai_content['message']['content']
+
+                    except (json.JSONDecodeError, KeyError, TypeError) as e:
+                        logging.warning(f"Failed to parse JSON content in trace {trace_idx} for operation {operation_id}: {e}")
+                        continue
+
+                all_results.append(result)
+
+            except Exception as e:
+                if dependency_id:
+                    logging.error(f"Error processing dependency {dependency_id}: {e}")
+                else:
+                    logging.error(f"Error processing dependency at index {idx}: {e}")
                 continue
 
-            if event_type == "gen_ai.system.message":
-                result["context"] = gen_ai_content.get('content', '')
-            elif event_type == "gen_ai.user.message":
-                result["question"] = gen_ai_content.get('content', '')
-            elif event_type == "gen_ai.choice":
-                result["answer"] = gen_ai_content.get('message', {}).get('content', '')
-
-        json_result = json.dumps(result, indent=2)
-        logging.debug(f"Extracted Data: {json_result}")
-        return json_result
+        return all_results
 
     except Exception as e:
         logging.error(f"Error during data extraction: {e}")
-        raise
+        return []
 
 
 
@@ -219,53 +251,83 @@ def relevance_evaluation(question: str, context: str, answer: str) -> str:
 
 
 
-def evaluation_run(k: int, groundedness_eval: bool = True, coherence_eval: bool = True, relevance_eval: bool = True) -> None:
+def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool = True, 
+     coherence_eval: bool = True, relevance_eval: bool = True) -> str:
+    
     """
-    Performs an evaluation run by extracting data and running all evaluations mentioned.
+    Extracts data from Azure Application Insights for multiple interactions.
 
     Args:
-        k (int): The index of the data row to evaluate.
-        groundedness_eval (bool): Whether to perform groundedness evaluation.
-        coherence_eval (bool): Whether to perform coherence evaluation.
-        relevance_eval (bool): Whether to perform relevance evaluation.
+        timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
+        take_count (int, optional): Number of interactions to retrieve. Defaults to 5.
+
+    Returns:
+        str: A JSON string containing a list of dictionaries with the evaluation results.
     """
+
+    results = []  # Initialize a list to store results for all IDs
+
     try:
-        app_insights_data = app_insights_data_extraction(k)
-        logging.info(f"App Insights Data: {app_insights_data}")
+        app_insights_data = extract_app_insights_data(timespan_days, take_count)
+        
+        logging.info(f"Extracted {len(app_insights_data)} interactions from App Insights.")
 
-        args = json.loads(app_insights_data)
-        question = args.get('question', '')
-        context = args.get('context', '')
-        answer = args.get('answer', '')
-        eval_id = args.get('id', 'N/A')
+        for idx, entry in enumerate(app_insights_data):
+            logging.info(f"Processing entry {idx}")
+            
+            try:
+                question = entry.get('question', '')
+                context = entry.get('context', '')
+                answer = entry.get('answer', '')
+                eval_id = entry.get('id', 'N/A')
+                result = {"id": eval_id}
 
-        # Perform evaluations
-        if groundedness_eval:
-            groundedness_result = groundedness_evaluation(question, context, answer)
-            logging.info("Groundedness Evaluation:")
-            logging.info(groundedness_result)
+                logging.info(f"Processing data for ID: {eval_id}")
 
-        if coherence_eval:
-            coherence_result = coherence_evaluation(question, context, answer)
-            logging.info("\nCoherence Evaluation:")
-            logging.info(coherence_result)
+                # Perform evaluations
+                if groundedness_eval:
+                    groundedness_result = groundedness_evaluation(question, context, answer)
+                    result["groundedness_result"] = groundedness_result
+                    logging.info("Groundedness Evaluation:")
+                    logging.info(groundedness_result)
 
-        if relevance_eval:
-            relevance_result = relevance_evaluation(question, context, answer)
-            logging.info("\nRelevance Evaluation:")
-            logging.info(relevance_result)
+                if coherence_eval:
+                    coherence_result = coherence_evaluation(question, context, answer)
+                    result["coherence_result"] = coherence_result
+                    logging.info("Coherence Evaluation:")
+                    logging.info(coherence_result)
 
-        logging.info(f"Results for input ID: {eval_id}")
-        logging.info("-" * 50)
+                if relevance_eval:
+                    relevance_result = relevance_evaluation(question, context, answer)
+                    result["relevance_result"] = relevance_result
+                    logging.info("Relevance Evaluation:")
+                    logging.info(relevance_result)
+
+                results.append(result)  # Add the result for this ID to the list
+                logging.info(f"Completed processing for input ID: {eval_id}")
+                logging.info("-" * 50)
+            
+            except Exception as e:
+                logging.error(f"Error processing entry {idx}: {str(e)}")
 
     except Exception as e:
         logging.error(f"Error during full evaluation: {e}")
         raise
 
+    return json.dumps(results)  # Return JSON string of all results
+
+
 if __name__ == "__main__":
-    groundedness_eval = False
+
+    groundedness_eval = True
     coherence_eval = True
     relevance_eval = True
+
+    timespan_days =2
+    take_count =5
     
-    evaluation_run(0, groundedness_eval, coherence_eval, relevance_eval)
+    results = evaluation_run(timespan_days,take_count, 
+    groundedness_eval, coherence_eval, relevance_eval)
+
+    print(results)
 
