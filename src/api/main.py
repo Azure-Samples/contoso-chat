@@ -52,7 +52,7 @@ logger.setLevel(logging.INFO)
 meter = metrics.get_meter_provider().get_meter("contoso-chat")
 root_counter = meter.create_counter("root-hits")
 
-tracer = trace.get_tracer("contoso.chat.main")
+tracer = trace.get_tracer(__name__)
 
 @app.get("/")
 async def root():
