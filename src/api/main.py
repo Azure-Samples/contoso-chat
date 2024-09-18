@@ -7,12 +7,14 @@ from prompty.core import PromptyStream, AsyncPromptyStream
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from tracing import init_tracing
 
 from contoso_chat.chat_request import get_response
 
 base = Path(__file__).resolve().parent
 
 load_dotenv()
+tracer = init_tracing()
 
 app = FastAPI()
 
@@ -24,7 +26,7 @@ if code_space:
     origin_5173 = f"https://{code_space}-5173.app.github.dev"
     ingestion_endpoint = app_insights.split(';')[1].split('=')[1]
     
-    origins = [origin_8000, origin_5173, os.getenv("API_SERVICE_ACA_URI"), os.getenv("WEB_SERVICE_ACA_URI"), ingestion_endpoint]
+    origins = [origin_8000, origin_5173, os.getenv("SERVICE_ACA_URI")]
 else:
     origins = [
         o.strip()
