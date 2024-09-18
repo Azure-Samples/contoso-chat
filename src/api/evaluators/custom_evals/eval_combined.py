@@ -5,13 +5,17 @@ from typing import Any, Dict, List
 from azure.core.exceptions import HttpResponseError
 from azure.identity import DefaultAzureCredential
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
+from azure.monitor.opentelemetry import configure_azure_monitor
 from dotenv import load_dotenv
 import prompty
 import prompty.azure
+from datetime import datetime
 import logging
 import sys
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 
 # Load environment variables
 load_dotenv(override=True)
@@ -36,6 +40,7 @@ model_config = {
 credential = DefaultAzureCredential()
 logs_client = LogsQueryClient(credential)
 workspace_id= os.environ["APPINSIGHTS_WORKSPACE_ID"]
+os.environ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = os.getenv("APPINSIGHTS_CONNECTIONSTRING") # for logging to app insights
 
 
 def execute_query(query, timespan_days):
@@ -380,17 +385,39 @@ def evaluation_run(timespan_days: int, batch_size:int, groundedness_eval: bool =
     return json.dumps(results)  # Return JSON string of all results
 
 
+def upload_evals_to_appinsights(json_string: str):
+    """
+    Uploads the evaluation results to Azure Application Insights.
+
+    Args:
+        results (str): A JSON string containing a list of dictionaries with the evaluation results.
+    """
+    
+    configure_azure_monitor()
+
+    data = json.loads(json_string)
+  
+    for item in data:        
+        extra = {'extra': item}
+        logger.info(item, **extra)
+       
+    
+
+
+
 if __name__ == "__main__":
 
-    groundedness_eval = True
-    coherence_eval = True
+    groundedness_eval = False
+    coherence_eval = False
     relevance_eval = True
 
     timespan_days =2 # number of days you want to select for queries
-    batch_size = 4# number of interactions you want to evaluate
+    batch_size = 2# number of interactions you want to evaluate
     
     results = evaluation_run(timespan_days,batch_size, 
     groundedness_eval, coherence_eval, relevance_eval)
 
-    print(results)
+    upload_evals_to_appinsights(results)
+
+    
 
