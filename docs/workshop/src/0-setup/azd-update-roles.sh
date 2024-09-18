@@ -1,6 +1,10 @@
 #!/bin/bash
-
 echo "--- ✅ | POST-PROVISIONING: Update RBAC permissions---"
+# Use this when pre-provisioning with azd
+#   - Refresh env: azd env refresh -e AITOUR
+#   - Run this script: bash docs/workshop/0-setup/azd-update-roles.sh
+#   - Then run hooks: azd hooks run postprovision
+#   - Should update database, index and deploy app
 
 # Exit shell immediately if command exits with non-zero status
 set -e
@@ -54,8 +58,7 @@ az role assignment create \
 # ------ See CosmosDB built-in roles for DATA plane
 # https://aka.ms/cosmos-native-rbac
 # Note: Azure CosmosDB data plane roles are distinct from built-in Azure control plane roles
-# See: 
-# https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-cosmos-db-connection?tabs=arm#step-2-create-a-cosmos-db-data-connection
+# See: https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-cosmos-db-connection?tabs=arm#step-2-create-a-cosmos-db-data-connection
 # See: infra/core/security/role-cosmos.bicep to understand what we need to set
 
 # Gets account name
@@ -65,13 +68,10 @@ COSMOSDB_NAME=$(az cosmosdb list --resource-group ${AZURE_OPENAI_RESOURCE_GROUP}
 az cosmosdb show --resource-group ${AZURE_OPENAI_RESOURCE_GROUP} --name ${COSMOSDB_NAME}
 COSMOSDB_RESOURCE_ID=
 
-# Cosmos DB Built-in Data Contributor
-# Grant full read-write access to CosmosDB data 
-
-# This worked -- data filled in
+# Cosmos DB Built-in Data Contributor - grant access to specific db
 az cosmosdb sql role assignment create \
-        --account-name "cosmos-contoso-xxxx" \
-        --resource-group "rg-AITOUR" \
+        --account-name "${COSMOSDB_NAME}" \
+        --resource-group "${AZURE_OPENAI_RESOURCE_GROUP}" \
         --role-definition-name "Cosmos DB Built-in Data Contributor" \
         --scope "/dbs/contoso-outdoor/colls/customers" \
         --principal-id "${PRINCIPAL_ID}"
@@ -85,15 +85,4 @@ az cosmosdb sql role assignment create \
         --scope "/" \
         --principal-id "${PRINCIPAL_ID}"
 
-# Try this instead recommended by docs --- Control Plane
-az role assignment create \
-        --role fbdf93bf-df7d-467e-a4d2-9458aa1360c8 \
-        --assignee-object-id "${PRINCIPAL_ID}" \
-         --scope <CosmosDBAccountResourceId> \
-        --scope /subscriptions/"${AZURE_SUBSCRIPTION_ID}"/resourceGroups/"${COSMOSDB_RESOURCE_ID}" 
-
-# Already setup to run notebooks
-echo "--- ✅ | 4. Post-provisioning - populating data---"
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > /dev/null
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > /dev/null
-echo "--- ✅ | PROVISIONING HOOKS COMPLETED ---"
+echo "--- ✅ | POST-PROVISIONING: RBAC permissions updated---"
