@@ -28,3 +28,13 @@ src/api/evaluators/result.jsonl
 src/api/evaluators/eval_results.jsonl
 src/api/evaluators/eval_results.md
 src/api/evaluators/.runs/*
+
+
+# dependencies
+/src/web/node_modules
+
+# testing
+/coverage
+
+# next.js
+/src/web/.next/

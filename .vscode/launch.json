@@ -30,5 +30,34 @@
       "cwd": "${workspaceFolder}/src/api",
       "jinja": true
     },
+    {
+      "name": "Next.js: debug full stack",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/web/node_modules/.bin/next",
+      "runtimeArgs": [
+        "--inspect"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "cwd": "${workspaceFolder}/src/web",
+      "serverReadyAction": {
+        "action": "debugWithEdge",
+        "killOnServerStop": true,
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "webRoot": "${workspaceFolder}/src/web"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Start API and Web App",
+      "configurations": [
+        "Python Debugger: FastAPI",
+        "Next.js: debug full stack"
+      ]
+    }
   ]
 }
