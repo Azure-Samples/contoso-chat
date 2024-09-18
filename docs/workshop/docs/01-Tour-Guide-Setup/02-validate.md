@@ -48,7 +48,7 @@ Lets authenticate with Azure and configure local development environment to use 
 
 ??? note "Step 4: Run post-provisioning hooks in 2️⃣"
 
-    1. Run `bash workspaces/src/azd-update-roles.sh` in terminal
+    1. Run `bash ./docs/workshop/src/0-setup/azd-update-roles.sh ` in terminal
     1. This will take a few minutes ....
     1. Run `azd hooks run postprovision` in terminal
     1. This will take a few minutes ....
@@ -57,6 +57,8 @@ Lets authenticate with Azure and configure local development environment to use 
     1. Refresh Container App in tab 5️⃣ - verify that you see "Hello world" ✅
 
 
-## On Azure Portal
+We completed all the post-provisioning steps and are now ready to get to work.
 
-Verify Azure CosmosDB, Azure AI Search and Azure Container App updates occured.
+---
+
+!!! info "Next → 3️⃣ [Validate Infra](./../03-Workshop-Build/03-infra.md) before we start building!
