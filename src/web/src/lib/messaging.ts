@@ -26,7 +26,6 @@ export const sendGroundedMessage = async (
   const newTurn: ChatTurn = {
     name: "Jane Doe",
     message: data.message,
-    // TODO: Update chat history
     chat_history: [],
     status: "done",
     type: "assistant",
