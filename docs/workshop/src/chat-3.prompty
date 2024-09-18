@@ -2,26 +2,23 @@
 name: Contoso Chat Prompt
 description: A retail assistent for Contoso Outdoors products retailer.
 authors:
-  - Cassie Breviu
-  - Seth Juarez
+  - Nitya Narasimhan
 model:
   api: chat
   configuration:
     type: azure_openai
-    azure_deployment: gpt-35-turbo
-    azure_endpoint: ${ENV:AZURE_OPENAI_ENDPOINT}
-    api_version: 2023-07-01-preview
+    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
+    azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
+    api_version: 2024-07-01-preview
   parameters:
     max_tokens: 128
     temperature: 0.2
 inputs:
   customer:
     type: object
-  documentation:
-    type: object
   question:
     type: string
-sample: ${file:chat.json}
+sample: ${file:chat-3.json}
 ---
 system:
 You are an AI agent for the Contoso Outdoors products retailer. As the agent, you answer questions briefly, succinctly, 

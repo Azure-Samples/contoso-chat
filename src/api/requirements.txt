@@ -19,3 +19,4 @@ opentelemetry-instrumentation-fastapi
 jupyter
 opentelemetry-instrumentation
 azure-identity==1.17.1
+tabulate

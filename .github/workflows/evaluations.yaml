@@ -44,6 +44,7 @@ jobs:
       SERVICE_ACA_IMAGE_NAME: ${{ vars.SERVICE_ACA_IMAGE_NAME }}
       SERVICE_ACA_NAME: ${{ vars.SERVICE_ACA_NAME }}
       SERVICE_ACA_URI: ${{ vars.SERVICE_ACA_URI }}
+
     steps:
       - name: checkout repo content
         uses: actions/checkout@v4 # checkout the repository content
