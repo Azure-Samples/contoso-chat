@@ -19,14 +19,16 @@
       "program": "${file}"
     },
     {
-      "name":"Python Debugger: FastAPI",
-      "type":"debugpy",
-      "request":"launch",
-      "module":"uvicorn",
-      "args":["src.api.main:app",
+      "name": "Python Debugger: FastAPI",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "main:app",
         "--reload"
       ],
-      "jinja":true
+      "cwd": "${workspaceFolder}/src/api",
+      "jinja": true
     },
   ]
 }
