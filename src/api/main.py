@@ -58,7 +58,6 @@ meter = metrics.get_meter_provider().get_meter("contoso-chat")
 root_counter = meter.create_counter("root-hits")
 
 tracer = trace.get_tracer(__name__)
-# TODO Move ChatRequestModel to a separate file and figure out import issues.
 
 @app.get("/")
 async def root():
