@@ -280,7 +280,7 @@ def evaluation_run(timespan_days: int, take_count:int, groundedness_eval: bool =
                 context = entry.get('context', '')
                 answer = entry.get('answer', '')
                 eval_id = entry.get('id', 'N/A')
-                result = {"id": eval_id}
+                result = {"gen_ai.response.id": eval_id}
 
                 logging.info(f"Processing data for ID: {eval_id}")
 
@@ -323,8 +323,8 @@ if __name__ == "__main__":
     coherence_eval = True
     relevance_eval = True
 
-    timespan_days =2
-    take_count =5
+    timespan_days =2 # number of days you want to select for queries
+    take_count =5 # number of interactions you want to evaluate
     
     results = evaluation_run(timespan_days,take_count, 
     groundedness_eval, coherence_eval, relevance_eval)
