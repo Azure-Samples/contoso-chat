@@ -64,10 +64,6 @@ az role assignment create \
 # Gets account name
 COSMOSDB_NAME=$(az cosmosdb list --resource-group ${AZURE_OPENAI_RESOURCE_GROUP} --query "[0].name" -o tsv)
 
-# Try to retrieve COSMOSDB_RESOURCEID this way
-az cosmosdb show --resource-group ${AZURE_OPENAI_RESOURCE_GROUP} --name ${COSMOSDB_NAME}
-COSMOSDB_RESOURCE_ID=
-
 # Cosmos DB Built-in Data Contributor - grant access to specific db
 az cosmosdb sql role assignment create \
         --account-name "${COSMOSDB_NAME}" \
