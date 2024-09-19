@@ -132,7 +132,6 @@ export const sendVisualMessage = async (
 
 
 export async function clearSession() {
-  console.log("CLEARING THE SESSION")
   const headers = {
     "Content-Type": "application/json"
   };
