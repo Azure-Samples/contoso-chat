@@ -12,7 +12,8 @@ Use the follow contex to provide a set of specialized queries to the search inde
 
 # Response format
 The response format is a valid JSON array that contains a list of specialized queries 
-to make to the search index. Here is an example:
+to make to the search index. You will reply only with the JSON itself, and no other descriptive or explanatory text.
+Here is an example:
 
 context: Can you find a selection of outdoor apparel?
 queries:
