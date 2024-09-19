@@ -79,4 +79,4 @@ _In this section, you saw how Prompty-based custom evaluators work with AI-Assis
 
 
 
-!!! example "Next → [Let's Talk About Deployment!](./05-evaluation.md) and related ideas for operationalization!"
+!!! example "Next → [Let's Talk About Deployment!](./06-operationalization.md) and related ideas for operationalization!"
