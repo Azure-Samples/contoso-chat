@@ -88,3 +88,9 @@ def create_response(chat_request: ChatRequestModel, request: Request, response: 
 def give_feedback(feedback_item: FeedbackItem) -> dict:
     result = provide_feedback(feedback_item)
     return result
+
+
+@app.post("/api/clear_session")
+def clear_session(response: Response):
+    # TODO: delete cookie
+    return 200
