@@ -71,12 +71,12 @@ def execute_query(query, timespan_days):
         logging.error(f"Error in execute_query: {e}")
         return None
 
-def get_interactions(timespan_days, batch_size):
+def get_interactions(timespan_days, interaction_count):
     query = f"""
     AppDependencies
     | where Properties["task"] == "get_response"
     | order by TimeGenerated desc
-    | take {batch_size}
+    | take {interaction_count}
     | project OperationId, Id
     """
     return execute_query(query, timespan_days)
@@ -193,20 +193,20 @@ def process_dependency(dependency_row, dependency_columns, timespan_days):
 
 
 
-def extract_app_insights_data(timespan_days: int = 2, batch_size: int = 5) -> List[Dict[str, Any]]:
+def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5) -> List[Dict[str, Any]]:
 
     """
     Extracts data from Azure Application Insights for multiple interactions.
 
     Args:
         timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
-        batch_size (int, optional): Number of interactions to retrieve. Defaults to 5.
+        interaction_count (int, optional): Number of interactions to retrieve. Defaults to 5.
 
     Returns:
         List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
     try:
-        dependencies_table = get_interactions(timespan_days, batch_size)
+        dependencies_table = get_interactions(timespan_days, interaction_count)
         
         if dependencies_table is None:
             logging.error("No data returned from get_interactions")
@@ -319,7 +319,7 @@ def relevance_evaluation(question: str, context: str, answer: str) -> str:
 
 
 
-def evaluation_run(timespan_days: int, batch_size:int, groundedness_eval: bool = True, 
+def evaluation_run(timespan_days: int, interaction_count:int, groundedness_eval: bool = True, 
      coherence_eval: bool = True, relevance_eval: bool = True) -> str:
     
     """
@@ -327,7 +327,7 @@ def evaluation_run(timespan_days: int, batch_size:int, groundedness_eval: bool =
 
     Args:
         timespan_days (int, optional): Number of days for the query timespan. Defaults to 2.
-        batch_size (int, optional): Number of interactions to retrieve. Defaults to 5.
+        interaction_count (int, optional): Number of interactions to retrieve. Defaults to 5.
 
     Returns:
         str: A JSON string containing a list of dictionaries with the evaluation results.
@@ -336,7 +336,7 @@ def evaluation_run(timespan_days: int, batch_size:int, groundedness_eval: bool =
     results = []  # Initialize a list to store results for all IDs
 
     try:
-        app_insights_data = extract_app_insights_data(timespan_days, batch_size)
+        app_insights_data = extract_app_insights_data(timespan_days, interaction_count)
         
         logging.info(f"Extracted {len(app_insights_data)} interactions from App Insights.")
 
@@ -392,18 +392,16 @@ def upload_evals_to_appinsights(json_string: str):
     Args:
         results (str): A JSON string containing a list of dictionaries with the evaluation results.
     """
-    
+
     configure_azure_monitor()
 
     data = json.loads(json_string)
   
     for item in data:        
         extra = {'extra': item}
-        logger.info(item, **extra)
+        logger.info("eval", **extra)
        
     
-
-
 
 if __name__ == "__main__":
 
@@ -412,9 +410,9 @@ if __name__ == "__main__":
     relevance_eval = True
 
     timespan_days =2 # number of days you want to select for queries
-    batch_size = 2# number of interactions you want to evaluate
+    interaction_count = 2# number of interactions you want to evaluate
     
-    results = evaluation_run(timespan_days,batch_size, 
+    results = evaluation_run(timespan_days,interaction_count, 
     groundedness_eval, coherence_eval, relevance_eval)
 
     upload_evals_to_appinsights(results)
