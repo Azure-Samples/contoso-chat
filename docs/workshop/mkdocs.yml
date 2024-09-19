@@ -21,8 +21,9 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to light mode
-
-#  features:
+  
+  features:
+    - content.code.copy
 #    - navigation.tabs
 
 markdown_extensions:
