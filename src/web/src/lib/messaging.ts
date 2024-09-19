@@ -136,6 +136,20 @@ export async function clearSession() {
     "Content-Type": "application/json"
   };
   const response = await fetch("/api/chat/session", {
+    method: "DELETE",
+    headers: headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+}
+
+export async function startSession() {
+  const headers = {
+    "Content-Type": "application/json"
+  };
+  const response = await fetch("/api/chat/session", {
     method: "POST",
     headers: headers,
   });

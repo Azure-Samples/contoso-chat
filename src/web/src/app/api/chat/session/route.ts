@@ -1,22 +1,16 @@
 import { type NextRequest } from "next/server";
-const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
+import { cookies } from 'next/headers'
+import { v4 } from "uuid";
 
+
+export async function DELETE(req: NextRequest) {
+    cookies().delete('sessionid')
+    const data = {message: "success"}
+    return Response.json(data);
+}
 
 export async function POST(req: NextRequest) {
-    const headers = {
-        "Content-Type": "application/json"
-    };
-
-    const response = await fetch(`${api_endpoint}/api/clear_session`, {
-        method: "POST",
-        headers: headers,
-    });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
+    cookies().set("sessionid", v4())
+    const data = {message: "success"}
     return Response.json(data);
-
 }

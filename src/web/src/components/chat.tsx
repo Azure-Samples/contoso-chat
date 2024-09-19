@@ -16,7 +16,8 @@ import {
   sendGroundedMessage,
   sendPromptFlowMessage,
   sendVisualMessage,
-  clearSession
+  clearSession,
+  startSession
 } from "@/lib/messaging";
 
 interface ChatAction {
@@ -156,7 +157,7 @@ export const Chat = () => {
     });
   };
 
-  const sendMessage = () => {
+  const sendMessage =  async () => {
     const newTurn: ChatTurn = {
       name: "John Doe",
       message: message,
@@ -168,6 +169,10 @@ export const Chat = () => {
     };
 
     const t0 = performance.now();
+
+    if (chatHistory.length == 0) {
+      await startSession()
+    }
 
     if (chatType === ChatType.Grounded) {
       // using "Add Your Data"

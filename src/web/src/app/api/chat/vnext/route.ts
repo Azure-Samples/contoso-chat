@@ -1,6 +1,7 @@
 
 import { log } from "console";
 import { type NextRequest } from "next/server";
+import { cookies } from 'next/headers'
 const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
 
 // TODO: Give this a better name than 'vnext'.
@@ -8,6 +9,8 @@ const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
 
 export async function POST(req: NextRequest) {
     const request_body = await req.json();
+    const cookieStore = cookies()
+    request_body['session_id'] = cookieStore.get('sessionid')?.value
 
     // TODO: What is the authentication mechanism?
     const headers = {

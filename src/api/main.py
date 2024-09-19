@@ -67,14 +67,9 @@ async def root():
 
 @app.post("/api/create_response")
 @tracer.start_as_current_span("create_response")
-def create_response(chat_request: ChatRequestModel, request: Request, response: Response) -> dict:
-
-    session_id = request.cookies.get('sessionid')
-    if not session_id:
-        session_id = str(uuid.uuid4())
-        response.set_cookie(key="sessionid", value=session_id)
+def create_response(chat_request: ChatRequestModel, response: Response) -> dict:
     span = trace.get_current_span()
-    span.set_attribute("session.id", session_id)
+    span.set_attribute("session.id", chat_request.session_id)
 
     result, metadata = get_response(chat_request.customer_id, chat_request.question, chat_request.chat_history)
 
@@ -88,9 +83,3 @@ def create_response(chat_request: ChatRequestModel, request: Request, response: 
 def give_feedback(feedback_item: FeedbackItem) -> dict:
     result = provide_feedback(feedback_item)
     return result
-
-
-@app.post("/api/clear_session")
-def clear_session(response: Response):
-    # TODO: delete cookie
-    return 200
