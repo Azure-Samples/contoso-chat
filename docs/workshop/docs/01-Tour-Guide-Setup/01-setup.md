@@ -1,10 +1,11 @@
-# 1️⃣ | Getting Started
+# 1️⃣ | Getting Started: Instructor-Led Workshop
 
-Thie instructions are for participants of the instructor-led **"WRK550: Build a Retail Copilot Code-First on Azure AI"** workshop offered on the Microsoft AI Tour (2024-2025). If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
+Thie instructions are for participants of the instructor-led **"WRK550: Build a Retail Copilot Code-First on Azure AI"** workshop offered on the Microsoft AI Tour (2024-2025). 
+
+If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
 
 - [**Register to attend**](https://aitour.microsoft.com/) at a tour stop near you.
 - [**View Lab resources**](https://aka.ms/aitour/wrk550) to continue your journey.
-
 
 !!! quote "Did you already check the [Pre-requisites](./../00-Before-You-Begin/index.md) and verify you met the requirements?"
 
@@ -12,103 +13,149 @@ Thie instructions are for participants of the instructor-led **"WRK550: Build a 
 
 ## 1. Launch Skillable Lab
 
-The **WRK550 Lab** is run using the Skillable platform which provides you with an active Azure account (_username_, _password_, _subscription_) that comes pre-provisioned with the resources you need for this lab (_Azure AI project_, _Azure OpenAI models_, supporting _Azure resources_, and data). 
+The **WRK550 Lab** is run using the Skillable platform which provides you with a temporary Azure account (_username_, _password_, _subscription_) that comes pre-provisioned with the resources you need for this lab (_Azure AI project_, _Azure OpenAI models_, supporting _Azure resources_, and data). 
 
-**Important:** Once the Skillable VM is activated, you will have a fixed time limit (75 minutes) to complete the workshop before the VM shuts down. You can track the remaining time in the display at the top-right corner of the Skillable VM.
+**Important:** Once the Skillable VM is activated, you will have a fixed time limit (75 minutes) to complete the workshop before the VM shuts down. You can track the remaining time in the display at the top-right corner of the Skillable Lab window.
 
 _If you are currently in an AI Tour session and have already launched the Skillable lab and verified credentials - move on to Section 2 below! Otherwise,  complete these two steps now_.
 
-??? abstract "Step 0: Launch Browser Window In Incognito Mode (window A)"
+!!! abstract "Step 0: Launch Browser Window In Incognito Mode (window A)"
 
-    The workshop is conducted completely within a browser environment. You may have an enterprise Azure or GitHub account that you are logged into that may cause conflicts. To avoid this, we recommend opening a new browser window in **incognito mode** (private mode) with your preferred browser. 
+   The workshop is conducted completely within a browser environment. You may have an enterprise Azure or GitHub account that you are logged into that may cause conflicts. To avoid this, we recommend opening a new browser window in **incognito mode** (private mode) with your preferred browser. 
 
-    - Open a new browser window in incognito or private mode
+   - Open a new browser window in incognito or private mode
 
-    **✅ | CONGRATULATIONS!** - Your Learning journey has begun!
+   **✅ | CONGRATULATIONS!** - Your Learning journey has begun!
 
-??? abstract "Step 1: Launch Skillable VM and log in (window B)"
+!!! abstract "Step 1: Launch Skillable VM and log in (window B)"
 
-    1. Navigate to the **WRK550 Lab** link 
-    1. Click `Launch` - open new window with split panes (window B)
-    1. **Check**: You see `Login` prompt in left pane
-    1. **Check**: You see a "Resources" tab in right pane
-    1. **Check**: You see an `Azure Portal` section under Resources
-    1. **Check**: You see `Subscription`, `Username`, `Password` in that section
-    1. **Check**: You see an `Admin`/`Password` section lower in Resources tab
-    1. Click login (left), then click admin `Password` (right) and confirm
-    1. **Check**: You see a Windows 11 Desktop in the left pane
-    1. Keep window B open - you will need credentials in the next step.
+1. Open the **WRK550 Lab** link provided by your instructor in your browser.
+1. Click `Launch` - open new window with two panes (window B)
+1. **Check**: You see `Password` prompt in the left pane.
+    - This is a virtual machine. We will not use it in this workshop.
+1. **Check**: You see a **Build a Retail Copilot Code-First on Azure AI** tab in right pane
+    - Follow the instructions in this pane to open the lab instructions.
 
-    **✅ | CONGRATULATIONS!** - Your Skillable VM is live!
+Keep window B open - you will need the **Azure Credentials** shown in this window in the next step.
+
+**✅ | CONGRATULATIONS!** - Your Skillable Lab is live!
 
 
-
-## 2. Setup Dev Environment
+## 2. Set Up Your Dev Environment
 
 The **WRK550 Lab** requires a Python development runtime (with package dependencies), Visual Studio Code (with specific extensions) and Azure CLI tooling - before we can begin building. The sample comes pre-configured with a [`devcontainer.json`](https://containers.dev), allowing us to get a **pre-built development environment** using GitHub Codespaces, with no manual effort required.
 
 _In this section, we'll fork the sample repo to our personal profiles - then launch GitHub Codespaces to activate that environment with a Visual Studio Code editor, right in the browser_.
 
-??? info "Step 2: Open GitHub in tab 1️⃣"
+!!! abstract "Step 2: Open GitHub in tab 1️⃣"
 
-    1. Open a new browser tab = Tab 1️⃣
-    1. Navigate to the workshop sample with this link - [Contoso Chat](https://aka.ms/aitour/contoso-chat)
-    1. Log into GitHub - use a personal login account
-    1. Fork the sample to your profile - uncheck `main` to get all branches
-    1. Switch to your fork of the repo - check that you have the `aitour-WRK550` branch
+The source code for the application used in this workshop is available on GitHub. Let's log into GitHub and copy a fork of the source code to your GitHub account.
 
-    **✅ | CONGRATULATIONS!** - Your have a personal copy of the sample to explore!
+1. Open a new browser tab = Tab 1️⃣
+1. **Navigate to** the [contoso-chat workshop sample](https://aka.ms/aitour/contoso-chat) with this link:
 
-??? info "Step 3: Launch Codespaces in tab 2️⃣"
+    ```
+    https://aka.ms/aitour/contoso-chat
+    ```
 
-    1. Use the branch dropdown - switch to the `aitour-WRK550` branch
-    1. Click the green `Code` button - select the `Codespaces` tab
-    1. Click the `Create new codespaces on aitour-WRK550` button
-    1. This should launch a new browser tab = Tab 2️⃣
-    1. **Check:** The loading tab should show a VS Code editor 
-    1. Codespaces is loading ... this may take a while (leave it open)
+1. **Sign into** GitHub - use your own GitHub account to log in
+1. Click **Fork** in the top-right corner of the page
 
-    **✅ | CONGRATULATIONS!** - Your Codespaces is running!
+1. In the "Create a new fork" page, scroll down and **uncheck** the option "Copy the main branch only".
 
+    !!! warning "If you forget to uncheck that option, you will need to delete your fork and try again."
 
-??? info "Step 4: Open Azure Portal in tab 3️⃣"
+1. Click the **Create Fork** button.
 
-    1. Open a new browser tab = Tab 3️⃣
-    1. Navigate to the [Azure Portal](https://portal.azure.com)
-    1. Sign in with Skillable `Username`-`Password` from **Step 1** (above).
-    1. Click `Resource Groups` - refresh it periodically if needed
-    1. **Check:** A resource group `rg-AITOUR` is created
-    1. Click resource group item - see 'Overview' in details page
-    1. **Check:** Deployments (under "Essentials") - **has 35 deployments**
-    1. **Check:** Resources (in Overview) - **has 15 resources created**
+    * You should now be at the page `https://github.com/YOURUSERNAME/contoso-chat` within your own GitHub account.
+   
+    * You now have a copy (known as a fork) of this workshop repository in your own GitHub account! Feel free to play with it, you won't break anything.
 
-    **✅ | CONGRATULATIONS!** - Your Azure Infra is Provisioned!
+**✅ | CONGRATULATIONS!** - Your have a personal copy of the sample to explore!
 
-??? info "Step 5: Open Azure AI Studio in tab 4️⃣"
+!!! abstract "Step 3: Launch Codespaces in tab 2️⃣"
 
-    1. Open a new browser tab = Tab 4️⃣
-    1. Navigate to the [Azure AI Studio](https://ai.azure.com)
-    1. Click `Sign in` - should auto-login with Azure credentials
-    1. Click `All resources` - **Check:** one hub resource listed
-    1. Click hub resource - **Check:** one project resource listed
-    1. Click `Deployments` tab - **Check:** 4 models under `aoai-connection` 
-    1. **Check:** Models include - `gpt-4`, `gpt-35-turbo`, `text-embedding-ada-002` 
+GitHub Codespaces will be our development environment for this workshop. Let's launch CodeSpaces now, starting from the fork of the `contoso-chat` repository you just created.
 
-    **✅ | CONGRATULATIONS!** - Your Azure AI Project is ready!
+!!! tip "Even a free GitHub account will have sufficient GitHub CodeSpaces credits to run this workshop. Be sure to delete the CodeSpace after the workshop to minimize use of your credits."
 
-??? info "Step 5: View Container Apps Endpoint in tab 5️⃣"
+1. Use the branch selection drop-down on the left side that now reads **main** and select the branch **aitour-WRK550**.
 
-    1. Return to Azure Portal = Tab 3️⃣
-    1. Visit the `rg-AITOUR` Resource group page
-    1. Click the `Container Apps` resource - see details page
-    1. Look for `Application Url` - at top right
-    1. Click to launch in new tab = Tab 5️⃣
-    1. See: page with `"Azure Container Apps"` and logo
+    ![alt text](../img/branch.png)
 
-    **🌟 | CONGRATULATIONS!** - Your ACA Endpoint is alive!
+1. Click the green **<> Code** button in the top-right part of the page, click the **Codespaces** tab, and then click **Create codespace on aitour-WRK550**.
+
+1. This will launch a new browser tab = Tab 2️⃣. It will take a few minutes for the CodeSpace to be ready for use. In the meantime, continue with the next sections. 
+
+!!! abstract "Step 4: Open Azure Portal in tab 3️⃣"
+
+1. Open a new browser tab = Tab 3️⃣
+1. Navigate to the [Azure Portal](https://portal.azure.com):
+    ```
+    https://portal.azure.com
+    ```
+1. **Sign in** using the `Username` and `Password` displayed under "Azure Credentials" in the Skillable Lab window you launched in **Step 1** (above).
+1. In the Navigate section, **Click** `Resource Groups`.
+1. A resource group has been created for you, containing the resources needed for the RAG application. **Click** `rg-AITOUR`.
+1. **Check:** Deployments (under "Essentials") - There are **35 succeeded** Deployments. 
+1. **Check:** Resources (in Overview) - There are **15 resources** in the resource group.
+
+**✅ | CONGRATULATIONS!** - Your Azure Infra is Provisioned!
+
+!!! abstract "Step 5: Open Azure AI Studio in tab 4️⃣"
+
+1. Open a new browser tab = Tab 4️⃣
+1. Navigate to the [Azure AI Studio](https://ai.azure.com?feature.customportal=false#home):
+    ```
+    https://ai.azure.com
+    ```
+
+1. **Click** `Sign in` -- you will auto-login with the Azure credentials used to sign into the portal.
+1. Under Management in the left pane, **click** `All hubs`. One hub resource will be listed.
+
+    !!! info "An [AI Studio hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects resources like generative AI endpoints that can be shared between projects."
+
+1. **Click** the listed hub resource name to display it. **Check:** 1 project listed under `Projects`.
+
+    !!! info "An [AI Studio project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) is used to organize your work when building applications."
+
+1. Under "Shared Resources" in the left pane, **click** `Deployments`. **Check:** 4 models listed under `aoai-connection` 
+
+    !!! info "The Model Deployments section lists Generative AI models deployed to this Hub. For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
+
+**✅ | CONGRATULATIONS!** - Your Azure AI Project is ready!
+
+!!! abstract "Step 5: View Container Apps Endpoint in tab 5️⃣"
+
+[Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) will host the endpoint used to serve the Contoso Chat application on the Contoso Outdoors website. We have deployed a container app, but have not yet pushed code to it. 
+
+1. Return to the Azure Portal, Tab 3️⃣
+1. Visit the `rg-AITOUR` Resource group page
+1. Click the `Container App` resource to display the Overview page
+1. Look for `Application Url` - at top right
+1. Click to launch in new tab = Tab 5️⃣
+1. See: page with `"Azure Container Apps"` and logo
+
+**🌟 | CONGRATULATIONS!** - Your ACA Endpoint is ready!
+
+!!! abstract "Step 6: Make sure CodeSpaces has completed launching"
+
+1. Return to your GitHub Codespaces tab, Tab 2️⃣.
+
+You should see the Visual Studio Online development environment. If you have used Visual Studio Code on the desktop, it will look very familiar. You should see these components:
+
+  * Left sidebar: The Activity Bar, including the "Prompty" extension logo at the end.
+  * Left pane: The Explorer pane, showing the files in the `contoso-chat` repository.
+  * Right pane: A preview of the main README.md file from the repository
+  * Lower pane: A terminal pane, with a `bash` prompt ready to receive input.
+
+If you don't see those yet, wait until they appear in your browser.
+
+**✅ | CONGRATULATIONS!** - Your CodeSpace is running!
 
 ---
 
 > We verified our Skillable credentials worked, and launched our Codespaces environment!
+
 
 !!! example "Next → Let's [Validate Our Setup](./02-validate.md) before we begin building"

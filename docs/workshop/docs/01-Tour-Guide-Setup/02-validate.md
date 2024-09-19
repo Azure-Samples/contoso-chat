@@ -1,4 +1,4 @@
-#  2️⃣ | Validate Setup
+#  2️⃣ | Validate Setup and Provision
 
 !!! success "Let's Review where we are right now"
 
@@ -14,86 +14,107 @@
 
 _We have our Azure infrastructure resources pre-provisioned, but we need to populate our data and deploy the initial application to Azure. Let's get this done_.
 
+## 1. Check: Tools Installed
 
-## 1. Check: VS Code Ready
+We need specific tools for running, testing & deploying our app. Let's verify we have these installed.
 
-_We had left GitHub Codespaces in loading mode - let's verify that loading completed and our Visual Studio Code IDE is ready!_.
+Copy/paste these commands into the VS Code terminal to verify required tools are installed. 
 
-??? info "Step 1: Validate Codespaces Ready in 2️⃣"
+```bash
+python --version
+```
 
-    1. Return to GitHub Codespaces tab 
-    1. See: VS Code editor with terminal open
-    1. Verify: `Prompty Extension` in sidebar (left, bottom)
-    1. Verify: Cursor ready in VS Code terminal (bottom)
+```bash
+az version
+```
 
+```bash
+azd version
+```
 
-## 2. Check: Tools Installed
+```bash
+python --version
+```    
+```bash
+fastapi --version
+```
 
-_We need specific tools for running, testing & deploying our app. Let's verify we have these installed_.
+!!! tip "These tools have been installed into GitHub CodeSpaces for you. If you want to run this workshop in another environment like your dekstop PC, you will have to install them yourself."
 
-??? info "Step 2: Verify tools installed in 2️⃣"
+## 2. Authenticate with Azure
 
-    Copy/paste these commands into the VS Code terminal to verify required tools are installed
-    
-    ```bash
-    python --version
+To access our Azure resources, we need to be authenticated from VS Code. Let's do that now. Since we'll be using both the `az` and `azd` tools, we'll authenticate in both.
+
+From the VS Code Online Terminal pane (in Tab 2️⃣):
+
+1. Log into Azure CLI using the command below. 
+
     ```
-    ```bash
-    az version
+    az login --use-device-code
     ```
 
-    ```bash
-    azd version
-    ```
+1. Copy the 8-character code shown to your clipboard, then click the link to visit https://microsoft.com/devicelogin in a new browser tab.
 
-    ```bash
-    python --version
-    ```    
-    ```bash
-    fastapi --version
-    ```
+1. Select the account with Username and from Skillable Lab window. Click "Continue" at the "are you sure" prompt, and then close the tab.
+
+1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
+1. You also need to log into the Azure Developer CLI. Enter the command below at the terminal, and follow the same process to copy the code, select the account, and close the tab.
+```
+azd auth login
+```
+
+!!! success "You are now logged into Azure CLI and Azure Developer CLI ✅"
+
+## 3. Configure Azure Env Vars
+
+To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've already provisioned in the `francecentral` region. Let's retrieve those here.
+
+From the Terminal pane in Tab 2️⃣:
+
+1. Run the commands below
+
+```
+azd env set AZURE_LOCATION francecentral
+```
+```
+azd env refresh -e AITOUR --no-prompt
+```
+
+The file `.azure/AITOUR/.env` has been updated in our filesystem with information needed to build our app: connection strings, endpoint URLs, resource names and much more. You can open the file to see the values retrieved, or display them with this command:
+
+```
+azd env get-values
+```
+
+!!! tip "No passwords or other secrets are included in the `.env` file. Authentication is validated using managed identities, as a security best practice." 
 
 
-## 3. Authenticate: with Azure
-
-_To access our Azure resources, we need to be authenticated from VS Code. Let's do that now. Since we'll be using both the `az` and `azd` tools, we'll authenticate in both_.
-
-??? info "Step 3: Authenticate with Azure via CLIs in 2️⃣"
-
-    1. Log into Azure CLI - `az login --use-device-code`
-    1. Complete authflow - use default tenant, subscription
-    1. You are now logged into Azure CLI ✅
-    1. Log into Azure Developer CLI - `azd auth login`
-    1. Complete authflow - see: "Logged in to Azure" ✅
-
-## 4. Configure Azure Env Vars
-
-_To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've provisioned. Let's retrieve those here._
-
-??? info  "Step 4: Refresh Azure Dev Env in local env in 2️⃣"
-
-    1. Run `azd env refresh -e AITOUR` in terminal
-    1. Select default subscription
-    1. Select `francecentral` as Azure location
-    1. See: `SUCCESS: Environment refresh completed`
-    1. See: `.azure/AITOUR/.env` created with values  ✅
-
-## 5. Run Postprovision Hooks
+## 4. Populate databases and container app
 
 _We can now use these configured tools and SDK to perform some post-provisioning tasks. This includes populating data in Azure AI Search (product indexes) and Azure Cosmos DB (customer data), and deploying the initial version of our application to Azure Container Apps_.
 
-??? info  "Step 5: Run post-provisioning hooks in 2️⃣"
+From the Terminal pane in Tab 2️⃣:
 
-    1. Run `bash ./docs/workshop/src/0-setup/azd-update-roles.sh ` in terminal
-    1. This will take a few minutes ....
-    1. Run `azd hooks run postprovision` in terminal
-    1. This will take a few minutes ....
-    1. Builds and deploys container app ..
-    1. Verify that you see a `.env` file in your repo ✅
-    1. Refresh Container App in tab 5️⃣ - verify that you see "Hello world" ✅
+1. Run the command below. (This will take a few minutes to complete.)
+
+    ```
+    bash ./docs/workshop/src/0-setup/azd-update-roles.sh
+    ```
+
+    !!! info "This updates the security profile for the provisioned Cosmos DB database so you can add data to it. This step isn't needed when you deploy Cosmos DB yourself."
+
+1. Once complete, run the command below:
+
+    ```
+    azd hooks run postprovision
+    ```
+
+    This command populates Azure Search and Cosmos DB with product and customer data from Contoso Outdoors. It also builds and deploys a shell endpoint to the container app, which we will update in the next section. This will take a few minutes.
+
+1. Refresh the Container App in tab 5️⃣ - it will update to say "Hello world" ✅
 
 ---
 
 _We are ready to start the development workflow segment of our workshop. But let's first check that all these setup operations were successful!_.
 
-!!! example "Next → [Let's Validate our Infra](./../03-Workshop-Build/03-infra.md) before we start building!"
+!!! example "Next → [Let's Explore the App Infrastructure](./../03-Workshop-Build/03-infra.md) before we start building!"

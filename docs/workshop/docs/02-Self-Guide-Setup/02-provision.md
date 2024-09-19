@@ -27,4 +27,4 @@ The last step provisions the Azure infrastructure **and** deploys the first vers
 
 ---
 
-!!! info "Next → 3️⃣ [Validate Infra](./../03-Workshop-Build/03-infra.md) before we start building!
+!!! info "Next → 3️⃣ [Let's Explore App Infrastructure](./../03-Workshop-Build/03-infra.md) before we start building!

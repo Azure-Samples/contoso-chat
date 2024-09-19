@@ -1,8 +1,11 @@
-# 1️⃣ | Getting Started
+# 1️⃣ | Getting Started (Self-Guided Workshop)
 
-These are the instructions for **Self Guided** learners for this workshop. By the end of this section, you should have provisioned your Azure infrastructure yourself, and validated your local development environment in GitHub Codespaces.
+These are the instructions for **Self Guided** learners for this workshop. If you are participating in an intructor-led version of this workshop, please skip ahead to Section 3️⃣ [Provision Infra](./../02-Self-Guide-Setup/02-provision.md). 
 
-!!! info "First → Review [ 0️⃣ | Pre-requisites](./../00-Before-You-Begin/index.md) before you begin setup"
+In this section, you will provision the required resources to your
+Azure subscription, and validated your local development environment in GitHub Codespaces.
+
+!!! info "Reminder! → You will need to have these [ 0️⃣ | Pre-requisites](./../00-Before-You-Begin/index.md) before you begin setup"
 
 
 ## 1. Setup Dev Environment

@@ -1,4 +1,4 @@
-# 3️⃣ | Validate Infra
+# 3️⃣ | Explore App Infrastructure
 
 !!! success "Let's Review where we are right now"
 
