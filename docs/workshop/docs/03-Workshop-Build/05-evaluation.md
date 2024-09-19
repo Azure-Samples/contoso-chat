@@ -30,6 +30,7 @@
     - **Take a minute to open each prompty and understand the template setup.**
 
 ??? info "Step 2: Execute AI-Assisted Evaluation"
+
     - Click on `src/api/evaluate-chat-flow.ipynb`
     - You should see: a Jupyter notebook
         - `pip install tabulate` if not already installed
@@ -63,6 +64,19 @@
     - Look for the `src/api/.runs` folder and click on a `.tracy` file
     - Explore the traces to understand the telemetry captured for debugging
 
-??? success "Congratulations 🎉 - You used AI-Assisted Evaluation with custom evaluators!"
+!!! quote "Congratulations! You just used custom evaluators in an AI-Assisted Evaluation flow!"
+
+    **Challenge yourself at home:** 
+
+    - Build a new evaluator that assesses a metric you made up 
+    - Define the scoring criteria, and give examples of usage
+    - Create the test dataset, then assess results against your evaluator. 
+    - Think about how this approach extends to _safety_ evaluations. 
 
 ---
+
+_In this section, you saw how Prompty-based custom evaluators work with AI-Assisted evaluation, to assess the quality of your application using defined metrics like coherence, fluency, relevance, and groundedness. You got a sense for how these custom evaluators are crafted._
+
+
+
+!!! example "Next → [Let's Talk About Deployment!](./05-evaluation.md) and related ideas for operationalization!"

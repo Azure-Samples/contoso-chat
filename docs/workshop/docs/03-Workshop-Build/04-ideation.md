@@ -1,5 +1,20 @@
 # 4️⃣ | Ideate With Prompty
 
+!!! success "Let's Review where we are right now"
+
+    We still have these 5 tabs open.
+
+    1. Github Repo - starting tab 1️⃣
+    1. GitHub Codespaces 2️⃣
+    1. Azure Portal 3️⃣
+    1. Azure AI Studio 4️⃣
+    1. Azure Container Apps 5️⃣
+
+    We also have a fully-provisioned Azure infrastructure (backend), successfully deployed the first version of our application - and tested it manually, with a single input.
+
+
+_Now it's time to understand how that application was developed - and specifically, understand how we can go from "prompt to prototype" in the **Ideation** phase of our developer workflow_.
+
 ??? danger "Step 1: Create a New Prompty"
 
     - create an empty folder in root of repo (e.g., `sandbox`)
@@ -10,6 +25,7 @@
         - ❌ | ` Error: 404 The API deployment for this resource does not exist.`
 
 ??? info "Step 2: Update model configuration"
+
     - Copy the previous prompty to a new one: `cp basic.prompty chat-0.prompty`
     - Update this line as shown: `azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}`
     - Run the prompty - should run immediately.
@@ -18,6 +34,7 @@
     - ✅ | Your prompty model configuration is working
 
 ??? info "Step 3: Update prompt template, add sample for testing"
+
     - Let's start refactoring the prompt in steps, till we get to the Contoso Chat version
     - First: `cp ../docs/workshop/src/chat-1.* .` to get the next iteration
         - `chat-1.prompty` has customized frontmatter and starter template for Contoso chat
@@ -51,14 +68,19 @@
         ```
     - Run the file by clicking the play icon. You should see a valid result.
 
-??? success "Congratulations 🎉 - You learned prompt engineering with Prompty!"
+!!! quote "Congratulations! You just learned prompt engineering with Prompty!"
 
-    - First, create a base prompt and configure the model, parameters
-    - Next, modify frontmatter to personalize usage, define inputs & test sample
-    - Then, modify body to reflect system context, instructions and template structure
-    - Last, create code to run Prompty from command-line or in automated workflows
+    Let's recap what we tried:
 
+    - First, create a base prompt → configure the model, parameters
+    - Next, modify frontmatter → spersonalize usage, define inputs & test sample
+    - Then, modify the body →  reflect system context, instructions and template structure
+    - Finally, create executable code →  run Prompty from command-line or in automated workflows
 
-    Iterate and explore changes and their impact on prompt response quality & cost. With each iteration, you should get closer to the `contoso_chat/chat.prompty` final version. Delete your `sandbox/` folder when done, to keep original app source in focus
+    We saw how these simple tools can help us implement safety guidance for our prompts and iterate on our prompt template design quickly and flexibly, to get to our first prototype. The sample data file  provides a test input for rapid iteration, and it allows us understand the "shape" of data we will need, to implement this application in production.
 
 ---
+
+_In this section, you saw how Prompty tooling supports rapid prototyping - starting with a basic prompty. Continue iterating on your own to get closer to the `contoso_chat/chat.prompty` target. You can now delete the `sandbox/` folder, to keep original app source in focus_.
+
+!!! example "Next → [Let's Evaluate with AI!](./05-evaluation.md) and learn about custom evaluators!"

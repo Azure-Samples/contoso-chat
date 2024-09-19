@@ -33,3 +33,8 @@
     1. The repository uses `azd` for deployment - learn more in the docs.
     
 ---
+
+_You made it!. That was a lot to cover - but don't worry! Now that you have a fork of the repo, you can check out the [Self-Guided Workshop](./../02-Self-Guide-Setup/01-setup.md) option to revisit ideas at your own pace! Before you go, some important cleanup tasks you need to do!!_
+
+
+!!! example "Next → [Summary & Teardown](./../04-Workshop-Wrapup/07-cleanup.md) - and thank you all for your attention!"

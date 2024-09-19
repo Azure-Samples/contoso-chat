@@ -1,4 +1,4 @@
-# 7️⃣ | Wrap-up Tasks
+# 7️⃣ | Cleanup
 
 !!! danger "Don't Forget - End the Skillable Session"
 

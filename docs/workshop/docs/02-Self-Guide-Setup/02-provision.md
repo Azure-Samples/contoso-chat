@@ -1,6 +1,7 @@
 #  2️⃣ | Provision Infra
 
 ??? note "Step 6: Provision infra with `azd` in tab 2️⃣"
+
     1. Stay in tab 2️⃣ - enter `azd up` and follow prompts
         1. Enter a new environment name - use `AITOUR`
         1. Select a subscription - pick the same one from step 5.
@@ -10,6 +11,7 @@
     1. ✅ | Your Azure infra is currently being provisioned..
 
 ??? note "Step 7: Track provisioning status in tab 3️⃣"
+
     1. Switch to the Azure Portal in tab 3️⃣
     1. Click on Resource Groups - see: `rg-AITOUR`
     1. Click on `rg-AITOUR` - see `Deployments` under **Essentials**
