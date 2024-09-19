@@ -47,23 +47,22 @@ export const sendPromptFlowMessage = async (
   };
 
   console.log(body);
-
-  let answer = ""
-
-  await fetch("/api/chat/vnext", {
+  
+  let response = await fetch("/api/chat/vnext", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
-  }).then(r => {
-    return r.json()
-  }).then(data => {
-    answer = data["answer"]
-  }).catch(e => {
-    console.log(e)
-    answer =  "There was a problem."
-  });
+  })
+  
+  let answer = ""
+  if (!response.ok) {
+    answer = "I'm sorry, there was a problem."
+  } else {
+    const data = await response.json();
+    answer = data['answer']
+  }
 
   const userMessage = {"role": "user", "content": turn.message}
   const assistantMessage = {"role": "assistant", "content": answer}
