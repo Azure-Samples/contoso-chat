@@ -1,6 +1,6 @@
 # 1️⃣ | Getting Started (Self-Guided Workshop)
 
-These are the instructions for **Self Guided** learners for this workshop. If you are participating in an intructor-led version of this workshop, please skip ahead to Section 3️⃣ [Provision Infra](./../02-Self-Guide-Setup/02-provision.md). 
+These are the instructions for **Self Guided** learners for this workshop. If you are participating in an intructor-led version of this workshop, please skip ahead to Section 3️⃣ [Explore App Infrastructure](./../03-Workshop-Build/03-infra.md). 
 
 In this section, you will provision the required resources to your
 Azure subscription, and validated your local development environment in GitHub Codespaces.

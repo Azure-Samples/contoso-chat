@@ -33,8 +33,9 @@ azd version
 ```
 
 ```bash
-python --version
+prompty --version
 ```    
+
 ```bash
 fastapi --version
 ```
@@ -63,6 +64,7 @@ From the VS Code Online Terminal pane (in Tab 2️⃣):
 ```
 azd auth login
 ```
+    - You won't need to enter the password again. Simply select your Skillable Lab account.
 
 !!! success "You are now logged into Azure CLI and Azure Developer CLI"
 
@@ -75,11 +77,13 @@ From the Terminal pane in Tab 2️⃣:
 1. Run the commands below
 
 ```
-azd env set AZURE_LOCATION francecentral
+azd env set AZURE_LOCATION francecentral -e AITOUR --no-prompt
 ```
 ```
-azd env refresh -e AITOUR --no-prompt
+azd env refresh -e AITOUR 
 ```
+
+(Press ENTER to select the default Azure subscription presented). 
 
 The file `.azure/AITOUR/.env` has been updated in our filesystem with information needed to build our app: connection strings, endpoint URLs, resource names and much more. You can open the file to see the values retrieved, or display them with this command:
 
