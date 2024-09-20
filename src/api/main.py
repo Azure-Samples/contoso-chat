@@ -5,7 +5,7 @@ import uuid
 from pathlib import Path
 from contoso_chat.models import ChatRequestModel, FeedbackItem
 from fastapi import FastAPI, Request
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, Response
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import metrics
@@ -59,6 +59,17 @@ root_counter = meter.create_counter("root-hits")
 
 tracer = trace.get_tracer(__name__)
 
+class APIException(Exception):
+    def __init__(self, code = 500):
+        self.code = code
+
+@app.exception_handler(APIException)
+async def api_exception_handler(request: Request, exc: APIException):
+    return JSONResponse(
+        status_code=exc.code,
+        content=f"There was a problem.",
+    )
+
 @app.get("/")
 async def root():
     root_counter.add(1)
@@ -67,16 +78,14 @@ async def root():
 
 @app.post("/api/create_response")
 @tracer.start_as_current_span("create_response")
-def create_response(chat_request: ChatRequestModel, request: Request, response: Response) -> dict:
-
-    session_id = request.cookies.get('sessionid')
-    if not session_id:
-        session_id = str(uuid.uuid4())
-        response.set_cookie(key="sessionid", value=session_id)
+def create_response(chat_request: ChatRequestModel, response: Response) -> dict:
     span = trace.get_current_span()
-    span.set_attribute("session.id", session_id)
+    span.set_attribute("session.id", chat_request.session_id)
 
-    result, metadata = get_response(chat_request.customer_id, chat_request.question, chat_request.chat_history)
+    try:
+        result, metadata = get_response(chat_request.customer_id, chat_request.question, chat_request.chat_history)
+    except Exception as e:
+        raise APIException()
 
     response.headers.append("gen_ai.response.id", metadata['responseId'])
     response.headers.append("gen_ai.response.model", metadata['model'])

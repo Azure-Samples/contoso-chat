@@ -8,7 +8,7 @@ import os
 from azure.cosmos import CosmosClient
 from dotenv import load_dotenv
 from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.ai.inference.models import SystemMessage, UserMessage, AssistantMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
 
@@ -69,12 +69,23 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     try:
         with tracer.start_as_current_span("llm", attributes={"task": "get_response"}):
-            response = client.complete(
-                messages=[
-                    SystemMessage(content=rendered_template),
-                    UserMessage(content=question),
-                ]
-            )
+            messages = [SystemMessage(content=rendered_template)]
+            for m in chat_history:
+                try:
+                    content = m['content']
+                    role = m['role']
+                    if role == 'user':
+                        messages.append(UserMessage(content=content))
+                    elif role == 'assistant':
+                        messages.append(AssistantMessage(content=content))
+                    else:
+                        logger.warning(f"Unknown role for message: {role}")
+                except Exception:
+                    logger.warning("Unable to parse chat history messages")
+                
+            messages.append(UserMessage(content=question))
+
+            response = client.complete(messages=messages)
 
         response_content = response.choices[0].message.content
 
@@ -83,6 +94,7 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     except Exception as e:
         logger.error(f"Error getting response: {e}")
+        raise e
 
     return response_back, metadata
 
