@@ -1,7 +1,6 @@
 
 import { log } from "console";
 import { type NextRequest } from "next/server";
-import { cookies } from 'next/headers'
 const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
 
 // TODO: Give this a better name than 'vnext'.
