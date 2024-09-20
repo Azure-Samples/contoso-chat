@@ -21,9 +21,11 @@ To get started in this workshop, open the lab instructions in your browser.
 
 We have created a temporary Azure subscription for you to use during this workshop. You will need these credentials shortly to log into Azure.
 
-Username: ++@lab.CloudPortalCredential(User1).Username++
+**TIP:** click on the username or password to copy it to your clipboard.
 
-Password: ++@lab.CloudPortalCredential(User1).Password++
+**Username:** ++@lab.CloudPortalCredential(User1).Username++
+
+**Password:** ++@lab.CloudPortalCredential(User1).Password++
 
 ## Virtual Machine Credentials (not needed TODO delete)
 

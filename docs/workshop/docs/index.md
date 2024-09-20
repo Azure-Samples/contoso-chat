@@ -1,6 +1,6 @@
 # Build a Retail Copilot Code-First on Azure AI
 
-This website contains the step-by-step instructions for a hands-on workshop that teaches you how to **build, evaluate, and deploy, a retail copilot code-first on Azure AI**. 
+This website contains the step-by-step instructions for a hands-on workshop that teaches you how to **build, evaluate, and deploy a retail copilot code-first on Azure AI**. 
 
 - The solution uses the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) to ground chat AI responses in the retailer's product catalog and cusomer data.
 - The implementation uses [Prompty](https://prompty.ai) for ideation, [Azure AI Studio](https://ai.azure.com) as the underlying platform for GenAIOps, and [Azure Container Apps](https://aka.ms/azcontainerapps) for hosting the deployed copilot.
@@ -21,7 +21,7 @@ This section introduces you to the application scenario (retail copilot), briefl
  
 ## 2. The RAG Pattern
 
-Many foundation models are trained on massive quantities of public data, giving them the ability to answer general-purpose queries effectively. However, in our app scenario, we want responses based on private data from the retailer databases. The _Retrieval Augmented Generation_ (RAG) pattern is currently the recommended approach to solving this problem.
+Many foundation models are trained on massive quantities of public data, giving them the ability to answer general-purpose queries effectively. However, in our app scenario we want responses based on private data from the retailer databases. The _Retrieval Augmented Generation_ (RAG) pattern is currently the recommended approach to solving this problem.
 
 1. The user query arrives at our copilot implementation via the endpoint (API).
 1. It sends the text query to a **retrieval** service which vectorizes it for efficiency.
@@ -61,3 +61,5 @@ The _orchestration_ of RAG workflow steps is achieved using **Prompty** assets c
 
 
 ---
+
+To get started with this workshop, [make sure you have everything you need](00-Before-You-Begin/index.md) to start building.
