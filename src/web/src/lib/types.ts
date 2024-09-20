@@ -9,6 +9,7 @@ export interface ChatTurn {
   image: string | null;
   message: string;
   chat_history: ChatMessage[];
+  session_id: string | null;
   status: "waiting" | "done";
   type: "user" | "assistant";
 };

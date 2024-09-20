@@ -16,9 +16,8 @@ import {
   sendGroundedMessage,
   sendPromptFlowMessage,
   sendVisualMessage,
-  clearSession,
-  startSession
 } from "@/lib/messaging";
+import { v4 } from "uuid";
 
 interface ChatAction {
   type: "add" | "clear" | "replace";
@@ -53,7 +52,7 @@ export const Chat = () => {
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [chatType, setChatType] = useState<ChatType>(ChatType.Grounded);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [state, dispatch] = useReducer(chatReducer, { turns: [] });
 
   const searchParams = useSearchParams();
@@ -140,7 +139,7 @@ export const Chat = () => {
 
   const reset = async () => {
     setChatHistory([])
-    await clearSession()
+    setSessionId(v4())
     setCurrentImage(null);
     setMessage("");
     dispatch({ type: "clear" });
@@ -158,21 +157,26 @@ export const Chat = () => {
   };
 
   const sendMessage =  async () => {
+    const t0 = performance.now()
+    let id = ""
+    if (!sessionId) {
+      id = v4()
+      setSessionId(id)
+    } else {
+      id = sessionId
+    }
+
     const newTurn: ChatTurn = {
       name: "John Doe",
       message: message,
       chat_history: chatHistory,
+      session_id: id,
       status: "done",
       type: "user",
       avatar: "",
       image: currentImage,
     };
 
-    const t0 = performance.now();
-
-    if (chatHistory.length == 0) {
-      await startSession()
-    }
 
     if (chatType === ChatType.Grounded) {
       // using "Add Your Data"
@@ -213,6 +217,7 @@ export const Chat = () => {
           name: "Jane Doe",
           message: "Let me see what I can find...",
           chat_history: chatHistory,
+          session_id: sessionId,
           status: "waiting",
           type: "assistant",
           avatar: "",
@@ -237,6 +242,7 @@ export const Chat = () => {
               name: "Jane Doe",
               message: "Hi, how can I be helpful today?",
               chat_history: chatHistory,
+              session_id: sessionId,
               status: "done",
               type: "assistant",
               avatar: "",

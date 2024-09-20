@@ -27,6 +27,7 @@ export const sendGroundedMessage = async (
     name: "Jane Doe",
     message: data.message,
     chat_history: [],
+    session_id: null,
     status: "done",
     type: "assistant",
     avatar: "",
@@ -44,6 +45,7 @@ export const sendPromptFlowMessage = async (
     chat_history: turn.chat_history,
     question: turn.message,
     customer_id: customerId.toString(),
+    session_id: turn.session_id,
   };
 
   console.log(body);
@@ -73,6 +75,7 @@ export const sendPromptFlowMessage = async (
     name: "Jane Doe",
     message: answer,
     chat_history: latestHistory,
+    session_id: null,
     status: "done",
     type: "assistant",
     avatar: "",
@@ -121,6 +124,7 @@ export const sendVisualMessage = async (
     name: "Jane Doe",
     message: data["answer"],
     chat_history: body.chat_history,
+    session_id: null,
     status: "done",
     type: "assistant",
     avatar: "",
@@ -129,32 +133,3 @@ export const sendVisualMessage = async (
 
   return newTurn;
 };
-
-
-export async function clearSession() {
-  const headers = {
-    "Content-Type": "application/json"
-  };
-  const response = await fetch("/api/chat/session", {
-    method: "DELETE",
-    headers: headers,
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-}
-
-export async function startSession() {
-  const headers = {
-    "Content-Type": "application/json"
-  };
-  const response = await fetch("/api/chat/session", {
-    method: "POST",
-    headers: headers,
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-}

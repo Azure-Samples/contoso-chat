@@ -9,8 +9,6 @@ const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
 
 export async function POST(req: NextRequest) {
     const request_body = await req.json();
-    const cookieStore = cookies()
-    request_body['session_id'] = cookieStore.get('sessionid')?.value
 
     // TODO: What is the authentication mechanism?
     const headers = {
