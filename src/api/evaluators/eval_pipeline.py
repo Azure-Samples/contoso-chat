@@ -44,7 +44,7 @@ azure_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
 # Initialize Azure OpenAI client with Entra ID authentication
 token_provider = get_bearer_token_provider(
     DefaultAzureCredential(),
-    "https://cognitiveservices.azure.com/.default"
+    os.getenv("AZURE_OPENAI_SCOPE")
 )
 
 eval_client = AzureOpenAI(
@@ -52,8 +52,6 @@ eval_client = AzureOpenAI(
     azure_ad_token_provider=token_provider,
     api_version=azure_api_version,
 )
-
-
 
 
 def execute_query(query, timespan_days):
