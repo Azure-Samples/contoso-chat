@@ -73,14 +73,15 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
             for m in chat_history:
                 try:
                     content = m['content']
-                    if m['role'] == 'user':
+                    role = m['role']
+                    if role == 'user':
                         messages.append(UserMessage(content=content))
-                    elif m['role'] == 'assistant':
+                    elif role == 'assistant':
                         messages.append(AssistantMessage(content=content))
                     else:
-                        logger.warning(f"Unknown role for message: {m['role']}")
+                        logger.warning(f"Unknown role for message: {role}")
                 except Exception:
-                    logger.warning("Unable to parde chat history messages")
+                    logger.warning("Unable to parse chat history messages")
                 
             messages.append(UserMessage(content=question))
 
@@ -93,6 +94,7 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     except Exception as e:
         logger.error(f"Error getting response: {e}")
+        raise e
 
     return response_back, metadata
 
