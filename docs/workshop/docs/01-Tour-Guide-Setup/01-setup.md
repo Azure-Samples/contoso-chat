@@ -17,29 +17,22 @@ The **WRK550 Lab** is run using the Skillable platform which provides you with a
 
 **Important:** Once the Skillable VM is activated, you will have a fixed time limit (75 minutes) to complete the workshop before the VM shuts down. You can track the remaining time in the display at the top-right corner of the Skillable Lab window.
 
-_If you are currently in an AI Tour session and have already launched the Skillable lab and verified credentials - move on to Section 2 below! Otherwise,  complete these two steps now_.
+!!! info "If you are currently in an AI Tour session and have already launched the Skillable Lab and verified credentials - move on to Section 2 below. Otherwise,  complete these two steps now."
 
-!!! abstract "Step 0: Launch Browser Window In Incognito Mode (window A)"
+1. Open a new bowser window In incognito mode (window A)
 
-   The workshop is conducted completely within a browser environment. You may have an enterprise Azure or GitHub account that you are logged into that may cause conflicts. To avoid this, we recommend opening a new browser window in **incognito mode** (private mode) with your preferred browser. 
-
-   - Open a new browser window in incognito or private mode
-
-   **✅ | CONGRATULATIONS!** - Your Learning journey has begun!
-
-!!! abstract "Step 1: Launch Skillable VM and log in (window B)"
+    The workshop is conducted completely within a browser environment. You may have an enterprise Azure or GitHub account that you are logged into from your browser that may cause conflicts. To avoid this, we recommend opening a new browser window in **incognito mode** (private mode) with your preferred browser. 
 
 1. Open the **WRK550 Lab** link provided by your instructor in your browser.
-1. Click `Launch` - open new window with two panes (window B)
-1. **Check**: You see `Password` prompt in the left pane.
+1. Click `Launch` - this opens the Skillable Lab in a new window with two panes (window B)
+1. **Check**: You see a `Password` prompt in the left pane.
     - This is a virtual machine. We will not use it in this workshop.
 1. **Check**: You see a **Build a Retail Copilot Code-First on Azure AI** tab in right pane
     - Follow the instructions in this pane to open the lab instructions.
 
-Keep window B open - you will need the **Azure Credentials** shown in this window in the next step.
+Do not close the Skillable Lab (window B) - you will need the **Azure Credentials** shown in this window in the next step.
 
 **✅ | CONGRATULATIONS!** - Your Skillable Lab is live!
-
 
 ## 2. Set Up Your Dev Environment
 
@@ -47,11 +40,11 @@ The **WRK550 Lab** requires a Python development runtime (with package dependenc
 
 _In this section, we'll fork the sample repo to our personal profiles - then launch GitHub Codespaces to activate that environment with a Visual Studio Code editor, right in the browser_.
 
-!!! abstract "Step 2: Open GitHub in tab 1️⃣"
+### Step 1: Open GitHub in Tab 1️⃣
 
 The source code for the application used in this workshop is available on GitHub. Let's log into GitHub and copy a fork of the source code to your GitHub account.
 
-1. Open a new browser tab = Tab 1️⃣
+1. Open a new browser tab (Tab 1️⃣)
 1. **Navigate to** the [contoso-chat workshop sample](https://aka.ms/aitour/contoso-chat) with this link:
 
     ```
@@ -73,7 +66,7 @@ The source code for the application used in this workshop is available on GitHub
 
 **✅ | CONGRATULATIONS!** - Your have a personal copy of the sample to explore!
 
-!!! abstract "Step 3: Launch Codespaces in tab 2️⃣"
+## Step 2: Launch Codespaces in Tab 2️⃣
 
 GitHub Codespaces will be our development environment for this workshop. Let's launch CodeSpaces now, starting from the fork of the `contoso-chat` repository you just created.
 
@@ -85,11 +78,11 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 1. Click the green **<> Code** button in the top-right part of the page, click the **Codespaces** tab, and then click **Create codespace on aitour-WRK550**.
 
-1. This will launch a new browser tab = Tab 2️⃣. It will take a few minutes for the CodeSpace to be ready for use. In the meantime, continue with the next sections. 
+1. This will launch a new browser tab (Tab 2️⃣). It will take a few minutes for the CodeSpace to be ready for use. In the meantime, continue with the next steps. 
 
-!!! abstract "Step 4: Open Azure Portal in tab 3️⃣"
+## Step 3: Open Azure Portal in Tab 3️⃣
 
-1. Open a new browser tab = Tab 3️⃣
+1. Open a new browser tab (Tab 3️⃣)
 1. Navigate to the [Azure Portal](https://portal.azure.com):
     ```
     https://portal.azure.com
@@ -102,7 +95,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 **✅ | CONGRATULATIONS!** - Your Azure Infra is Provisioned!
 
-!!! abstract "Step 5: Open Azure AI Studio in tab 4️⃣"
+## Step 4: Open Azure AI Studio in Tab 4️⃣
 
 1. Open a new browser tab = Tab 4️⃣
 1. Navigate to the [Azure AI Studio](https://ai.azure.com?feature.customportal=false#home):
@@ -115,39 +108,40 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
     !!! info "An [AI Studio hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects resources like generative AI endpoints that can be shared between projects."
 
-1. **Click** the listed hub resource name to display it. **Check:** 1 project listed under `Projects`.
+1. **Click** the listed hub resource name to display it. **Check:** 1 project is listed under `Projects`.
 
     !!! info "An [AI Studio project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) is used to organize your work when building applications."
 
-1. Under "Shared Resources" in the left pane, **click** `Deployments`. **Check:** 4 models listed under `aoai-connection` 
+1. Under "Shared Resources" in the left pane, **click** `Deployments`. **Check:** 4 models are listed under `aoai-connection` 
 
     !!! info "The Model Deployments section lists Generative AI models deployed to this Hub. For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
 
 **✅ | CONGRATULATIONS!** - Your Azure AI Project is ready!
 
-!!! abstract "Step 5: View Container Apps Endpoint in tab 5️⃣"
+## Step 5: View Container Apps Endpoint in Tab 5️⃣
 
 [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) will host the endpoint used to serve the Contoso Chat application on the Contoso Outdoors website. We have deployed a container app, but have not yet pushed code to it. 
 
 1. Return to the Azure Portal, Tab 3️⃣
 1. Visit the `rg-AITOUR` Resource group page
 1. Click the `Container App` resource to display the Overview page
-1. Look for `Application Url` - at top right
-1. Click to launch in new tab = Tab 5️⃣
-1. See: page with `"Azure Container Apps"` and logo
+1. Look for `Application Url` (at top right), and click it to launch in new tab (Tab 5️⃣)
+    * This creates a new tab `"Azure Container Apps"` displaying the logo
+
+!!! info "Azure Container Apps (ACA) is an easy-to-use compute solution for hosting our chat AI application. The application is implemented as a FastAPI server that exposes a simple `/create_request` API endpoint to clients for direct use or integration with third-party clients."
 
 **🌟 | CONGRATULATIONS!** - Your ACA Endpoint is ready!
 
-!!! abstract "Step 6: Make sure CodeSpaces has completed launching"
+## Step 6: Make sure CodeSpaces has completed launching
 
 1. Return to your GitHub Codespaces tab, Tab 2️⃣.
 
-You should see the Visual Studio Online development environment. If you have used Visual Studio Code on the desktop, it will look very familiar. You should see these components:
+You should see the Visual Studio Online development environment. If you have used Visual Studio Code on the desktop, it will look very familiar. You will see these components:
 
-  * Left sidebar: The Activity Bar, including the "Prompty" extension logo at the end.
-  * Left pane: The Explorer pane, showing the files in the `contoso-chat` repository.
+  * Left sidebar: The Activity Bar, including the "Prompty" extension logo at the end
+  * Left pane: The Explorer pane, showing the files in the `contoso-chat` repository
   * Right pane: A preview of the main README.md file from the repository
-  * Lower pane: A terminal pane, with a `bash` prompt ready to receive input.
+  * Lower pane: A terminal pane, with a `bash` prompt ready to receive input
 
 If you don't see those yet, wait until they appear in your browser.
 

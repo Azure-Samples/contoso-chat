@@ -5,14 +5,14 @@
     We should have the following windows and tabs open in our device:
 
     1. Window A = Skillable Lab (starting point)
-    2. Window B = Skillable VM (with our Azure credentials)
+    2. Window B = Dev Environment (logged in with our Azure credentials)
     3. Tab 1️⃣ = GitHub Repo (starting point)
     4. Tab 2️⃣ = GitHub Codespaces (development environment)
     5. Tab 3️⃣ = Azure Portal (provisioned resources)
     6. Tab 4️⃣ = Azure AI Studio (AI project & models)
     7. Tab 5️⃣ = Azure Container Apps (Deployment target)
 
-_We have our Azure infrastructure resources pre-provisioned, but we need to populate our data and deploy the initial application to Azure. Let's get this done_.
+_We have our Azure infrastructure resources pre-provisioned, but we need to populate our data and deploy the initial application to Azure. Let's get this done now_.
 
 ## 1. Check: Tools Installed
 
@@ -39,7 +39,7 @@ python --version
 fastapi --version
 ```
 
-!!! tip "These tools have been installed into GitHub CodeSpaces for you. If you want to run this workshop in another environment like your dekstop PC, you will have to install them yourself."
+!!! tip "These tools have been installed into the GitHub CodeSpaces dev container for you. If you want to run this workshop in another environment like your dekstop PC, you will have to install them first."
 
 ## 2. Authenticate with Azure
 
@@ -47,27 +47,28 @@ To access our Azure resources, we need to be authenticated from VS Code. Let's d
 
 From the VS Code Online Terminal pane (in Tab 2️⃣):
 
-1. Log into Azure CLI using the command below. 
+1. Log into the Azure CLI `az` using the command below. 
 
     ```
     az login --use-device-code
     ```
 
-1. Copy the 8-character code shown to your clipboard, then click the link to visit https://microsoft.com/devicelogin in a new browser tab.
+1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
 
-1. Select the account with Username and from Skillable Lab window. Click "Continue" at the "are you sure" prompt, and then close the tab.
+1. Select the account with Username and from Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab.
 
 1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
-1. You also need to log into the Azure Developer CLI. Enter the command below at the terminal, and follow the same process to copy the code, select the account, and close the tab.
+
+1. You also need to log into the Azure Developer CLI, `azd`. Enter the command below at the terminal, and follow the same process to copy the code, select the account, and close the tab.
 ```
 azd auth login
 ```
 
-!!! success "You are now logged into Azure CLI and Azure Developer CLI ✅"
+!!! success "You are now logged into Azure CLI and Azure Developer CLI"
 
 ## 3. Configure Azure Env Vars
 
-To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've already provisioned in the `francecentral` region. Let's retrieve those here.
+To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've already provisioned for you in the `francecentral` region. Let's retrieve those now.
 
 From the Terminal pane in Tab 2️⃣:
 
@@ -86,10 +87,10 @@ The file `.azure/AITOUR/.env` has been updated in our filesystem with informatio
 azd env get-values
 ```
 
-!!! tip "No passwords or other secrets are included in the `.env` file. Authentication is validated using managed identities, as a security best practice." 
+!!! info "No passwords or other secrets are included in the `.env` file. Authentication is controlled using [managed identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) as a security best practice." 
 
 
-## 4. Populate databases and container app
+## 4. Populate databases and deploy container app
 
 _We can now use these configured tools and SDK to perform some post-provisioning tasks. This includes populating data in Azure AI Search (product indexes) and Azure Cosmos DB (customer data), and deploying the initial version of our application to Azure Container Apps_.
 
@@ -110,6 +111,8 @@ From the Terminal pane in Tab 2️⃣:
     ```
 
     This command populates Azure Search and Cosmos DB with product and customer data from Contoso Outdoors. It also builds and deploys a shell endpoint to the container app, which we will update in the next section. This will take a few minutes.
+
+    !!! info "If you're curious, the code to populate the databases is found in Python Notebooks in `data` folder of the repository."
 
 1. Refresh the Container App in tab 5️⃣ - it will update to say "Hello world" ✅
 
