@@ -1,6 +1,6 @@
 ---
 name: Contoso Chat Prompt
-description: A retail assistent for Contoso Outdoors products retailer.
+description: A retail assistant for Contoso Outdoors products retailer.
 authors:
   - Nitya Narasimhan
 model:
@@ -11,7 +11,7 @@ model:
     azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
     api_version: 2024-07-01-preview
   parameters:
-    max_tokens: 128
+    max_tokens: 3000
     temperature: 0.2
 inputs:
   customer:
