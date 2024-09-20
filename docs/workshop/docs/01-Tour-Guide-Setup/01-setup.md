@@ -19,7 +19,7 @@ The **WRK550 Lab** is run using the Skillable platform which provides you with a
 
 !!! info "If you are currently in an AI Tour session and have already launched the Skillable Lab and verified credentials - move on to Section 2 below. Otherwise,  complete these two steps now."
 
-1. Open a new bowser window In incognito mode (window A)
+1. Open a new browser window in incognito mode (window A)
 
     The workshop is conducted completely within a browser environment. You may have an enterprise Azure or GitHub account that you are logged into from your browser that may cause conflicts. To avoid this, we recommend opening a new browser window in **incognito mode** (private mode) with your preferred browser. 
 
@@ -88,6 +88,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
     https://portal.azure.com
     ```
 1. **Sign in** using the `Username` and `Password` displayed under "Azure Credentials" in the Skillable Lab window you launched in **Step 1** (above).
+1. You will be presented with a "Welcome to Microsoft Azure" screen. Click **Cancel** to dismiss, or click **Get Started** if you'd like to take an introductory tour of the Azure Portal.
 1. In the Navigate section, **Click** `Resource Groups`.
 1. A resource group has been created for you, containing the resources needed for the RAG application. **Click** `rg-AITOUR`.
 1. **Check:** Deployments (under "Essentials") - There are **35 succeeded** Deployments. 
@@ -126,11 +127,11 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 1. Visit the `rg-AITOUR` Resource group page
 1. Click the `Container App` resource to display the Overview page
 1. Look for `Application Url` (at top right), and click it to launch in new tab (Tab 5️⃣)
-    * This creates a new tab `"Azure Container Apps"` displaying the logo
+    * This creates a new tab `"Welcome to Azure Container Apps!"` displaying the logo
 
 !!! info "Azure Container Apps (ACA) is an easy-to-use compute solution for hosting our chat AI application. The application is implemented as a FastAPI server that exposes a simple `/create_request` API endpoint to clients for direct use or integration with third-party clients."
 
-**🌟 | CONGRATULATIONS!** - Your ACA Endpoint is ready!
+**✅ | CONGRATULATIONS!** - Your ACA Endpoint is ready!
 
 ## Step 6: Make sure CodeSpaces has completed launching
 
@@ -139,6 +140,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 You should see the Visual Studio Online development environment. If you have used Visual Studio Code on the desktop, it will look very familiar. You will see these components:
 
   * Left sidebar: The Activity Bar, including the "Prompty" extension logo at the end
+    ![Prompty logo](../img/prompty-logo.png)
   * Left pane: The Explorer pane, showing the files in the `contoso-chat` repository
   * Right pane: A preview of the main README.md file from the repository
   * Lower pane: A terminal pane, with a `bash` prompt ready to receive input

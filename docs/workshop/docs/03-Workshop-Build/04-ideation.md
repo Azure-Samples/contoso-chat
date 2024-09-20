@@ -120,9 +120,18 @@ cp chat-0.prompty chat-1.prompty
 
 Open the file `chat-1.prompty` and edit it as described below.
 
+### Set the temperature parameter
+
+1. Add the following at Line 15 (at the end of the `parameters:` section):
+```
+    temperature: 0.2
+```
+
+!!! info "[Temperature](https://learn.microsoft.com/azure/ai-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions#temperature-and-top_p-parameters) is one of the parameters you can use to modify the behavior of Generative AI models. It controls the degree of randomness in the response, from 0.0 (deterministic) to 1.0 (maximum variability)."
+
 ### Use a sample data file
 
-For now, we'll supply data in a JSON file to provide context for the generative AI model to provide in the model. (Later, we'll extract this data from the databases.)
+From here, we'll supply data in a JSON file to provide context for the generative AI model to provide in the model. (Later, we'll extract this data from the databases.)
 
 1. Copy a JSON file with sample data to provide as context in our Prompty. 
     ```
@@ -192,14 +201,14 @@ Prompty constructs the meta-prompt from the inputs before passing it to the mode
 
 3. Ideate on your own!
 
-You can change the system prompt to modify the style and tone of the responses from the chatbot.
+    You can change the system prompt to modify the style and tone of the responses from the chatbot.
 
-- Try adding `Provide responses in a bullet list of items` to the end of the `system:` section. What happens to the output?
+    - Try adding `Provide responses in a bullet list of items` to the end of the `system:` section. What happens to the output?
 
-You can also change the parameters passed to the generative AI model in the `parameters:` section.
+    You can also change the parameters passed to the generative AI model in the `parameters:` section.
 
-- Have you observed truncated responses in the output? Try changing `max_tokens` to 3000 - does that fix the problem?
-- Try changing `temperature` to 0.7. Try some other values between 0.0 and 1.0. What happens to the output?
+    - Have you observed truncated responses in the output? Try changing `max_tokens` to 3000 - does that fix the problem?
+    - Try changing `temperature` to 0.7. Try some other values between 0.0 and 1.0. What happens to the output?
 
 ✅ | Your prompty template is updated, and uses a sample test data file
 
@@ -219,9 +228,9 @@ cp chat-1.prompty chat-2.prompty
 cp chat-1.json chat-2.json
 ```
 
-1. Open `chat-1.prompty` for editing
+1. Open `chat-2.prompty` for editing
 
-1. Change line 22 to input the new data file:
+1. Change line 21 to input the new data file:
 
     ```
     sample: ${file:chat-2.json}
@@ -283,7 +292,7 @@ cp chat-1.json chat-2.json
     cp ../docs/workshop/src/1-build/chat-3.json .
     ```
 
-1. In the Explorer pane, right-click on the new `chat-3.prompty` file: select `Add Code > Add Prompty Code`. This creates a new Python file `chat-3.py` and opens it in VS Code.
+1. In the Explorer pane, right-click on the new `chat-3.prompty` file and select `Add Code > Add Prompty Code`. This creates a new Python file `chat-3.py` and opens it in VS Code.
 
 1. Add the three lines below to the top of `chat-3.py`:
 
@@ -296,6 +305,8 @@ cp chat-1.json chat-2.json
     !!! info "These lines load environment varianbles from your `.env` file for use in the Python script.`       
     
 1. Execute `chat-3.py` by clicking the "play" at the top-right of its VS Code window.
+
+A Python script forms the basis of the FASTAPI endpoint we deployed in Tab 5️⃣. We'll explore the source code later.
 
 !!! quote "Congratulations! You just learned prompt engineering with Prompty!"
 
@@ -313,7 +324,6 @@ We saw how these simple tools can help us implement safety guidance for our prom
 _In this section, you saw how Prompty tooling supports rapid prototyping - starting with a basic prompty. Continue iterating on your own to get closer to the `contoso_chat/chat.prompty` target. You can now delete the `sandbox/` folder, to keep original app source in focus_.
 
 !!! example "Next → [Let's Evaluate with AI!](./05-evaluation.md) and learn about custom evaluators!"
-
 
 We didn't change the Customer and Context section, but observe how the parameters will insert the input customer name and context into the meta-prompt.
 

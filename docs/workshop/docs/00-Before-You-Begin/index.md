@@ -40,7 +40,7 @@ _Tip: every page will have these handy **Next →** markers to help you navigate
 - [X] The infrastructure is pre-provisioned for you. Just launch the lab to get started.
 - [X] The sessions run for a fixed time. You have 75 minutes to complete the lab.
 
-!!! example  "**Next** → Doing a self-guided walkthrough of the workshop? [Get Started Here](./../02-Self-Guide-Setup/02-provision.md)"
+!!! example  "**Next** → Doing a self-guided walkthrough of the workshop? [Get Started Here](./../02-Self-Guide-Setup/01-setup.md)"
 
 - [X] You will use your own Azure subscription and laptop.
 - [X] You will provision Azure infrastructure and deploy the application yourself. 
