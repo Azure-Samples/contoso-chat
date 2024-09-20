@@ -3,20 +3,20 @@ Content-Type: application/json
 
 {
     "customer_id":"2",
-    "question":"Tell%20me%20about%20hiking%20shoes",
+    "question":"Tell%20me%20about%20tents",
     "chat_history": []
 }
 
 ###
 
-post http://127.0.0.1:8000/api/give_feedback?customer_id=2&responseId=AResponseIDHere&feedback=1 HTTP/1.1
+post http://127.0.0.1:8000/api/give_feedback HTTP/1.1
 Content-Type: application/json
 
 {
-    "responseId": "AResponseIDHere",
-    "feedback": -1,
+    "responseId": "chatcmpl-TEST",
+    "feedback": 1,
     "extra": {
-        "comment": "I found this response helpful",
+        "comment": "This was awesome",
         "sentiment": "positive"
     }
 }

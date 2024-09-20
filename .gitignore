@@ -32,6 +32,7 @@ src/api/evaluators/.runs/*
 
 # dependencies
 /src/web/node_modules
+/src/api/node_modules
 
 # testing
 /coverage

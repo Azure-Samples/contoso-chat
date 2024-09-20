@@ -30,6 +30,7 @@ export const sendGroundedMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };
@@ -58,11 +59,12 @@ export const sendPromptFlowMessage = async (
     body: JSON.stringify(body),
   })
   
+  let data;
   let answer = ""
   if (!response.ok) {
     answer = "I'm sorry, there was a problem."
   } else {
-    const data = await response.json();
+    data = await response.json();
     answer = data['answer']
   }
 
@@ -78,6 +80,7 @@ export const sendPromptFlowMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };
@@ -127,6 +130,7 @@ export const sendVisualMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };

@@ -102,6 +102,7 @@ def provide_feedback(feedback_item: FeedbackItem) -> dict:
     extra_info = validate_extra_feedback(feedback_item.extra)
     feedback_context = {"gen_ai.response.id": feedback_item.responseId, "feedback": feedback_item.feedback, "extra": extra_info}
     logger.info("user_feedback", extra=feedback_context)
+
     return {"result": "success"}
 
 def validate_extra_feedback(extra: dict) -> str:

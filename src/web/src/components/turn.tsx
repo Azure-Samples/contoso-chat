@@ -9,6 +9,8 @@ import { useRemark } from "react-remark";
 import remarkGemoji from "remark-gemoji";
 import { ChatTurn, ChatType } from "@/lib/types";
 
+import Feedback from "@/components/feedback";
+
 type Props = {
   turn: ChatTurn;
   type: ChatType;
@@ -74,6 +76,9 @@ export const Turn = ({ turn, type }: Props) => {
             )}
           >
             {reactContent}
+            <Feedback
+              responseId={turn.responseId}
+            />
           </div>
         </div>
       );
