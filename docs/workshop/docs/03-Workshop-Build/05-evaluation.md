@@ -56,7 +56,12 @@ Now that you understand the process of evaluation, let's evaluate the perfomance
 1. When the notebook completes, check out the results of the evaluations in these files created in the  `src/api/evaluators` folder:
     - **Chat Responses** = `result.jsonl`
     - **Evaluated Results** = `result_evaluated.jsonl` (The scores are at the end of each line.)
-    - **Evaliation Summary** = computed from `eval_results.jsonl` (Complete data from the evaluation process.)
+    - **Evaluation Summary** = computed from `eval_results.jsonl` (Complete data from the evaluation process.)
+
+!!! tip "Switch output cell to scrollable to see final tabulation"
+
+    When the notebook execution completes, the final results will be tabulated and shown in the output cell in the notebook at the very end. However, the default view is _not set to scrollable_ so you may miss seeing that rendered. Instead, wait till the run completes, then look for the link in the output cell that lets you switch to a scrollable element. **Scroll to the bottom** to see a table with the evaluation results all test inputs, for the 4 quality assessment criteria.
+
 
 # Step 3: Understand Evaluation Workflow
 

@@ -65,6 +65,23 @@ You will get a response body with `question`, `answer` and `context` components.
 
 ✅ | Your Contoso Chat AI is deployed - and works with valid inputs!
 
+## Let's Connect The Dots
+
+!!! info "Recall that the [Retrieval Augmented Generation](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation#how-does-rag-work) works by *retrieving* relevant knowledge from your data stores, and _augmenting_ the user query with it to create an enhanced prompt - which _generates_ the final response."
+
+To implement this RAG pattern, we need to execute three steps:
+
+1. **Setup data sources** and populate them with our data (product catalog, customer orders)
+1. **Create [indexes](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation#how-does-rag-work)** for efficient information retrieval by LLMs (e.g., find matching products)
+1. **Connect our Azure AI project** to access data/indexes code-first, for use in processing steps.
+
+In the previous section we setup the data sources (provisioning infra) and populated them with data (post-provisioning scripts) as follows:
+
+1. **Azure CosmosDB** - loaded **12 records** from `data/customer_info`, got _customers_ database.
+1. **Azure AI Search** - loaded **20 records** from `data/product_info`, got _contoso-products_ index.
+
+In this section, we verified these steps and checked off the first two items on our RAG checklist above. In the next section (Ideation with Prompty) we'll see how we achieve the third item with a code-first approach that makes use of the Azure AI Search, Azure CosmosDB and Azure OpenAI services through their Azure SDKs.
+
 ---
 
 _Now you understand the application architecture, and have a sense for the retail copilot API, it's time to dig into the codebase and understand the three stages of our GenAIOps workflow - ideation, evaluation, and operationalization_.

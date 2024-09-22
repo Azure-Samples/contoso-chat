@@ -40,7 +40,7 @@ prompty --version
 fastapi --version
 ```
 
-!!! tip "These tools have been installed into the GitHub CodeSpaces dev container for you. If you want to run this workshop in another environment like your dekstop PC, you will have to install them first."
+!!! tip "These tools have been installed into the GitHub CodeSpaces dev container for you. If you want to run this workshop in another environment like your desktop PC, you will have to install them first."
 
 ## 2. Authenticate with Azure
 

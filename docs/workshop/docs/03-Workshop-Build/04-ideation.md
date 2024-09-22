@@ -93,7 +93,7 @@ sample:
   question: What can you tell me about your tents?
 ```
 
-### 4. Run your updated Prompty file
+### 4. Run updated Prompty file
 
 1. Run `chat-0.prompty`. (Use the Run button or press F5.)
 
@@ -106,7 +106,7 @@ sample:
 
 **Ideate on your own!** If you like, try changing the `firstName` and `question` fields in the Prompty file and run it again. How do your changes affect the response?
 
-## Step 3: Update the prompt template
+## Step 3: Update prompt template
 
 ??? tip "OPTIONAL: You can skip this step and copy over a pre-edited file with the command hidden below."
     ```
@@ -212,7 +212,9 @@ Prompty constructs the meta-prompt from the inputs before passing it to the mode
 
 ✅ | Your prompty template is updated, and uses a sample test data file
 
-## Step 4: Update prompt template, add Safety instructions
+## Step 4: Update prompt template
+
+### 1. Add Safety instructions
 
 ??? tip "OPTIONAL: You can skip this step and copy over a pre-edited file with the commands hidden below."
     ```
@@ -265,7 +267,11 @@ cp chat-1.json chat-2.json
     # Documentation
     ```
 
+### 2. Test: Default Question
+
 1. Run `chat-2.prompty`. The user question hasn't changed, and the new Safety guidance in the meta-prompt hasn't changed the ouptut much.
+
+### 3. Test: Jailbreak Question
 
 1. Open `chat2.json` for editing, and change line 18 as follows:
 
@@ -283,7 +289,9 @@ cp chat-1.json chat-2.json
 
 ✅ | Your prompty now has Safety guidance built-in!
 
-## Step 5: Run Prompty with Python code
+## Step 5: Run Prompty from code
+
+### 1. Add Code For Prompty
 
 1. First, let's copy over final versions of our Prompty file and input data:
 
@@ -294,6 +302,10 @@ cp chat-1.json chat-2.json
 
 1. In the Explorer pane, right-click on the new `chat-3.prompty` file and select `Add Code > Add Prompty Code`. This creates a new Python file `chat-3.py` and opens it in VS Code.
 
+1. Run the default code by clicking the play icon. **It will fail with an error** indicating there are missing environment variables. Let's fix that.
+
+### 1. Update Default Code
+
 1. Add the three lines below to the top of `chat-3.py`:
 
     ```python
@@ -301,12 +313,27 @@ cp chat-1.json chat-2.json
     from dotenv import load_dotenv
     load_dotenv()
     ```
-
-    !!! info "These lines load environment varianbles from your `.env` file for use in the Python script.`       
     
-1. Execute `chat-3.py` by clicking the "play" at the top-right of its VS Code window.
+    !!! info "These lines load environment varianbles from your `.env` file for use in the Python script.`"       
+    
+1. Execute `chat-3.py` by clicking the "play" at the top-right of its VS Code window. You should now see a valid response being generated.
 
-A Python script forms the basis of the FASTAPI endpoint we deployed in Tab 5️⃣. We'll explore the source code later.
+### 1. Troubleshooting
+
+_The [Prompty](https://prompty.ai) tooling is in preview and evolving constantly. This section captures any known issues with workarounds you can use till the fix is made in the next release._
+
+In the previous step, you might encounter an error where the code generation fails with an `AZURE_OPENAI_KEY` error.
+
+- **Verify**: You should have a `prompty.json` file created in the same folder.
+- **Verify**: That file will have a line with the `AZURE_OPENAI_KEY` specified
+- **Fix It**: Delete this line from the file and save changes.
+- **Retry**: Re-run the prompty. It should now work.
+
+**Explanation:** The auto-generation makes use of the default environment variables and model configuration used for your Prompty development. This error may occur if some default setting still maintains the KEY variable even though our environment is setup for managed identity.
+
+
+
+## Recap: Ideation With Prompty
 
 !!! quote "Congratulations! You just learned prompt engineering with Prompty!"
 
@@ -319,7 +346,205 @@ A Python script forms the basis of the FASTAPI endpoint we deployed in Tab 5️�
 
 We saw how these simple tools can help us implement safety guidance for our prompts and iterate on our prompt template design quickly and flexibly, to get to our first prototype. The sample data file  provides a test input for rapid iteration, and it allows us understand the "shape" of data we will need, to implement this application in production.
 
+
+## Let's Connect The Dots
+
+!!! info "This section is OPTIONAL. Please skip this if time is limited and [move to Next Steps](#next-steps). You can revisit this section later to get insights into how the sample data is replaced with live data bindings in Contoso Chat."
+
+In the ideation step, we will end up with three files:
+
+ - `xxx.prompty` - the prompt asset that defines our template and model configuration
+ - `xxx.json` - the sample data file that effectively defines the "shape" of data we need for RAG
+ - `xxx.py` - the Python script that loads and executes the prompt asset in a code-first manner
+
+Let's compare this to the contents of the `src/api/contoso_chat` folder which implements our actual copilot and see if we can connect the dots. The listing below shows _the relevant subset_ of files from the folder for our discussion.
+
+```bash
+src/api/
+ - contoso_chat/
+        product/
+            product.prompty
+            product.py
+        chat_request.py
+        chat.json
+        chat.prompty
+ - main.py
+ - requirements.txt
+```
+
+### Explore: Chat Prompt
+
+The `chat.prompty` and `chat.json` files will be familiar based on the exercise you completed. If you click the play button in the prompty file, it will run using the json sample file (just as before) for independent template testing. **But how do we then replace the sample data with real data from our RAG workflow**. 
+
+This is when we take the python script generated from the prompty file and enhance it to *orchestrate* the steps required to fetch data, populate the template, and execute it. Expand the sections below to get a better understanding of the details.
+
+??? tip "Let's investigate the `chat_request.py` file - click to expand"
+
+    For clarity, I've removed some of the lines of code and left just the key elements here for discussion:
+
+    ```py linenums="1"
+
+        # WE LOAD ENV VARIABLES HERE
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        # IMPORT LINES REMOVED FOR CLARITY
+
+        # THIS CODE ENABLES TRACING FOR OBSERVABILITY
+        Tracer.add("console", console_tracer)
+        json_tracer = PromptyTracer()
+        Tracer.add("PromptyTracer", json_tracer.tracer)
+
+
+        # STEP 2: THIS GETS CUSTOMER DATA CODE-FIRST USING COSMOS SDK
+        # It uses the configured env variables to initialize a client
+        # It uses customerId input to retrieve customer record from db
+        # The "orders" will match the "shape of data" you see in `chat.json` sample
+        @trace
+        def get_customer(customerId: str) -> str:
+            try:
+                url = os.environ["COSMOS_ENDPOINT"]
+                client = CosmosClient(url=url, credential=DefaultAzureCredential())
+                db = client.get_database_client("contoso-outdoor")
+                container = db.get_container_client("customers")
+                response = container.read_item(item=str(customerId), partition_key=str(customerId))
+                response["orders"] = response["orders"][:2]
+                return response
+            except Exception as e:
+                print(f"Error retrieving customer: {e}")
+                return None
+
+
+        # STEP 1: THIS IS THE COPILOT ORCHESTRATION FUNCTION
+        # It gets input {customerId, question, chat_history} - from the function caller 
+        # It calls get_customer - binds result to "customer" (STEP 2 here)
+        # It calls find_products "tool" from product/ - binds result to "context"
+        # It defines the model configuration - from environment variables
+        # It then executes the prompty - providing {model, inputs, context} to render template
+        # And publishes the result to the console
+        @trace
+        def get_response(customerId, question, chat_history):
+            print("getting customer...")
+            customer = get_customer(customerId)
+            print("customer complete")
+            context = product.find_products(question)
+            print(context)
+            print("products complete")
+            print("getting result...")
+
+            model_config = {
+                "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
+                "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
+            }
+
+            result = prompty.execute(
+                "chat.prompty",
+                inputs={"question": question, "customer": customer, "documentation": context},
+                configuration=model_config,
+            )
+            print("result: ", result)
+            return {"question": question, "answer": result, "context": context}
+
+
+        # THIS IS OUR ENTRY POINT TO OUR COPILOT IMPLEMENTATION
+        # IT EXPECTS A CUSTOMER ID, A QUESTION, AND CHAT HISTORY AS ARGS
+        if __name__ == "__main__":
+            get_response(4, "What hiking jackets would you recommend?", [])
+            #get_response(argv[1], argv[2], argv[3])
+
+    ```
+
+??? info "Now let's unpack the details in the code"
+
+    1. The copilot is defined by the *get_response* function in **line 40**
+        1. It gets inputs (question, customerId, chat_history) from some caller (here: main)
+    1. In **line 42** it calls the *get_customer* function with the customerId
+        1. This function is defined in **line 18** and fetches data from CosmosDB
+        1. The returned results are bound to the **customer** data in the prompty
+    1. In **line 44** it calls the *product.find_products* function with the question
+        1. This function is defined in *products/product.py* - explore the code yourself
+            1. It uses the question to extract query terms - and expands on them
+            1. It uses embeddings to convert query terms - into vectorized queries
+            1. It uses vectorized queries - to search product index for matching items
+            1. It returns matching items - using semantic ranking for ordering
+        1. The returned results are bound to the **context** data in the prompty
+    1. In **line 49** it explictly sets chat model configuration (override prompty default)
+    1. In **line 54** it executes the prompty, sending the enhanced prompt to that chat model
+    1. In **line 60** it returns the result to the caller for use (or display)
+
+
+### Explore: Product Prompt
+
+We'll leave this as an exercise for you to explore on your own.s
+
+??? info "Here is some guidance for unpacking this code"
+
+    1. Open the `products/product.py` file and look for these definitions:
+        - *find_products* function - takes question as input, returns product items
+            - first, executes a prompty - converts question into query terms
+            - next, generates embeddings - converts query terms into vector query
+            - next, retrieve products - looks up specified index for query matches
+            - last, returns retrieved products to caller
+    1. Open the `products/product.prompty` file and look for these elements:
+        - what does the system context say? (hint: create specialized queries)
+        - what does the response format say? (hint: return as JSON array)
+        - what does the output format say? (hint: return 5 terms)
+
+### Explore: FastAPI App
+
+The python scripts above help you test the orchestrated flow locally - invoking it from the command line. **But how do you now get this copilot function invoked from a hosted endpoint?** This is where the [FastAPI](https://fastapi.tiangolo.com/) framework helps. Let's take a look at a simplified version of the code.
+
+??? tip "Let's investigate the `src/api/main.py` file - click to expand"
+
+    For clarity, I've removed some of the lines of code and left just the key elements here for discussion:
+
+    ```py linenums="1"
+    
+        # REMOVED SOME IMPORTS FOR CLARITY
+        from fastapi import FastAPI
+        from fastapi.responses import StreamingResponse
+        from fastapi.middleware.cors import CORSMiddleware
+
+        # IMPORTS THE COPILOT ENTRY FUNCTION
+        from contoso_chat.chat_request import get_response
+
+        # CREATES A FASTAPI APP
+        app = FastAPI()
+
+        # CUSTOMIZES APP CONFIGURATION
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+        # ADDS DEFAULT ROUTE (show simple message)
+        @app.get("/")
+        async def root():
+            return {"message": "Hello World"}
+
+        # ADDS COPILOT ROUTE (maps calls to copilot function invocation)
+        @app.post("/api/create_response")
+        @trace
+        def create_response(question: str, customer_id: str, chat_history: str) -> dict:
+            result = get_response(customer_id, question, chat_history)
+            return result
+    ```
+
+Let's unpack what happens:
+
+1. In line **10** we instantiate a new FastAPI "app".
+1. In line **22** we define one route `/` that returns default content.
+1. In line **27** we define another route `/api/create_response` that takes inputs sent to this endpoint, and converts them into parameters for an invocation to our copilot.
+
+And that's it. Later on, we'll see how we can test the FastAPI endpoint locally (using `fastapi dev src/api/main.py`) or by visiting the hosted version on Azure Container Apps. This takes advantage of the [default Swagger UI](https://fastapi.tiangolo.com/reference/openapi/docs/?h=%2Fdocs) on the `/docs` endpoint which provides an interactive interface for _trying out_ various routes on the app.
+
+
 ---
+
+## Next Steps
 
 _In this section, you saw how Prompty tooling supports rapid prototyping - starting with a basic prompty. Continue iterating on your own to get closer to the `contoso_chat/chat.prompty` target. You can now delete the `sandbox/` folder, to keep original app source in focus_.
 
