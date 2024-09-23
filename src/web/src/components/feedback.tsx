@@ -3,13 +3,18 @@
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa6";
 import { MessageFeedback } from "@/lib/types";
 import { sendFeedback } from "@/lib/feedback";
-import { clsx } from 'clsx';
+import styles from './feedback.module.css';
+import { useState } from "react";
 
 type Props = {
     responseId: string;
 };
 
 export const Feedback = ({ responseId }: Props) => {
+    const [currentFeedback, setCurrentFeedback] = useState<MessageFeedback | null>(null);
+    const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const [feedbackSubmitted, setFeedbackSubmitted] = useState<boolean>(false);
+    
     var iconsVisible: Boolean = false;
 
     if (responseId && responseId != '') {
@@ -17,7 +22,11 @@ export const Feedback = ({ responseId }: Props) => {
     }
 
     async function ProvideFeedback(feedback: MessageFeedback) {
+        setCurrentFeedback(feedback);
+        setIsAnimating(true);
         await sendFeedback(feedback);
+        setTimeout(() => setIsAnimating(false), 1000); // Reset animation state after 1 second
+        setFeedbackSubmitted(true);
     }
 
     async function OnThumbsUpClick() {
@@ -32,18 +41,30 @@ export const Feedback = ({ responseId }: Props) => {
     }
 
 
-    if (iconsVisible) {
-        return (
-            <div>
-                <p>&nbsp;</p>
-                <div className='flex'>
-                    <FaRegThumbsUp size='20px' onClick={OnThumbsUpClick} />
-                    &nbsp;
-                    <FaRegThumbsDown size='20px' onClick={OnThumbsDownClick} />
-                </div>
-            </div>
-        );
-    }
+     return (            
+        <div className={styles.feedbackContainer}>
+            {feedbackSubmitted ? (
+                <p>Thank you for your feedback!</p>
+            ) : (
+                iconsVisible && (
+                    <>
+      <button
+        className={`${styles.button} ${currentFeedback?.feedback === 1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === 1 ? styles.animate : ''}`}
+        onClick={OnThumbsUpClick}
+      >
+      <FaRegThumbsUp />
+      </button>
+      <button
+        className={`${styles.button} ${currentFeedback?.feedback === -1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === -1 ? styles.animate : ''}`}
+        onClick={OnThumbsDownClick}
+      >
+         <FaRegThumbsDown />
+      </button>
+      </>
+                )
+            )}
+        </div>
+    );
 };
 
 export default Feedback;
