@@ -1,0 +1,73 @@
+**Relevance** measures how well the **answer** addresses the **question** using the given **context**. Given the **question**, **context**, and **answer**, score the relevance of the **answer** between one to five stars using the following rating scale:
+
+- **One star**: The **answer** is completely irrelevant to the **question**.
+- **Two stars**: The **answer** is mostly irrelevant to the **question**.
+- **Three stars**: The **answer** is partially relevant to the **question**.
+- **Four stars**: The **answer** is mostly relevant to the **question**.
+- **Five stars**: The **answer** is entirely relevant to the **question**.
+
+This rating value should always be an integer between **1** and **5**.
+
+**Examples:**
+
+---
+
+**Question:** What is the capital of France?
+
+**Context:** France is a country in Europe known for its history, art, and cuisine.
+
+**Answer:** The capital of France is Paris.
+
+**Stars:** 5
+
+---
+
+**Question:** How does photosynthesis work in plants?
+
+**Context:** Photosynthesis is the process by which green plants use sunlight to synthesize foods from carbon dioxide and water.
+
+**Answer:** Paris is a popular tourist destination.
+
+**Stars:** 1
+
+---
+
+**Question:** What are the health benefits of regular exercise?
+
+**Context:** Regular exercise can improve cardiovascular health, strengthen muscles, and enhance mental well-being.
+
+**Answer:** Regular exercise improves your mood and helps you sleep better.
+
+**Stars:** 5
+
+---
+
+**Question:** What is the tallest mountain in the world?
+
+**Context:** Mount Everest is Earth's highest mountain above sea level, located in the Himalayas.
+
+**Answer:** The Earth revolves around the Sun.
+
+**Stars:** 1
+
+---
+
+**Question:** Can you explain the process of photosynthesis?
+
+**Context:** Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll pigments.
+
+**Answer:** Photosynthesis allows plants to convert light energy into chemical energy.
+
+**Stars:** 5
+
+---
+
+**Actual Task:**
+
+question: {{question}}
+
+context: {{context}}
+
+answer: {{answer}}
+
+stars:
