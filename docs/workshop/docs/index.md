@@ -1,5 +1,7 @@
 # Build a Retail Copilot Code-First on Azure AI
 
+!!! example "Microsoft AI Tour Attendees:  <br/> To get started with this workshop, [make sure you have everything you need](00-Before-You-Begin/index.md) to start building."   
+
 This website contains the step-by-step instructions for a hands-on workshop that teaches you how to **build, evaluate, and deploy a retail copilot code-first on Azure AI**. 
 
 - Our solution use the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) to ground chat AI responses in the retailer's product catalog and cusomer data.
@@ -74,4 +76,4 @@ In our workshop, you willl see the development workflow organized into sections 
 
 ---
 
-To get started with this workshop, [make sure you have everything you need](00-Before-You-Begin/index.md) to start building.
+!!! example "To get started with this workshop, [make sure you have everything you need](00-Before-You-Begin/index.md) to start building."

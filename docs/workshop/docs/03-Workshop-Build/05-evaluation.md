@@ -1,23 +1,29 @@
 # 5️⃣ | Evaluate with AI
 
-To make sure our app is working as intended, we can **evaluate** its response (the ANSWER) given the customer's QUESTION and the CONTEXT provided. We will evaluate the responses according to the following criteria:
+To make sure our app is working as intended, we can **evaluate** its response (the ANSWER) given the customer's QUESTION and the CONTEXT provided - using four criteria:
 
-* **Coherence**: how well all the sentences in the ANSWER fit together and sound naturally as a whole
-* **Fluency**: the quality of individual sentences in the ANSWER, and whether they are well-written and grammatically correct
-* **Groundedness**: given CONTEXT, whether the ANSWER uses information provided by the CONTEXT
-* **Relevance**: how well the ANSWER addresses the main aspects of the QUESTION, based on the CONTEXT
+* **Coherence** <br/> how well all sentences in the ANSWER fit together <br/> and whether they _sound naturally as a whole_
+* **Fluency** <br/> quality of individual sentences in the ANSWER, <br/> and whether they are _well-written and grammatically correct_
+* **Groundedness** <br/>given CONTEXT, whether the ANSWER <br/> _uses information provided_ by the CONTEXT
+* **Relevance** <br/>how well the ANSWER _addresses the main aspects_ of the QUESTION, <br/>based on the CONTEXT
 
-These evaluations _could_ be performed by a human, who could use their subjective judgement to rate an answer on a scale from one star to five stars. But in this section, we will **automate** the process using a powerful generative AI model (GPT-4) to evaluate responses.
+These evaluations _could_ be performed by a human, who could use their subjective judgement to rate an answer on a scale from one star to five stars. But in this section, we will use 
+_AI-Assisted Evaluation_  - where we **automate** the process using a powerful generative AI model (GPT-4) to evaluate multiple responses against these criteria, for scale.
 
-# Step 1: Understand custom Prompty Evaluators
+## Step 1: Understand custom Prompty Evaluators
 
-Prompty files to evaluate answers on the criteria above can be found in the repository at `src/api/evaluators/custom_evals`.
+We evaluate these criteria using **custom evaluators** represented by the 4 prompty files found in the repository under `src/api/evaluators/custom_evals`. Take a minute to locate the folder, then let's explore _one_ of these evaluators closely.
+
+### 1.1 View Coherence Evaluator
 
 1. Open the `src/api/evaluators/custom_evals` folder in VS Code Explorer
 1. Open the file `coherence.prompty` look at it. The default inputs in the `sample:` section are:
     - **question**: What feeds all the fixtures in low voltage tracks instead of each light having a line-to-low voltage transformer?
     - **context**: Track lighting, invented by Lightolier, was popular at one period of time because it was much easier to install than recessed lighting, and individual fixtures are decorative and can be easily aimed at a wall. It has regained some popularity recently in low-voltage tracks, which often look nothing like their predecessors because they do not have the safety issues that line-voltage systems have, and are therefore less bulky and more ornamental in themselves. A master transformer feeds all of the fixtures on the track or rod with 12 or 24 volts, instead of each light fixture having its own line-to-low voltage transformer. There are traditional spots and floods, as well as other small hanging fixtures. A modified version of this is cable lighting, where lights are hung from or clipped to bare metal cables under tension
     - **answer**: The main transformer is the object that feeds all the fixtures in low voltage tracks.
+
+### 1.2 Run Coherence Evaluator
+
 1. Run the prompty file. You will see output like this:
     ```bash
     2024-09-16 21:35:43.602 [info] Loading /workspaces/contoso-chat/.env
@@ -29,13 +35,15 @@ Prompty files to evaluate answers on the criteria above can be found in the repo
 
     !!! info "Note the several examples given in the Prompty file of answers that represent each of the star ratings. This is an example of [few-shot learning](https://learn.microsoft.com/azure/ai-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions#few-shot-learning), a common technique used to guide AI models."
 
+### 1.3 Run All Custom Evaluators
+
 1. Repeat the process for the other Prompty files:
 
     - `fluency.prompty`
     - `groundedness.prompty`
     - `relevance.prompty`
 
-# Step 2: Execute AI-Assisted Evaluation
+## Step 2: Execute AI-Assisted Evaluation
 
 Now that you understand the process of evaluation, let's evaluate the perfomance of our Contoso Chat application on a suite of test questions.
 
@@ -63,7 +71,7 @@ Now that you understand the process of evaluation, let's evaluate the perfomance
     When the notebook execution completes, the final results will be tabulated and shown in the output cell in the notebook at the very end. However, the default view is _not set to scrollable_ so you may miss seeing that rendered. Instead, wait till the run completes, then look for the link in the output cell that lets you switch to a scrollable element. **Scroll to the bottom** to see a table with the evaluation results all test inputs, for the 4 quality assessment criteria.
 
 
-# Step 3: Understand Evaluation Workflow
+## Step 3: Understand Evaluation Workflow
 
 - Walk through the steps in the notebook
     - Load test data - from JSONL file
@@ -80,14 +88,14 @@ Now that you understand the process of evaluation, let's evaluate the perfomance
 
 !!! success "Congratulations! You just used custom evaluators in an AI-Assisted Evaluation flow!"
 
-# Step 4: Understand Observability with Tracer (optional)
+## Step 4: Understand Observability with Tracer (optional)
 
 - Revisit the `contoso_chat/chat_request.py` and `evaluators/coherence.py` files
 - Explain the `PromptyTracer` and `@trace` decoration features
 - Look for the `src/api/.runs` folder and click on a `.tracy` file
 - Explore the traces to understand the telemetry captured for debugging
 
-# Step 5 (Optional) Homework
+## Step 5 (Optional) Homework
 
 **Here are some other things to try when you run this workshop at home:** 
 

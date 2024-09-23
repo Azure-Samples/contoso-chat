@@ -1,5 +1,7 @@
 # 1️⃣ | Getting Started: Instructor-Led Workshop
 
+!!! example "Microsoft AI Tour Attendees:  <br/> Already launched the Skillable Lab and verified credentials? [Move Directly to Step 2](#2-set-up-your-dev-environment) to save time."   
+
 Thie instructions are for participants of the instructor-led **"WRK550: Build a Retail Copilot Code-First on Azure AI"** workshop offered on the Microsoft AI Tour (2024-2025). 
 
 If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
