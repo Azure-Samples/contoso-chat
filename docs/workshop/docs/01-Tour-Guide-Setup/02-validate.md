@@ -56,7 +56,7 @@ From the VS Code Online Terminal pane (in Tab 2️⃣):
 
 1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
 
-1. Select the account with Username and from Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab.
+1. Select the account with the Username shown in the Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab
 
 1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
 

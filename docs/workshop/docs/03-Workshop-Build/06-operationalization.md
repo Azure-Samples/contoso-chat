@@ -21,7 +21,7 @@ Let's look at how the FastAPI application is implemented, in code by opening the
 
 - **line 11** - we import the `get_response` function from our chat implementation
 - **line 17** - we create a new instance of FastAPI called `app`.
-- **line 34** - we configure the app middleware to handle requests.
+- **line 35** - we configure the app middleware to handle requests.
 - **line 44** - we attach a default route `/` that returns "Hello World" when invoked
 - **line 49** - we attach a default route `/api/create_response` that accepts POST requests
 - **line 51** - when this receives a request, it calls our chat function (passing parameters)

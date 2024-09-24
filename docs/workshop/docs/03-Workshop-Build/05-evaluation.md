@@ -25,7 +25,7 @@ The chat application generates its response (ANSWER) given a customer input (QUE
 | **Coherence** | How well do all sentences in the ANSWER fit together? <br/> Do they sound natural when taken as a whole? |
 | **Fluency** | What is the quality of individual sentences in the ANSWER? <br/> Are they well-written and grammatically correct? |
 | **Groundedness**| Given support knowledge, does the ANSWER use the information provided by the CONTEXT? |
-| **Relevance**| How well does the ANSWER address the main aspects o fthe QUESTION, based on the CONTEXT? |
+| **Relevance**| How well does the ANSWER address the main aspects of the QUESTION, based on the CONTEXT? |
 
 ## Step 2: Understand Evaluators
 
@@ -124,7 +124,7 @@ Navigate to the `src/api` folder in Visual Studio Code.
 
 ### 3.2 Watch Evaluation Runs
 
-One of the benefits of using Prompty is the built-in `Tracer` feature that captures execution traces for the entire workflow. These trace _runs_ are stored in  `.tracy` files in in the `api/.runs/` folder as shown in the figure below.
+One of the benefits of using Prompty is the built-in `Tracer` feature that captures execution traces for the entire workflow. These trace _runs_ are stored in  `.tracy` files in the `api/.runs/` folder as shown in the figure below.
 
 - Keep this explorer sidebar open while the evaluation notebook runs/
 - You see: `get_response` traces when our chat application is running
@@ -227,7 +227,7 @@ We covered a lot in this section!! But there's a lot more left to learn. Here ar
 
 - Copy the `Coherence.prompty` to a new `Politeness.prompty` file
 - Modify the **system** segment to define a "Politeness" metric
-- Modify the **user** segment to define your scoring guidanc
+- Modify the **user** segment to define your scoring guidance
 - Define a sample input & refine Prompty to return valid score
 - Create the test dataset, then assess results against your evaluator. 
 - Think about how this approach extends to _safety_ evaluations. 
