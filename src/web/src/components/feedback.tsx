@@ -14,7 +14,7 @@ export const Feedback = ({ responseId }: Props) => {
     const [currentFeedback, setCurrentFeedback] = useState<MessageFeedback | null>(null);
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const [feedbackSubmitted, setFeedbackSubmitted] = useState<boolean>(false);
-    
+
     var iconsVisible: Boolean = false;
 
     if (responseId && responseId != '') {
@@ -41,26 +41,35 @@ export const Feedback = ({ responseId }: Props) => {
     }
 
 
-     return (            
+    return (
         <div className={styles.feedbackContainer}>
             {feedbackSubmitted ? (
-                <p>Thank you for your feedback!</p>
+                <div>
+                    <p>&nbsp;</p>
+                    <p
+                        className={styles.feedbackMessage}
+                    >
+                        Thank you for your feedback!
+                    </p>
+                </div>
             ) : (
                 iconsVisible && (
-                    <>
-      <button
-        className={`${styles.button} ${currentFeedback?.feedback === 1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === 1 ? styles.animate : ''}`}
-        onClick={OnThumbsUpClick}
-      >
-      <FaRegThumbsUp />
-      </button>
-      <button
-        className={`${styles.button} ${currentFeedback?.feedback === -1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === -1 ? styles.animate : ''}`}
-        onClick={OnThumbsDownClick}
-      >
-         <FaRegThumbsDown />
-      </button>
-      </>
+                    <div>
+                        <p>&nbsp;</p>
+                        <button
+                            className={`${styles.button} ${currentFeedback?.feedback === 1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === 1 ? styles.animate : ''}`}
+                            onClick={OnThumbsUpClick}
+                        >
+                            <FaRegThumbsUp />
+                        </button>
+                        &nbsp;
+                        <button
+                            className={`${styles.button} ${currentFeedback?.feedback === -1 ? styles.selected : ''} ${isAnimating && currentFeedback?.feedback === -1 ? styles.animate : ''}`}
+                            onClick={OnThumbsDownClick}
+                        >
+                            <FaRegThumbsDown />
+                        </button>
+                    </div>
                 )
             )}
         </div>

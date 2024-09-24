@@ -8,11 +8,12 @@
     cursor: pointer;
     background: none;
     border: none;
+    color: gray;
     transition: transform 0.3s ease;
   }
-  
+
   .selected {
-    color: blue;
+    color: teal;
   }
   
   .animate {
@@ -30,3 +31,7 @@
       transform: translateY(-5px);
     }
   }
+ 
+.feedbackMessage {
+  color: teal;
+}
