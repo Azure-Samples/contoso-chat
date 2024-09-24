@@ -2,11 +2,16 @@
 
 !!! success "Let's Review where we are right now"
 
+    ![Dev Workflow](./../img/workshop-developer-flow.png)
+
+    Looking at our end-to-end developer workflow, we completed the `PROVISION` and `SETUP` stages. Before we dive into the `IDEATE` stage, let's take a minute to validate that we are ready to begin development.
+
     1. We set up our development environment (GitHub Codespaces)
     1. We provisioned our infrastructure (Azure Resources)
     1. We connected our dev environment to our infra (Auth & Env Vars)
     1. We used SDK and CLI tools to push updates to infra (Data & App)
 
+---
 
 _In this section, we'll take a minute to understand what our Azure infrastructure looks like, and validate that the resources are deployed and initialized correctly. Here's a reminder of the Azure Application Architecure showing the key resources used. Let's dive in._
 

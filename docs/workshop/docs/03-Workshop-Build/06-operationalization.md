@@ -1,5 +1,12 @@
 # 6️⃣ | Deploy with ACA
 
+!!! success "Let's Review where we are right now"
+
+    ![Dev Workflow](./../img/workshop-developer-flow.png)
+
+    In the previous step, we evaluated our application for quality using 4 key metrics and a larger test inputs dataset. After getting acceptable results, it's time to deploy the protoype to production. **But how can we go from Prompty prototype to hosted API endpoint?** Let's build a FastAPI app and serve it with Azure Container Apps.
+
+## Building FastAPI Apps
 
 [FastAPI](https://fastapi.tiangolo.com/) is a modern, high-performance web framework for building and serving APIs using Python code. With FastAPI you get a default application server (that can listen on a specified port) that can be configured with various paths (API routes) by defining functions that should be called in response to invocations on those endpoints.
 
@@ -175,7 +182,7 @@ Let's try the first option and change the default message that the app returns w
 1. Return to the browser page above.
     - **Check:** The displayed message should have updated to "Hello Microsoft AI Tour"
 
-!!! success "You just made changes & verified them live!"
+!!! success "You just made changes & verified them live (without restarting dev server)!"
 
 
 ## Step 6: Test changes at prompty
@@ -184,7 +191,7 @@ Let's try to make a change that will be visible in the `/api/create_response` ro
 
 1. Open `src/api/contoso_chat/chat.prompty`
     - Find the `system:` section of the file
-    - Add `When answering questions, always use a bulleted list of 5 items` to the end
+    - Add `Start every response with "THE ANSWER IS 42!"` to the end
     - Save the changes.
 1. Return to the browser page for our FastAPI dev server preview.
 1. Append `/docs` to the URL to get the Swagger UI interactive testing page
@@ -193,7 +200,7 @@ Let's try to make a change that will be visible in the `/api/create_response` ro
     - Specify a customer_id: try **1** ("John Smith")
     - Specify chat_history: leave it at `[]` for now 
 
-Note: this is the same question we tried in Step 3. **How did the response change this time?**
+Note: this is the same question we tried in Step 3. _Did you see the difference in the output?_
 
 !!! tip "Challenge: Try making other changes to the prompty file or the `get_request` function and observe impact."
 

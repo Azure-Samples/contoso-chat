@@ -2,7 +2,9 @@
 
 !!! success "Let's Review where we are right now"
 
-    We still have these 5 tabs open.
+    ![Dev Workflow](./../img/workshop-developer-flow.png)
+
+    We currently have these 5 tabs open in our development environment.
 
     1. Github Repo - starting tab 1️⃣
     1. GitHub Codespaces 2️⃣
@@ -10,7 +12,7 @@
     1. Azure AI Studio 4️⃣
     1. Azure Container Apps 5️⃣
 
-    We also have a fully-provisioned Azure infrastructure (backend), successfully deployed the first version of our application - and tested it manually, with a single input.
+    We also have a fully-provisioned Azure infrastructure (backend), successfully deployed the first version of our application - and tested it manually, with a single input. **It's time to move into the `IDEATE` phase of our workflow.**
 
 _Now it's time to understand how that application was developed - and specifically, understand how we can go from "prompt to prototype" in the **Ideation** phase of our developer workflow_.
 
@@ -231,7 +233,7 @@ Since this chatbot will be exposed on a public website, it's likely that nefario
 
 Copy your Prompty file and data file to new versions for editing:
 ```
-cp chat-1.prompty chat-2.
+cp chat-1.prompty chat-2.prompty
 ```
 ```
 cp chat-1.json chat-2.json
@@ -304,6 +306,8 @@ cp chat-1.json chat-2.json
 
     ```
     cp ../docs/workshop/src/1-build/chat-3.prompty .
+    ```
+    ```
     cp ../docs/workshop/src/1-build/chat-3.json .
     ```
 
