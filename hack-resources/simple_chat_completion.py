@@ -7,6 +7,7 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, CompletionsFinishReason
 from azure.core.credentials import AzureKeyCredential
+from azure.identity import DefaultAzureCredential
 from azure.core.tracing import AiInferenceApiInstrumentor
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.settings import settings
@@ -50,11 +51,20 @@ def sample_chat_completions():
     from azure.ai.inference.models import SystemMessage, UserMessage
     from azure.core.credentials import AzureKeyCredential
 
+    # client = ChatCompletionsClient(
+    #     endpoint=endpoint,
+    #     credential=AzureKeyCredential(""),  # Pass in an empty value.
+    #     headers={"api-key": key},
+    #     # AOAI api-version. Update as needed.
+    #     api_version="2023-03-15-preview",
+    #     logging_enable=True,
+    # )
+
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
-        # AOAI api-version. Update as needed.
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )

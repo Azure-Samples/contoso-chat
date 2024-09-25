@@ -1,4 +1,5 @@
 import random
+import uuid
 import aiohttp
 import asyncio
 import logging
@@ -39,7 +40,8 @@ def generate_user_prompt():
     return {
         "customer_id": "2",
         "question": random.choice(questions),
-        "chat_history": []
+        "chat_history": [],
+        "sesssion_id": uuid.uuid4().hex
     }
 
 

@@ -18,6 +18,7 @@ tracer = trace.get_tracer(__name__)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
 def get_customer(customerId: str) -> str:
     try:
         url = os.environ["COSMOS_ENDPOINT"]
@@ -36,16 +37,17 @@ def get_customer(customerId: str) -> str:
 def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    # key = os.environ["AZUREAI_ENDPOINT_KEY"]
 
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
-    
+
     customer = get_customer(customerId)
     context = product.find_products(question)
 
@@ -82,15 +84,17 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
                         logger.warning(f"Unknown role for message: {role}")
                 except Exception:
                     logger.warning("Unable to parse chat history messages")
-                
+
             messages.append(UserMessage(content=question))
 
             response = client.complete(messages=messages)
 
         response_content = response.choices[0].message.content
 
-        response_back = {"question": question, "answer": response_content, "context": context}
-        metadata = {"responseId": response.id, "model": response.model, "usage": response.usage}
+        response_back = {"question": question,
+                         "answer": response_content, "context": context}
+        metadata = {"responseId": response.id,
+                    "model": response.model, "usage": response.usage}
 
     except Exception as e:
         logger.error(f"Error getting response: {e}")
@@ -98,19 +102,22 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     return response_back, metadata
 
+
 def provide_feedback(feedback_item: FeedbackItem) -> dict:
     extra_info = validate_extra_feedback(feedback_item.extra)
-    feedback_context = {"gen_ai.response.id": feedback_item.responseId, "feedback": feedback_item.feedback, "extra": extra_info}
+    feedback_context = {"gen_ai.response.id": feedback_item.responseId,
+                        "feedback": feedback_item.feedback, "extra": extra_info}
     logger.info("user_feedback", extra=feedback_context)
 
     return {"result": "success"}
+
 
 def validate_extra_feedback(extra: dict) -> str:
     if extra is None:
         return {}
     return json.dumps(extra)
 
+
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
     # get_response(argv[1], argv[2], argv[3])
-    

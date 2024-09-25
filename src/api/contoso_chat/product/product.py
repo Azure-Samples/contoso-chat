@@ -25,13 +25,15 @@ load_dotenv()
 
 tracer = trace.get_tracer(__name__)
 
+
 def generate_embeddings(queries: List[str]) -> str:
     endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
-    key = os.environ["AZUREAI_EMBEDDING_KEY"]
+    # key = os.environ["AZUREAI_EMBEDDING_KEY"]
     client = EmbeddingsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-05-15",
         logging_enable=True,
     )
@@ -87,12 +89,13 @@ def find_products(context: str) -> Dict[str, any]:
     print("context:", context)
 
     endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    # key = os.environ["AZUREAI_ENDPOINT_KEY"]
 
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
