@@ -41,7 +41,7 @@ def generate_user_prompt():
         "customer_id": "2",
         "question": random.choice(questions),
         "chat_history": [],
-        "sesssion_id": uuid.uuid4().hex
+        "session_id": uuid.uuid4().hex
     }
 
 
