@@ -99,6 +99,10 @@ param runningOnGh string = ''
 @description('Whether the deployment is running on Azure DevOps Pipeline')
 param runningOnAdo string = ''
 
+@description('Whether to enable content tracing for Azure AI Inference API')
+param azureai_inference_api_enable_content_tracing bool
+
+
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 
@@ -189,7 +193,7 @@ module containerApps 'core/host/container-apps.bicep' = {
     tags: tags
     containerAppsEnvironmentName: '${prefix}-containerapps-env'
     containerRegistryName: ai.outputs.containerRegistryName
-    logAnalyticsWorkspaceName: ai.outputs.logAnalyticsWorkspaceName
+    logAnalyticsWorkspaceName: ai.outputs.logAnalyticsWorkspaceName    
   }
 }
 
@@ -215,6 +219,7 @@ module aca 'app/aca.bicep' = {
     cosmosDatabaseName: cosmosDatabaseName
     cosmosContainerName: cosmosContainerName
     appinsights_Connectionstring: ai.outputs.applicationInsightsConnectionString
+    azureai_inference_api_enable_content_tracing: azureai_inference_api_enable_content_tracing
   }
 }
 

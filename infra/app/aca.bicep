@@ -18,6 +18,7 @@ param cosmosContainerName string
 param aiSearchEndpoint string
 param aiSearchIndexName string
 param appinsights_Connectionstring string
+param azureai_inference_api_enable_content_tracing bool
 
 
 module app '../core/host/container-app-upsert.bicep' = {
@@ -79,7 +80,10 @@ module app '../core/host/container-app-upsert.bicep' = {
         name: 'APPINSIGHTS_CONNECTIONSTRING'
         value: appinsights_Connectionstring
       }
-
+      {
+        name: 'AZUREAI_INFERENCE_API_ENABLE_CONTENT_TRACING'
+        value: azureai_inference_api_enable_content_tracing
+      }
     ]
     targetPort: 80
   }
