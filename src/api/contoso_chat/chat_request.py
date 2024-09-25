@@ -36,8 +36,8 @@ def get_customer(customerId: str) -> str:
 
 def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
-    endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    # key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
 
     client = ChatCompletionsClient(
         endpoint=endpoint,

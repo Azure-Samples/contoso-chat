@@ -27,8 +27,9 @@ tracer = trace.get_tracer(__name__)
 
 
 def generate_embeddings(queries: List[str]) -> str:
-    endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
-    # key = os.environ["AZUREAI_EMBEDDING_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_EMBEDDING_NAME'])
+
     client = EmbeddingsClient(
         endpoint=endpoint,
         credential=DefaultAzureCredential(
@@ -88,8 +89,8 @@ def find_products(context: str) -> Dict[str, any]:
     # Get product queries
     print("context:", context)
 
-    endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    # key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
 
     client = ChatCompletionsClient(
         endpoint=endpoint,

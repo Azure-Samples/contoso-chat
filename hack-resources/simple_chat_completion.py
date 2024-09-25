@@ -7,7 +7,6 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, CompletionsFinishReason
 from azure.core.credentials import AzureKeyCredential
-from azure.identity import DefaultAzureCredential
 from azure.core.tracing import AiInferenceApiInstrumentor
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.settings import settings
