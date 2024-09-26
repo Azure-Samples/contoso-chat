@@ -100,7 +100,7 @@ param runningOnGh string = ''
 param runningOnAdo string = ''
 
 @description('Whether to enable content tracing for Azure AI Inference API')
-param azureai_inference_api_enable_content_tracing bool
+param azureai_inference_api_enable_content_tracing bool = true
 
 
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
@@ -229,7 +229,7 @@ module acaweb 'app/acaweb.bicep' = {
   name: 'acaweb'
   scope: resourceGroup
   params: {
-    name: replace('${take(prefix, 19)}-ca', '--', '-')
+    name: replace('${take(prefix, 19)}-webca', '--', '-')
     location: location
     tags: tags
     identityName: managedIdentity.outputs.managedIdentityName
