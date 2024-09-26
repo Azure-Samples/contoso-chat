@@ -331,6 +331,8 @@ output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
 output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
+output WEBAPP_ACA_NAME string = acaweb.outputs.WEBAPP_ACA_NAME
+output WEBAPP_ACA_URI string = acaweb.outputs.WEBAPP_ACA_URI
 output SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
 output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
 

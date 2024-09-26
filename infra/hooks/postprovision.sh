@@ -9,9 +9,9 @@ az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${
 
 echo  "Building contosochatweb:latest..."
 az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatweb:latest ./src/web/
-image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatweb:latest"
-az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${image_name}
-az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 80
+web_image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatweb:latest"
+az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${WEBAPP_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${web_image_name}
+az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${WEBAPP_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 3000
 
 
 
