@@ -175,6 +175,7 @@ export const Chat = () => {
       type: "user",
       avatar: "",
       image: currentImage,
+      responseId: '', // Add responseId property
     };
 
 
@@ -222,6 +223,7 @@ export const Chat = () => {
           type: "assistant",
           avatar: "",
           image: null,
+          responseId: '',
         },
       });
     }, 400);
@@ -247,6 +249,7 @@ export const Chat = () => {
               type: "assistant",
               avatar: "",
               image: null,
+              responseId: '',
             },
           });
         }, 400);

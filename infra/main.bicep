@@ -223,6 +223,21 @@ module aca 'app/aca.bicep' = {
   }
 }
 
+module acaweb 'app/acaweb.bicep' = {
+  name: 'acaweb'
+  scope: resourceGroup
+  params: {
+    name: replace('${take(prefix, 19)}-ca', '--', '-')
+    location: location
+    tags: tags
+    identityName: managedIdentity.outputs.managedIdentityName
+    containerAppsEnvironmentName: containerApps.outputs.environmentName
+    containerRegistryName: containerApps.outputs.registryName
+    contosochatapiendpoint: aca.outputs.SERVICE_ACA_URI
+  }
+  dependsOn: [aca]
+}
+
 module aiSearchRole 'core/security/role.bicep' = {
   scope: resourceGroup
   name: 'ai-search-index-data-contributor'
