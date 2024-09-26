@@ -197,6 +197,7 @@ module containerApps 'core/host/container-apps.bicep' = {
   }
 }
 
+// Deploy back-end web app
 module aca 'app/aca.bicep' = {
   name: 'aca'
   scope: resourceGroup
@@ -223,6 +224,7 @@ module aca 'app/aca.bicep' = {
   }
 }
 
+// Deploy front-end web app
 module acaweb 'app/acaweb.bicep' = {
   name: 'acaweb'
   scope: resourceGroup

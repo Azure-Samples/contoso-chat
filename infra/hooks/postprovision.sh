@@ -7,6 +7,14 @@ az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_
 az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 80
 
 
+echo  "Building contosochatweb:latest..."
+az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatweb:latest ./src/web/
+image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatweb:latest"
+az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${image_name}
+az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 80
+
+
+
 # Retrieve service names, resource group name, and other values from environment variables
 resourceGroupName=$AZURE_RESOURCE_GROUP
 searchService=$AZURE_SEARCH_NAME
@@ -26,6 +34,8 @@ fi
 azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
 azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
 azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
+azd env set AZUREAI_INFERENCE_API_ENABLE_CONTENT_TRACING true
+azd env set OTEL_EXPORTER_OTLP_ENDPOINT http://localhost:4317
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values >.env
