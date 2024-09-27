@@ -8,12 +8,15 @@ from evaluators.custom_evals.fluency import fluency_evaluation
 from evaluators.custom_evals.groundedness import groundedness_evaluation
 import jsonlines
 import pandas as pd
+from prompty.tracer import trace
+from tracing import init_tracing
 from contoso_chat.chat_request import get_response
 
 # %% [markdown]
 # ## Get output from data and save to results jsonl file
 
 # %%
+@trace
 def load_data():
     data_path = "./evaluators/data.jsonl"
 
@@ -22,7 +25,7 @@ def load_data():
     return df
 
 # %%
-
+@trace
 def create_response_data(df):
     results = []
 
@@ -49,6 +52,7 @@ def create_response_data(df):
     return results
 
 # %%
+@trace
 def evaluate():
     # Evaluate results from results file
     results_path = 'result.jsonl'
@@ -88,6 +92,7 @@ def evaluate():
     return df
 
 # %%
+@trace
 def create_summary(df):
     print("Evaluation summary:\n")
     print(df)
@@ -105,7 +110,7 @@ def create_summary(df):
 # %%
 # create main funciton for python script
 if __name__ == "__main__":
-
+   tracer = init_tracing(local_tracing=True)
    test_data_df = load_data()
    response_results = create_response_data(test_data_df)
    result_evaluated = evaluate()

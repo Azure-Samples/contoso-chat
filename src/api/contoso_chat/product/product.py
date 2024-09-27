@@ -30,7 +30,6 @@ def generate_embeddings(queries: List[str]) -> str:
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
         azure_ad_token_provider=token_provider
     )
-    print("client:", client)
     embeddings = client.embeddings.create(input=queries, model="text-embedding-ada-002")
     embs = [emb.embedding for emb in embeddings.data]
     items = [{"item": queries[i], "embedding": embs[i]} for i in range(len(queries))]
@@ -79,7 +78,6 @@ def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
 
 def find_products(context: str) -> Dict[str, any]:
     # Get product queries
-    print("context:", context)
     model_config = {
         "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
         "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
@@ -89,13 +87,11 @@ def find_products(context: str) -> Dict[str, any]:
         configuration=model_config,
         inputs={"context":context}
         )
-    print("queries:", queries)
     qs = json.loads(queries)
     # Generate embeddings
     items = generate_embeddings(qs)
     # Retrieve products
     products = retrieve_products(items, "contoso-products")
-    print("products:", products)
     return products
 
 
