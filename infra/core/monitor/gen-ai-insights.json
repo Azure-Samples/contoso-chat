@@ -1,942 +1,1040 @@
 {
-    "version": "Notebook/1.0",
-    "items": [
-      {
-        "type": 1,
-        "content": {
-          "json": "# Gen AI Insights\r\n\r\n### The Gen AI Insights  provides real-time insights into the performance metrics, usage patterns, and operational efficiency of your AI applications. Easily track metrics such as execution times, costs, and error rates across sessions. The dashboard provides detailed logs and visualizations, helping identify bottlenecks and optimize workflows. This ensures that your AI applications operate efficiently and reliably at scale."
-        },
-        "name": "text - 4"
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "# Gen AI Insights- Preview\r\n\r\n### The Gen AI Insights  provides real-time insights into the performance metrics, usage patterns, and operational efficiency of your AI applications. Easily track metrics such as execution times, costs, and error rates across sessions. The dashboard provides detailed logs and visualizations, helping identify bottlenecks and optimize workflows. This ensures that your AI applications operate efficiently and reliably at scale."
       },
-      {
-        "type": 9,
-        "content": {
-          "version": "KqlParameterItem/1.0",
-          "parameters": [
-            {
-              "id": "fe04b060-a336-4f44-882a-f73613825d3a",
-              "version": "KqlParameterItem/1.0",
-              "name": "Duration",
-              "type": 4,
-              "isRequired": true,
-              "isGlobal": true,
-              "typeSettings": {
-                "selectableValues": [
-                  {
-                    "durationMs": 300000
-                  },
-                  {
-                    "durationMs": 900000
-                  },
-                  {
-                    "durationMs": 1800000
-                  },
-                  {
-                    "durationMs": 3600000
-                  },
-                  {
-                    "durationMs": 14400000
-                  },
-                  {
-                    "durationMs": 43200000
-                  },
-                  {
-                    "durationMs": 86400000
-                  },
-                  {
-                    "durationMs": 172800000
-                  },
-                  {
-                    "durationMs": 259200000
-                  },
-                  {
-                    "durationMs": 604800000
-                  },
-                  {
-                    "durationMs": 1209600000
-                  },
-                  {
-                    "durationMs": 2419200000
-                  },
-                  {
-                    "durationMs": 2592000000
-                  },
-                  {
-                    "durationMs": 5184000000
-                  },
-                  {
-                    "durationMs": 7776000000
-                  }
-                ],
-                "allowCustom": true
-              },
-              "timeContext": {
-                "durationMs": 86400000
-              },
-              "value": {
-                "durationMs": 1800000
-              }
-            }
-          ],
-          "style": "pills",
-          "queryType": 0,
-          "resourceType": "microsoft.insights/components"
-        },
-        "name": "parameters - 3"
-      },
-      {
-        "type": 11,
-        "content": {
-          "version": "LinkItem/1.0",
-          "style": "tabs",
-          "tabStyle": "bigger",
-          "links": [
-            {
-              "id": "e87fda11-f869-446a-abef-93700451ec07",
-              "cellValue": "page",
-              "linkTarget": "parameter",
-              "linkLabel": "Overview",
-              "subTarget": "overview",
-              "style": "link",
-              "tabWidth": "'200px'"
-            },
-            {
-              "id": "c8318a81-a292-44c0-85bf-ee84a2b5ba1e",
-              "cellValue": "page",
-              "linkTarget": "parameter",
-              "linkLabel": "Session Drill",
-              "subTarget": "session",
-              "style": "link",
-              "tabWidth": "'200px'"
-            }
-          ]
-        },
-        "name": "links - 5"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "items": [
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueField": "prompt_tokens",
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "gray",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Promtp Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueField": "completion_tokens",
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "gray",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Completion Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy - Copy",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "orange",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Total Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy - Copy - Copy",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  }
-                ]
-              },
-              "name": "tile_group_overview"
-            },
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "items": [
-                  {
-                    "type": 10,
-                    "content": {
-                      "chartId": "workbook02d8cda6-4556-4c76-9e44-02608fffc04a",
-                      "version": "MetricsItem/2.0",
-                      "size": 1,
-                      "chartType": 2,
-                      "resourceType": "microsoft.cognitiveservices/accounts",
-                      "metricScope": 0,
-                      "resourceIds": [
-                        "/subscriptions/3604ee4c-dcf1-4974-b720-ec371ce55958/resourceGroups/rg-contosochat/providers/Microsoft.CognitiveServices/accounts/aoai-q5ezmhyg2mjqw"
-                      ],
-                      "timeContextFromParameter": "Duration",
-                      "timeContext": {
-                        "durationMs": 1800000
-                      },
-                      "metrics": [
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Cognitive Services  HTTP Requests-Latency",
-                          "aggregation": 7,
-                          "columnName": "Latency"
-                        },
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAIRequests",
-                          "aggregation": 1
-                        },
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAITimeToResponse",
-                          "aggregation": 4
-                        }
-                      ],
-                      "title": "Latency",
-                      "gridSettings": {
-                        "rowLimit": 10000
-                      }
-                    },
-                    "customWidth": "50",
-                    "name": "Azure Cognitive Service Latency",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 10,
-                    "content": {
-                      "chartId": "workbook5884c944-ba97-4c32-8162-ce094216c39f",
-                      "version": "MetricsItem/2.0",
-                      "size": 1,
-                      "chartType": 2,
-                      "resourceType": "microsoft.cognitiveservices/accounts",
-                      "metricScope": 0,
-                      "resourceIds": [
-                        "/subscriptions/3604ee4c-dcf1-4974-b720-ec371ce55958/resourceGroups/rg-contosochat/providers/Microsoft.CognitiveServices/accounts/aoai-q5ezmhyg2mjqw"
-                      ],
-                      "timeContextFromParameter": "Duration",
-                      "timeContext": {
-                        "durationMs": 1800000
-                      },
-                      "metrics": [
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-ActiveTokens",
-                          "aggregation": 1
-                        },
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-GeneratedTokens",
-                          "aggregation": 1
-                        },
-                        {
-                          "namespace": "microsoft.cognitiveservices/accounts",
-                          "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-GeneratedTokens",
-                          "aggregation": 1
-                        }
-                      ],
-                      "title": "Tokens",
-                      "gridSettings": {
-                        "rowLimit": 10000
-                      }
-                    },
-                    "customWidth": "50",
-                    "name": "metric - 1",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 10,
-                    "content": {
-                      "chartId": "workbookf60e743e-126a-4537-8ed9-6eb841e44567",
-                      "version": "MetricsItem/2.0",
-                      "size": 1,
-                      "chartType": 2,
-                      "resourceType": "microsoft.insights/components",
-                      "metricScope": 0,
-                      "resourceIds": [
-                        "/subscriptions/3604ee4c-dcf1-4974-b720-ec371ce55958/resourcegroups/rg-contosochat/providers/microsoft.insights/components/appi-q5ezmhyg2mjqw"
-                      ],
-                      "timeContextFromParameter": "Duration",
-                      "timeContext": {
-                        "durationMs": 1800000
-                      },
-                      "metrics": [
-                        {
-                          "namespace": "microsoft.insights/components/kusto",
-                          "metric": "microsoft.insights/components/kusto-Failures-exceptions/count",
-                          "aggregation": 1
-                        }
-                      ],
-                      "title": "Exceptions",
-                      "gridSettings": {
-                        "rowLimit": 10000
-                      }
-                    },
-                    "customWidth": "50",
-                    "name": "metric - 2",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "traces\r\n| where message == \"user_feedback\"\r\n| extend FeedbackType = case(toint(customDimensions.feedback) == -1, \"Positive\", toint(customDimensions.feedback) == 1, \"Negative\", \"Unknown\")\r\n| summarize Count = count() by FeedbackType\r\n| render timechart",
-                      "size": 1,
-                      "title": "User Feedback",
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "tiles",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "FeedbackType",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "Count",
-                          "formatter": 12,
-                          "formatOptions": {
-                            "palette": "greenRed"
-                          },
-                          "numberFormat": {
-                            "unit": 17,
-                            "options": {
-                              "style": "decimal",
-                              "maximumFractionDigits": 2,
-                              "maximumSignificantDigits": 3
-                            }
-                          }
-                        },
-                        "showBorder": false
-                      }
-                    },
-                    "customWidth": "50",
-                    "name": "query - 3",
-                    "styleSettings": {
-                      "showBorder": true
-                    }
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.groundedness)\r\n| render barchart",
-                      "size": 0,
-                      "title": "Groundedness Scoring Scale",
-                      "color": "orange",
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "graphSettings": {
-                        "type": 0
-                      },
-                      "chartSettings": {
-                        "xAxis": "Score",
-                        "yAxis": [
-                          "Count"
-                        ],
-                        "showMetrics": false
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 4"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.coherence)\r\n| render barchart",
-                      "size": 0,
-                      "title": "Coherence Scoring Scale",
-                      "color": "turquoise",
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "chartSettings": {
-                        "xAxis": "Score",
-                        "yAxis": [
-                          "Count"
-                        ],
-                        "showMetrics": false,
-                        "seriesLabelSettings": [
-                          {
-                            "seriesName": "Score",
-                            "color": "greenDark"
-                          }
-                        ]
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 4 - Copy"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.relevance)\r\n| render barchart",
-                      "size": 0,
-                      "title": "Relevance Scoring Scale",
-                      "color": "redBright",
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "chartSettings": {
-                        "xAxis": "Score",
-                        "yAxis": [
-                          "Count"
-                        ],
-                        "showMetrics": false,
-                        "seriesLabelSettings": [
-                          {
-                            "seriesName": "Score",
-                            "color": "magenta"
-                          }
-                        ]
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 4 - Copy - Copy"
-                  }
-                ]
-              },
-              "name": "metric_tiles-grp"
-            },
-            {
-              "type": 1,
-              "content": {
-                "json": "## LLM Request"
-              },
-              "name": "text - 0"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n",
-                "size": 0,
-                "timeContextFromParameter": "Duration",
-                "queryType": 0,
-                "resourceType": "microsoft.insights/components",
-                "visualization": "table",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "Latency",
-                      "formatter": 4,
-                      "formatOptions": {
-                        "palette": "greenRed"
-                      }
-                    },
-                    {
-                      "columnMatch": "Complete_Trace",
-                      "formatter": 7,
-                      "formatOptions": {
-                        "linkTarget": "DependencyDetails"
-                      }
-                    },
-                    {
-                      "columnMatch": "performanceBucket",
-                      "formatter": 4,
-                      "formatOptions": {
-                        "palette": "redGreen"
-                      }
-                    }
-                  ]
+      "name": "Header-txt"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subcription}"
+        ],
+        "parameters": [
+          {
+            "id": "fe04b060-a336-4f44-882a-f73613825d3a",
+            "version": "KqlParameterItem/1.0",
+            "name": "Duration",
+            "type": 4,
+            "isRequired": true,
+            "isGlobal": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
                 },
-                "sortBy": []
-              },
-              "name": "query - 3",
-              "styleSettings": {
-                "showBorder": true
-              }
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": {
+              "durationMs": 1800000
             }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "page",
-          "comparison": "isEqualTo",
-          "value": "overview"
-        },
-        "name": "overview"
+          },
+          {
+            "id": "f39ba997-9f20-4d99-810c-122f1efbd1b2",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subcription",
+            "label": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "isGlobal": true,
+            "typeSettings": {
+              "additionalResourceOptions": [],
+              "includeAll": true,
+              "showDefault": false
+            },
+            "value": ""
+          },
+          {
+            "id": "1c7b1da9-952e-459a-a868-6999207eeea1",
+            "version": "KqlParameterItem/1.0",
+            "name": "Applicationinsights",
+            "label": "ApplicationInsights",
+            "type": 5,
+            "isRequired": true,
+            "isGlobal": true,
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.insights/components": true
+              },
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "value": ""
+          },
+          {
+            "id": "038984aa-bb91-4f0d-94e8-71e8251039d8",
+            "version": "KqlParameterItem/1.0",
+            "name": "AIService",
+            "type": 5,
+            "isRequired": true,
+            "query": "where type == 'microsoft.cognitiveservices/accounts' and kind == 'AIServices'\r\n| project id\r\n\r\n",
+            "crossComponentResources": [
+              "{Subcription}"
+            ],
+            "typeSettings": {
+              "resourceTypeFilter": {
+                "microsoft.cognitiveservices/accounts": true,
+                "microsoft.cognitiveservices/browseaiservices": true
+              },
+              "additionalResourceOptions": [],
+              "showDefault": false
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": ""
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
       },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 9,
-              "content": {
-                "version": "KqlParameterItem/1.0",
-                "parameters": [
-                  {
-                    "id": "11d6d102-9cfc-4fa8-8e95-41ab2c465e5f",
-                    "version": "KqlParameterItem/1.0",
-                    "name": "session",
-                    "label": "Session",
-                    "type": 2,
-                    "query": "dependencies\r\n| where name == \"create_response\"\r\n| order by timestamp desc\r\n| project customDimensions.[\"session.id\"]\r\n",
-                    "typeSettings": {
-                      "additionalResourceOptions": [],
-                      "showDefault": false
-                    },
-                    "timeContext": {
-                      "durationMs": 0
-                    },
+      "name": "parameters - 3"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "tabStyle": "bigger",
+        "links": [
+          {
+            "id": "e87fda11-f869-446a-abef-93700451ec07",
+            "cellValue": "page",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "overview",
+            "style": "link",
+            "tabWidth": "'200px'"
+          },
+          {
+            "id": "c8318a81-a292-44c0-85bf-ee84a2b5ba1e",
+            "cellValue": "page",
+            "linkTarget": "parameter",
+            "linkLabel": "Session Drill",
+            "subTarget": "session",
+            "style": "link",
+            "tabWidth": "'200px'"
+          }
+        ]
+      },
+      "name": "tab"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
-                    "value": "f6dcd0cc-6ae9-419e-b21c-2f1dc484f9ee"
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "prompt_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "gray",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Promtp Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "summary-tile-1",
+                  "styleSettings": {
+                    "showBorder": true
                   }
-                ],
-                "style": "pills",
-                "queryType": 0,
-                "resourceType": "microsoft.insights/components"
-              },
-              "name": "parameters - 0"
-            },
-            {
-              "type": 1,
-              "content": {
-                "json": "## Gen AI Sessions"
-              },
-              "name": "text - 1"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"eval\" \r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness_result,\r\n        coherence = customDimensions.coherence_result,\r\n        relevance = customDimensions.relevance_result\r\n) on response_id\r\n| project\r\n    TimeStamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    feedback,\r\n    groundedness,\r\n    coherence,\r\n    relevance",
-                "size": 0,
-                "timeContextFromParameter": "Duration",
-                "queryType": 0,
-                "resourceType": "microsoft.insights/components",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "Complete_Trace",
-                      "formatter": 7,
-                      "formatOptions": {
-                        "linkTarget": "DependencyDetails"
-                      }
-                    },
-                    {
-                      "columnMatch": "transactionview",
-                      "formatter": 7,
-                      "formatOptions": {
-                        "linkTarget": "DependencyDetails"
-                      }
-                    },
-                    {
-                      "columnMatch": "duration",
-                      "formatter": 4,
-                      "formatOptions": {
-                        "palette": "greenRed"
-                      }
-                    },
-                    {
-                      "columnMatch": "performanceBucket",
-                      "formatter": 4,
-                      "formatOptions": {
-                        "palette": "greenRed"
-                      }
-                    }
-                  ]
                 },
-                "sortBy": []
-              },
-              "name": "query - 2",
-              "styleSettings": {
-                "showBorder": true
-              }
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "completion_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "gray",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Completion Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "summary-tile-2",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "orange",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Total Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "summary-tile-3",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                }
+              ]
             },
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "items": [
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueField": "prompt_tokens",
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "gray",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Promtp Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
+            "name": "tile_group_overview"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook02d8cda6-4556-4c76-9e44-02608fffc04a",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "resourceType": "microsoft.cognitiveservices/accounts",
+                    "metricScope": 0,
+                    "resourceParameter": "AIService",
+                    "resourceIds": [
+                      "{AIService}"
+                    ],
+                    "timeContextFromParameter": "Duration",
+                    "timeContext": {
+                      "durationMs": 0
                     },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy",
-                    "styleSettings": {
-                      "showBorder": true
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Cognitive Services  HTTP Requests-Latency",
+                        "aggregation": 7,
+                        "splitBy": null,
+                        "columnName": "Latency"
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAIRequests",
+                        "aggregation": 1
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAITimeToResponse",
+                        "aggregation": 4
+                      }
+                    ],
+                    "title": "Latency",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "Azure Cognitive Service Latency",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook5884c944-ba97-4c32-8162-ce094216c39f",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "resourceType": "microsoft.cognitiveservices/accounts",
+                    "metricScope": 0,
+                    "resourceParameter": "AIService",
+                    "resourceIds": [
+                      "{AIService}"
+                    ],
+                    "timeContextFromParameter": "Duration",
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-ActiveTokens",
+                        "aggregation": 1,
+                        "splitBy": null
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-GeneratedTokens",
+                        "aggregation": 1
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-GeneratedTokens",
+                        "aggregation": 1
+                      }
+                    ],
+                    "title": "Tokens",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "metric - 1",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbookf60e743e-126a-4537-8ed9-6eb841e44567",
+                    "version": "MetricsItem/2.0",
+                    "size": 1,
+                    "chartType": 2,
+                    "resourceType": "microsoft.insights/components",
+                    "metricScope": 0,
+                    "resourceParameter": "Applicationinsights",
+                    "resourceIds": [
+                      "{Applicationinsights}"
+                    ],
+                    "timeContextFromParameter": "Duration",
+                    "timeContext": {
+                      "durationMs": 0
+                    },
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.insights/components/kusto",
+                        "metric": "microsoft.insights/components/kusto-Failures-exceptions/count",
+                        "aggregation": 1,
+                        "splitBy": null
+                      }
+                    ],
+                    "title": "Exceptions",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "metric - 2",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where message == \"user_feedback\"\r\n| extend FeedbackType = case(toint(customDimensions.feedback) == -1, \"Positive\", toint(customDimensions.feedback) == 1, \"Negative\", \"Unknown\")\r\n| summarize Count = count() by FeedbackType\r\n| render timechart",
+                    "size": 1,
+                    "title": "User Feedback",
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "tiles",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "FeedbackType",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "Count",
+                        "formatter": 12,
+                        "formatOptions": {
+                          "palette": "greenRed"
+                        },
+                        "numberFormat": {
+                          "unit": 17,
+                          "options": {
+                            "style": "decimal",
+                            "maximumFractionDigits": 2,
+                            "maximumSignificantDigits": 3
+                          }
+                        }
+                      },
+                      "showBorder": false
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "query - 3",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.groundedness)\r\n| render barchart",
+                    "size": 0,
+                    "title": "Groundedness Scoring Scale",
+                    "color": "orange",
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "graphSettings": {
+                      "type": 0
+                    },
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.coherence)\r\n| render barchart",
+                    "size": 0,
+                    "title": "Coherence Scoring Scale",
+                    "color": "turquoise",
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false,
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Score",
+                          "color": "greenDark"
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4 - Copy"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where message == \"eval\"\r\n| summarize Count = count() by Score = toint(customDimensions.relevance)\r\n| render barchart",
+                    "size": 0,
+                    "title": "Relevance Scoring Scale",
+                    "color": "redBright",
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false,
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Score",
+                          "color": "magenta"
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4 - Copy - Copy"
+                }
+              ]
+            },
+            "name": "metric_tiles-grp"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## LLM Request"
+            },
+            "name": "text - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n",
+              "size": 0,
+              "timeContextFromParameter": "Duration",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{Applicationinsights}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Latency",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
                     }
                   },
                   {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContextFromParameter": "Duration",
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueField": "completion_tokens",
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "gray",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Completion Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy - Copy",
-                    "styleSettings": {
-                      "showBorder": true
+                    "columnMatch": "Complete_Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
                     }
                   },
                   {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                      "size": 1,
-                      "timeContext": {
-                        "durationMs": 86400000
-                      },
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components",
-                      "visualization": "stat",
-                      "tileSettings": {
-                        "titleContent": {
-                          "columnMatch": "total_tokens",
-                          "formatter": 1
-                        },
-                        "leftContent": {
-                          "columnMatch": "prompt_tokens",
-                          "formatter": 1
-                        },
-                        "rightContent": {
-                          "columnMatch": "completion_tokens",
-                          "formatter": 1
-                        },
-                        "showBorder": false
-                      },
-                      "statSettings": {
-                        "valueField": "total_tokens",
-                        "valueAggregation": "None",
-                        "colorSettings": {
-                          "type": "static",
-                          "mode": "background",
-                          "staticColor": "orange",
-                          "heatmapPalette": "greenRed",
-                          "thresholdsGrid": []
-                        },
-                        "iconSettings": {
-                          "thresholdsGrid": []
-                        },
-                        "tagText": "Total Tokens",
-                        "valueFontStyle": "xxLarge"
-                      },
-                      "mapSettings": {
-                        "locInfo": "LatLong",
-                        "sizeSettings": "prompt_tokens",
-                        "sizeAggregation": "Sum",
-                        "legendMetric": "prompt_tokens",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "type": "heatmap",
-                          "colorAggregation": "Sum",
-                          "nodeColorField": "prompt_tokens",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "customWidth": "33",
-                    "name": "query - 10 - Copy - Copy - Copy",
-                    "styleSettings": {
-                      "showBorder": true
+                    "columnMatch": "performanceBucket",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "redGreen"
                     }
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id\r\n);\r\ntraces\r\n| where message == \"eval\" and operation_Id == ops_Id\r\n| summarize Count = count() by Score = toint(customDimensions.groundedness)\r\n| render barchart",
-                      "size": 0,
-                      "timeContext": {
-                        "durationMs": 86400000
-                      },
-                      "queryType": 0,
-                      "resourceType": "microsoft.insights/components"
-                    },
-                    "name": "query - 3"
                   }
                 ]
               },
-              "name": "tile_group"
+              "sortBy": []
+            },
+            "name": "llm-request-query",
+            "styleSettings": {
+              "showBorder": true
             }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "page",
-          "comparison": "isEqualTo",
-          "value": "session"
-        },
-        "name": "session-drill",
-        "styleSettings": {
-          "showBorder": true
-        }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "page",
+        "comparison": "isEqualTo",
+        "value": "overview"
+      },
+      "name": "overview"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "11d6d102-9cfc-4fa8-8e95-41ab2c465e5f",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "session",
+                  "label": "Session",
+                  "type": 2,
+                  "query": "dependencies\r\n| where name == \"create_response\"\r\n| order by timestamp desc\r\n| project customDimensions.[\"session.id\"]\r\n",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "Duration",
+                  "queryType": 0,
+                  "resourceType": "microsoft.insights/components",
+                  "value": "91423d1bbd57466f8f69a17f9feb7c98"
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components"
+            },
+            "name": "parameters - 0"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Gen AI Sessions"
+            },
+            "name": "text - 1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"eval\" \r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness_result,\r\n        coherence = customDimensions.coherence_result,\r\n        relevance = customDimensions.relevance_result\r\n) on response_id\r\n| project\r\n    TimeStamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    feedback,\r\n    groundedness,\r\n    coherence,\r\n    relevance",
+              "size": 0,
+              "timeContextFromParameter": "Duration",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{Applicationinsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Complete_Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "transactionview",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "performanceBucket",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "name": "query - 2",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "prompt_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "gray",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Promtp Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 10 - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "completion_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "gray",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Completion Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 10 - Copy - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 1,
+                    "timeContextFromParameter": "Duration",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{Applicationinsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "total_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "staticColor": "orange",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Total Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 10 - Copy - Copy - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id\r\n);\r\ntraces\r\n| where message == \"eval\" and operation_Id == ops_Id\r\n| summarize Count = count() by Score = toint(customDimensions.groundedness)\r\n| render barchart",
+                    "size": 0,
+                    "timeContext": {
+                      "durationMs": 86400000
+                    },
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components"
+                  },
+                  "name": "query - 3"
+                }
+              ]
+            },
+            "name": "tile_group"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "page",
+        "comparison": "isEqualTo",
+        "value": "session"
+      },
+      "name": "session-drill",
+      "styleSettings": {
+        "showBorder": true
       }
-    ],
-    "fallbackResourceIds": [],
-    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
-  }
+    }
+  ],
+  "fallbackResourceIds": [
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
