@@ -1,6 +1,8 @@
 # 1️⃣ | Getting Started: Instructor-Led Workshop
 
-Thie instructions are for participants of the instructor-led **"WRK550: Build a Retail Copilot Code-First on Azure AI"** workshop offered on the Microsoft AI Tour (2024-2025). 
+!!! example "Microsoft AI Tour Attendees:  <br/> Already launched the Skillable Lab and verified credentials? [Move Directly to Step 2](#2-set-up-your-dev-environment) to save time."   
+
+The instructions are for participants of the instructor-led **"WRK550: Build a Retail Copilot Code-First on Azure AI"** workshop offered on the Microsoft AI Tour (2024-2025). 
 
 If you're not at an AI Tour event right now, you can register for an upcoming event in a city near you.
 
@@ -40,7 +42,7 @@ The **WRK550 Lab** requires a Python development runtime (with package dependenc
 
 _In this section, we'll fork the sample repo to our personal profiles - then launch GitHub Codespaces to activate that environment with a Visual Studio Code editor, right in the browser_.
 
-### Step 1: Open GitHub in Tab 1️⃣
+### 2.1 Open GitHub in Tab 1️⃣
 
 The source code for the application used in this workshop is available on GitHub. Let's log into GitHub and copy a fork of the source code to your GitHub account.
 
@@ -66,7 +68,7 @@ The source code for the application used in this workshop is available on GitHub
 
 **✅ | CONGRATULATIONS!** - Your have a personal copy of the sample to explore!
 
-## Step 2: Launch Codespaces in Tab 2️⃣
+### 2.2: Launch Codespaces in Tab 2️⃣
 
 GitHub Codespaces will be our development environment for this workshop. Let's launch CodeSpaces now, starting from the fork of the `contoso-chat` repository you just created.
 
@@ -80,7 +82,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 1. This will launch a new browser tab (Tab 2️⃣). It will take a few minutes for the CodeSpace to be ready for use. In the meantime, continue with the next steps. 
 
-## Step 3: Open Azure Portal in Tab 3️⃣
+### 2.3: Open Azure Portal in Tab 3️⃣
 
 1. Open a new browser tab (Tab 3️⃣)
 1. Navigate to the [Azure Portal](https://portal.azure.com):
@@ -96,7 +98,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 **✅ | CONGRATULATIONS!** - Your Azure Infra is Provisioned!
 
-## Step 4: Open Azure AI Studio in Tab 4️⃣
+### 2.4 Open Azure AI Studio in Tab 4️⃣
 
 1. Open a new browser tab = Tab 4️⃣
 1. Navigate to the [Azure AI Studio](https://ai.azure.com?feature.customportal=false#home):
@@ -107,19 +109,21 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 1. **Click** `Sign in` -- you will auto-login with the Azure credentials used to sign into the portal.
 1. Under Management in the left pane, **click** `All hubs`. One hub resource will be listed.
 
+    !!! warning "The AI Studio UI is evolving. Instead of `All hubs` you may see an `All resources` item in the left pane instead, with 2 resources listed in the right - one of which should be a _hub_ resource."
+
     !!! info "An [AI Studio hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects resources like generative AI endpoints that can be shared between projects."
 
 1. **Click** the listed hub resource name to display it. **Check:** 1 project is listed under `Projects`.
 
     !!! info "An [AI Studio project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) is used to organize your work when building applications."
 
-1. Under "Shared Resources" in the left pane, **click** `Deployments`. **Check:** 4 models are listed under `aoai-connection` 
+1. Under "Shared Resources" in the left pane, **click** `Deployments`. The right pane should show two `*-connection` groups. **Check:** 4 models are listed under each connection. 
 
     !!! info "The Model Deployments section lists Generative AI models deployed to this Hub. For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
 
 **✅ | CONGRATULATIONS!** - Your Azure AI Project is ready!
 
-## Step 5: View Container Apps Endpoint in Tab 5️⃣
+### 2.5: View Container Apps Endpoint in Tab 5️⃣
 
 [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) will host the endpoint used to serve the Contoso Chat application on the Contoso Outdoors website. We have deployed a container app, but have not yet pushed code to it. 
 
@@ -133,7 +137,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 **✅ | CONGRATULATIONS!** - Your ACA Endpoint is ready!
 
-## Step 6: Make sure CodeSpaces has completed launching
+## 3. Make sure CodeSpaces has completed launching
 
 1. Return to your GitHub Codespaces tab, Tab 2️⃣.
 
