@@ -77,7 +77,7 @@
               "durationMs": 86400000
             },
             "value": {
-              "durationMs": 1800000
+              "durationMs": 86400000
             }
           },
           {
@@ -187,7 +187,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -251,7 +251,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -315,7 +315,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -398,14 +398,13 @@
                     ],
                     "timeContextFromParameter": "Duration",
                     "timeContext": {
-                      "durationMs": 0
+                      "durationMs": 86400000
                     },
                     "metrics": [
                       {
                         "namespace": "microsoft.cognitiveservices/accounts",
                         "metric": "microsoft.cognitiveservices/accounts-Cognitive Services  HTTP Requests-Latency",
                         "aggregation": 7,
-                        "splitBy": null,
                         "columnName": "Latency"
                       },
                       {
@@ -445,14 +444,13 @@
                     ],
                     "timeContextFromParameter": "Duration",
                     "timeContext": {
-                      "durationMs": 0
+                      "durationMs": 86400000
                     },
                     "metrics": [
                       {
                         "namespace": "microsoft.cognitiveservices/accounts",
                         "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-ActiveTokens",
-                        "aggregation": 1,
-                        "splitBy": null
+                        "aggregation": 1
                       },
                       {
                         "namespace": "microsoft.cognitiveservices/accounts",
@@ -491,14 +489,13 @@
                     ],
                     "timeContextFromParameter": "Duration",
                     "timeContext": {
-                      "durationMs": 0
+                      "durationMs": 86400000
                     },
                     "metrics": [
                       {
                         "namespace": "microsoft.insights/components/kusto",
                         "metric": "microsoft.insights/components/kusto-Failures-exceptions/count",
-                        "aggregation": 1,
-                        "splitBy": null
+                        "aggregation": 1
                       }
                     ],
                     "title": "Exceptions",
@@ -652,7 +649,8 @@
           {
             "type": 1,
             "content": {
-              "json": "## LLM Request"
+              "json": "## AI Spans \r\n\r\n### AI Spans capture various types of operations with Large Language Models deployed under Azure AI Service paired with user feedback and evaluation score. The gen_ai.operation.name represents different operations like chat, text_completion, and embeddings. To view a detailed transaction encompassing this span, please click on the transaction view link.\r\n\r\n",
+              "style": "upsell"
             },
             "name": "text - 0"
           },
@@ -660,7 +658,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n",
+              "query": "let parent_id=(dependencies\r\n| where name == \"llm\" and  customDimensions.task == \"get_response\"\r\n| project id);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_ParentId in (parent_id) \r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    duration,\r\n    Transaction = itemId,\r\n    gen_ai_operation_name = customDimensions[\"gen_ai.operation.name\"], \r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    duration,\r\n    Latency,\r\n    gen_ai_operation_name,\r\n    Transaction,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n \r\n",
               "size": 0,
               "timeContextFromParameter": "Duration",
               "queryType": 0,
@@ -672,10 +670,17 @@
               "gridSettings": {
                 "formatters": [
                   {
-                    "columnMatch": "Latency",
+                    "columnMatch": "duration",
                     "formatter": 4,
                     "formatOptions": {
                       "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "Transaction",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
                     }
                   },
                   {
@@ -738,7 +743,7 @@
                   "timeContextFromParameter": "Duration",
                   "queryType": 0,
                   "resourceType": "microsoft.insights/components",
-                  "value": "91423d1bbd57466f8f69a17f9feb7c98"
+                  "value": ""
                 }
               ],
               "style": "pills",
@@ -750,60 +755,10 @@
           {
             "type": 1,
             "content": {
-              "json": "## Gen AI Sessions"
+              "json": "## Gen AI Sessions Overview\r\n\r\n#### This gives details for individual user session",
+              "style": "upsell"
             },
             "name": "text - 1"
-          },
-          {
-            "type": 3,
-            "content": {
-              "version": "KqlItem/1.0",
-              "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"eval\" \r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness_result,\r\n        coherence = customDimensions.coherence_result,\r\n        relevance = customDimensions.relevance_result\r\n) on response_id\r\n| project\r\n    TimeStamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    feedback,\r\n    groundedness,\r\n    coherence,\r\n    relevance",
-              "size": 0,
-              "timeContextFromParameter": "Duration",
-              "queryType": 0,
-              "resourceType": "microsoft.insights/components",
-              "crossComponentResources": [
-                "{Applicationinsights}"
-              ],
-              "gridSettings": {
-                "formatters": [
-                  {
-                    "columnMatch": "Complete_Trace",
-                    "formatter": 7,
-                    "formatOptions": {
-                      "linkTarget": "DependencyDetails"
-                    }
-                  },
-                  {
-                    "columnMatch": "transactionview",
-                    "formatter": 7,
-                    "formatOptions": {
-                      "linkTarget": "DependencyDetails"
-                    }
-                  },
-                  {
-                    "columnMatch": "duration",
-                    "formatter": 4,
-                    "formatOptions": {
-                      "palette": "greenRed"
-                    }
-                  },
-                  {
-                    "columnMatch": "performanceBucket",
-                    "formatter": 4,
-                    "formatOptions": {
-                      "palette": "greenRed"
-                    }
-                  }
-                ]
-              },
-              "sortBy": []
-            },
-            "name": "query - 2",
-            "styleSettings": {
-              "showBorder": true
-            }
           },
           {
             "type": 12,
@@ -816,7 +771,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -880,7 +835,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -944,7 +899,7 @@
                   "content": {
                     "version": "KqlItem/1.0",
                     "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
-                    "size": 1,
+                    "size": 4,
                     "timeContextFromParameter": "Duration",
                     "queryType": 0,
                     "resourceType": "microsoft.insights/components",
@@ -1002,24 +957,122 @@
                   "styleSettings": {
                     "showBorder": true
                   }
-                },
-                {
-                  "type": 3,
-                  "content": {
-                    "version": "KqlItem/1.0",
-                    "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id\r\n);\r\ntraces\r\n| where message == \"eval\" and operation_Id == ops_Id\r\n| summarize Count = count() by Score = toint(customDimensions.groundedness)\r\n| render barchart",
-                    "size": 0,
-                    "timeContext": {
-                      "durationMs": 86400000
-                    },
-                    "queryType": 0,
-                    "resourceType": "microsoft.insights/components"
-                  },
-                  "name": "query - 3"
                 }
               ]
             },
             "name": "tile_group"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## LLM Spans in Session ",
+              "style": "upsell"
+            },
+            "name": "text - 5"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id  in (ops_Id) \r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n",
+              "size": 1,
+              "timeContextFromParameter": "Duration",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{Applicationinsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Complete_Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "transactionview",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "performanceBucket",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "name": "query - 2",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Detailed LLM Spans View ",
+              "style": "upsell"
+            },
+            "name": "text - 6"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let ops_Id = toscalar(\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{session}\"\r\n    | project operation_Id);\r\nlet dep=(\r\ntraces\r\n| where message in (\"gen_ai.choice\", \"gen_ai.user.message\", \"gen_ai.system.message\") and operation_Id == ops_Id\r\n| project\r\n    operation_ParentId,    \r\n    timestamp, \r\n    role = iff(message == \"gen_ai.choice\", \"llm_response\", parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).role), \r\n    content = iff(\r\n        message == \"gen_ai.choice\", \r\n        parse_json(tostring(parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).message)).content, \r\n        parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).content)\r\n| join kind=leftouter  (       \r\n    dependencies\r\n    | where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id == ops_Id\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        id,\r\n        duration,\r\n        performanceBucket,\r\n        response_id,\r\n        Transaction = itemId,\r\n        timestamp,\r\n        gen_ai_operation_name = customDimensions[\"gen_ai.operation.name\"], \r\n        gen_ai_response_id = customDimensions[\"gen_ai.response.id\"], \r\n        gen_ai_response_model = customDimensions[\"gen_ai.response.model\"], \r\n        gen_ai_usage_input_tokens = customDimensions[\"gen_ai.usage.input_tokens\"], \r\n        gen_ai_usage_output_tokens = customDimensions[\"gen_ai.usage.output_tokens\"]\r\n) on $left.operation_ParentId == $right.id\r\n| project    \r\n    timestamp,   \r\n    role,\r\n    content,\r\n    performanceBucket,\r\n    duration,\r\n    Transaction,    \r\n    response_id,\r\n    gen_ai_operation_name,\r\n    gen_ai_response_id,\r\n    gen_ai_response_model,\r\n    gen_ai_usage_input_tokens,\r\n    gen_ai_usage_output_tokens\r\n);\r\ndep\r\n| join kind=leftouter (\r\n    traces\r\n    | where message == \"user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"feedback\"])\r\n) on response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where message ==\"eval\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        groundedness = customDimensions.groundedness,\r\n        coherence=customDimensions.coherence,\r\n        relevance=customDimensions.relevance\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    role,\r\n    content,\r\n    gen_ai_response_id,\r\n    gen_ai_response_model,\r\n    duration,\r\n    performanceBucket,\r\n    Transaction,    \r\n    gen_ai_operation_name,    \r\n    gen_ai_usage_input_tokens,\r\n    gen_ai_usage_output_tokens,\r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance",
+              "size": 0,
+              "timeContextFromParameter": "Duration",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{Applicationinsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "Transaction",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  }
+                ],
+                "sortBy": [
+                  {
+                    "itemKey": "Timestamp",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "Timestamp",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "name": "query - 3"
           }
         ]
       },
@@ -1034,7 +1087,6 @@
       }
     }
   ],
-  "fallbackResourceIds": [
-  ],
+  "fallbackResourceIds": [ ],
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
 }
