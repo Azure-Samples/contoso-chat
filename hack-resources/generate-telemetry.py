@@ -81,13 +81,16 @@ async def main():
         # list of tasks of response id
         response_id = []
         create_resposne_tasks = [make_post_request(
-            session, create_response, generate_user_prompt()) for _ in range(5)]
+            session, create_response, generate_user_prompt()) for _ in range(2)]
         responses = await asyncio.gather(*create_resposne_tasks)
         for response in responses:
             response_id.append(response.headers.get('gen_ai.response.id'))
             print(response)
 
-         # For each response id, generate feedback
+        # response_id = ['chatcmpl-ACEQtl2nQA5vSm9mA7WT7iE2WIT7S', 'chatcmpl-ACEQlESuI0IHHbV10ZtTVpMqCAjUE', 'chatcmpl-ACEQaWvVFgkMB83gOjH7zbWxL3al6',
+        #                'chatcmpl-ACEQTxQi0oOnvtYqxFndgExr4Hxf4', 'chatcmpl-ACEQLtT0NyJjwDt9OsVZ0m1chzh8Q', 'chatcmpl-ACDqxRhDu1N9jZSQZbhhWVIVgcbZD']
+
+        # For each response id, generate feedback
         submit_feedback_tasks = [make_post_request(
             session, give_feedback, generate_feedback(response_id[i])) for i in range(len(response_id))]
         user_feedback = await asyncio.gather(*submit_feedback_tasks)
