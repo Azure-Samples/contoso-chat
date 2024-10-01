@@ -18,7 +18,7 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from azure.core.tracing import AiInferenceApiInstrumentor
+from azure.core.tracing.ai.inference import AIInferenceInstrumentor
 
 
 def setup_azure_monitor_exporters(conn_str: str):
@@ -93,7 +93,7 @@ def setup_telemetry(app: FastAPI):
     otel_exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
 
     # Instrument AI Inference API
-    AiInferenceApiInstrumentor().instrument()
+    AIInferenceInstrumentor().instrument()
 
     # Set up exporters
     if app_insights_conn_str:

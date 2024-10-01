@@ -15,4 +15,4 @@ azure-monitor-opentelemetry
 opentelemetry-instrumentation-fastapi
 opentelemetry-instrumentation
 opentelemetry-exporter-otlp-proto-grpc
-./hack-resources/azure_core-1.31.0-py3-none-any.whl
+./hack-resources/azure_core_tracing_opentelemetry-1.0.0b12-py3-none-any.whl
