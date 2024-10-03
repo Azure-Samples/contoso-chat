@@ -2,8 +2,6 @@ import os
 import json
 from typing import Dict, List
 from azure.identity import DefaultAzureCredential
-import prompty.azure
-from openai import AzureOpenAI
 from dotenv import load_dotenv
 from pathlib import Path
 from azure.search.documents import SearchClient
@@ -13,11 +11,8 @@ from azure.search.documents.models import (
     QueryCaptionType,
     QueryAnswerType,
 )
-from azure.core.credentials import AzureKeyCredential
-
 from azure.ai.inference import ChatCompletionsClient, EmbeddingsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
 from opentelemetry import trace
 

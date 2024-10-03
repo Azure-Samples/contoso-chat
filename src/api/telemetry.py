@@ -48,6 +48,7 @@ def setup_azure_monitor_exporters(conn_str: str):
     exporter = AzureMonitorLogExporter.from_connection_string(conn_str)
     logger_provider.add_log_record_processor(
         BatchLogRecordProcessor(exporter, schedule_delay_millis=60000))
+
     handler = LoggingHandler(level=logging.NOTSET,
                              logger_provider=logger_provider)
     logging.getLogger().addHandler(handler)

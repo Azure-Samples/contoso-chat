@@ -11,6 +11,12 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, AssistantMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
+from opentelemetry.sdk._logs import LoggerProvider, Logger, LogRecord
+from opentelemetry._logs import set_logger_provider
+from opentelemetry._events import set_event_logger_provider, EventLoggerProvider
+from opentelemetry._events import Attributes, EventLoggerProvider, EventLogger, Event, get_event_logger_provider
+from opentelemetry.sdk._logs.export import SimpleLogRecordProcessor, ConsoleLogExporter
+
 
 load_dotenv()
 
@@ -105,9 +111,10 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
 def provide_feedback(feedback_item: FeedbackItem) -> dict:
     extra_info = validate_extra_feedback(feedback_item.extra)
+
     feedback_context = {"gen_ai.response.id": feedback_item.responseId,
-                        "feedback": feedback_item.feedback, "extra": extra_info}
-    logger.info("user_feedback", extra=feedback_context)
+                        "gen_ai.evaluation.score": feedback_item.feedback, "event.name": "gen_ai.evaluation.user_feedback", "extra": extra_info}
+    logger.info("gen_ai.evaluation.user_feedback", extra=feedback_context)
 
     return {"result": "success"}
 

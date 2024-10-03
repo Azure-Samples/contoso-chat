@@ -14,6 +14,7 @@ from opentelemetry.sdk._logs import (
     LoggingHandler,
 )
 import os
+from opentelemetry._events import Event
 
 
 logger = logging.getLogger(__name__)
@@ -64,11 +65,15 @@ def generate_feedback(response_id: str):
 
 
 def submit_eval(response_id: str):
-    eval = {"gen_ai.response.id": response_id,
-            "groundedness": random.choice([1, 2, 3, 4, 5]),
-            "coherence": random.choice([1, 2, 3, 4, 5]),
-            "relevance": random.choice([1, 2, 3, 4, 5])}
-    logger.info("eval", extra=eval)
+    evalscores = ["gen_ai.evaluation.groundedness",
+                  "gen_ai.evaluation.coherence", "gen_ai.evaluation.relevance"]
+
+    for score in evalscores:
+        eval = {"gen_ai.response.id": response_id,
+                "gen_ai.evaluation.score": random.choice([1, 2, 3, 4, 5]),
+                "event.name": score,
+                }
+        logger.info(score, extra=eval)
 
 
 async def main():
@@ -81,7 +86,7 @@ async def main():
         # list of tasks of response id
         response_id = []
         create_resposne_tasks = [make_post_request(
-            session, create_response, generate_user_prompt()) for _ in range(2)]
+            session, create_response, generate_user_prompt()) for _ in range(10)]
         responses = await asyncio.gather(*create_resposne_tasks)
         for response in responses:
             response_id.append(response.headers.get('gen_ai.response.id'))
