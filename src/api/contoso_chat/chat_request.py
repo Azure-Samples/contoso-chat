@@ -41,7 +41,6 @@ def get_response(customerId, question, chat_history):
     customer = get_customer(customerId)
     print("customer complete")
     context = product.find_products(question)
-    print(context)
     print("products complete")
     print("getting result...")
 
@@ -55,9 +54,11 @@ def get_response(customerId, question, chat_history):
         inputs={"question": question, "customer": customer, "documentation": context},
         configuration=model_config,
     )
-    print("result: ", result)
     return {"question": question, "answer": result, "context": context}
 
 if __name__ == "__main__":
+    from tracing import init_tracing
+
+    tracer = init_tracing(local_tracing=False)
     get_response(4, "What hiking jackets would you recommend?", [])
     #get_response(argv[1], argv[2], argv[3])

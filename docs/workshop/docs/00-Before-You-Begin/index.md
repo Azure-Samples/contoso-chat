@@ -1,5 +1,8 @@
 #  0️⃣ | Pre-Requisites
 
+!!! example "Microsoft AI Tour Attendees:  <br/> Are you currently in the instructor-led session on tour? [Get Started Here](./../01-Tour-Guide-Setup/01-setup.md) to save time."   
+
+
 !!! warning "To participate in this workshop you will need the following"
 
 1. **Your own laptop.**
