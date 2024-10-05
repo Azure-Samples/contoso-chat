@@ -13,7 +13,7 @@
 
 !!! info "Reminder - Give us Feedback"
 
-    Visit `LINK TBD` to give us feedback on this session
+    Visit [aka.ms/MicrosoftAITour/Survey](https://aka.ms/MicrosoftAITour/Survey) to give us feedback on this session (#WRK550)
 
 !!! info "Reminder - Star the Repo"
 

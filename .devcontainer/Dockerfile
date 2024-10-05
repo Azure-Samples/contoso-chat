@@ -17,7 +17,7 @@ RUN sudo apt-get update && sudo apt-get install -y \
 # Install keyring-related and IPython packages in the same layer to reduce the image size and build time
 COPY ./src/api/requirements.txt .
 RUN pip install -r requirements.txt \    
-&& pip install keyrings.alt dbus-python ipython ipykernel mkdocs-material
+    && pip install keyrings.alt dbus-python ipython ipykernel mkdocs-material
 
 # Configure the IPython kernel
 RUN ipython kernel install --name "python3" --user
