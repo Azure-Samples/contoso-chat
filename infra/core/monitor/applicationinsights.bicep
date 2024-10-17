@@ -43,7 +43,7 @@ resource genAiInsightsWorkbook 'Microsoft.Insights/workbooks@2023-06-01' = {
   }
 }
 
-output connectionString string = replace(applicationInsights.properties.ConnectionString,applicationInsights.properties.InstrumentationKey,'00000000-0000-0000-0000-000000000000')
+output connectionString string = applicationInsights.properties.ConnectionString
 output id string = applicationInsights.id
 output instrumentationKey string = applicationInsights.properties.InstrumentationKey
 output name string = applicationInsights.name

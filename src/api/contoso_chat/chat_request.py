@@ -11,12 +11,19 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, AssistantMessage
 from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
+from opentelemetry.sdk._logs import LoggerProvider, Logger, LogRecord
+from opentelemetry._logs import set_logger_provider
+from opentelemetry._events import set_event_logger_provider, EventLoggerProvider
+from opentelemetry._events import Attributes, EventLoggerProvider, EventLogger, Event, get_event_logger_provider
+from opentelemetry.sdk._logs.export import SimpleLogRecordProcessor, ConsoleLogExporter
+
 
 load_dotenv()
 
 tracer = trace.get_tracer(__name__)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
 
 def get_customer(customerId: str) -> str:
     try:
@@ -35,17 +42,18 @@ def get_customer(customerId: str) -> str:
 
 def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
-    endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
 
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
-    
+
     customer = get_customer(customerId)
     context = product.find_products(question)
 
@@ -82,15 +90,17 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
                         logger.warning(f"Unknown role for message: {role}")
                 except Exception:
                     logger.warning("Unable to parse chat history messages")
-                
+
             messages.append(UserMessage(content=question))
 
             response = client.complete(messages=messages)
 
         response_content = response.choices[0].message.content
 
-        response_back = {"question": question, "answer": response_content, "context": context}
-        metadata = {"responseId": response.id, "model": response.model, "usage": response.usage}
+        response_back = {"question": question,
+                         "answer": response_content, "context": context}
+        metadata = {"responseId": response.id,
+                    "model": response.model, "usage": response.usage}
 
     except Exception as e:
         logger.error(f"Error getting response: {e}")
@@ -98,19 +108,23 @@ def get_response(customerId: str, question: str, chat_history: str) -> dict:
 
     return response_back, metadata
 
+
 def provide_feedback(feedback_item: FeedbackItem) -> dict:
     extra_info = validate_extra_feedback(feedback_item.extra)
-    feedback_context = {"gen_ai.response.id": feedback_item.responseId, "feedback": feedback_item.feedback, "extra": extra_info}
-    logger.info("user_feedback", extra=feedback_context)
+
+    feedback_context = {"gen_ai.response.id": feedback_item.responseId,
+                        "gen_ai.evaluation.score": feedback_item.feedback, "event.name": "gen_ai.evaluation.user_feedback", "extra": extra_info}
+    logger.info("gen_ai.evaluation.user_feedback", extra=feedback_context)
 
     return {"result": "success"}
+
 
 def validate_extra_feedback(extra: dict) -> str:
     if extra is None:
         return {}
     return json.dumps(extra)
 
+
 if __name__ == "__main__":
     get_response(4, "What hiking jackets would you recommend?", [])
     # get_response(argv[1], argv[2], argv[3])
-    

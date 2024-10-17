@@ -1,4 +1,5 @@
 import random
+import uuid
 import aiohttp
 import asyncio
 import logging
@@ -13,6 +14,7 @@ from opentelemetry.sdk._logs import (
     LoggingHandler,
 )
 import os
+from opentelemetry._events import Event
 
 
 logger = logging.getLogger(__name__)
@@ -39,7 +41,8 @@ def generate_user_prompt():
     return {
         "customer_id": "2",
         "question": random.choice(questions),
-        "chat_history": []
+        "chat_history": [],
+        "session_id": uuid.uuid4().hex
     }
 
 
@@ -62,11 +65,15 @@ def generate_feedback(response_id: str):
 
 
 def submit_eval(response_id: str):
-    eval = {"gen_ai.response.id": response_id,
-            "groundedness": random.choice([1, 2, 3, 4, 5]),
-            "coherence": random.choice([1, 2, 3, 4, 5]),
-            "relevance": random.choice([1, 2, 3, 4, 5])}
-    logger.info("eval", extra=eval)
+    evalscores = ["gen_ai.evaluation.groundedness",
+                  "gen_ai.evaluation.coherence", "gen_ai.evaluation.relevance"]
+
+    for score in evalscores:
+        eval = {"gen_ai.response.id": response_id,
+                "gen_ai.evaluation.score": random.choice([1, 2, 3, 4, 5]),
+                "event.name": score,
+                }
+        logger.info(score, extra=eval)
 
 
 async def main():
@@ -79,13 +86,16 @@ async def main():
         # list of tasks of response id
         response_id = []
         create_resposne_tasks = [make_post_request(
-            session, create_response, generate_user_prompt()) for _ in range(5)]
+            session, create_response, generate_user_prompt()) for _ in range(10)]
         responses = await asyncio.gather(*create_resposne_tasks)
         for response in responses:
             response_id.append(response.headers.get('gen_ai.response.id'))
             print(response)
 
-         # For each response id, generate feedback
+        # response_id = ['chatcmpl-ACEQtl2nQA5vSm9mA7WT7iE2WIT7S', 'chatcmpl-ACEQlESuI0IHHbV10ZtTVpMqCAjUE', 'chatcmpl-ACEQaWvVFgkMB83gOjH7zbWxL3al6',
+        #                'chatcmpl-ACEQTxQi0oOnvtYqxFndgExr4Hxf4', 'chatcmpl-ACEQLtT0NyJjwDt9OsVZ0m1chzh8Q', 'chatcmpl-ACDqxRhDu1N9jZSQZbhhWVIVgcbZD']
+
+        # For each response id, generate feedback
         submit_feedback_tasks = [make_post_request(
             session, give_feedback, generate_feedback(response_id[i])) for i in range(len(response_id))]
         user_feedback = await asyncio.gather(*submit_feedback_tasks)

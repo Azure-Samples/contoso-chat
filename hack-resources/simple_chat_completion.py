@@ -7,9 +7,10 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, CompletionsFinishReason
 from azure.core.credentials import AzureKeyCredential
-from azure.core.tracing import AiInferenceApiInstrumentor
+from azure.identity import DefaultAzureCredential
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.settings import settings
+from azure.core.tracing.ai.inference import AIInferenceInstrumentor
 
 
 def setup_azure_monitor_trace_exporter():
@@ -32,13 +33,13 @@ def setup_console_trace_exporter():
     trace.get_tracer_provider().add_span_processor(SimpleSpanProcessor(exporter))
 
 
-@distributed_trace(name_of_span="sample_chat_completions")
 def sample_chat_completions():
     import os
 
     try:
-        endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-        key = os.environ["AZUREAI_ENDPOINT_KEY"]
+        endpoint = "{}openai/deployments/{}".format(
+            os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
+
     except KeyError:
         print(
             "Missing environment variable 'AZURE_AI_CHAT_ENDPOINT' or 'AZURE_AI_CHAT_KEY'")
@@ -48,13 +49,12 @@ def sample_chat_completions():
     # [START chat_completions]
     from azure.ai.inference import ChatCompletionsClient
     from azure.ai.inference.models import SystemMessage, UserMessage
-    from azure.core.credentials import AzureKeyCredential
 
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
-        # AOAI api-version. Update as needed.
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
@@ -77,8 +77,8 @@ if __name__ == "__main__":
     setup_azure_monitor_trace_exporter()
 
     # Instrument AI Inference API
-    AiInferenceApiInstrumentor().instrument()
+    AIInferenceInstrumentor().instrument()
 
     sample_chat_completions()
     print("===== chat_with_function_tool() done =====")
-    AiInferenceApiInstrumentor().uninstrument()
+    AIInferenceInstrumentor().uninstrument()

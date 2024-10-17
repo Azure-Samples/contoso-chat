@@ -7,9 +7,10 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage, CompletionsFinishReason
 from azure.core.credentials import AzureKeyCredential
-from azure.core.tracing import AiInferenceApiInstrumentor
+from azure.core.tracing.ai.inference import AIInferenceInstrumentor
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.settings import settings
+from azure.identity import DefaultAzureCredential
 
 
 def setup_azure_monitor_trace_exporter():
@@ -38,11 +39,11 @@ def sample_chat_completions_with_tools():
     import json
 
     try:
-        endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-        key = os.environ["AZUREAI_ENDPOINT_KEY"]
+        endpoint = "{}openai/deployments/{}".format(
+            os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
     except KeyError:
         print(
-            "Missing environment variable 'AZURE_AI_CHAT_ENDPOINT' or 'AZURE_AI_CHAT_KEY'")
+            "Missing environment variable 'AZURE_OPENAI_ENDPOINT' or 'AZURE_OPENAI_CHAT_DEPLOYMENT'")
         print("Set them before running this sample.")
         exit()
 
@@ -101,17 +102,11 @@ def sample_chat_completions_with_tools():
         )
     )
 
-    # Create a chat completion client. Make sure you selected a model that supports tools.
-    # client = ChatCompletionsClient(
-    #     endpoint=endpoint,
-    #     credential=AzureKeyCredential(key)
-    # )
-
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
-        # AOAI api-version. Update as needed.
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
@@ -148,8 +143,8 @@ def sample_chat_completions_with_tools():
             # Only tools of type function are supported. Make a function call.
             function_args = json.loads(
                 tool_call.function.arguments.replace("'", '"'))
-            print(f"Calling function `{
-                  tool_call.function.name}` with arguments {function_args}.")
+            print(
+                f"Calling function '{tool_call.function.name}' with arguments {function_args}.")
             callable_func = locals()[tool_call.function.name]
 
             function_response = callable_func(**function_args)
@@ -172,8 +167,8 @@ if __name__ == "__main__":
     setup_azure_monitor_trace_exporter()
 
     # Instrument AI Inference API
-    AiInferenceApiInstrumentor().instrument()
+    AIInferenceInstrumentor().instrument()
 
     sample_chat_completions_with_tools()
     print("===== chat_with_function_tool() done =====")
-    AiInferenceApiInstrumentor().uninstrument()
+    AIInferenceInstrumentor().uninstrument()

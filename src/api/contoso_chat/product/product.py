@@ -2,8 +2,6 @@ import os
 import json
 from typing import Dict, List
 from azure.identity import DefaultAzureCredential
-import prompty.azure
-from openai import AzureOpenAI
 from dotenv import load_dotenv
 from pathlib import Path
 from azure.search.documents import SearchClient
@@ -13,11 +11,8 @@ from azure.search.documents.models import (
     QueryCaptionType,
     QueryAnswerType,
 )
-from azure.core.credentials import AzureKeyCredential
-
 from azure.ai.inference import ChatCompletionsClient, EmbeddingsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
 from jinja2 import Template
 from opentelemetry import trace
 
@@ -25,13 +20,16 @@ load_dotenv()
 
 tracer = trace.get_tracer(__name__)
 
+
 def generate_embeddings(queries: List[str]) -> str:
-    endpoint = os.environ["AZUREAI_EMBEDDING_ENDPOINT"]
-    key = os.environ["AZUREAI_EMBEDDING_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_EMBEDDING_NAME'])
+
     client = EmbeddingsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-05-15",
         logging_enable=True,
     )
@@ -86,13 +84,14 @@ def find_products(context: str) -> Dict[str, any]:
     # Get product queries
     print("context:", context)
 
-    endpoint = os.environ["AZUREAI_ENDPOINT_URL"]
-    key = os.environ["AZUREAI_ENDPOINT_KEY"]
+    endpoint = "{}openai/deployments/{}".format(
+        os.environ['AZURE_OPENAI_ENDPOINT'], os.environ['AZURE_OPENAI_CHAT_DEPLOYMENT'])
 
     client = ChatCompletionsClient(
         endpoint=endpoint,
-        credential=AzureKeyCredential(""),  # Pass in an empty value.
-        headers={"api-key": key},
+        credential=DefaultAzureCredential(
+            exclude_interactive_browser_credential=False),
+        credential_scopes=["https://cognitiveservices.azure.com/.default"],
         api_version="2023-03-15-preview",
         logging_enable=True,
     )
