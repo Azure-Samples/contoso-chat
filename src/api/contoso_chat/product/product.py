@@ -134,7 +134,6 @@ def find_products(context: str) -> Dict[str, any]:
     items = generate_embeddings(qs)
     # Retrieve products
     products = retrieve_products(items, "contoso-products")
-    print("products:", products)
     return products
 
 

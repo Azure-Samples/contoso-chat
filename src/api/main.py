@@ -17,6 +17,7 @@ from contoso_chat.chat_request import get_response, provide_feedback
 from telemetry import setup_telemetry
 
 load_dotenv()
+tracer = init_tracing()
 
 app = FastAPI()
 

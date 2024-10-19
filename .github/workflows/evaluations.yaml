@@ -23,15 +23,27 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_OPENAI_ENDPOINT: ${{ vars.AZURE_OPENAI_ENDPOINT }}
-      AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
-      AZURE_OPENAI_4_EVAL_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_4_EVAL_DEPLOYMENT_NAME }}
-      AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT_NAME }}
-      AZURE_OPENAI_35_TURBO_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_35_TURBO_DEPLOYMENT_NAME }}
       AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
-      AZURE_SEARCH_ENDPOINT: ${{ vars.AZURE_SEARCH_ENDPOINT }}
+      APPINSIGHTS_CONNECTIONSTRING: ${{ vars.APPINSIGHTS_CONNECTIONSTRING }}
+      AZURE_CONTAINER_ENVIRONMENT_NAME: ${{ vars.AZURE_CONTAINER_ENVIRONMENT_NAME }}
+      AZURE_CONTAINER_REGISTRY_ENDPOINT: ${{ vars.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
+      AZURE_CONTAINER_REGISTRY_NAME: ${{ vars.AZURE_CONTAINER_REGISTRY_NAME }}
+      AZURE_COSMOS_NAME: ${{ vars.AZURE_COSMOS_NAME }}
+      AZURE_EMBEDDING_NAME: ${{ vars.AZURE_EMBEDDING_NAME }}
+      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+      AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
       AZURE_OPENAI_NAME: ${{ vars.AZURE_OPENAI_NAME }}
-      BING_SEARCH_ENDPOINT: ${{ vars.BING_SEARCH_ENDPOINT }}
-      BING_SEARCH_KEY: ${{ secrets.BING_SEARCH_KEY }}
+      AZURE_OPENAI_RESOURCE_GROUP_LOCATION: ${{ vars.AZURE_OPENAI_RESOURCE_GROUP_LOCATION }}
+      AZURE_SEARCH_ENDPOINT: ${{ vars.AZURE_SEARCH_ENDPOINT }}
+      AZURE_SEARCH_NAME: ${{ vars.AZURE_SEARCH_NAME }}
+      COSMOS_CONTAINER: ${{ vars.COSMOS_CONTAINER }}
+      COSMOS_ENDPOINT: ${{ vars.COSMOS_ENDPOINT }}
+      OPENAI_TYPE: ${{ vars.OPENAI_TYPE }}
+      SERVICE_ACA_IMAGE_NAME: ${{ vars.SERVICE_ACA_IMAGE_NAME }}
+      SERVICE_ACA_NAME: ${{ vars.SERVICE_ACA_NAME }}
+      SERVICE_ACA_URI: ${{ vars.SERVICE_ACA_URI }}
 
     steps:
       - name: checkout repo content
@@ -66,13 +78,13 @@ jobs:
       - name: evaluate
         working-directory: ./src/api
         run: |
-          python -m evaluators.evaluate
+          python -m evaluate
       
       - name: Upload eval results as build artifact
         uses: actions/upload-artifact@v4
         with:
           name: eval_result
-          path: ./src/api/evaluators/eval_results.jsonl
+          path: ./src/api/eval_results.jsonl
 
       - name: GitHub Summary Step
         if: ${{ success() }}

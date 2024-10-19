@@ -126,5 +126,8 @@ def validate_extra_feedback(extra: dict) -> str:
 
 
 if __name__ == "__main__":
+    from tracing import init_tracing
+
+    tracer = init_tracing(local_tracing=False)
     get_response(4, "What hiking jackets would you recommend?", [])
     # get_response(argv[1], argv[2], argv[3])

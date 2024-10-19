@@ -1,0 +1,20 @@
+{
+    "customer": { 
+        "id": "1",
+        "firstName": "John",
+        "lastName": "Smith",
+        "age": 35,
+        "membership": "Base",
+        "orders": [
+          {
+            "id": 29,
+            "productId": 8,
+            "name": "Alpine Explorer Tent",
+            "description": "Welcome to the joy of camping with the Alpine Explorer Tent! This robust, 8-person, 3-season marvel is from the responsible hands of the AlpineGear brand. Promising an enviable setup that is as straightforward as counting sheep, your camping experience is transformed into a breezy pastime. Looking for privacy? The detachable divider provides separate spaces at a moment's notice. Love a tent that breathes? The numerous mesh windows and adjustable vents fend off any condensation dragon trying to dampen your adventure fun. The waterproof assurance keeps you worry-free during unexpected rain dances. With a built-in gear loft to stash away your outdoor essentials, the Alpine Explorer Tent emerges as a smooth balance of privacy, comfort, and convenience. Simply put, this tent isn't just a shelter - it's your second home in the heart of nature! Whether you're a seasoned camper or a nature-loving novice, this tent makes exploring the outdoors a joyous journey."
+          }
+        ]
+    },
+
+    "question": "What cold-weather sleeping bag would go well with what I have already purchased?"
+
+}
