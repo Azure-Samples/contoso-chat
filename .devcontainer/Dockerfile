@@ -15,16 +15,10 @@ RUN sudo apt-get update && sudo apt-get install -y \
 
 # Copy requirements.txt and install the Python packages
 # Install keyring-related and IPython packages in the same layer to reduce the image size and build time
-<<<<<<< HEAD
 COPY requirements.txt .
 COPY ./hack-resources/azure_core_tracing_opentelemetry-1.0.0b12-py3-none-any.whl ./hack-resources/azure_core_tracing_opentelemetry-1.0.0b12-py3-none-any.whl
 RUN pip install -r requirements.txt \
     && pip install keyrings.alt dbus-python ipython ipykernel
-=======
-COPY ./src/api/requirements.txt .
-RUN pip install -r requirements.txt \    
-    && pip install keyrings.alt dbus-python ipython ipykernel mkdocs-material
->>>>>>> 26938fc4040f7455b2b53d99b9a314d8e9d7b2af
 
 # Configure the IPython kernel
 RUN ipython kernel install --name "python3" --user

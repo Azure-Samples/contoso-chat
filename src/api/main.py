@@ -17,7 +17,6 @@ from contoso_chat.chat_request import get_response, provide_feedback
 from telemetry import setup_telemetry
 
 load_dotenv()
-tracer = init_tracing()
 
 app = FastAPI()
 
@@ -60,9 +59,11 @@ root_counter = meter.create_counter("root-hits")
 
 tracer = trace.get_tracer(__name__)
 
+
 class APIException(Exception):
-    def __init__(self, code = 500):
+    def __init__(self, code=500):
         self.code = code
+
 
 @app.exception_handler(APIException)
 async def api_exception_handler(request: Request, exc: APIException):
@@ -71,11 +72,13 @@ async def api_exception_handler(request: Request, exc: APIException):
         content=f"There was a problem.",
     )
 
+
 @app.get("/")
 async def root():
     root_counter.add(1)
     logger.info("Hello from root endpoint")
     return {"message": "Hello World"}
+
 
 @app.post("/api/create_response")
 @tracer.start_as_current_span("create_response")
@@ -84,14 +87,17 @@ def create_response(chat_request: ChatRequestModel, response: Response) -> dict:
     span.set_attribute("session.id", chat_request.session_id)
 
     try:
-        result, metadata = get_response(chat_request.customer_id, chat_request.question, chat_request.chat_history)
+        result, metadata = get_response(
+            chat_request.customer_id, chat_request.question, chat_request.chat_history)
     except Exception as e:
         raise APIException()
 
     response.headers.append("gen_ai.response.id", metadata['responseId'])
     response.headers.append("gen_ai.response.model", metadata['model'])
-    response_body = {"question": result['question'], "answer": result['answer'], "context": result['context']}
+    response_body = {"question": result['question'],
+                     "answer": result['answer'], "context": result['context']}
     return response_body
+
 
 @app.post("/api/give_feedback")
 @tracer.start_as_current_span("provide_feedback")
