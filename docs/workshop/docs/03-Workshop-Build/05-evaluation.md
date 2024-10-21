@@ -120,7 +120,8 @@ Navigate to the `src/api` folder in Visual Studio Code.
 
 !!! warning "Troubleshooting: Evaluation gives an error message in the Notebook"
 
-    On occasion, the evaluation notebook may throw an error after a couple of iterations. This is typically a transient error. To fix it, `Clear inputs` in the Jupyter Notebook, then `Restart` it. It should complete the run this time.
+    On occasion, the evaluation notebook may throw an error after a few iterations. This is typically a transient error. To fix it, `Clear outputs` in the Jupyter Notebook, then `Restart` the kernel. `Run All` should complete the run this time.
+
 
 ### 3.2 Watch Evaluation Runs
 
@@ -177,14 +178,14 @@ Once the trace file is displayed, explore the panel to get an intuition for usag
 ### 4.3 Explore: Create Summary
 
 1. When notebook execution completes, look in the `src/api/evaluators` folder:
-    - See: **Chat Responses** in `result.jsonl`
-    - See: **Evaluated Results** in `result_evaluated.jsonl` (scores at end of each line)
-    - See: **Evaluation Summary** computed from `eval_results.jsonl` (complete data.)
+    - You see: **Chat Responses** in `result.jsonl`
+    - You see: **Evaluated Results** in `result_evaluated.jsonl` (scores at end of each line)
+    - You see: **Evaluation Summary** computed from `eval_results.jsonl` (complete data.)
 
-1. Scroll to the bottom of the notebook and view the results cell:
+1. Scroll to the bottom of the notebook to view the results cell:
     - Click the `View as scrollable element` link to redisplay output
     - Scroll to the bottom of redisplayed cell to view scores table
-    - You should see something like this
+    - You should see something like the table below - we reformatted it manually for clarity.
 
 ![Eval](./../img/tabular-eval.png)
 
@@ -192,18 +193,20 @@ Once the trace file is displayed, explore the panel to get an intuition for usag
 
 The figure shows you what that tabulated data looks like in the notebook results. Ignore the formatting for now, and let's look at what this tells us:
 
-1. You see 12 rows of data - correspoding to 12 test inputs
-1. You see 3 columns of metrics - corresponding to evaluators
-1. Each metric records a score between `1` and `5`
+1. You see 12 rows of data - corresponding to 12 test inputs (in `data.jsonl`)
+1. You see 4 metrics from custom evaluators - `groundedness`,`fluency`,`coherence`,`relevance`
+1. Each metric records a score - between `1` and `5`
 
 Let's try to put the scores in context of the responses we see. Try these exercises:
 
-1. Find a row that has a `groundedness` of 5.
-    - View the related row in the evaluation results file
-    - Observe the answer and context provided - _was the answer grounded in the context?_
-1. Find a row that has a `groundedness` of 1.
-    - View the related row in the evaluation results file
-    - Observe the answer and context provided - _was THIS answer grounded in the context?_
+1. Pick a row above that has a `groundedness` of 5.
+    - View the related row in the `result_evaluation.jsonl` file
+    - Observe related answer and context in file - _was the answer grounded in the context?_
+1. Pick a row that has a `groundedness` of 1.
+    - View the related row in the `result_evaluation.jsonl` file
+    - Observe related answer and context in file - _was THIS answer grounded in the context?_
+
+As one example, we can see that the first response in the visualized results (`row 0`) had a groundedness of 5, while the third row from the bottom (`row 9`) had a groundedness of 1. You might find that in the first case the answers provided matched the data context. While in the second case, the answers may quote specific context but did not actually reflect correct usage.
 
 !!! note "Explore the data in more detail on your own. Try to build your intuition for how scores are computed, and how that assessment reflects in the quality of your application."
 

@@ -10,8 +10,8 @@
 
 [FastAPI](https://fastapi.tiangolo.com/) is a modern, high-performance web framework for building and serving APIs using Python code. With FastAPI you get a default application server (that can listen on a specified port) that can be configured with various paths (API routes) by defining functions that should be called in response to invocations on those endpoints.
 
-- Run the FastAPI server _locally_ using `fastapi dev <app-entry>` to get a **development server** with hot reload. Now, changes you make to the code are automatically reflected in the server without having to restart it, making it easy to iterate rapidly.
-- Run the FastAPI server _in production_ using a hosting service like Azure Container Apps. This packages the application into a **production container** with the necessary dependencies, and deploys it to a hosted endpoint on Azure for use by real-world applications.
+- You can run the FASTAPI server _locally_ to get a development server with hot reload. Code changes are instantly reflected in the app preview, making it easy to iterate rapidly.
+- You can run the FASTAPI server _in production_ by packaging it into a container and deploying it to a  hosting service like Azure Container Apps, for real-world use.
 
 Let's take a look at how this helps us take our _Prompty_ based prototype to a full-fledged application with a hosted API endpoint on Azure.
 
@@ -132,8 +132,8 @@ We know from **line 49** that the chat API is deployed against the `/api/create_
 - Return to the dev server preview tab in the browser (ends in `github.dev`)
 - Append `/docs` to the URL to get the Swagger UI interactive testing page
 - Expand the POST section and click `Try it out`
-    - Specify a question: `What camping stove should I get?`
-    - Specify a customer_id: try **1** ("John Smith")
+    - Specify a question: `What camping gear do I own already?`
+    - Specify a customer_id: try **3** ("Michael Johnson")
     - Specify chat_history: leave it at `[]` for now 
 - Click `Execute` to run the query 
 
@@ -164,7 +164,7 @@ Specifically, the contents of the console logs clearly show the content safety m
 !!! success "You just tested and debugged your chat AI locally!"
 
 
-## Step 5: Test changes at app level
+## Step 5: Test changes at app server level
     
 Leave the FastAPI dev server running. Now, let's make changes to the application. We can change things at different processing stages:
 
@@ -172,7 +172,22 @@ Leave the FastAPI dev server running. Now, let's make changes to the application
 - Want to change steps in orchestration of `get_request` handle? _Modify `chat_request.py`_
 - Want to change the response format or instructions for copilot? _Modify `chat.prompty`_
 
-Let's try the first option and change the default message that the app returns when you hit the "/" route. This is a simple change that lets us validate automatic reload on the FastAPI server.
+Let's try the first option, and change how an incoming API request is handled.
+
+!!! note "Sidebar: Understanding API Routes and Requests"
+
+    By default, API requests are sent to a server "endpoint" (or route) that the server listens on, for incoming requests.
+
+    - The "/" route is the default API server URL that returns a message (as a health check)
+    - The "/api/create_response" route is an enhanced URL that listens for copilot requests.
+
+    Our API server is implemented in the `src/api/main.py` file. Let's see how it handles these requests:
+
+    - See: `@app.get("/")` - requests to the default route ("/") get a "Hello World" health check message.
+    - `@app.put("/api/create_response")` - requests to this endpoint are parsed, with query parameters extracted and passed to the `get_response` function (copilot), with the response then returned to the caller.
+
+
+**Let's change how the API server handles the health-check request on "/"**. This is a simple change that lets us validate automatic reload on the FastAPI server.
 
 1. Make sure the `fastapi dev src/main.py` command is still running
 1. **Check:** the browser is showing the "/" route on `*.github.dev` with "Hello, World"
@@ -185,9 +200,9 @@ Let's try the first option and change the default message that the app returns w
 !!! success "You just made changes & verified them live (without restarting dev server)!"
 
 
-## Step 6: Test changes at prompty
+## Step 6: Test changes at prompty asset
     
-Let's try to make a change that will be visible in the `/api/create_response` route handling.
+**Now, let's try to make a change that will be visible in the `/api/create_response` route handling.**
 
 1. Open `src/api/contoso_chat/chat.prompty`
     - Find the `system:` section of the file

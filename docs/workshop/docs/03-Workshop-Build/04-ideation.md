@@ -39,7 +39,8 @@ _Now it's time to understand how that application was developed - and specifical
 
 ![The extension 'Prompty' wants to sign in using Microsoft.](../img/prompty-auth.png)
 
-- Result: **You will get an Error** in the Output pane. This is because we haven't yet configured a model for Prompty to use.
+- Result: The Visual Studio Code console will switch to the "Output" tab.
+    - **You will get an Error** in the Output pane as shown below. This is expected. It is because we haven't yet configured a model for Prompty to use.
     - ❌ | ` Error: 404 The API deployment for this resource does not exist.`
 
 ## Step 2: Update model configuration and basic info
@@ -53,7 +54,9 @@ For a Prompty file to run, we need to specify a generative AI model to use.
 
 ### 1. Update model configuration
 
-1. Copy the previous prompty to a new one. From the Terminal pane:
+1. Return to the Visual Studio Code terminal pane. 
+1. If you are still seeing the error message from the previous step, then you are in the _Output_ tab. Switch to the _Terminal_ tab to get a command prompt.
+1. Now, use this command to copy the previous prompty to a new one. 
     ```
     cp basic.prompty chat-0.prompty
     ```
@@ -141,7 +144,7 @@ From here, we'll supply data in a JSON file to provide context for the generativ
     cp ../docs/workshop/src/1-build/chat-1.json .
     ```
 
-    !!! note "Open the file to take a look at its contents. It provides a customer's name, age, membership level, and purchase history. It also provides the customer's question to the chatbot: What can you tell me about your tents?."
+    !!! note "Open the file to take a look at its contents. It has the customer's name, age, membership level, and purchase history. It also has the default customer question for our chatbot: _What cold-weather sleeping bag would go well with what I have already purchased?_"
 
 2. Replace the `sample:` section of `chat-1.prompty` (lines 16-18) with the following:
 
@@ -329,7 +332,9 @@ cp chat-1.json chat-2.json
     
 1. Execute `chat-3.py` by clicking the "play" at the top-right of its VS Code window. You should now see a valid response being generated.
 
-<!-->
+    !!! tip "Press Alt-Z (or Cmd-Z on Mac) to toggle word wrap. This will make the prompts in the `.prompty` file easier to read within the limited screen view."
+
+<!--
 ### 3. Troubleshooting
 
 _The [Prompty](https://prompty.ai) tooling is in preview. This section captures any issues and workarounds that can be used to resolve them (till fixed in a new release)._
