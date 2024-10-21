@@ -34,3 +34,4 @@ src/api/eval_results.jsonl
 src/api/eval_results.md
 docs/workshop/site
 sandbox/*
+docs/workshop/docs/.DS_Store

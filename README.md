@@ -351,6 +351,7 @@ Have issues or questions about the workshop? Submit [a new issue](https://github
 
 1. [Prompty Documentation](https://prompty.ai)
 1. [Azure AI Studio Documentation](https://aka.ms/aistudio)
+1. [Develop AI Apps using Azure AI Services](https://aka.ms/ai-apps-docs)
 1. [Azure AI Templates with Azure Developer CLI](https://aka.ms/ai-studio/azd-templates)
 
 

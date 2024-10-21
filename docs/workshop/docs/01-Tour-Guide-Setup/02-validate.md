@@ -62,7 +62,7 @@ From the VS Code Online Terminal pane (in Tab 2️⃣):
 
 1. You also need to log into the Azure Developer CLI, `azd`. Enter the command below at the terminal, and follow the same process to copy the code, select the account, and close the tab.
 ```
-azd auth login
+azd auth login --use-device-code
 ```
     - You won't need to enter the password again. Simply select your Skillable Lab account.
 
