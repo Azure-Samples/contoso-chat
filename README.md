@@ -26,7 +26,7 @@ description: Build, evaluate, and deploy, a RAG-based retail copilot that respon
 ## Table of Contents
 
 - [Overview](#overview)
-- [Features](#features) · [Architecture Diagram](#architecture-diagram) · [Demo Video](#demo-video)
+- [Features](#features) · [Architecture Diagram](#architecture-diagram) 
 - [Pre-Requisites](#pre-requisites)
 - [Getting Started](#getting-started) 
     - [GitHub Codespaces](#github-codespaces) 
@@ -44,6 +44,8 @@ description: Build, evaluate, and deploy, a RAG-based retail copilot that respon
 ## Important Security Notice 
 
 This template, the application code and configuration it contains, has been built to showcase Microsoft Azure specific services and tools. We strongly advise our customers not to make this code part of their production environments without implementing or enabling additional security features.  
+
+For a more comprehensive list of best practices and security recommendations for Intelligent Applications, visit our [official documentation](https://learn.microsoft.com/azure/developer/ai/get-started-securing-your-ai-app).
 
 > [!WARNING]  
 >
@@ -91,10 +93,6 @@ It also comes with:
 
 ### Architecture Diagram 
 ![Architecture](./docs/img/arch-contoso-retail-aca.png)
-
-### Demo Video
-
-(In Planning) - Get an intuitive sense for how simple it can be to go from template discovery, to codespaces launch, to application deployment with `azd up`. Watch this space for a demo video.
 
 ## Pre-requisites
 
@@ -348,18 +346,6 @@ The sample has a `docs/workshop` folder with step-by-step guidance for developer
 
 Have issues or questions about the workshop? Submit [a new issue](https://github.com/Azure-Samples/contoso-chat/issues/new) with a `documentation` tag.
 
-### Versions
-
-The Contoso Chat sample has undergone numerous architecture and tooling changes since its first version back in 2023. The table below links to legacy versions for awareness only. **We recommend all users start with the latest version to leverage the latest tools and practices**.
-
-> | Version | Description |
-> |:---|:---|
-> | v0 : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | MSAITour 2023-24 (dag-flow, jnja template) - Skillable + Script |
-> | v1 : [msbuild-lab322](https://github.com/Azure-Samples/contoso-chat/tree/msbuild-lab322) | MSBuild 2024 (dag-flow, jnja template) - Skillable + Script |
-> | v2 : [raghack-24](https://github.com/Azure-Samples/contoso-chat/tree/raghack-24) | RAG Hack 2024 (flex-flow, prompty asset) - AZD Template |
-> | v3 : [aitour-WRK550](https://github.com/Azure-Samples/contoso-chat/tree/raghack-24)  🆕| MSAITour 2024-25 (prompty asset, ACA)- Skillable + AZD |
-> | v3.x : [main](https://github.com/Azure-Samples/contoso-chat/tree/raghack-24) | Latest version of codebase (in active development) |
-> | | |
 
 ## Resources
 
