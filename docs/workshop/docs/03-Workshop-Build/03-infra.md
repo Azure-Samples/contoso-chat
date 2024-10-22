@@ -25,7 +25,7 @@ The Azure CosmosDB resource holds the customer data for our application. It is a
 1. **Click** the `Azure Cosmos DB account` resource name to visit its details page
 1. **Click** `Data Explorer` in the top-nav menu 
     - dismiss the popup dialog to skip the movie
-    - see: `contoso-outdoors` container with `customers` database
+    - see: `contoso-outdoor` container with `customers` database
     - click `customers`, then select `Items`
     - you should see: **12 data items in database**
 
@@ -70,7 +70,7 @@ You will get a response body with `question`, `answer` and `context` components.
     - The products selected may depend on `customer_id` and the associated order history. 
     - The web app provides `chat_history` from the chat window - which can serve as additional context that the model can use to ground the response.
 
-!!! note "Exercise → Repeat exercise above with a different customer ID number. How did the response change?"
+!!! note "Exercise → Repeat exercise with a different customer ID (between 1 and 12). How did the response change?"
 
 
 ✅ | Your Contoso Chat AI is deployed - and works with valid inputs!
