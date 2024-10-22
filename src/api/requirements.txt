@@ -22,3 +22,5 @@ azure-monitor-opentelemetry
 opentelemetry-instrumentation-fastapi
 opentelemetry-instrumentation
 opentelemetry-exporter-otlp-proto-grpc
+azure-ai-evaluation
+azure-monitor-query
