@@ -10,7 +10,18 @@ from utils.evaluator import evaluate_metric
 from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator, CoherenceEvaluator
 from dotenv import load_dotenv
 import logging
-import sys
+from opentelemetry._logs import set_logger_provider
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from azure.monitor.opentelemetry.exporter import AzureMonitorLogExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+from opentelemetry.sdk._logs import (
+    LoggerProvider,
+    LoggingHandler,
+)
+from opentelemetry._events import Event
+
+
 # Configure logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -18,45 +29,18 @@ logger = logging.getLogger(__name__)
 
 
 # Load environment variables
-load_dotenv(override=True)
+load_dotenv()
 
-
-################################ For app insights #######################################
 credential = DefaultAzureCredential()
 logs_client = LogsQueryClient(credential)
 workspace_id = os.environ["APPINSIGHTS_WORKSPACE_ID"]
-os.environ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = os.getenv(
-    "APPINSIGHTS_CONNECTIONSTRING")  # for logging to app insights
 
-
-############################### For Azure OpenAI Eval Client ##############################
-
-required_openai_env_vars = ["AZURE_OPENAI_ENDPOINT",
-                            "AZURE_OPENAI_API_VERSION", "EVAL_DEPLOY_NAME"]
-missing_vars = [
-    var for var in required_openai_env_vars if var not in os.environ]
-
-if missing_vars:
-    print(
-        f"Error: The following required environment variables are not set: {', '.join(missing_vars)}")
-    print("Please set these variables before running the script.")
-    sys.exit(1)
-
-azure_opneai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-eval_model_deployment = os.getenv("EVAL_DEPLOY_NAME")
-azure_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
-
-# Initialize Azure OpenAI client with Entra ID authentication
-token_provider = get_bearer_token_provider(
-    DefaultAzureCredential(),
-    os.getenv("AZURE_OPENAI_SCOPE")
-)
-
-eval_client = AzureOpenAI(
-    azure_endpoint=azure_opneai_endpoint,
-    azure_ad_token_provider=token_provider,
-    api_version=azure_api_version,
-)
+model_config = {
+    "azure_endpoint": os.environ.get("AZURE_OPENAI_ENDPOINT"),
+    "api_key": os.environ.get("AZURE_OPENAI_API_KEY"),
+    "azure_deployment": os.environ.get("AZURE_OPENAI_DEPLOYMENT"),
+    "api_version": os.environ.get("AZURE_OPENAI_API_VERSION"),
+}
 
 
 def execute_query(query, timespan_days):
@@ -333,62 +317,25 @@ def evaluation_run(timespan_days: int, interaction_count: int, groundedness_eval
 
                 # Perform evaluations
                 if groundedness_eval:
-                    prompt = load_prompt("groundedness")
-                    # groundedness_result = evaluate_metric(question=question,
-                    #                                       context=context,
-                    #                                       answer=answer,
-                    #                                       client=eval_client,
-                    #                                       model_deployment=eval_model_deployment,
-                    #                                       prompt=prompt)
-                    # result["groundedness"] = groundedness_result
-                    # logging.info("Groundedness Evaluation:")
-                    # logging.info(groundedness_result)
                     groundedness_score = groundedness_eval(
                         response=answer,
                         context=context,)
-                    logging.info("Groundedness Evaluation:")
-                    logging.info(groundedness_score)
+                    result["gen_ai.evaluation.groundedness"] = groundedness_score["gpt_groundedness"]
 
                 if coherence_eval:
-                    prompt = load_prompt("coherence")
-                    # coherence_result = evaluate_metric(question=question,
-                    #                                    context="",  # no context provided for coherence eval
-                    #                                    answer=answer,
-                    #                                    client=eval_client,
-                    #                                    model_deployment=eval_model_deployment,
-                    #                                    prompt=prompt)
-                    # result["coherence"] = coherence_result
-                    # logging.info("Coherence Evaluation:")
-                    # logging.info(coherence_result)
                     coherence_score = coherence_eval(
                         response=answer,
                         query=question,)
-                    logging.info("Coherence Evaluation:")
-                    logging.info(coherence_score)
+                    result["gen_ai.evaluation.coherence"] = coherence_score["gpt_coherence"]
 
                 if relevance_eval:
-                    prompt = load_prompt("relevance")
-                    # relevance_result = evaluate_metric(question=question,
-                    #                                    context=context,
-                    #                                    answer=answer,
-                    #                                    client=eval_client,
-                    #                                    model_deployment=eval_model_deployment,
-                    #                                    prompt=prompt)
-                    # result["relevance"] = relevance_result
-                    # logging.info("Relevance Evaluation:")
-                    # logging.info(relevance_result)
                     relevance_score = relevance_eval(
                         response=answer,
                         context=context,
                         query=question,)
-                    logging.info("Relevance Evaluation:")
-                    logging.info(relevance_score)
+                    result["gen_ai.evaluation.relevance"] = relevance_score["gpt_relevance"]
 
-                # Add the result for this ID to the
-                # TODO:
-                #  results.append(result)
-                logging.info(f"Completed processing for input ID: {eval_id}")
-                logging.info("-" * 50)
+                results.append(result)
 
             except Exception as e:
                 logging.error(f"Error processing entry {idx}: {str(e)}")
@@ -408,24 +355,46 @@ def upload_evals_to_appinsights(json_string: str):
         results (str): A JSON string containing a list of dictionaries with the evaluation results.
     """
 
-    configure_azure_monitor()
-
     data = json.loads(json_string)
 
-    for item in data:
-        extra = {'extra': item}
-        logger.info("eval", **extra)
+    for score in data:
+        response_id = score["gen_ai.response.id"]
+        for eval_type in ["groundedness", "coherence", "relevance"]:
+            eval_score = score.get(f"gen_ai.evaluation.{eval_type}")
+            if eval_score:
+                eval = {
+                    "gen_ai.response.id": response_id,
+                    "gen_ai.evaluation.score": eval_score,
+                    "event.name": f"gen_ai.evaluation.{eval_type}",
+                }
+                logger.info(f"gen_ai.evaluation.{eval_type}", extra=eval)
 
 
 if __name__ == "__main__":
 
+    # Configure OpenTelemetry logging
+    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "contoso-eval-pipeline")
+    resource = Resource(attributes={SERVICE_NAME: OTEL_SERVICE_NAME
+                                    })
+    logger_provider = LoggerProvider(resource=resource)
+    set_logger_provider(logger_provider)
+    exporter = AzureMonitorLogExporter.from_connection_string(
+        os.getenv("APPINSIGHTS_CONNECTIONSTRING"))
+    logger_provider.add_log_record_processor(
+        BatchLogRecordProcessor(exporter, schedule_delay_millis=60000))
+    handler = LoggingHandler(level=logging.NOTSET,
+                             logger_provider=logger_provider)
+    logging.getLogger().addHandler(handler)
+
     groundedness_eval = True
     coherence_eval = True
     relevance_eval = True
-
     timespan_days = 2  # number of days you want to select for queries
     interaction_count = 4  # number of interactions you want to evaluate
 
+    # Run evaluation pipeline
     results = evaluation_run(timespan_days, interaction_count,
                              groundedness_eval, coherence_eval, relevance_eval)
-    # upload_evals_to_appinsights(results)
+
+    # Upload evaluation results to Azure Application Insights
+    upload_evals_to_appinsights(results)
