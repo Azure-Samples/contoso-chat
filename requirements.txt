@@ -9,7 +9,7 @@ prompty
 prompty[azure]
 nbconvert
 Jinja2==3.1.4
-azure-ai-inference
+azure-ai-inference[opentelemetry]
 opentelemetry-sdk 
 azure-monitor-opentelemetry
 opentelemetry-instrumentation-fastapi
@@ -17,4 +17,3 @@ opentelemetry-instrumentation
 opentelemetry-exporter-otlp-proto-grpc
 azure-ai-evaluation
 azure-monitor-query
-./hack-resources/azure_core_tracing_opentelemetry-1.0.0b12-py3-none-any.whl

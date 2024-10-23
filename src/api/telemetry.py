@@ -18,7 +18,7 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from azure.core.tracing.ai.inference import AIInferenceInstrumentor
+from azure.ai.inference.tracing import AIInferenceInstrumentor
 
 
 def setup_azure_monitor_exporters(conn_str: str):
