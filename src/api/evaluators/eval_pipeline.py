@@ -2,56 +2,33 @@ import json
 import os
 from datetime import timedelta
 from typing import Any, Dict, List
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from openai import AzureOpenAI
+from azure.identity import DefaultAzureCredential
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
-from azure.monitor.opentelemetry import configure_azure_monitor
-from utils.evaluator import evaluate_metric
+from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator, CoherenceEvaluator
 from dotenv import load_dotenv
 import logging
-import sys
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
+from opentelemetry._logs import set_logger_provider
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from azure.monitor.opentelemetry.exporter import AzureMonitorLogExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+from opentelemetry.sdk._logs import (
+    LoggerProvider,
+    LoggingHandler,
+)
+from opentelemetry._events import Event
 
 # Load environment variables
-load_dotenv(override=True)
+load_dotenv()
 
+# Configure logging
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-
-################################ For app insights #######################################
 credential = DefaultAzureCredential()
 logs_client = LogsQueryClient(credential)
-workspace_id= os.environ["APPINSIGHTS_WORKSPACE_ID"]
-os.environ["APPLICATIONINSIGHTS_CONNECTION_STRING"] = os.getenv("APPINSIGHTS_CONNECTIONSTRING") # for logging to app insights
-
-
-############################### For Azure OpenAI Eval Client ##############################
-
-required_openai_env_vars = ["AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_VERSION", "EVAL_DEPLOY_NAME"]
-missing_vars = [var for var in required_openai_env_vars if var not in os.environ]
-
-if missing_vars:
-    print(f"Error: The following required environment variables are not set: {', '.join(missing_vars)}")
-    print("Please set these variables before running the script.")
-    sys.exit(1)
-
-azure_opneai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-eval_model_deployment = os.getenv("EVAL_DEPLOY_NAME")
-azure_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
-
-# Initialize Azure OpenAI client with Entra ID authentication
-token_provider = get_bearer_token_provider(
-    DefaultAzureCredential(),
-    os.getenv("AZURE_OPENAI_SCOPE")
-)
-
-eval_client = AzureOpenAI(
-    azure_endpoint=azure_opneai_endpoint,
-    azure_ad_token_provider=token_provider,
-    api_version=azure_api_version,
-)
+workspace_id = os.environ["APPINSIGHTS_WORKSPACE_ID"]
 
 
 def execute_query(query, timespan_days):
@@ -76,39 +53,34 @@ def execute_query(query, timespan_days):
         if not response.tables:
             logging.warning("No tables returned in the query.")
             return None
-        logging.info(f"Query executed successfully. Result type: {type(response.tables[0])}")
+        logging.info(
+            f"Query executed successfully. Result type: {type(response.tables[0])}")
         return response.tables[0]
     except Exception as e:
         logging.error(f"Error in execute_query: {e}")
         return None
 
-def get_interactions(timespan_days, interaction_count):
+
+def get_genaispans(timespan_days, interaction_count):
     query = f"""
     AppDependencies
-    | where Properties["task"] == "get_response"
+    | where isnotnull(Properties["gen_ai.system"]) and Properties["gen_ai.response.model"] == "gpt-35-turbo"
     | order by TimeGenerated desc
     | take {interaction_count}
-    | project OperationId, Id
+    | project OperationId, Id, Properties["gen_ai.response.id"]
     """
     return execute_query(query, timespan_days)
 
-def get_responses(dependency_id):
-    query = f"""
-    AppDependencies
-    | where ParentId == "{dependency_id}"
-    | project OperationId, Id, Properties["gen_ai.response.id"]
-    """
-    return execute_query( query, timespan_days)
 
-def get_traces( operation_id, timespan_days):
+def get_tokenlogs(operation_id, timespan_days):
     query = f"""
     AppTraces
-    | where ParentId == "{operation_id}"
+    | where ParentId == "{operation_id}" and Message in ("gen_ai.choice", "gen_ai.user.message", "gen_ai.system.message")
     """
-    return execute_query( query, timespan_days)
+    return execute_query(query, timespan_days)
 
 
-def process_traces(traces_table):
+def process_tokenlogs(traces_table):
     """
     Processes the traces table and extracts the relevant data.
 
@@ -146,66 +118,14 @@ def process_traces(traces_table):
                 result["answer"] = gen_ai_content['message']['content']
 
         except (json.JSONDecodeError, KeyError, TypeError) as e:
-            logging.warning(f"Failed to parse JSON content in trace {trace_idx}: {e}")
+            logging.warning(
+                f"Failed to parse JSON content in trace {trace_idx}: {e}")
             continue
 
     return result
 
-def process_dependency(dependency_row, dependency_columns, timespan_days):
-    """
-    Processes a single dependency row from the App Insights data.
-
-    Args:
-        dependency_row (list): A list of values representing the dependency row.
-        dependency_columns (list): A list of column names for the dependency data.
-        timespan_days (int): The number of days to query for the data.
-
-    Returns:
-        dict: A dictionary containing the processed data.
-    """
-    dependency_id = ""
-    try:
-        dependency_dict = dict(zip(dependency_columns, dependency_row))
-        dependency_id = dependency_dict.get("Id", "")
-        logging.info(f"Processing dependency: {dependency_id}")
-
-        # Get responses
-        response_table = get_responses(dependency_id)
-        if response_table is None or not response_table.rows:
-            logging.warning(f"No response IDs found for dependency {dependency_id}.")
-            return None
-
-        # Extract response ID and operation ID
-        response_row = response_table.rows[0]
-        response_columns = response_table.columns
-        response_dict = dict(zip(response_columns, response_row))
-        operation_id = response_dict.get("Id", "")
-        response_id = response_dict.get('Properties_gen_ai.response.id', "")
-        logging.info(f"Response ID extracted: {response_id}")
-
-        # Get traces
-        traces_table = get_traces(operation_id, timespan_days)
-        if traces_table is None or not traces_table.rows:
-            logging.warning(f"No traces found for operation {operation_id}.")
-            return None
-
-        # Process traces
-        result = process_traces(traces_table)
-        result["id"] = response_id
-
-        return result
-
-    except Exception as e:
-        if dependency_id:
-            logging.error(f"Error processing dependency {dependency_id}: {e}")
-        else:
-            logging.error(f"Error processing dependency: {e}")
-        return None
-
-
 
 def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5) -> List[Dict[str, Any]]:
-
     """
     Extracts data from Azure Application Insights for multiple interactions.
 
@@ -217,20 +137,22 @@ def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5
         List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
     try:
-        dependencies_table = get_interactions(timespan_days, interaction_count)
-        
+        dependencies_table = get_genaispans(timespan_days, interaction_count)
+
         if dependencies_table is None:
             logging.error("No data returned from get_interactions")
             return []
-        
+
         logging.info(f"Type of dependencies_table: {type(dependencies_table)}")
-        
+
         if not hasattr(dependencies_table, 'columns'):
-            logging.error(f"dependencies_table has no 'columns' attribute. Content: {dependencies_table}")
+            logging.error(
+                f"dependencies_table has no 'columns' attribute. Content: {dependencies_table}")
             return []
 
         if not hasattr(dependencies_table, 'rows'):
-            logging.error(f"dependencies_table has no 'rows' attribute. Content: {dependencies_table}")
+            logging.error(
+                f"dependencies_table has no 'rows' attribute. Content: {dependencies_table}")
             return []
 
         if not dependencies_table.rows:
@@ -238,43 +160,38 @@ def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5
             return []
 
         all_results = []
-        dependency_columns = dependencies_table.columns  
+        dependency_columns = dependencies_table.columns
 
+        # Extract response ID and operation ID
         for idx, dependency_row in enumerate(dependencies_table.rows):
-            result = process_dependency(dependency_row, dependency_columns, timespan_days)
+            response_dict = dict(zip(dependency_columns, dependency_row))
+            operation_id = response_dict.get("Id", "")
+            response_id = response_dict.get(
+                'Properties_gen_ai.response.id', "")
+            logging.info(f"Response ID extracted: {response_id}")
+
+            # Get traces
+            traces_table = get_tokenlogs(operation_id, timespan_days)
+            if traces_table is None or not traces_table.rows:
+                logging.warning(
+                    f"No traces found for operation {operation_id}.")
+                return None
+
+            # Process traces
+            result = process_tokenlogs(traces_table)
+            result["id"] = response_id
             if result:
                 all_results.append(result)
 
         return all_results
-    
+
     except Exception as e:
         logging.error(f"Error during data extraction: {e}")
         return []
 
 
-def load_prompt(prompt_name: str) -> str:
-    """
-    Loads the prompt text from a file.
-
-    Args:
-        prompt_name (str): The name of the prompt file (without extension).
-
-    Returns:
-        str: The prompt text.
-    """
-    prompt_path = os.path.join("prompts", f"{prompt_name}.txt")
-    try:
-        with open(prompt_path, 'r', encoding='utf-8') as file:
-            prompt_text = file.read()
-        return prompt_text
-    except FileNotFoundError:
-        print(f"Prompt file {prompt_path} not found.")
-        return ""
-    
-
-def evaluation_run(timespan_days: int, interaction_count:int, groundedness_eval: bool = True, 
-     coherence_eval: bool = True, relevance_eval: bool = True) -> str:
-    
+def evaluation_run(timespan_days: int, interaction_count: int, groundedness_eval: bool = True,
+                   coherence_eval: bool = True, relevance_eval: bool = True) -> str:
     """
     Extracts data from Azure Application Insights for multiple interactions.
 
@@ -289,13 +206,27 @@ def evaluation_run(timespan_days: int, interaction_count:int, groundedness_eval:
     results = []  # Initialize a list to store results for all IDs
 
     try:
-        app_insights_data = extract_app_insights_data(timespan_days, interaction_count)
-        
-        logging.info(f"Extracted {len(app_insights_data)} interactions from App Insights.")
+        app_insights_data = extract_app_insights_data(
+            timespan_days, interaction_count)
+
+        logging.info(
+            f"Extracted {len(app_insights_data)} interactions from App Insights.")
+
+        model_config = {
+            "azure_endpoint": os.environ.get("AZURE_OPENAI_ENDPOINT"),
+            "api_key": os.environ.get("AZURE_OPENAI_API_KEY"),
+            "azure_deployment": os.environ.get("AZURE_OPENAI_DEPLOYMENT"),
+            "api_version": os.environ.get("AZURE_OPENAI_API_VERSION"),
+        }
+
+        # Initialzing Relevance Evaluator
+        relevance_eval = RelevanceEvaluator(model_config)
+        groundedness_eval = GroundednessEvaluator(model_config)
+        coherence_eval = CoherenceEvaluator(model_config)
 
         for idx, entry in enumerate(app_insights_data):
             logging.info(f"Processing entry {idx}")
-            
+
             try:
                 question = entry.get('question', '')
                 context = entry.get('context', '')
@@ -307,45 +238,26 @@ def evaluation_run(timespan_days: int, interaction_count:int, groundedness_eval:
 
                 # Perform evaluations
                 if groundedness_eval:
-                    prompt = load_prompt("groundedness")
-                    groundedness_result = evaluate_metric(question=question,
-                                                        context=context,  
-                                                        answer=answer,
-                                                        client=eval_client,
-                                                        model_deployment=eval_model_deployment,
-                                                        prompt=prompt)
-                    result["groundedness"] = groundedness_result
-                    logging.info("Groundedness Evaluation:")
-                    logging.info(groundedness_result)
+                    groundedness_score = groundedness_eval(
+                        response=answer,
+                        context=context,)
+                    result["gen_ai.evaluation.groundedness"] = groundedness_score["gpt_groundedness"]
 
                 if coherence_eval:
-                    prompt = load_prompt("coherence")
-                    coherence_result = evaluate_metric( question=question,
-                                                        context="", # no context provided for coherence eval
-                                                        answer=answer,
-                                                        client=eval_client,
-                                                        model_deployment=eval_model_deployment,
-                                                        prompt=prompt)
-                    result["coherence"] = coherence_result      
-                    logging.info("Coherence Evaluation:")
-                    logging.info(coherence_result)
+                    coherence_score = coherence_eval(
+                        response=answer,
+                        query=question,)
+                    result["gen_ai.evaluation.coherence"] = coherence_score["gpt_coherence"]
 
                 if relevance_eval:
-                    prompt = load_prompt("relevance")
-                    relevance_result = evaluate_metric( question=question,
-                                                        context=context,  
-                                                        answer=answer,
-                                                        client=eval_client,
-                                                        model_deployment=eval_model_deployment,
-                                                        prompt=prompt)
-                    result["relevance"] = relevance_result
-                    logging.info("Relevance Evaluation:")
-                    logging.info(relevance_result)
+                    relevance_score = relevance_eval(
+                        response=answer,
+                        context=context,
+                        query=question,)
+                    result["gen_ai.evaluation.relevance"] = relevance_score["gpt_relevance"]
 
-                results.append(result)  # Add the result for this ID to the list
-                logging.info(f"Completed processing for input ID: {eval_id}")
-                logging.info("-" * 50)
-            
+                results.append(result)
+
             except Exception as e:
                 logging.error(f"Error processing entry {idx}: {str(e)}")
 
@@ -364,28 +276,46 @@ def upload_evals_to_appinsights(json_string: str):
         results (str): A JSON string containing a list of dictionaries with the evaluation results.
     """
 
-    configure_azure_monitor()
-
     data = json.loads(json_string)
-  
-    for item in data:        
-        extra = {'extra': item}
-        logger.info("eval", **extra)
-       
-    
+
+    for score in data:
+        response_id = score["gen_ai.response.id"]
+        for eval_type in ["groundedness", "coherence", "relevance"]:
+            eval_score = score.get(f"gen_ai.evaluation.{eval_type}")
+            if eval_score:
+                eval = {
+                    "gen_ai.response.id": response_id,
+                    "gen_ai.evaluation.score": eval_score,
+                    "event.name": f"gen_ai.evaluation.{eval_type}",
+                }
+                logger.info(f"gen_ai.evaluation.{eval_type}", extra=eval)
+
 
 if __name__ == "__main__":
+
+    # Configure OpenTelemetry logging
+    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "contoso-eval-pipeline")
+    resource = Resource(attributes={SERVICE_NAME: OTEL_SERVICE_NAME
+                                    })
+    logger_provider = LoggerProvider(resource=resource)
+    set_logger_provider(logger_provider)
+    exporter = AzureMonitorLogExporter.from_connection_string(
+        os.getenv("APPINSIGHTS_CONNECTIONSTRING"))
+    logger_provider.add_log_record_processor(
+        BatchLogRecordProcessor(exporter, schedule_delay_millis=60000))
+    handler = LoggingHandler(level=logging.NOTSET,
+                             logger_provider=logger_provider)
+    logging.getLogger().addHandler(handler)
 
     groundedness_eval = True
     coherence_eval = True
     relevance_eval = True
+    timespan_days = 2  # number of days you want to select for queries
+    interaction_count = 4  # number of interactions you want to evaluate
 
-    timespan_days =2 # number of days you want to select for queries
-    interaction_count = 4# number of interactions you want to evaluate
-    
-    results = evaluation_run(timespan_days,interaction_count, 
-    groundedness_eval, coherence_eval, relevance_eval)
+    # Run evaluation pipeline
+    results = evaluation_run(timespan_days, interaction_count,
+                             groundedness_eval, coherence_eval, relevance_eval)
+
+    # Upload evaluation results to Azure Application Insights
     upload_evals_to_appinsights(results)
-
-    
-
