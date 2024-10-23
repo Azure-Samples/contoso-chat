@@ -6,7 +6,6 @@ from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from openai import AzureOpenAI
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
 from azure.monitor.opentelemetry import configure_azure_monitor
-from utils.evaluator import evaluate_metric
 from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator, CoherenceEvaluator
 from dotenv import load_dotenv
 import logging
@@ -21,26 +20,17 @@ from opentelemetry.sdk._logs import (
 )
 from opentelemetry._events import Event
 
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
-# Load environment variables
-load_dotenv()
-
 credential = DefaultAzureCredential()
 logs_client = LogsQueryClient(credential)
 workspace_id = os.environ["APPINSIGHTS_WORKSPACE_ID"]
-
-model_config = {
-    "azure_endpoint": os.environ.get("AZURE_OPENAI_ENDPOINT"),
-    "api_key": os.environ.get("AZURE_OPENAI_API_KEY"),
-    "azure_deployment": os.environ.get("AZURE_OPENAI_DEPLOYMENT"),
-    "api_version": os.environ.get("AZURE_OPENAI_API_VERSION"),
-}
 
 
 def execute_query(query, timespan_days):
@@ -247,26 +237,6 @@ def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5
     except Exception as e:
         logging.error(f"Error during data extraction: {e}")
         return []
-
-
-def load_prompt(prompt_name: str) -> str:
-    """
-    Loads the prompt text from a file.
-
-    Args:
-        prompt_name (str): The name of the prompt file (without extension).
-
-    Returns:
-        str: The prompt text.
-    """
-    prompt_path = os.path.join("prompts", f"{prompt_name}.txt")
-    try:
-        with open(prompt_path, 'r', encoding='utf-8') as file:
-            prompt_text = file.read()
-        return prompt_text
-    except FileNotFoundError:
-        print(f"Prompt file {prompt_path} not found.")
-        return ""
 
 
 def evaluation_run(timespan_days: int, interaction_count: int, groundedness_eval: bool = True,
