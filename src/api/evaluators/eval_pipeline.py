@@ -2,10 +2,8 @@ import json
 import os
 from datetime import timedelta
 from typing import Any, Dict, List
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from openai import AzureOpenAI
+from azure.identity import DefaultAzureCredential
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
-from azure.monitor.opentelemetry import configure_azure_monitor
 from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator, CoherenceEvaluator
 from dotenv import load_dotenv
 import logging
@@ -63,35 +61,26 @@ def execute_query(query, timespan_days):
         return None
 
 
-def get_interactions(timespan_days, interaction_count):
+def get_genaispans(timespan_days, interaction_count):
     query = f"""
     AppDependencies
-    | where Properties["task"] == "get_response"
+    | where isnotnull(Properties["gen_ai.system"]) and Properties["gen_ai.response.model"] == "gpt-35-turbo"
     | order by TimeGenerated desc
     | take {interaction_count}
-    | project OperationId, Id
-    """
-    return execute_query(query, timespan_days)
-
-
-def get_responses(dependency_id):
-    query = f"""
-    AppDependencies
-    | where ParentId == "{dependency_id}"
     | project OperationId, Id, Properties["gen_ai.response.id"]
     """
     return execute_query(query, timespan_days)
 
 
-def get_traces(operation_id, timespan_days):
+def get_tokenlogs(operation_id, timespan_days):
     query = f"""
     AppTraces
-    | where ParentId == "{operation_id}"
+    | where ParentId == "{operation_id}" and Message in ("gen_ai.choice", "gen_ai.user.message", "gen_ai.system.message")
     """
     return execute_query(query, timespan_days)
 
 
-def process_traces(traces_table):
+def process_tokenlogs(traces_table):
     """
     Processes the traces table and extracts the relevant data.
 
@@ -136,59 +125,6 @@ def process_traces(traces_table):
     return result
 
 
-def process_dependency(dependency_row, dependency_columns, timespan_days):
-    """
-    Processes a single dependency row from the App Insights data.
-
-    Args:
-        dependency_row (list): A list of values representing the dependency row.
-        dependency_columns (list): A list of column names for the dependency data.
-        timespan_days (int): The number of days to query for the data.
-
-    Returns:
-        dict: A dictionary containing the processed data.
-    """
-    dependency_id = ""
-    try:
-        dependency_dict = dict(zip(dependency_columns, dependency_row))
-        dependency_id = dependency_dict.get("Id", "")
-        logging.info(f"Processing dependency: {dependency_id}")
-
-        # Get responses
-        response_table = get_responses(dependency_id)
-        if response_table is None or not response_table.rows:
-            logging.warning(
-                f"No response IDs found for dependency {dependency_id}.")
-            return None
-
-        # Extract response ID and operation ID
-        response_row = response_table.rows[0]
-        response_columns = response_table.columns
-        response_dict = dict(zip(response_columns, response_row))
-        operation_id = response_dict.get("Id", "")
-        response_id = response_dict.get('Properties_gen_ai.response.id', "")
-        logging.info(f"Response ID extracted: {response_id}")
-
-        # Get traces
-        traces_table = get_traces(operation_id, timespan_days)
-        if traces_table is None or not traces_table.rows:
-            logging.warning(f"No traces found for operation {operation_id}.")
-            return None
-
-        # Process traces
-        result = process_traces(traces_table)
-        result["id"] = response_id
-
-        return result
-
-    except Exception as e:
-        if dependency_id:
-            logging.error(f"Error processing dependency {dependency_id}: {e}")
-        else:
-            logging.error(f"Error processing dependency: {e}")
-        return None
-
-
 def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5) -> List[Dict[str, Any]]:
     """
     Extracts data from Azure Application Insights for multiple interactions.
@@ -201,7 +137,7 @@ def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5
         List[Dict[str, Any]]: A list of dictionaries containing the extracted data.
     """
     try:
-        dependencies_table = get_interactions(timespan_days, interaction_count)
+        dependencies_table = get_genaispans(timespan_days, interaction_count)
 
         if dependencies_table is None:
             logging.error("No data returned from get_interactions")
@@ -226,9 +162,24 @@ def extract_app_insights_data(timespan_days: int = 2, interaction_count: int = 5
         all_results = []
         dependency_columns = dependencies_table.columns
 
+        # Extract response ID and operation ID
         for idx, dependency_row in enumerate(dependencies_table.rows):
-            result = process_dependency(
-                dependency_row, dependency_columns, timespan_days)
+            response_dict = dict(zip(dependency_columns, dependency_row))
+            operation_id = response_dict.get("Id", "")
+            response_id = response_dict.get(
+                'Properties_gen_ai.response.id', "")
+            logging.info(f"Response ID extracted: {response_id}")
+
+            # Get traces
+            traces_table = get_tokenlogs(operation_id, timespan_days)
+            if traces_table is None or not traces_table.rows:
+                logging.warning(
+                    f"No traces found for operation {operation_id}.")
+                return None
+
+            # Process traces
+            result = process_tokenlogs(traces_table)
+            result["id"] = response_id
             if result:
                 all_results.append(result)
 
