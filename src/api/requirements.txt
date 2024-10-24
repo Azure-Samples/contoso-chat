@@ -16,7 +16,7 @@ pandas
 azure-identity==1.17.1
 jupyter
 Jinja2==3.1.4
-azure-ai-inference
+azure-ai-inference[opentelemetry]
 opentelemetry-sdk 
 azure-monitor-opentelemetry
 opentelemetry-instrumentation-fastapi

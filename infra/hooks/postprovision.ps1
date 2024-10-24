@@ -39,7 +39,7 @@ if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($ope
 azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
 azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
 azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
-azd env set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED true
+azd env set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED false
 azd env set OTEL_EXPORTER_OTLP_ENDPOINT http://localhost:4317
 
 
