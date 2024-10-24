@@ -28,6 +28,17 @@ src/api/evaluators/result.jsonl
 src/api/evaluators/eval_results.jsonl
 src/api/evaluators/eval_results.md
 src/api/evaluators/.runs/*
+
+# dependencies
+/src/web/node_modules
+/src/api/node_modules
+
+# testing
+/coverage
+
+# next.js
+/src/web/.next/
+
 src/api/result_evaluated.jsonl
 src/api/result.jsonl
 src/api/eval_results.jsonl
@@ -35,3 +46,4 @@ src/api/eval_results.md
 docs/workshop/site
 sandbox/*
 docs/workshop/docs/.DS_Store
+

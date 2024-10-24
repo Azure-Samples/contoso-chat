@@ -21,3 +21,5 @@ param useApplicationInsights = bool(readEnvironmentVariable('USE_APPLICATION_INS
 param useSearch = bool(readEnvironmentVariable('USE_SEARCH_SERVICE', 'true'))
 
 param runningOnGh = readEnvironmentVariable('GITHUB_ACTIONS', '')
+param azureai_inference_api_enable_content_tracing = bool(readEnvironmentVariable('AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED', 'false'))
+

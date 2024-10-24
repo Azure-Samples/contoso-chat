@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name":"Python Debugger: Current File",
+      "type":"debugpy",
+      "request":"launch",
+      "program":"${file}",
+      "console":"integratedTerminal"
+    },
+    {
       "name": "Python Debugger: Current File with Arguments",
       "type": "debugpy",
       "request": "launch",
@@ -17,6 +24,47 @@
       "request": "launch",
       "name": "Bash-Debug (simplest configuration)",
       "program": "${file}"
+    },
+    {
+      "name": "Python Debugger: Contoso API",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "main:app",
+        "--reload"
+      ],
+      "cwd": "${workspaceFolder}/src/api",
+      "jinja": true
+    },
+    {
+      "name": "Next.js: Contoso Web",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/web/node_modules/.bin/next",
+      "runtimeArgs": [
+        "--inspect"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "cwd": "${workspaceFolder}/src/web",
+      "serverReadyAction": {
+        "action": "debugWithEdge",
+        "killOnServerStop": true,
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "webRoot": "${workspaceFolder}/src/web"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Start Contoso API(backend) and Web(fronted)",
+      "configurations": [
+        "Python Debugger: Contoso API",
+        "Next.js: Contoso Web"
+      ]
     }
   ]
 }

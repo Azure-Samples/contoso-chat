@@ -29,6 +29,9 @@
     },
     "runningOnAdo": {
       "value": "${TF_BUILD}"
+    },
+    "azureai_inference_api_enable_content_tracing": {
+      "value": "${AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED}"
     }
   }
 }

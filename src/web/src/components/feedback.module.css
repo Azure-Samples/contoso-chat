@@ -1,0 +1,37 @@
+.feedbackContainer {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button {
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: gray;
+    transition: transform 0.3s ease;
+  }
+
+  .selected {
+    color: teal;
+  }
+  
+  .animate {
+    animation: bounce 0.5s ease;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+ 
+.feedbackMessage {
+  color: teal;
+}
