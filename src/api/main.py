@@ -76,8 +76,8 @@ async def api_exception_handler(request: Request, exc: APIException):
 @app.get("/")
 async def root():
     root_counter.add(1)
-    logger.info("Hello from root endpoint")
-    return {"message": "Hello World"}
+    logger.info("Hello from Contoso Root")
+    return {"message": "Hello from Contoso Root"}
 
 
 @app.post("/api/create_response")

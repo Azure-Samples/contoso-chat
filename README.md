@@ -250,6 +250,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 
 </details>
 
+
 ## Testing
 
 We can think about two levels of testing - _manual_ validation and _automated_ evaluation. The first is interactive, using a single test prompt to validate the prototype as we iterate. The second is code-driven, using a test prompt dataset to assess quality and safety of prototype responses for a diverse set of prompt inputs - and score them for criteria like _coherence_, _fluency_, _relevance_ and _groundedness_ based on built-in or custom evaluators.
@@ -259,23 +260,19 @@ We can think about two levels of testing - _manual_ validation and _automated_ e
 <br/>
 
 The Contoso Chat application is implemented as a _FastAPI_ application that can be deployed to a hosted endpoint in Azure Container Apps. The API implementation is defined in `src/api/main.py` and currently exposes 2 routes:
- - `/` - which shows the default "Hello World" message
- - `/api/create_request` - which is our chat AI endpoint for test prompts
+ - `/` - which shows the default "Hello from Contoso Root" message
+ - `/api/create_request` - which is chat AI endpoint to test prompts
+ - `/api/give_feedback` - which is a feedback endpoint to provide feedback on chat bot resposnes
+ 
+To test locally, follow these steps:
 
-To test locally, we run the FastAPI dev server, then use the Swagger endpoint at the `/docs` route to test the locally-served endpoint in the same way we tested the deployed version/
+- From VScode open the solution in dev containe
+- Set the `Run and debug` configuration to `Start Contoso API(backend) and Web(fronted)`
+- Click the `Run and debug` button to start the backend and frontend
+- Browse to `http://localhost:3000/` to access the frontend interface and test the chat bot with the UI 
 
-- Change to the root folder of the repository
-- Run `fastapi dev ./src/api/main.py` - it should launch a dev server
-- Click `Open in browser` to preview the dev server page in a new tab
-    - You should see: "Hello, World" with route at `/`
-- Add `/docs` to the end of the path URL in the browser tab
-    - You should see: "FASTAPI" page with 2 routes listed
-    - Click the `POST` route then click `Try it out` to unlock inputs
-- Try a test input
-    - Enter `question` = "Tell me about the waterproof tents"
-    - Enter `customer_id` = 2
-    - Enter `chat_history` = []
-    - Click **Execute** to see results: _You should see a valid response with a list of matching tents from the product catalog with additional details_.
+To test the API directly, you can use the Swagger UI at `http://localhost:8000/docs` to test the API directly or use [api-test.http](./api-test.http) to send requests directly from VSCode [Rest client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension.
+
 1. ✅ | **Congratulations!** - You successfully tested the app locally
 
 </details>
@@ -284,19 +281,13 @@ To test locally, we run the FastAPI dev server, then use the Swagger endpoint at
 <summary> 2️⃣ | AI-Assisted Evaluation (code-driven) </summary>
 <br/>
 
-Testing a single prompt is good for rapid prototyping and ideation. But once we have our application designed, we want to validate the _quality and safety_ of responses against diverse test prompts. The sample shows you how to do **AI-Assisted Evaluation** using custom evaluators implemented with Prompty.
+Testing a single prompt is good for rapid prototyping and ideation. But once we have our application designed, we want to validate the _quality and safety_ of responses against diverse test prompts. The sample shows you how to do **AI-Assisted Evaluation** using Azure AI Evalaution SDK and write back evlations score to Application Insights
 
 - Visit the `src/api/evaluators/` folder
-- Open the `evaluate-chat-flow.ipynb` notebook - "Select Kernel" to activate
-- Clear inputs and then `Run all` - starts evaluaton flow with `data.jsonl` test dataset
-- Once evaluation completes (takes 10+ minutes), you should see
-    - `results.jsonl` = the chat model's responses to test inputs
-    - `evaluated_results.jsonl` = the evaluation model's scoring of the responses
-    - tabular results = coherence, fluency, relevance, groundedness scores
-
-Want to get a better understanding of how custom evaluators work? Check out the `src/api/evaluators/custom_evals` folder and explore the relevant Prompty assets and their template instructions.
-
-The Prompty tooling also has support for built-in _tracing_ for observability. Look for a `.runs/` subfolder to be created during the evaluation run, with `.tracy` files containing the trace data. Click one of them to get a _trace-view_ display in Visual Studio Code to help you drill down or debug the interaction flow. _This is a new feature so look for more updates in usage soon_.
+- Open the `eval_pipeline.py` and configure quality metrics and evaluation settings
+- In VSCode Set the `Run and debug` configuration to `Python Debugger: Current File`
+- Click the `Run and debug` button to run evaluation pipeline
+- Check the evaluation results in Azure Applcation Insights(gen-ai-insights) workbook or Azure AI Studio Tracing View 
 
 </details>
 
@@ -314,7 +305,7 @@ This solution uses OpenTelemetry (OTEL) to collect traces, metrics, and logs. Th
 To visualize telemetry data locally, use the [Aspire Dashboard](https://aspiredashboard.com/). This solution simplifies starting and stopping Aspire Dashboard:
 
 1. Set the environment variable `OTEL_EXPORTER_OTLP_ENDPOINT` to `http://localhost:4317` to direct all telemetry data to Aspire Dashboard.
-2. In VSCode, use Terminal > Run Task > Start Aspire Dashboard or Stop Aspire Dashboard commands.</br>
+2. In VSCode, use Terminal > Run Task > Start Aspire Dashboard or Stop Aspire Dashboard command.</br>
 ![Aspire Dashbaord Task](./docs/img/start-aspire-dashboard.png)
 3. Follow the instructions in the terminal to open Aspire Dashboard in your local browser or visit `http://localhost:62816/` and copy the token from the terminal.
 
