@@ -100,7 +100,7 @@ param runningOnGh string = ''
 param runningOnAdo string = ''
 
 @description('Whether to enable content tracing for Azure AI Inference API')
-param azureai_inference_api_enable_content_tracing bool = true
+param azureai_inference_api_enable_content_tracing bool = false
 
 
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))

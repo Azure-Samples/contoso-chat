@@ -81,8 +81,8 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: appinsights_Connectionstring
       }
       {
-        name: 'AZUREAI_INFERENCE_API_ENABLE_CONTENT_TRACING'
-        value: 'true'
+        name: 'AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED'
+        value: azureai_inference_api_enable_content_tracing
       }
     ]
     targetPort: 80

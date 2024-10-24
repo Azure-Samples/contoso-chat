@@ -300,6 +300,45 @@ The Prompty tooling also has support for built-in _tracing_ for observability. L
 
 </details>
 
+## Observability
+
+This solution uses OpenTelemetry (OTEL) to collect traces, metrics, and logs. The OTEL instrumentation captures telemetry data from all HTTP requests served by this application, including the Azure Open AI endpoints, and is compatible with [OTEL Semenatic Coventions for GenAI Systems](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+
+> [!WARNING]  
+>
+> **Recording message conetent.** The environment variable [AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED](./infra/main.bicepparam)determines if the actual message contents will be recorded in the traces. By default, message contents are not recorded. To include message contents in the trace, set the environment variable to "true" (case insensitive). Any other value will ensure the message contents are not recorded.
+
+<details>
+<summary> 1️⃣ | Local Tracing(Inner Loop) </summary>
+
+To visualize telemetry data locally, use the [Aspire Dashboard](https://aspiredashboard.com/). This solution simplifies starting and stopping Aspire Dashboard:
+
+1. Set the environment variable `OTEL_EXPORTER_OTLP_ENDPOINT` to `http://localhost:4317` to direct all telemetry data to Aspire Dashboard.
+2. In VSCode, use Terminal > Run Task > Start Aspire Dashboard or Stop Aspire Dashboard commands.</br>
+![Aspire Dashbaord Task](./docs/img/start-aspire-dashboard.png)
+3. Follow the instructions in the terminal to open Aspire Dashboard in your local browser or visit `http://localhost:62816/` and copy the token from the terminal.
+
+![Aspire Dashbaord](./docs/img/local-aspire-traces.png)
+</details>
+
+
+<details>
+<summary> 2️⃣ | Azure Monitor(Outer Loop)  </summary>
+
+After deploying the Contoso chat app in Azure, visualize telemetry data using the Application Insights workbook. This workbook helps ensure your generative AI applications run efficiently and reliably at scale. Get real-time insights into performance metrics, usage patterns, and operational efficiency. Track data like execution times, token consumption, and error rates across sessions with detailed logs and visualizations to identify bottlenecks and optimize workflows.
+
+Additonaly this dashboard consolidates user feedback and model evaluations to help you understand the quality of responses and identify areas for improvement in your generative AI applications by session and model. 
+
+1. Visit the Azure Portal and navigate to the Application Insights resource created by the deployment.
+2. Click on the Gen-AI-Insights workbook to visualize the data.
+
+![Overview](./docs/img/gen-ai-insights-overview.png)
+<br/>
+![Session Overview](./docs/img/gen-ai-insights-session-overview.png)
+</details>
+
+
+
 ## Deployment
 
 The solution is deployed using the Azure Developer CLI. The `azd up` command effectively calls `azd provision` and then `azd deploy` - allowing you to provision infrastructure and deploy the application with a single command. Subsequent calls to `azd up` (e.g., ,after making changes to the application) should be faster, re-deploying the application and updating infrastructure provisioning only if required. You can then test the deployed endpoint as described earlier.
