@@ -306,7 +306,7 @@ This solution uses OpenTelemetry (OTEL) to collect traces, metrics, and logs. Th
 
 > [!WARNING]  
 >
-> **Recording message conetent.** The environment variable [AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED](./infra/main.bicepparam)determines if the actual message contents will be recorded in the traces. By default, message contents are not recorded. To include message contents in the trace, set the environment variable to "true" (case insensitive). Any other value will ensure the message contents are not recorded.
+> **Recording message content.** The environment variable [AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED](./infra/main.bicepparam)determines if the actual message contents will be recorded in the traces. By default, message contents are not recorded. To include message contents in the trace, set the environment variable to "true" (case insensitive). Any other value will ensure the message contents are not recorded.
 
 <details>
 <summary> 1️⃣ | Local Tracing(Inner Loop) </summary>
@@ -334,7 +334,8 @@ Additonaly this dashboard consolidates user feedback and model evaluations to he
 
 ![Overview](./docs/img/gen-ai-insights-overview.png)
 <br/>
-![Session Overview](./docs/img/gen-ai-insights-session-overview.png)
+Session details view provides detailed insights per user session.
+![Session Detals](./docs/img/gen-ai-insights-session-overview.png)
 </details>
 
 
