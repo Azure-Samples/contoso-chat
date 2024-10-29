@@ -14,12 +14,6 @@ from prompty.tracer import trace, Tracer, console_tracer, PromptyTracer
 from dotenv import load_dotenv
 load_dotenv()
 
-from opentelemetry.sdk._logs import LoggerProvider, Logger, LogRecord
-from opentelemetry._logs import set_logger_provider
-from opentelemetry._events import set_event_logger_provider, EventLoggerProvider
-from opentelemetry._events import Attributes, EventLoggerProvider, EventLogger, Event, get_event_logger_provider
-from opentelemetry.sdk._logs.export import SimpleLogRecordProcessor, ConsoleLogExporter
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 

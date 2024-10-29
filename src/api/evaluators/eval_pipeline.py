@@ -16,7 +16,6 @@ from opentelemetry.sdk._logs import (
     LoggerProvider,
     LoggingHandler,
 )
-from opentelemetry._events import Event
 
 # Load environment variables
 load_dotenv()
