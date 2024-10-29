@@ -30,7 +30,7 @@ export const sendGroundedMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data.responseId,
+    responseId: data?.responseId,
     avatar: "",
     image: null,
   };
@@ -51,7 +51,7 @@ export const sendPromptFlowMessage = async (
 
   console.log(body);
   
-  let response = await fetch("/api/chat/vnext", {
+  let response = await fetch("/api/create_response", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const sendPromptFlowMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data.responseId,
+    responseId: data?.responseId,
     avatar: "",
     image: null,
   };
@@ -130,7 +130,7 @@ export const sendVisualMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data.responseId,
+    responseId: data?.responseId,
     avatar: "",
     image: null,
   };

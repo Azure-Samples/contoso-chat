@@ -1,12 +1,4 @@
 #!/bin/bash
-
-echo  "Building contosochatapi:latest..."
-az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatapi:latest ./src/api/
-image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatapi:latest"
-az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${image_name}
-az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${SERVICE_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 80
-
-
 # Retrieve service names, resource group name, and other values from environment variables
 resourceGroupName=$AZURE_RESOURCE_GROUP
 searchService=$AZURE_SEARCH_NAME
@@ -46,20 +38,3 @@ echo "Populating data ...."
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > /dev/null
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > /dev/null
 echo "--- ✅ | 3. Post-provisioning - populated data ---"
-
-#echo "Running evaluations ...."
-#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-sdk.ipynb
-#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom-no-sdk.ipynb
-#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 evaluations/evaluate-chat-flow-custom.ipynb
-#echo "--- ✅ | 4. Post-provisioning - ran evaluations ---"
-
-
-echo  "Building contosochatweb:latest..."
-echo -e "\e[31mWarning: Building Frotend Image take a while, please be patient\e[0m"
-echo -e "\e[33Alternatively you can skip this step and build it manually\e[0m"
-
-az acr build --subscription ${AZURE_SUBSCRIPTION_ID} --registry ${AZURE_CONTAINER_REGISTRY_NAME} --image contosochatweb:latest ./src/web/
-web_image_name="${AZURE_CONTAINER_REGISTRY_NAME}.azurecr.io/contosochatweb:latest"
-az containerapp update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${WEBAPP_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --image ${web_image_name}
-az containerapp ingress update --subscription ${AZURE_SUBSCRIPTION_ID} --name ${WEBAPP_ACA_NAME} --resource-group ${AZURE_RESOURCE_GROUP} --target-port 3000
-

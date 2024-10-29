@@ -19,6 +19,9 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from azure.ai.inference.tracing import AIInferenceInstrumentor
+from opentelemetry import trace as oteltrace
+import contextlib
+from prompty.tracer import Tracer, PromptyTracer
 
 
 def setup_azure_monitor_exporters(conn_str: str):
@@ -87,12 +90,28 @@ def setup_otlp_traces_exporter(endpoint: str):
     handler.setFormatter(logging.Formatter("Python: %(message)s"))
     logging.getLogger().addHandler(handler)
 
+@contextlib.contextmanager
+def trace_span(name: str):    
+    tracer = oteltrace.get_tracer("prompty")    
+    with tracer.start_as_current_span(name, attributes={"task": name}) as span:        
+        def verbose_trace(key, value):            
+            if isinstance(value, dict):             
+                for k, v in value.items():                  
+                    verbose_trace(f"{key}.{k}", v)        
+            elif isinstance(value, (list, tuple)):
+                for index, item in enumerate(value):
+                    span.set_attribute(f"{index}", str(item))  
+            else:                
+                span.set_attribute(f"{key}", value)   
+        yield verbose_trace
 
 def setup_telemetry(app: FastAPI):
     settings.tracing_implementation = "OpenTelemetry"
     app_insights_conn_str = os.getenv("APPINSIGHTS_CONNECTIONSTRING")
     otel_exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
 
+    # Get prompty tracer
+    Tracer.add("prompty_span", trace_span)
     # Instrument AI Inference API
     AIInferenceInstrumentor().instrument()
 

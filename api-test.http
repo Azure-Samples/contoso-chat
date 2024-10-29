@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "customer_id":"2",
     "question":"Tell%20me%20about%20tents",
-    "chat_history": [],
+    "chat_history": [{"role": "user", "content": "Tell me about tents"}],
     "session_id": "550e8400-e29b-41d4-a716-446655440000"
 }
 

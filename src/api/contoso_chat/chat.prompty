@@ -21,6 +21,8 @@ inputs:
     type: object
   question:
     type: string
+  history:
+    type: array
 sample: ${file:chat.json}
 ---
 system:

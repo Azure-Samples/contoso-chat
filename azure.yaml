@@ -1,6 +1,19 @@
 name: contoso-chat-openai-prompty
 metadata:
   template: contoso-chat-openai-prompty@0.0.1
+services:
+  api:
+    project: ./src/api
+    language: python
+    host: containerapp
+    docker:
+      remoteBuild: true
+  web:
+    project: ./src/web
+    language: js
+    host: containerapp
+    docker:
+      remoteBuild: true
 hooks:
   postprovision:
     posix:
