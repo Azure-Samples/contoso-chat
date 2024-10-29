@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Aspire Dashboard",
+            "type": "shell",
+            "command": "./start-aspire-dashboard.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop Aspire Dashboard",
+            "type": "shell",
+            "command": "docker stop aspire-dashboard",
+            "problemMatcher": []
+        }
+    ]
+}

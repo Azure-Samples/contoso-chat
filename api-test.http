@@ -1,0 +1,23 @@
+post http://127.0.0.1:8000/api/create_response HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id":"2",
+    "question":"Tell%20me%20about%20tents",
+    "chat_history": [],
+    "session_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+
+###
+
+post http://127.0.0.1:8000/api/give_feedback HTTP/1.1
+Content-Type: application/json
+
+{
+    "responseId": "chatcmpl-TEST",
+    "feedback": 1,
+    "extra": {
+        "comment": "This was awesome",
+        "sentiment": "positive"
+    }
+}

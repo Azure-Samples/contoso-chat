@@ -39,6 +39,9 @@ if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($ope
 azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
 azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
 azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
+azd env set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED false
+azd env set OTEL_EXPORTER_OTLP_ENDPOINT http://localhost:4317
+
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values > .env
@@ -51,3 +54,12 @@ python -m pip install -r ./src/api/requirements.txt > $null
 Write-Host "Populating data ...."
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > $null
 jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > $null
+
+
+Write-Output  "Building contosochatweb:latest..."
+Write-Output "Warning: Building Frotend Image take a while, please be patient"
+Write-output "Alternatively you can skip this step and build it manually"
+az acr build --subscription $env:AZURE_SUBSCRIPTION_ID --registry $env:AZURE_CONTAINER_REGISTRY_NAME --image contosochatweb:latest ./src/web/
+$web_image_name = $env:AZURE_CONTAINER_REGISTRY_NAME + '.azurecr.io/contosochatweb:latest'
+az containerapp update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:WEBAPP_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --image $web_image_name
+az containerapp ingress update --subscription $env:AZURE_SUBSCRIPTION_ID --name $env:WEBAPP_ACA_NAME --resource-group $env:AZURE_RESOURCE_GROUP --target-port 3000

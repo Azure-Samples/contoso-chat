@@ -1,0 +1,1616 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "# Generative AI Application Insights (Preview)\r\n\r\n#### Use this dashboard to ensure your generative AI applications operate efficiently and reliably at scale. Get real-time insights into the performance metrics, usage patterns, and operational efficiency of your AI applications. Easily track data such as execution times, token consumption, and error rates across sessions, using detailed logs and visualizations to identify bottlenecks and optimize workflows.",
+        "style": "info"
+      },
+      "name": "Header-txt"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "fe04b060-a336-4f44-882a-f73613825d3a",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "type": 4,
+            "isRequired": true,
+            "isGlobal": true,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 300000
+                },
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
+            },
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": {
+              "durationMs": 7776000000
+            },
+            "label": "Time Range"
+          },
+          {
+            "id": "56e7925e-87ac-4da5-a28a-8d7a8c854195",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::1"
+              ],
+              "includeAll": false,
+              "showDefault": false
+            },
+            "defaultValue": "value::1",
+            "value": ""
+          },
+          {
+            "id": "910ca8e9-cacd-453a-8a2a-bafeb4463e06",
+            "version": "KqlParameterItem/1.0",
+            "name": "ApplicationInsights",
+            "label": "Application Insights",
+            "type": 5,
+            "isRequired": true,
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::1"
+              ],
+              "showDefault": false
+            },
+            "defaultValue": "value::1",
+            "value": ""
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 3"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "Please configure Application Insights instance for this Azure AI Studio Project/Hub to visualize telemetry signals captured from your application.",
+              "style": "error"
+            },
+            "name": "text - 1"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "bullets",
+              "links": [
+                {
+                  "id": "bb3396ca-7950-435e-9cd4-23a5ef165645",
+                  "cellValue": "{AzureAIHub}",
+                  "linkTarget": "Resource",
+                  "linkLabel": "Configure Application Insights",
+                  "subTarget": "properties",
+                  "style": "primary"
+                }
+              ]
+            },
+            "name": "links - 0"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "ApplicationInsights",
+        "comparison": "isEqualTo",
+        "value": "value::1"
+      },
+      "name": "group - 6"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "tabStyle": "bigger",
+        "links": [
+          {
+            "id": "e87fda11-f869-446a-abef-93700451ec07",
+            "cellValue": "page",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "overview",
+            "style": "link",
+            "tabWidth": "'200px'"
+          },
+          {
+            "id": "e0de13ba-7369-4090-82d2-11f3a8ef5328",
+            "cellValue": "page",
+            "linkTarget": "parameter",
+            "linkLabel": "Session Details",
+            "subTarget": "session",
+            "style": "link"
+          },
+          {
+            "id": "bf9a6476-5cea-4868-a118-af07995e0968",
+            "cellValue": "page",
+            "linkTarget": "parameter",
+            "linkLabel": "Azure OpenAI Resource",
+            "subTarget": "metrics",
+            "style": "link",
+            "tabWidth": "'200px'"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "ApplicationInsights",
+        "comparison": "isNotEqualTo",
+        "value": "value::1"
+      },
+      "name": "tab"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Token Usage",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 9,
+                  "content": {
+                    "version": "KqlParameterItem/1.0",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "parameters": [
+                      {
+                        "id": "208e5bfe-ad60-47fe-b451-46e426a1944f",
+                        "version": "KqlParameterItem/1.0",
+                        "name": "Model",
+                        "type": 2,
+                        "isRequired": true,
+                        "isGlobal": true,
+                        "multiSelect": true,
+                        "quote": "'",
+                        "delimiter": ",",
+                        "query": "dependencies\r\n| where isnotnull(customDimensions[\"gen_ai.system\"]) and isnotempty(customDimensions[\"gen_ai.response.model\"])\r\n| project response_model = customDimensions[\"gen_ai.response.model\"]\r\n| distinct tostring(response_model)",
+                        "crossComponentResources": [
+                          "{ApplicationInsights}"
+                        ],
+                        "typeSettings": {
+                          "additionalResourceOptions": [
+                            "value::all"
+                          ],
+                          "showDefault": false
+                        },
+                        "timeContext": {
+                          "durationMs": 0
+                        },
+                        "timeContextFromParameter": "TimeRange",
+                        "defaultValue": "value::all",
+                        "queryType": 0,
+                        "resourceType": "microsoft.insights/components",
+                        "value": [
+                          "gpt-35-turbo"
+                        ]
+                      }
+                    ],
+                    "style": "pills",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components"
+                  },
+                  "name": "parameters - 5"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and customDimensions[\"gen_ai.response.model\"] in ({Model})\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "prompt_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "numberFormatSettings": {
+                        "unit": 17,
+                        "options": {
+                          "style": "decimal",
+                          "useGrouping": true
+                        }
+                      },
+                      "tagText": "Prompt Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "summary-tile-1",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and customDimensions[\"gen_ai.response.model\"] in ({Model})\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "completion_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "numberFormatSettings": {
+                        "unit": 17,
+                        "options": {
+                          "style": "decimal",
+                          "useGrouping": false
+                        }
+                      },
+                      "tagText": "Completion Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "summary-tile-2",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and customDimensions[\"gen_ai.response.model\"] in ({Model})\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "numberFormatSettings": {
+                        "unit": 17,
+                        "options": {
+                          "style": "decimal",
+                          "useGrouping": true
+                        }
+                      },
+                      "tagText": "Total Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "summary-tile-3",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where isnotnull(customDimensions[\"gen_ai.system\"]) and customDimensions[\"gen_ai.response.model\"] in ({Model})\r\n| count",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {},
+                      "rightContent": {
+                        "columnMatch": "Count"
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "numberFormatSettings": {
+                        "unit": 17,
+                        "options": {
+                          "style": "decimal",
+                          "useGrouping": true
+                        }
+                      },
+                      "tagText": "Total Calls",
+                      "valueFontStyle": "xxLarge"
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "query - 4",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "dependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and customDimensions[\"gen_ai.response.model\"] in ({Model})\r\n| summarize \r\n    Prompt_Tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    Completion_Tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"])),\r\n    Total_Tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))\r\n    by bin(timestamp, 1h)\r\n| render linechart with (title=\"Token Usage Over Time\", ytitle=\"Token Count\", xtitle=\"Time\")",
+                    "size": 0,
+                    "title": "Prompt, Completion and Total Tokens(sum by hour)",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "linechart",
+                    "chartSettings": {
+                      "showLegend": true,
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Prompt_Tokens",
+                          "label": "Prompt Tokens"
+                        },
+                        {
+                          "seriesName": "Completion_Tokens",
+                          "label": "Completion Tokens"
+                        },
+                        {
+                          "seriesName": "Total_Tokens",
+                          "label": "Total Tokens"
+                        }
+                      ],
+                      "showDataPoints": true
+                    }
+                  },
+                  "name": "query - 5"
+                }
+              ]
+            },
+            "name": "token-usage-grp"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "User Feedback",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\"\r\n| extend FeedbackType = case(toint(customDimensions[\"gen_ai.evaluation.score\"]) == -1, \"Positive\", toint(customDimensions[\"gen_ai.evaluation.score\"]) == 1, \"Negative\", \"Unknown\")\r\n| summarize Count = count() by FeedbackType, timestamp\r\n| make-series Count=count() on timestamp from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by FeedbackType",
+                    "size": 0,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "linechart",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "FeedbackType",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "Count",
+                        "formatter": 12,
+                        "formatOptions": {
+                          "palette": "auto"
+                        }
+                      },
+                      "showBorder": true,
+                      "size": "auto"
+                    },
+                    "graphSettings": {
+                      "type": 0,
+                      "topContent": {
+                        "columnMatch": "FeedbackType",
+                        "formatter": 1
+                      },
+                      "centerContent": {
+                        "columnMatch": "Count",
+                        "formatter": 1,
+                        "numberFormat": {
+                          "unit": 17,
+                          "options": {
+                            "maximumSignificantDigits": 3,
+                            "maximumFractionDigits": 2
+                          }
+                        }
+                      }
+                    },
+                    "chartSettings": {
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Positive",
+                          "color": "lightBlue"
+                        },
+                        {
+                          "seriesName": "Negative",
+                          "color": "orange"
+                        }
+                      ],
+                      "showDataPoints": true
+                    }
+                  },
+                  "customWidth": "70",
+                  "name": "query - 3 - Copy",
+                  "styleSettings": {
+                    "margin": "50"
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\"\r\n| extend FeedbackType = case(toint(customDimensions[\"gen_ai.evaluation.score\"]) == -1, \"Positive\", toint(customDimensions[\"gen_ai.evaluation.score\"]) == 1, \"Negative\", \"Unknown\")\r\n| summarize Count = count() by FeedbackType",
+                    "size": 0,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "piechart",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "FeedbackType",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "Count",
+                        "formatter": 12,
+                        "formatOptions": {
+                          "palette": "auto"
+                        }
+                      },
+                      "showBorder": true,
+                      "size": "auto"
+                    },
+                    "chartSettings": {
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Positive",
+                          "color": "lightBlue"
+                        },
+                        {
+                          "seriesName": "Negative",
+                          "color": "orange"
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "30",
+                  "name": "query - 3"
+                }
+              ]
+            },
+            "name": "metric_tiles-grp"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Evaluation Metrics ",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.groundedness\"\r\n| summarize Count = count() by Score = toint(customDimensions[\"gen_ai.evaluation.score\"])\r\n| render barchart\r\n",
+                    "size": 0,
+                    "title": "Groundedness Scoring Scale",
+                    "color": "turquoise",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "unstackedbar",
+                    "graphSettings": {
+                      "type": 0
+                    },
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.coherence\"\r\n| summarize Count = count() by Score = toint(customDimensions[\"gen_ai.evaluation.score\"])\r\n| render barchart",
+                    "size": 0,
+                    "title": "Coherence Scoring Scale",
+                    "color": "turquoise",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false,
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Score",
+                          "color": "greenDark"
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4 - Copy"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.relevance\"\r\n| summarize Count = count() by Score = toint(customDimensions[\"gen_ai.evaluation.score\"])\r\n| render barchart",
+                    "size": 0,
+                    "title": "Relevance Scoring Scale",
+                    "color": "turquoise",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "chartSettings": {
+                      "xAxis": "Score",
+                      "yAxis": [
+                        "Count"
+                      ],
+                      "showMetrics": false,
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "Score",
+                          "color": "magenta"
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "33",
+                  "name": "query - 4 - Copy - Copy"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "traces\r\n| where customDimensions[\"event.name\"] in (\"gen_ai.evaluation.groundedness\", \"gen_ai.evaluation.coherence\", \"gen_ai.evaluation.relevance\")\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| summarize     \r\n    Groundedness = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.groundedness\"),\r\n    Coherence = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.coherence\"),\r\n    Relevance = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.relevance\")\r\n    by response_id, bin(timestamp, 1d)",
+                    "size": 0,
+                    "aggregation": 3,
+                    "title": "Evalauation Metrics (average score per day)",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "linechart",
+                    "chartSettings": {
+                      "showLegend": true,
+                      "showDataPoints": true
+                    }
+                  },
+                  "name": "query - 3"
+                }
+              ]
+            },
+            "name": "evaluation-metrics-grp"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Exceptions",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let bigWindow = exceptions\r\n| summarize makelist(problemId, 100000);\r\nlet data = exceptions\r\n| where timestamp {TimeRange};\r\ndata\r\n| extend IsNew = problemId !in (bigWindow)\r\n| where \"['New Failure Rate (%)'], ['Existing Failure Rate (%)']\" == \"['New Failure Rate (%)'], ['Existing Failure Rate (%)']\" or IsNew == true\r\n| make-series Count = count()  default = 0 on timestamp in range({TimeRange:start}, now(), {TimeRange:grain}) by ['Failure'] = iff(IsNew, 'New Failure', 'Existing Failure')",
+                    "size": 0,
+                    "color": "orangeDark",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "linechart",
+                    "chartSettings": {
+                      "showMetrics": false
+                    }
+                  },
+                  "name": "query - 1"
+                }
+              ]
+            },
+            "name": "group - 5"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Gen AI Spans \r\n\r\n### A request to an Generative AI is modeled as a Gen AI span in a trace. This sections captures Gen AI spans from your application and combines them with performance and evaluation metrics. To view the full trace that includes the span, click the \"Complete Trace\" link associated with the Gen AI span.\r\n\r\n",
+              "style": "upsell"
+            },
+            "name": "text - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let gen_ai_spans=(dependencies\r\n    | where isnotnull(customDimensions[\"gen_ai.system\"])\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        id,\r\n        operation_Id,\r\n        operation_ParentId,\r\n        duration,\r\n        performanceBucket,\r\n        response_id,\r\n        Complete_Trace = itemId,\r\n        timestamp,\r\n        success,\r\n        gen_ai_operation_name = customDimensions[\"gen_ai.operation.name\"],\r\n        gen_ai_response_id = customDimensions[\"gen_ai.response.id\"],\r\n        gen_ai_response_model = customDimensions[\"gen_ai.response.model\"],\r\n        gen_ai_usage_input_tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n        gen_ai_usage_output_tokens = customDimensions[\"gen_ai.usage.output_tokens\"]);\r\nlet gen_ai_events=(\r\n    traces\r\n    | where message in (\"gen_ai.choice\", \"gen_ai.user.message\", \"gen_ai.system.message\")\r\n    | project \r\n        id= operation_ParentId,\r\n        operation_Id,\r\n        operation_ParentId,\r\n        user_input = iff(message == \"gen_ai.user.message\", parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).content, \"\"),\r\n        system = iff(message == \"gen_ai.system.message\", parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).content, \"\"),\r\n        llm_response = iff(message == \"gen_ai.choice\", parse_json(tostring(parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).message)).content, \"\")\r\n    | summarize \r\n        operation_ParentId = any(operation_ParentId),\r\n        Input = maxif(user_input, user_input != \"\"),\r\n        System = maxif(system, system != \"\"),\r\n        Output = maxif(llm_response, llm_response != \"\")\r\n        by operation_Id, id);\r\nlet gen_ai_eval_events=(traces\r\n    | where customDimensions[\"event.name\"] in (\"gen_ai.evaluation.groundedness\", \"gen_ai.evaluation.coherence\", \"gen_ai.evaluation.relevance\", \"gen_ai.evaluation.user_feedback\")\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])    \r\n    | summarize \r\n        Groundedness = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.groundedness\"),\r\n        Coherence = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.coherence\"),\r\n        Relevance = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.relevance\"),\r\n        Feedback = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\")\r\n        by response_id);\r\ngen_ai_spans\r\n| join kind=inner (gen_ai_events) on id, operation_Id\r\n| join kind=leftouter (gen_ai_eval_events) on response_id\r\n| project\r\nTimestamp=timestamp,\r\n['Complete Trace']=Complete_Trace,\r\nStatus= iff(success==\"True\", strcat('✅ ', 'Success'), strcat('❌ ', 'Fail')),\r\n// id,\r\n// operation_Id,\r\n// operation_ParentId,\r\n// performanceBucket=performanceBucket,\r\nDuration=duration,\r\nInput,\r\nSystem,\r\nOutput,\r\nFeedback,\r\nGroundedness,\r\nCoherence,\r\nRelevance",
+              "size": 0,
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{ApplicationInsights}"
+              ],
+              "visualization": "table",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Complete Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "ExceptionDetails",
+                      "linkIsContextBlade": false
+                    }
+                  },
+                  {
+                    "columnMatch": "Duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "Complete_Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "Transaction",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "performanceBucket",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "redGreen"
+                    }
+                  }
+                ],
+                "sortBy": [
+                  {
+                    "itemKey": "Timestamp",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "Timestamp",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "name": "llm-request-query",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibilities": [
+        {
+          "parameterName": "page",
+          "comparison": "isEqualTo",
+          "value": "overview"
+        },
+        {
+          "parameterName": "ApplicationInsights",
+          "comparison": "isNotEqualTo",
+          "value": "value::1"
+        }
+      ],
+      "name": "overview"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Gen AI Sessions\r\n\r\n#### This view shows all Gen AI sessions. Click on a row to see session details or search the session using the Session ID in the dropdown below.\r\n#### Note: Session will show up here only when spans are instrumented wiht the span attribute \"session.id\"\r\n\r\n",
+              "style": "upsell"
+            },
+            "name": "text - 8"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{ApplicationInsights}"
+              ],
+              "parameters": [
+                {
+                  "id": "11d6d102-9cfc-4fa8-8e95-41ab2c465e5f",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "Session",
+                  "type": 2,
+                  "query": "dependencies\r\n| where isnotnull(customDimensions[\"session.id\"])\r\n| order by timestamp desc\r\n| project session_id = tostring(customDimensions.[\"session.id\"])\r\n| distinct session_id",
+                  "crossComponentResources": [
+                    "{ApplicationInsights}"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "TimeRange",
+                  "queryType": 0,
+                  "resourceType": "microsoft.insights/components",
+                  "value": null
+                }
+              ],
+              "style": "pills",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components"
+            },
+            "name": "parameters - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let session_spans_summary=(dependencies\r\n| where isnotnull(customDimensions[\"session.id\"])\r\n| summarize \r\n    StartTime = min(timestamp),\r\n    EndTime = max(timestamp),\r\n    Success = any(success), \r\n    TotalDuration = sum(duration),     \r\n    ClientCity = any(client_City), \r\n    ClientCountry = any(client_CountryOrRegion)\r\n    by SessionID = tostring(customDimensions[\"session.id\"])\r\n| project \r\n    [\"Session ID\"] = SessionID, \r\n    StartTime, \r\n    EndTime, \r\n    Success, \r\n    TotalDuration, \r\n    [\"Client City\"] = ClientCity, \r\n    [\"Client Country\"] = ClientCountry);\r\nlet session_spans=(dependencies\r\n| where isnotnull(customDimensions[\"session.id\"])\r\n| project [\"Session ID\"] = customDimensions[\"session.id\"],operation_Id);\r\nlet gen_ai_spans=(dependencies\r\n| where isnotnull(customDimensions[\"gen_ai.system\"])\r\n| summarize [\"Gen AI Calls\"] = count() by operation_Id);\r\nlet session_gen_ai_summary=(session_spans\r\n| join kind=inner (gen_ai_spans) on operation_Id\r\n| summarize \r\n    [\"Gen AI Calls\"] = sum([\"Gen AI Calls\"])\r\n    by [\"Session ID\"] = tostring([\"Session ID\"]));\r\nsession_spans_summary\r\n| join session_gen_ai_summary on [\"Session ID\"]\r\n|project-away ['Session ID1']",
+              "size": 0,
+              "timeContextFromParameter": "TimeRange",
+              "exportFieldName": "Session ID",
+              "exportParameterName": "Session",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{ApplicationInsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Session ID",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "CellDetails",
+                      "linkIsContextBlade": true
+                    }
+                  },
+                  {
+                    "columnMatch": "Duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  }
+                ],
+                "sortBy": [
+                  {
+                    "itemKey": "Gen AI Calls",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "Gen AI Calls",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "name": "query - 7"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Token Usage",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id in (ops_Id)\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "prompt_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Prompt Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "query - 10 - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\" \r\n    | project operation_Id    \r\n); \r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id in(ops_Id)\r\n| summarize \r\n    prompt_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"])),\r\n    completion_tokens = sum(toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "completion_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Completion Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "query - 10 - Copy - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where customDimensions[\"gen_ai.operation.name\"] == \"chat\"  and operation_Id in (ops_Id)\r\n| summarize \r\n    total_tokens = sum(toint(customDimensions[\"gen_ai.usage.input_tokens\"]) + toint(customDimensions[\"gen_ai.usage.output_tokens\"]))",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "tileSettings": {
+                      "titleContent": {
+                        "columnMatch": "total_tokens",
+                        "formatter": 1
+                      },
+                      "leftContent": {
+                        "columnMatch": "prompt_tokens",
+                        "formatter": 1
+                      },
+                      "rightContent": {
+                        "columnMatch": "completion_tokens",
+                        "formatter": 1
+                      },
+                      "showBorder": false
+                    },
+                    "statSettings": {
+                      "valueField": "total_tokens",
+                      "valueAggregation": "None",
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Total Tokens",
+                      "valueFontStyle": "xxLarge"
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong",
+                      "sizeSettings": "prompt_tokens",
+                      "sizeAggregation": "Sum",
+                      "legendMetric": "prompt_tokens",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "type": "heatmap",
+                        "colorAggregation": "Sum",
+                        "nodeColorField": "prompt_tokens",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "query - 10 - Copy - Copy - Copy",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\" \r\n    | project operation_Id\r\n);\r\ndependencies\r\n| where isnotnull(customDimensions[\"gen_ai.system\"]) and operation_Id in (ops_Id)\r\n| count",
+                    "size": 4,
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "stat",
+                    "statSettings": {
+                      "colorSettings": {
+                        "type": "static",
+                        "mode": "background",
+                        "heatmapPalette": "greenRed",
+                        "thresholdsGrid": []
+                      },
+                      "iconSettings": {
+                        "thresholdsGrid": []
+                      },
+                      "tagText": "Total Calls",
+                      "valueFontStyle": "xxLarge"
+                    }
+                  },
+                  "customWidth": "25",
+                  "name": "query - 3",
+                  "styleSettings": {
+                    "showBorder": true
+                  }
+                }
+              ]
+            },
+            "name": "title_group-session-grp"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "User Feedback",
+              "expandable": true,
+              "expanded": true,
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let ops_Id = (\r\n    dependencies\r\n    | where name == \"create_response\"\r\n    | where customDimensions[\"session.id\"] == \"{Session}\" \r\n    | project operation_Id\r\n);\r\nlet response_ids= (\r\n  dependencies\r\n    | where customDimensions[\"gen_ai.operation.name\"] == \"chat\" and operation_Id in (ops_Id)\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project gen_ai_response_id = customDimensions[\"gen_ai.response.id\"]\r\n);\r\ntraces\r\n| where customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\" and customDimensions[\"gen_ai.response.id\"] in (response_ids)\r\n| extend FeedbackType = case(toint(customDimensions[\"gen_ai.evaluation.score\"]) == -1, \"Positive\", toint(customDimensions[\"gen_ai.evaluation.score\"]) == 1, \"Negative\", \"Unknown\")\r\n| summarize Count = count() by FeedbackType",
+                    "size": 0,
+                    "noDataMessage": "No user feedback registered for this session",
+                    "timeContextFromParameter": "TimeRange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.insights/components",
+                    "crossComponentResources": [
+                      "{ApplicationInsights}"
+                    ],
+                    "visualization": "piechart"
+                  },
+                  "name": "query - 0"
+                }
+              ]
+            },
+            "name": "user_feedback_session_grp"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## All Gen AI Spans in this Session\r\n\r\n#### A request to an Generative AI is modeled as a Gen AI span in a trace. This sections captures Gen AI spans from your application for the selected session and combines them with performance and evaluation metrics.\r\n#### To view the full trace that includes the span, click the \"Complete Trace\" link associated with the Gen AI span.",
+              "style": "upsell"
+            },
+            "name": "text - 5"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\"\r\n    | project operation_Id);\r\ndependencies\r\n| where isnotnull(customDimensions[\"gen_ai.system\"]) and operation_Id  in (ops_Id) \r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| project\r\n    timestamp,\r\n    Operation = operation_Id,\r\n    Latency = performanceBucket,\r\n    Complete_Trace = itemId,\r\n    Input_Tokens = customDimensions[\"gen_ai.usage.input_tokens\"],\r\n    Output_Tokens = customDimensions[\"gen_ai.usage.output_tokens\"],\r\n    Model = customDimensions[\"gen_ai.response.model\"],\r\n    response_id\r\n| join kind=leftouter (\r\n    traces\r\n    | where customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"gen_ai.evaluation.score\"])\r\n) on response_id\r\n| join kind=leftouter (\r\ntraces\r\n| where customDimensions[\"event.name\"] in (\"gen_ai.evaluation.groundedness\", \"gen_ai.evaluation.coherence\", \"gen_ai.evaluation.relevance\")\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| summarize \r\n    groundedness = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.groundedness\"),\r\n    coherence = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.coherence\"),\r\n    relevance = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.relevance\")\r\nby response_id\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    Latency,\r\n    Complete_Trace,\r\n    Input_Tokens,\r\n    Output_Tokens,\r\n    Model, \r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance\r\n",
+              "size": 1,
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{ApplicationInsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Complete_Trace",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "transactionview",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  },
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "performanceBucket",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  }
+                ]
+              },
+              "sortBy": []
+            },
+            "name": "query - 2",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Detailed Gen AI Span Token View for this Session\r\n\r\n#### Detailed Gen AI Span Token View displays prompt tokens, systems tokens and completion tokens from all the Gen AI Spans under the same session flow.\r\n#### To view the full trace that includes the span, click the \"Complete Trace\" link associated with the Gen AI span.",
+              "style": "upsell"
+            },
+            "name": "text - 6"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let ops_Id = (\r\n    dependencies\r\n    | where isnotnull(customDimensions[\"session.id\"])\r\n    | where customDimensions[\"session.id\"] == \"{Session}\"\r\n    | project operation_Id);\r\nlet dep=(\r\ntraces\r\n| where message in (\"gen_ai.choice\", \"gen_ai.user.message\", \"gen_ai.system.message\") and operation_Id in (ops_Id)\r\n| project\r\n    operation_ParentId,    \r\n    timestamp, \r\n    role = message, \r\n    content = iff(\r\n        message == \"gen_ai.choice\", \r\n        parse_json(tostring(parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).message)).content, \r\n        parse_json(tostring(customDimensions[\"gen_ai.event.content\"])).content)\r\n| join kind=leftouter  (       \r\n    dependencies\r\n    | where isnotnull(customDimensions[\"gen_ai.system\"]) and operation_Id in(ops_Id)\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        id,\r\n        duration,\r\n        performanceBucket,\r\n        response_id,\r\n        Transaction = itemId,\r\n        timestamp,\r\n        gen_ai_operation_name = customDimensions[\"gen_ai.operation.name\"], \r\n        gen_ai_response_id = customDimensions[\"gen_ai.response.id\"], \r\n        gen_ai_response_model = customDimensions[\"gen_ai.response.model\"], \r\n        gen_ai_usage_input_tokens = customDimensions[\"gen_ai.usage.input_tokens\"], \r\n        gen_ai_usage_output_tokens = customDimensions[\"gen_ai.usage.output_tokens\"]\r\n) on $left.operation_ParentId == $right.id\r\n| project    \r\n    timestamp,   \r\n    role,\r\n    content,\r\n    performanceBucket,\r\n    duration,\r\n    Transaction,    \r\n    response_id,\r\n    gen_ai_operation_name,\r\n    gen_ai_response_id,\r\n    gen_ai_response_model,\r\n    gen_ai_usage_input_tokens,\r\n    gen_ai_usage_output_tokens\r\n);\r\ndep\r\n| join kind=leftouter (\r\n    traces\r\n    | where customDimensions[\"event.name\"] == \"gen_ai.evaluation.user_feedback\"\r\n    | extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n    | project\r\n        response_id,\r\n        feedback = tostring(customDimensions[\"gen_ai.evaluation.score\"])\r\n) on response_id\r\n| join kind=leftouter (\r\ntraces\r\n| where customDimensions[\"event.name\"] in (\"gen_ai.evaluation.groundedness\", \"gen_ai.evaluation.coherence\", \"gen_ai.evaluation.relevance\")\r\n| extend response_id = tostring(customDimensions[\"gen_ai.response.id\"])\r\n| summarize \r\n    groundedness = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.groundedness\"),\r\n    coherence = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.coherence\"),\r\n    relevance = maxif(todouble(customDimensions[\"gen_ai.evaluation.score\"]), customDimensions[\"event.name\"] == \"gen_ai.evaluation.relevance\")\r\nby response_id\r\n) on response_id\r\n| project\r\n    Timestamp=timestamp,\r\n    role,\r\n    content,\r\n    gen_ai_response_id,\r\n    gen_ai_response_model,\r\n    duration,\r\n    performanceBucket,\r\n    Transaction,    \r\n    gen_ai_operation_name,\r\n    gen_ai_usage_input_tokens,\r\n    gen_ai_usage_output_tokens,\r\n    Feedback=feedback,\r\n    Groundedness=groundedness,\r\n    Coherence=coherence,\r\n    Relevance=relevance",
+              "size": 2,
+              "timeContextFromParameter": "TimeRange",
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "crossComponentResources": [
+                "{ApplicationInsights}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "duration",
+                    "formatter": 4,
+                    "formatOptions": {
+                      "palette": "greenRed"
+                    }
+                  },
+                  {
+                    "columnMatch": "Transaction",
+                    "formatter": 7,
+                    "formatOptions": {
+                      "linkTarget": "DependencyDetails"
+                    }
+                  }
+                ],
+                "sortBy": [
+                  {
+                    "itemKey": "role",
+                    "sortOrder": 2
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "role",
+                  "sortOrder": 2
+                }
+              ]
+            },
+            "name": "query - 3"
+          }
+        ]
+      },
+      "conditionalVisibilities": [
+        {
+          "parameterName": "page",
+          "comparison": "isEqualTo",
+          "value": "session"
+        },
+        {
+          "parameterName": "ApplicationInsights",
+          "comparison": "isNotEqualTo",
+          "value": "value::1"
+        }
+      ],
+      "name": "session-drill",
+      "styleSettings": {
+        "showBorder": true
+      }
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "parameters": [
+                {
+                  "id": "ec40d045-e5aa-4153-a1b6-a54a0c8bb723",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "AIService",
+                  "label": "AI Service",
+                  "type": 5,
+                  "isRequired": true,
+                  "isGlobal": true,
+                  "query": "where type == 'microsoft.cognitiveservices/accounts' and kind == 'AIServices'\r\n| project id\r\n\r\n\r\n",
+                  "crossComponentResources": [
+                    "{Subscription}"
+                  ],
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::1"
+                    ],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 0
+                  },
+                  "timeContextFromParameter": "Duration",
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": "/subscriptions/305a29b6-bf81-47fb-b34f-993835c72868/resourceGroups/rg-testchat/providers/Microsoft.CognitiveServices/accounts/aoai-a4fwqeoqn4otw"
+                }
+              ],
+              "style": "pills",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "name": "parameters - 1"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook2d5cd501-7f10-4904-8c84-9f134dc70cb4",
+                    "version": "MetricsItem/2.0",
+                    "size": 0,
+                    "chartType": 2,
+                    "resourceType": "microsoft.cognitiveservices/accounts",
+                    "metricScope": 0,
+                    "resourceParameter": "AIService",
+                    "resourceIds": [
+                      "{AIService}"
+                    ],
+                    "timeContextFromParameter": "TimeRange",
+                    "timeContext": {
+                      "durationMs": 7776000000
+                    },
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-ProcessedPromptTokens",
+                        "aggregation": 1,
+                        "columnName": "PrompTokens"
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  Usage-GeneratedTokens",
+                        "aggregation": 1,
+                        "columnName": "CompletionTokens"
+                      }
+                    ],
+                    "title": "Token Usage",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "name": "metric - 0"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook818cf7f7-0201-4412-99d5-1037fc7c7651",
+                    "version": "MetricsItem/2.0",
+                    "size": 0,
+                    "chartType": 2,
+                    "resourceType": "microsoft.cognitiveservices/accounts",
+                    "metricScope": 0,
+                    "resourceParameter": "AIService",
+                    "resourceIds": [
+                      "{AIService}"
+                    ],
+                    "timeContextFromParameter": "TimeRange",
+                    "timeContext": {
+                      "durationMs": 7776000000
+                    },
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Cognitive Services  HTTP Requests-TotalCalls",
+                        "aggregation": 7
+                      }
+                    ],
+                    "title": "Request per Minute",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "metric - 1"
+                },
+                {
+                  "type": 10,
+                  "content": {
+                    "chartId": "workbook72994be4-328b-41e9-8076-0471666584ff",
+                    "version": "MetricsItem/2.0",
+                    "size": 0,
+                    "chartType": 2,
+                    "resourceType": "microsoft.cognitiveservices/accounts",
+                    "metricScope": 0,
+                    "resourceParameter": "AIService",
+                    "resourceIds": [
+                      "{AIService}"
+                    ],
+                    "timeContextFromParameter": "TimeRange",
+                    "timeContext": {
+                      "durationMs": 7776000000
+                    },
+                    "metrics": [
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAIRequests",
+                        "aggregation": 1
+                      },
+                      {
+                        "namespace": "microsoft.cognitiveservices/accounts",
+                        "metric": "microsoft.cognitiveservices/accounts-Azure OpenAI  HTTP Requests-AzureOpenAITimeToResponse",
+                        "aggregation": 4
+                      }
+                    ],
+                    "title": "Request vs Time to Respond",
+                    "gridSettings": {
+                      "rowLimit": 10000
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "metric - 2"
+                }
+              ]
+            },
+            "name": "metrics-tiles-grp"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "page",
+        "comparison": "isEqualTo",
+        "value": "metrics"
+      },
+      "name": "metrics-grp"
+    }
+  ],
+  "fallbackResourceIds": [ ],
+  "fromTemplateId": "community-Workbooks/Azure Machine Learning/AI Studio/AtResource",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}

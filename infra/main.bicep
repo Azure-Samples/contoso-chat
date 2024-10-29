@@ -99,6 +99,10 @@ param runningOnGh string = ''
 @description('Whether the deployment is running on Azure DevOps Pipeline')
 param runningOnAdo string = ''
 
+@description('Whether to enable content tracing for Azure AI Inference API')
+param azureai_inference_api_enable_content_tracing bool = false
+
+
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 
@@ -189,10 +193,11 @@ module containerApps 'core/host/container-apps.bicep' = {
     tags: tags
     containerAppsEnvironmentName: '${prefix}-containerapps-env'
     containerRegistryName: ai.outputs.containerRegistryName
-    logAnalyticsWorkspaceName: ai.outputs.logAnalyticsWorkspaceName
+    logAnalyticsWorkspaceName: ai.outputs.logAnalyticsWorkspaceName    
   }
 }
 
+// Deploy back-end web app
 module aca 'app/aca.bicep' = {
   name: 'aca'
   scope: resourceGroup
@@ -215,7 +220,24 @@ module aca 'app/aca.bicep' = {
     cosmosDatabaseName: cosmosDatabaseName
     cosmosContainerName: cosmosContainerName
     appinsights_Connectionstring: ai.outputs.applicationInsightsConnectionString
+    azureai_inference_api_enable_content_tracing: azureai_inference_api_enable_content_tracing
   }
+}
+
+// Deploy front-end web app
+module acaweb 'app/acaweb.bicep' = {
+  name: 'acaweb'
+  scope: resourceGroup
+  params: {
+    name: replace('${take(prefix, 19)}-webca', '--', '-')
+    location: location
+    tags: tags
+    identityName: managedIdentity.outputs.managedIdentityName
+    containerAppsEnvironmentName: containerApps.outputs.environmentName
+    containerRegistryName: containerApps.outputs.registryName
+    contosochatapiendpoint: aca.outputs.SERVICE_ACA_URI
+  }
+  dependsOn: [aca]
 }
 
 module aiSearchRole 'core/security/role.bicep' = {
@@ -309,6 +331,8 @@ output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
 output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
+output WEBAPP_ACA_NAME string = acaweb.outputs.WEBAPP_ACA_NAME
+output WEBAPP_ACA_URI string = acaweb.outputs.WEBAPP_ACA_URI
 output SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
 output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
 
