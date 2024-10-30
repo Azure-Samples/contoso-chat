@@ -1,8 +1,7 @@
 
 import { log } from "console";
 import { type NextRequest } from "next/server";
-const api_endpoint = process.env.CONTOSO_CHAT_API_ENDPOINT!;
-
+import { endpoint } from "../../../../constants";
 // TODO: Give this a better name than 'vnext'.
 
 
@@ -19,7 +18,7 @@ export async function POST(req: NextRequest) {
     log("Request body: ", request_body);
     log("Request body jsonify: ", JSON.stringify(request_body));
 
-    const response = await fetch(`${api_endpoint}/api/create_response`, {
+    const response = await fetch(`${endpoint}/api/create_response`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify(request_body),

@@ -1,4 +1,5 @@
 import { ChatTurn, GroundedMessage } from "./types";
+import { endpoint } from "../constants";
 
 export const sendGroundedMessage = async (
   turn: ChatTurn
@@ -38,7 +39,8 @@ export const sendGroundedMessage = async (
   return newTurn;
 };
 
-export const sendPromptFlowMessage = async (
+
+export const sendChatMessage = async (
   turn: ChatTurn,
   customerId: string = "4" // Sarah Lee is Customer 4
 ): Promise<ChatTurn> => {
@@ -51,7 +53,7 @@ export const sendPromptFlowMessage = async (
 
   console.log(body);
   
-  let response = await fetch("/api/create_response", {
+  let response =  await fetch(`${endpoint}/api/create_response`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

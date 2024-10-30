@@ -14,7 +14,7 @@ import { useSearchParams } from "next/navigation";
 import Video from "./video";
 import {
   sendGroundedMessage,
-  sendPromptFlowMessage,
+  sendChatMessage,
   sendVisualMessage,
 } from "@/lib/messaging";
 import { v4 } from "uuid";
@@ -71,7 +71,7 @@ export const Chat = () => {
       setChatType(ChatType.Visual);
     } else {
       setShowCamera(false);
-      setChatType(ChatType.PromptFlow);
+      setChatType(ChatType.Chat);
     }
   }, [searchParams]);
 
@@ -195,7 +195,7 @@ export const Chat = () => {
 
       sendVisualMessage(newTurn).then((responseTurn) => {
         const t1 = performance.now();
-        console.log(`sendPromptFlowMessage took ${t1 - t0} milliseconds.`);
+        console.log(`sendChatMessage took ${t1 - t0} milliseconds.`);
         dispatch({ type: "replace", payload: responseTurn });
       });
     } else {
@@ -203,10 +203,10 @@ export const Chat = () => {
       if (message === "") return;
       dispatch({ type: "add", payload: newTurn });
 
-      sendPromptFlowMessage(newTurn).then((responseTurn) => {
+      sendChatMessage(newTurn).then((responseTurn) => {
         setChatHistory([...responseTurn.chat_history])
         const t1 = performance.now();
-        console.log(`sendPromptFlowMessage took ${t1 - t0} milliseconds.`);
+        console.log(`sendChatMessage took ${t1 - t0} milliseconds.`);
         dispatch({ type: "replace", payload: responseTurn });
       });
     }

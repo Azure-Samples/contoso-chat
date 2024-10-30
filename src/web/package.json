@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.0.18",
     "ai": "^2.2.20",
     "clsx": "^2.0.0",
+    "dotenv": "^16.4.5",
     "eventsource-parser": "^1.1.1",
     "marked": "^9.1.4",
     "next": "14.0.0",
