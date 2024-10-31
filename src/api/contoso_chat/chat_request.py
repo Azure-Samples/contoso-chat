@@ -9,7 +9,7 @@ from azure.cosmos import CosmosClient
 
 from sys import argv
 import prompty
-import prompty.serverless
+import prompty.azure
 from prompty.tracer import trace, Tracer, console_tracer, PromptyTracer
 from dotenv import load_dotenv
 load_dotenv()
