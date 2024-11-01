@@ -108,7 +108,7 @@ To deploy and explore the sample, you will need:
 1. An active GitHub account - [Signup for a free account here](https://github.com/signup)
 1. Access to Azure OpenAI Services - [Learn about Limited Access here](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
 1. Access to Azure AI Search - [With Semantic Ranker](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview) (premiun feature)
-1. Available Quota for: `text-embedding-ada-002`, `gpt-35-turbo`. and `gpt-4`
+1. Available Quota for: `text-embedding-ada-002` and `gpt-4`
 
 We recommend deployments to `swedencentral` or `francecentral` as regions that can support all these models. In addition to the above, you will also need the ability to:
  - provision Azure Monitor (free tier)
@@ -314,7 +314,7 @@ The solution is deployed using the Azure Developer CLI. The `azd up` command eff
 
 ### Region Availability
 
-This template currently uses the following models: `gpt35-turbo`, `gpt-4` and `text-embedding-ada-002`, which may not be available in all Azure regions, or may lack sufficient quota for your subscription in supported regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
+This template currently uses the following models:`gpt-4` and `text-embedding-ada-002`, which may not be available in all Azure regions, or may lack sufficient quota for your subscription in supported regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
 
 **We recommend using `francecentral`**
 
@@ -322,7 +322,7 @@ This template currently uses the following models: `gpt35-turbo`, `gpt-4` and `t
 
 Pricing for services may vary by region and usage and exact costs are hard to determine. You can _estimate_ the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/) with these services:
 
-- Azure OpenAI - Standard tier, GPT-35-turbo and Ada models. [See Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
+- Azure OpenAI - Standard tier, gpt-4 and Ada models. [See Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 - Azure AI Search - Basic tier, Semantic Ranker enabled. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/search/)
 - Azure Cosmos DB for NoSQL - Serverless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/autoscale-provisioned/#pricing)
 - Azure Monitor - Serverless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)

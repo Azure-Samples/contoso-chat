@@ -66,7 +66,7 @@ For a Prompty file to run, we need to specify a generative AI model to use.
         azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
     ```
 
-    !!! info "Prompty will use the AZURE_OPENAI_CHAT_DEPLOYMENT from the `.env` file we created earlier to find and use the OpenAI endpoint we have already deployed. That file specifies the model to use as `gpt-35-turbo`."
+    !!! info "Prompty will use the AZURE_OPENAI_CHAT_DEPLOYMENT from the `.env` file we created earlier to find and use the OpenAI endpoint we have already deployed. That file specifies the model to use as `gpt-4`."
 
 ### 2. Edit Basic information
 

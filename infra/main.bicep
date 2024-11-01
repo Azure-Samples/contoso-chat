@@ -100,7 +100,6 @@ param runningOnGh string = ''
 param runningOnAdo string = ''
 
 @description('Whether to enable content tracing for Azure AI Inference API')
-param azureai_inference_api_enable_content_tracing bool = false
 
 
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
@@ -197,9 +196,9 @@ module containerApps 'core/host/container-apps.bicep' = {
   }
 }
 
-// Deploy back-end web app
-module aca 'app/aca.bicep' = {
-  name: 'aca'
+// Deploy back-end api app
+module api 'app/api.bicep' = {
+  name: 'api'
   scope: resourceGroup
   params: {
     name: replace('${take(prefix, 19)}-ca', '--', '-')
@@ -209,7 +208,7 @@ module aca 'app/aca.bicep' = {
     identityId: managedIdentity.outputs.managedIdentityClientId
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-35-turbo'
+    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-4'
     openAiEmbeddingDeploymentName: openAiEmbeddingDeploymentName
     openAiEndpoint: ai.outputs.openAiEndpoint
     openAiType: openAiType
@@ -220,13 +219,12 @@ module aca 'app/aca.bicep' = {
     cosmosDatabaseName: cosmosDatabaseName
     cosmosContainerName: cosmosContainerName
     appinsights_Connectionstring: ai.outputs.applicationInsightsConnectionString
-    azureai_inference_api_enable_content_tracing: azureai_inference_api_enable_content_tracing
   }
 }
 
 // Deploy front-end web app
-module acaweb 'app/acaweb.bicep' = {
-  name: 'acaweb'
+module web 'app/web.bicep' = {
+  name: 'web'
   scope: resourceGroup
   params: {
     name: replace('${take(prefix, 19)}-webca', '--', '-')
@@ -235,9 +233,9 @@ module acaweb 'app/acaweb.bicep' = {
     identityName: managedIdentity.outputs.managedIdentityName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    contosochatapiendpoint: aca.outputs.SERVICE_ACA_URI
+    contosochatapiendpoint: api.outputs.SERVICE_ACA_URI
   }
-  dependsOn: [aca]
+  dependsOn: [api]
 }
 
 module aiSearchRole 'core/security/role.bicep' = {
@@ -330,11 +328,11 @@ output AZURE_OPENAI_NAME string = ai.outputs.openAiName
 output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
 
-output SERVICE_ACA_NAME string = aca.outputs.SERVICE_ACA_NAME
-output WEBAPP_ACA_NAME string = acaweb.outputs.WEBAPP_ACA_NAME
-output WEBAPP_ACA_URI string = acaweb.outputs.WEBAPP_ACA_URI
-output SERVICE_ACA_URI string = aca.outputs.SERVICE_ACA_URI
-output SERVICE_ACA_IMAGE_NAME string = aca.outputs.SERVICE_ACA_IMAGE_NAME
+output SERVICE_ACA_NAME string = api.outputs.SERVICE_ACA_NAME
+output WEBAPP_ACA_NAME string = web.outputs.WEBAPP_ACA_NAME
+output WEBAPP_ACA_URI string = web.outputs.WEBAPP_ACA_URI
+output SERVICE_ACA_URI string = api.outputs.SERVICE_ACA_URI
+output SERVICE_ACA_IMAGE_NAME string = api.outputs.SERVICE_ACA_IMAGE_NAME
 
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.registryLoginServer

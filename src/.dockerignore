@@ -1,3 +1,10 @@
 .git*
 .venv/
 **/*.pyc
+node_modules
+dist
+# from web
+**/.devcontainer
+**/build
+**/node_modules
+README.md

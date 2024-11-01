@@ -6,7 +6,7 @@ param identityName string
 param identityId string
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param serviceName string = 'aca'
+param serviceName string = 'api'
 param openAiDeploymentName string
 param openAiEndpoint string
 param openAiApiVersion string
@@ -18,7 +18,6 @@ param cosmosContainerName string
 param aiSearchEndpoint string
 param aiSearchIndexName string
 param appinsights_Connectionstring string
-param azureai_inference_api_enable_content_tracing bool = false
 
 
 module app '../core/host/container-app-upsert.bicep' = {
@@ -79,10 +78,6 @@ module app '../core/host/container-app-upsert.bicep' = {
       {
         name: 'APPINSIGHTS_CONNECTIONSTRING'
         value: appinsights_Connectionstring
-      }
-      {
-        name: 'AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED'
-        value: azureai_inference_api_enable_content_tracing
       }
     ]
     targetPort: 80

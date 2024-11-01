@@ -5,7 +5,7 @@ param tags object = {}
 param identityName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param serviceName string = 'acaweb'
+param serviceName string = 'web'
 param contosochatapiendpoint string
 
 module webapp '../core/host/container-app-upsert.bicep' = {

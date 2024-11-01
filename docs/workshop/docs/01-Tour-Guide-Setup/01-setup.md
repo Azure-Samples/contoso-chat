@@ -119,7 +119,7 @@ GitHub Codespaces will be our development environment for this workshop. Let's l
 
 1. Under "Shared Resources" in the left pane, **click** `Deployments`. The right pane should show two `*-connection` groups. **Check:** 4 models are listed under each connection. 
 
-    !!! info "The Model Deployments section lists Generative AI models deployed to this Hub. For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
+    !!! info "The Model Deployments section lists Generative AI models deployed to this Hub. For this application, we will use the chat completion models `gpt-4`, and the embedding model `text-embedding-ada-002`." 
 
 **✅ | CONGRATULATIONS!** - Your Azure AI Project is ready!
 

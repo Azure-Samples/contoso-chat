@@ -63,7 +63,7 @@ def execute_query(query, timespan_days):
 def get_genaispans(timespan_days, interaction_count):
     query = f"""
     AppDependencies
-    | where isnotnull(Properties["gen_ai.system"]) and Properties["gen_ai.response.model"] == "gpt-35-turbo"
+    | where isnotnull(Properties["gen_ai.system"]) and Properties["gen_ai.response.model"] == "gpt-4"
     | order by TimeGenerated desc
     | take {interaction_count}
     | project OperationId, Id, Properties["gen_ai.response.id"]

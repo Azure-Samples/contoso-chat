@@ -16,7 +16,7 @@ fi
 # Set additional environment variables expected by app
 # TODO: Standardize these and remove need for setting here
 azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
-azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
+azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-4
 azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
 azd env set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED false
 azd env set OTEL_EXPORTER_OTLP_ENDPOINT http://localhost:4317

@@ -21,7 +21,7 @@ async function getData(): Promise<Product[]> {
 
 export async function POST(request: NextRequest) {
   const messages: ChatMessage[] = await request.json();
-  const deployment_id = "gpt-35-turbo";
+  const deployment_id = "gpt-4";
   const grounded_uri = `${aiservicesendpoint}openai/deployments/${deployment_id}/extensions/chat/completions?api-version=2023-08-01-preview`;
 
   const headers = {

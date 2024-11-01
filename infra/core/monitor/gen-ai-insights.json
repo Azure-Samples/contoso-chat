@@ -252,7 +252,7 @@
                         "queryType": 0,
                         "resourceType": "microsoft.insights/components",
                         "value": [
-                          "gpt-35-turbo"
+                          "gpt-4"
                         ]
                       }
                     ],
