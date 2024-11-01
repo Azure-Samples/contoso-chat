@@ -17,32 +17,41 @@ description: Build, evaluate, and deploy, a RAG-based retail copilot that respon
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
-> [!WARNING]  
-> **This sample is being actively updated at present and make have breaking changes**. We are refactoring the code to use new Azure AI platform features and moving deployment from Azure AI Studio to Azure Container Apps. We will remove this notice once the migration is complete. Till then, please pause on submitting new issues as codebase is changing.
->
-> **Some of the features used in this repository are in preview.** Preview versions are provided without a service level agreement, and they are not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/).**
-
 
 # Contoso Chat: Retail RAG Copilot with Azure AI Studio and Prompty
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
 
-
 ## Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
+- [Features](#features) · [Architecture Diagram](#architecture-diagram) 
 - [Pre-Requisites](#pre-requisites)
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Testing](#testing)
+- [Getting Started](#getting-started) 
+    - [GitHub Codespaces](#github-codespaces) 
+    - [VS Code Dev Containers](#vs-code-dev-containers) 
+    - [Local Environment](#local-environment) 
+- [Development](#development) 
+- [Testing](#testing) 
 - [Deployment](#deployment)
-- [Costs](#costs)
-- [Security Guidelines](#security-guidelines)
-- [Resources](#resources)
-- [Code of Conduct](#code-of-conduct)
-- [Responsible AI Guidelines](#responsible-ai-guidelines)
+- [Guidance](#guidance) - [Region Availability](#region-availability) · [Costs](#costs) · [Security](#security)
+- [Workshop](#workshop) 🆕 · [Versions](#versions)
+- [Resources](#resources) · [Code of Conduct](#code-of-conduct)
+· [Responsible AI Guidelines](#responsible-ai-guidelines)
+
+
+## Important Security Notice 
+
+This template, the application code and configuration it contains, has been built to showcase Microsoft Azure specific services and tools. We strongly advise our customers not to make this code part of their production environments without implementing or enabling additional security features.  
+
+For a more comprehensive list of best practices and security recommendations for Intelligent Applications, visit our [official documentation](https://learn.microsoft.com/azure/developer/ai/get-started-securing-your-ai-app).
+
+> [!WARNING]  
+>
+> **Some of the features used in this repository are in preview.** Preview versions are provided without a service level agreement, and they are not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/).
+
+**Sample application code is included in this project**. You can use or modify this app code or you can rip it out and include your own.
 
 ---
 
@@ -52,7 +61,7 @@ _Contoso Outdoor_ is an online retailer specializing in hiking and camping equip
 
 ![Contoso Outdoor](./docs/img/app-scenario-ui.png)
 
-This sample implements _Contoso Chat_ - a retail copilot solution for Contoso Outdoor that uses a _retrieval augmented generation_ design pattern to ground chatbot responses in the retailer's product and customer data. Customers can now ask questions from the website in natural language, and get relevant responses along with potential recommendations based on their purchase history - with responsible AI practices to ensure response quality and safety.
+This sample implements _Contoso Chat_ - a retail copilot solution for Contoso Outdoor that uses a _retrieval augmented generation_ design pattern to ground chatbot responses in the retailer's product and customer data. Customers can ask questions from the website in natural language, and get relevant responses with potential recommendations based on their purchase history - with responsible AI practices to ensure response quality and safety.
 
 ![Contoso Chat](./docs/img/app-scenario-ai.png)
 
@@ -85,22 +94,6 @@ It also comes with:
 ### Architecture Diagram 
 ![Architecture](./docs/img/arch-contoso-retail-aca.png)
 
-### Demo Video
-
-(In Planning) - Get an intuitive sense for how simple it can be to go from template discovery, to codespaces launch, to application deployment with `azd up`. Watch this space for a demo video.
-
-### Versions
-
-The Contoso Chat sample has undergone numerous architecture and tooling changes since its first version back in 2023. The table below links to legacy versions for awareness only. **We recommend all users start with the latest version to leverage the latest tools and practices**.
-
-> | Version | Description |
-> |:---|:---|
-> | v0 : [#cc2e808](https://github.com/Azure-Samples/contoso-chat/tree/cc2e808eee29768093866cf77a16e8867adbaa9c) | MSAITour 2023-24 (dag-flow, jnja template) - Skillable Lab |
-> | v1 : [msbuild-lab322](https://github.com/Azure-Samples/contoso-chat/tree/msbuild-lab322) | MSBuild 2024 (dag-flow, jnja template) - Skillable Lab |
-> | v2 : [raghack-24](https://github.com/Azure-Samples/contoso-chat/tree/raghack-24) | RAG Hack 2024 (flex-flow, prompty asset) - AZD Template |
-> | v3 : [main](https://github.com/Azure-Samples/contoso-chat/tree/raghack-24)  🆕| MSAITour 2024-25 (prompty asset, ACA)- AZD Template |
-> | | |
-
 ## Pre-requisites
 
 To deploy and explore the sample, you will need:
@@ -132,56 +125,62 @@ You have three options for setting up your development environment:
 
 **We recommend going with GitHub Codespaces** for the fastest start and lowest maintenance overheads. Pick one option below - click to expand the section and view the details.
 
-<details>
-<summary> 1️⃣ | Quickstart with GitHub Codespaces </summary>
+### GitHub Codespaces
 
-1. Fork this repository to your personal GitHub account
-1. Click the green `Code` button in your fork of the repo
-1. Select the `Codespaces` tab and click `Create new codespaces ...`
-1. You should see: a new browser tab launch with a VS Code IDE
-1. Wait till Codespaces is ready - VS Code terminal has active cursor.
-1. ✅ | **Congratulations!** - Your Codespaces environment is ready!
+1. You can run this template virtually by using GitHub Codespaces. Click this button to open a web-based VS Code instance in your browser:
 
-</details>
+    [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 
-<details>
-<summary> 2️⃣ | Get Started with Docker Desktop </summary>
+1. Once the codespaces environment is ready (this can take several minutes), open a new terminal in that VS Code instance - and proceed to the [Development](#development) step.
 
-1. Install VS Code (with Dev Containers Extension) to your local device
-1. Install Docker Desktop to your local device - and start the daemon
-1. Fork this repository to your personal GitHub account
-1. Clone the fork to your local device - open with Visual Studio Code
-1. If Dev Containers Extension installed - you see: "Reopen in Container" prompt
-1. Else [read Dev Containers Documentation](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) - to launch it manually
-1. Wait till the Visual Studio Code environment is ready - cursor is active.
-1. ✅ | **Congratulations!** - Your Docker Desktop environment is ready!
+### VS Code Dev Containers
 
-</details>
+A related option is to use VS Code Dev Containers, which will open the project in your _local Visual Studio Code editor_ using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
 
-<details>
-<summary> 3️⃣ | Get Started with Manual Setup </summary>
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop) (if not installed), then start it.
+1. Open the project in your local VS Code by clicking the button below:
+   
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
 
-1. Verify you have Python 3 installed on your machine
-1. Install dependencies with `pip install -r src/api/requirements.txt`
-1. Install the [Azure Developer CLI](https://aka.ms/install-azd) for your OS
-1. Install the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) for your OS
-1. Verify that all required tools are installed and active:
+1. Once the VS Code window shows the project files (this can take several minutes), open a new terminal in that VS Code instance - and proceed to the [Development](#development) step.
+
+### Local environment
+
+1. **Install the required tools** in your local device:
+    - [Azure Developer CLI (azd)](https://aka.ms/install-azd)
+    - [Python 3.10+](https://www.python.org/downloads/)
+    - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+    - [Git](https://git-scm.com/downloads)
+
+    **Note for Windows users:** If you are _not_ using a container to run this sample, note that our post-provisioning hooks make use of shell scripts. While we update scripts for different local device environments, we recommend using [git bash](https://gitforwindows.org/) to run samples correctly.
+
+1. **Initialize the project** in your local device:
+    - Create a new folder `contoso-chat` and `cd` into it
+    - Run this command to download project template. Note that this command will initialize a git repository, so you do not need to clone this repository.
+        ```bash
+        azd init -t contoso-chat-openai-prompty
+        ```
+1. **Install dependencies** for the project, manually. Note that this is done for you automatically if you use the dev container options above.
     ```bash
-    az version
-    azd version
-    prompty --version
-    python --version
+        cd src/api
+        pip install -r requirements.txt
     ```
 
-</details>
+You can now proceed to the next step - [Development](#development) - where we will provision the required Azure infrastructure and deploy the application from the template using `azd`.
 
-<br/>
-
-Once you have set up the development environment, it's time to get started with the _development_ workflow by first provisioning the required Azure infrastructure, then deploying the application from the template.
 
 ## Development
 
-Regardless of the setup route you chose, you should at this point have a _Visual Studio Code_ IDE running, with the required tools and package dependencies met in the associated dev environment.
+Once you've completed the setup the project (using [Codespaces](#github-codespaces), [Dev Containers](#vs-code-dev-containers), or [local environment](#local-environment)) you should now have a Visual Studio Code editor open, with the project files loaded, and a terminal open for running commands. Let's verify that all required tools are installed.
+
+```bash
+az version
+azd version
+prompty --version
+python --version
+```
+
+We can now proceed with next steps - click to expand for detailed instructions.
 
 <details>
 <summary> 1️⃣ | Authenticate With Azure </summary>
@@ -191,11 +190,13 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     ```bash
     az login --use-device-code
     ```
-1. Now authenticate with Azure Developer CLI in the same terminal. Complete the auth workflow as guided. You should see: **Logged in on Azure.**
+1. Now authenticate with Azure Developer CLI in the same terminal. Complete the auth workflow as guided. 
 
     ```bash
-    azd auth login
+    azd auth login --use-device-code
     ```
+1. You should see: **Logged in on Azure.** This will create a folder under `.azure/` in your project to store the configuration for this deployment. You may have multiple azd environments if desired.
+
 </details>
 
 <details>
@@ -206,10 +207,7 @@ Regardless of the setup route you chose, you should at this point have a _Visual
     ```bash
     azd up
     ```
-1. The command will ask for an `environment name`, a `location` for deployment and the `subscription` you wish to use for this purpose.
-    - The environment name maps to `rg-ENVNAME` as the resource group created
-    - The location should be `swedencentral` or `francecentral` for model quota
-    - The subscription should be an active subscription meeting pre-requistes
+1. You will be asked for  a _subscription_ for provisioning resources, an _environment name_ that maps to the resource group, and a _location_ for deployment. Refer to the [Region Availability](#region-availability) guidance to select the region that has the desired models and quota available.
 1. The `azd up` command can take 15-20 minutes to complete. Successful completion sees a **`SUCCESS: ...`** messages posted to the console. We can now validate the outcomes.
 </details>
 
@@ -306,7 +304,15 @@ The Prompty tooling also has support for built-in _tracing_ for observability. L
 
 The solution is deployed using the Azure Developer CLI. The `azd up` command effectively calls `azd provision` and then `azd deploy` - allowing you to provision infrastructure and deploy the application with a single command. Subsequent calls to `azd up` (e.g., ,after making changes to the application) should be faster, re-deploying the application and updating infrastructure provisioning only if required. You can then test the deployed endpoint as described earlier.
 
-## Costs
+## Guidance
+
+### Region Availability
+
+This template currently uses the following models: `gpt35-turbo`, `gpt-4` and `text-embedding-ada-002`, which may not be available in all Azure regions, or may lack sufficient quota for your subscription in supported regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
+
+**We recommend using `francecentral`**
+
+### Costs
 
 Pricing for services may vary by region and usage and exact costs are hard to determine. You can _estimate_ the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/) with these services:
 
@@ -317,16 +323,35 @@ Pricing for services may vary by region and usage and exact costs are hard to de
 - Azure Container Apps - Severless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/container-apps/)
 
 
-## Security Guidelines
+### Security
 
 This template uses [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for authentication with key Azure services including Azure OpenAI, Azure AI Search, and Azure Cosmos DB. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. This also removes the need for developers to manage these credentials themselves and reduces their complexity.
 
 Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repo.
 
+## Workshop 
+
+The sample has a `docs/workshop` folder with step-by-step guidance for developers, to help you deconstruct the codebase, and understand how to to provision, ideate, build, evaluate, and deploy, the application yourself, with your own data. 
+ - The workshop may be offered as an _instructor-guided option_ (e.g., on [Microsoft AI Tour](https://aitour.microsoft.com))
+ - The workshop can be completed at home as a **self-paced lab** with your own subscription.
+
+### Lab Guide
+
+1. [View Workshop Online](https://aka.ms/aitour/contoso-chat/workshop) - view a pre-built workshop version in your browser
+1. **View Workshop Locally** - The workshop is built using Mkdocs. To preview it locally, 
+    - install mkdocs: `pip install mkdocs-material`
+    - switch to folder: `cd docs/workshop`
+    - launch preview: `mkdocs serve` 
+    - open browser to the preview URL specified
+
+Have issues or questions about the workshop? Submit [a new issue](https://github.com/Azure-Samples/contoso-chat/issues/new) with a `documentation` tag.
+
+
 ## Resources
 
 1. [Prompty Documentation](https://prompty.ai)
 1. [Azure AI Studio Documentation](https://aka.ms/aistudio)
+1. [Develop AI Apps using Azure AI Services](https://aka.ms/ai-apps-docs)
 1. [Azure AI Templates with Azure Developer CLI](https://aka.ms/ai-studio/azd-templates)
 
 

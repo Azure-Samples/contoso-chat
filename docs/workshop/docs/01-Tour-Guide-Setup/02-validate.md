@@ -40,7 +40,7 @@ prompty --version
 fastapi --version
 ```
 
-!!! tip "These tools have been installed into the GitHub CodeSpaces dev container for you. If you want to run this workshop in another environment like your dekstop PC, you will have to install them first."
+!!! tip "These tools have been installed into the GitHub CodeSpaces dev container for you. If you want to run this workshop in another environment like your desktop PC, you will have to install them first."
 
 ## 2. Authenticate with Azure
 
@@ -56,13 +56,13 @@ From the VS Code Online Terminal pane (in Tab 2️⃣):
 
 1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
 
-1. Select the account with Username and from Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab.
+1. Select the account with the Username shown in the Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab
 
 1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
 
 1. You also need to log into the Azure Developer CLI, `azd`. Enter the command below at the terminal, and follow the same process to copy the code, select the account, and close the tab.
 ```
-azd auth login
+azd auth login --use-device-code
 ```
     - You won't need to enter the password again. Simply select your Skillable Lab account.
 
