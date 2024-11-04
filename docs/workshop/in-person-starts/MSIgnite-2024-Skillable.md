@@ -7,10 +7,10 @@ This file is dynamically retrieved and used by the Skillable VM as the Instructi
 
 This is a 75-minute instructor-led workshop session at Microsoft Ignite 2024. You must [register](https://ignite.microsoft.com/sessions/LAB401?source=sessions) for an available session, to attend in person.
 
-_In this workshop, you will learn to build, evaluate, and deploy, a custom retail copilot code-first on Azure AI. We will use a Retrieval Augmented Generation (RAG) design pattern to ground copilot responses in retailer data, to improve application quality_.
+_You will learn to build, evaluate, and deploy, a custom retail copilot code-first on Azure AI - using the Retrieval Augmented Generation (RAG) design pattern to ground copilot responses in retailer data_.
 
 
-**‼️ -- DO NOT CLOSE THIS WINDOW -- ‼️*. <br/> Closing this window will end your lab prematurely. It is ok to minimize this window so you can return to it later when required.
+**‼️ -- DO NOT CLOSE THIS WINDOW -- ‼️** <br/> Closing this window will end your lab prematurely. It is ok to minimize this window so you can return to it later when required.
 
 ---
 
@@ -18,7 +18,7 @@ _In this workshop, you will learn to build, evaluate, and deploy, a custom retai
 
 **Instructions Link:** ++https://aka.ms/aitour/contoso-chat/workshop++
 
-The lab instructions are available as an interactive website at the link above. To get started:
+The lab instructions are available at the link above. To get started:
 1. Open a new incognito (private) browser window on your workstation
 1. Copy the link above into the browser address bar and navigate to it.
 1. Start from the **Setup** section to make best use of your time.
