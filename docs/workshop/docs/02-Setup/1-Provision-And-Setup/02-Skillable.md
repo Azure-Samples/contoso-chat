@@ -80,6 +80,7 @@ The Codespaces is running on the original Azure Samples repo. Let's create a for
     ``` title="Tip: Click the icon at far right to copy text"
     forking sample to my profile
     ```
+1. Accept the default ("Yes") in the "There are no staged .." pop-up dialog 
 1. 
 
 
