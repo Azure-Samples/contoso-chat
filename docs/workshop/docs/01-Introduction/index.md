@@ -1,8 +1,6 @@
 # Introduction
 
-!!! warning "In-Venue Attendees: You only have 60-75 mins for this lab! [Jump to Setup now to save time!](./../02-Setup/1-Setup/index.md)"   
-
----
+!!! warning "In-Venue Attendees: You have less than 75 mins to complete the lab! [Jump to Provision & Setup!](./../02-Setup/1-Provision-And-Setup/02-Skillable/)"   
 
 The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI. By the end of the workshop, you will learn to:
 

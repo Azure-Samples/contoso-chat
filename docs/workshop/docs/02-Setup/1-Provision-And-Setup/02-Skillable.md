@@ -1,40 +1,48 @@
 # B. Skillable-Based 
 
-The instructor-led sessions use [Skillable](https://skillable.com), a _lab-on-demand_ platform with a built-in Azure subscription, that pre-provisions the infrastructure for the lab to save you time. 
+!!! warning "If you are are NOT in an instructor-led session, use the [Self-Guided Setup](./01-Self-Guided.md) instead!"
 
+---
 
-??? info "STEP 1: Launch the Skillable VM (expand for details)"
+The instructor-led sessions use [Skillable](https://skillable.com), a _lab-on-demand_ platform with a built-in Azure subscription, that pre-provisions the infrastructure for the lab to save you time. Your instructor should provide you a link or QR code for the Skillable Lab at the start of your session.
 
-    _If you are currently viewing this workshop guide as part of an instructor-guided session, you have probably already completed this step and can move to STEP 2. Otherwise, please do complete the steps below now_
+## 1. Launch Skillable VM
+
+You may have completed this step in-venue, with instructor guidance. If not, please expand the section below to complete the task now. At the end of this step you should have:
+
+- [X] The Skillable VM tab open, with the Azure subscription details shown.
+- [X] The Skillable countdown timer visible, with start time of 1h 15 mins.
+- [X] The instruction guide open, with this section in focus.
+
+??? info "Browser Tab 1️ - Skillable VM"
+
+    The lab instructor should have shared a Skillable Lab link (URL or QR Code).
+
+    - Open the browser and navigate to the link - _verify the lab title is right_.
+    - Click the **Launch** button - _wait till the page completes loading_.
+        - (Left) You will see a login screen - _we can ignore this for now_
+        - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
+        - (Right) You should see an instruction pane - _we'll validate this, next_
+    - Review the instruction pane details:
+        - Check the lab title - should be _Build a Retail Copilot Code-First on Auzre AI_
+        - Check the Azure subscription - should have _username & password_ details filled in
+        - Check the Workshop guide link - should open to a hosted version of this guide.
+     
+    **Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
 
     ---
 
-    1. The lab instructor should have shared a Skillable Lab link (URL or QR Code).
-        - Open your browser and navigate to this link in a new tab.
-        - You should see a **Launch** button - click that now.
-        - You should see a new window open with a loading indicator - wait till ready.
-            - You should see a login screen (left) - we can ignore this for now
-            - You should see an instruction pane (right) - we'll explore this next
-            - You should see a countdown timer (top right) - it should have 1hr 15 mins. 
-        - Review the instruction pane
-            - You should see a lab title - _Build a Retail Copilot Code-First on Auzre AI_
-            - You should see an Azure subscription - Both username & password should be given
-            - You should see a workshop guide link - open it in a new tab (you get _this_ site)
-    2. Leave the Skillable tab open in your browser
-        - We'll use the Azure credential in the next step
-        - We'll revisit it at the end for the teardown step
-        - Use it to keep track of remaining time for your lab
-
-    ---
-
-    ✅ **CONGRATULATIONS!** | Your Skillable VM tab is active!
+    ✅ **CONGRATULATIONS!** | You setup the Skillable VM tab!
 
 
-??? info "STEP 3: Launch GitHub Codespaces"
+## 2. Launch GitHub Codespaces
 
-    The **WRK550 Lab** requires a Python development runtime (with package dependencies), Visual Studio Code (with specific extensions) and Azure CLI tooling - before we can begin building. The sample comes pre-configured with a [`devcontainer.json`](https://containers.dev), allowing us to get a **pre-built development environment** using GitHub Codespaces, with no manual effort required.
+Our development environment uses a Visual Studio Code editor with a Python runtime. The Contoso Chat sample repository is instrumented with a [dev container](https://containers.dev) which specifies all required tools and dependencies. At the end of this step you should have:
 
-    _In this section, we'll fork the sample repo to our personal profiles - then launch GitHub Codespaces to activate that environment with a Visual Studio Code editor, right in the browser_.
+- [X] Forked the sample repo to your personal GitHub profile.
+- [X] Launched GitHub Codespaces to get the pre-built dev environment.
+
+??? info "Browser Tab 2 - GitHub Codespaces"
 
     ### 2.1 Open GitHub in Tab 1️⃣
 

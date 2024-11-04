@@ -2,18 +2,22 @@
 
 ![Dev Workflow](./../../img/workshop-developer-flow.png)
 
-In this section, we'll **Provision** our infrastructure, **Setup** our development environment, and validate that everything is ready for us to move to the ideation stage.
+To get started building our custom copilot, we need to:
+
+ - **PROVISION** Azure infrastructure with the resources needed for our application architecture
+ - **SETUP** our development environment and configure it to work with the infrastructure
+ - **VALIDATE** that setup completed, before we dive into the ideation phase.
 
 ---
 
 === "Self-Guided"
 
-    Complete the [Self-guided Setup](01-Self-Guided.md) section. This requires you to complete the infrastructure provisioning step with your own subscription, which adds some time and complexity to setup.
+    !!! warning "You will provision the infrastructure yourself, using your Azure subscription! [Let's Get Started!](./01-Self-Guided.md)"  
 
 === "Microsoft AI Tour"
 
-    Complete the [Skillable-based Setup](02-Skillable.md) section. This lets you benefit from pre-provisioned infrastructure to reduce setup time and complexity for time-limited instructor-based sessions.
+    !!! info "You will use a Skillable VM with pre-provisioned infrastructure! [Let's Get Started!](./02-Skillable.md)"   
 
 === "Microsoft Ignite"
 
-    Complete the [Skillable-based Setup](02-Skillable.md) section. This lets you benefit from pre-provisioned infrastructure to reduce setup time and complexity for time-limited instructor-based sessions.
+    !!! info "You will use a Skillable VM with pre-provisioned infrastructure! [Let's Get Started!](./02-Skillable.md)"  

@@ -1,9 +1,5 @@
 # 0. Pre-Requisites
 
-!!! warning "In-Venue Attendees: You only have 60-75 mins for this lab! [Jump to Setup now to save time!](./../1-Setup/index.md)"   
-
-![Dev Workflow](./../../img/workshop-developer-flow.png)
-
 You **must** have a GitHub account to get started. Take a minute to [sign up for a free account](https://github.com/signup) if you don't currently have one. Then check your workshop tab below for additional details.
 
 ---
@@ -45,9 +41,13 @@ You **must** have a GitHub account to get started. Take a minute to [sign up for
         1. Hands-on understanding of the [Azure AI Studio](https://ai.azure.com) platform and relevant developer tools (e.g., Azure Developer CLI, Prompty, Fast API) to streamline end-to-end development workflows for your own AI apps.
         
 === "Microsoft AI Tour"
+    
+    !!! warning "In-Venue Attendees: You have less than 75 mins to complete the lab! [Jump to Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md)"   
 
     The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the Self-Guided tab for the review_.
 
 === "Microsoft Ignite"
+    
+    !!! warning "In-Venue Attendees: You have less than 75 mins to complete the lab! [Jump to Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md)"   
 
     The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the Self-Guided tab for the review_.
