@@ -1,4 +1,4 @@
-# 0. Pre-Requisites
+# Pre-Requisites
 
 You **must** have a GitHub account to get started. Take a minute to [sign up for a free account](https://github.com/signup) if you don't currently have one. Then check your workshop tab below for additional details.
 
