@@ -1,13 +1,43 @@
 # 2. The RAG Pattern
 
-Foundation large language models are trained on massive quantities of public data, giving them the ability to answer general questions effectively. However, our retail copilot needs responses grounded in _private data_ that exists in the retailer's data stores. _Retrieval Augmented Generation_ (RAG) is a design pattern that provides a popular solution to this challenge with this workflow:
-
-1. The user query arrives at our copilot implementation via the endpoint (API).
-1. The copilot sends the text query to a **retrieval** service which vectorizes it for efficiency.
-1. It uses this vector to query a search index for matching results (e.g., based on similarity)
-1. The retrieval service returns results to the copilot, potentially with semantic ranking applied.
-1. The copilot **augments** the user prompt with this knowledge, and invokes the chat model.
-1. The chat model now **generates** responses _grounded_ in the provided knowledge.
+The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI - using the _Retrieval Augmented Generation_ (RAG) design pattern to make sure that our copilot responses are grounded in the (private) data maintained by the enterprise, for this application.
 
 ![RAG](./../img/rag-design-pattern.png)
  
+
+Let's learn how this design pattern works in the context of our Contoso Chat application. Click on the tabs in order, to understand the sequence of events shown in the figure above.
+
+---
+
+=== "1. Get Query"
+
+    !!! info "The user query arrives at our copilot implementation via the endpoint (API)"
+
+    Our deployed Contoso Chat application is exposed as a hosted API endpoint using Azure Container Apps. The inoming "user query" has 3 components: the user _question_ (text input), the user's _customer ID_ (text input), and an optional _chat history_ (object array).
+
+    The API server extracts these parameters from the incoming request, and invokes the Contoso Chat application - starting the workflow reflecting this RAG design pattern.
+
+=== "2. Vectorize Query" 
+
+    !!! info "The copilot sends the text query to a **retrieval** service after first vectorizing it."
+
+    The Contoso Chat application converts the text question into a vectorized query using a Large Language "Embedding" Model (e.g., Azure Open AI `text-embedding-ada-002`). This is then sent to the information retrieval service (e.g., Azure AI Search) in the next step.
+
+=== "3. **Retrieve** Matches"
+
+    !!! info "The retrieval service uses the vectorized query to return matching results based on similarity"
+
+    The information retrieval service maintains a search index for relevant information (here, for our product catalog). In this step, we use the vectorized query from the previous step to find and return _matching product results_ based on vector similarity. The information retrieval service can also use features like _semantic ranking_ to order the returned results.
+
+=== "4. **Augment** Query"
+
+    !!! info "The copilot **augments** the question with this knowledge for an enhanced _model prompt_."
+
+    The Contoso Chat application combines the user's original _question_ with returned "documents" from the information retrieval service, to create an enhanced _model prompt_. This is made easier using prompt template technologies (e.g., Prompty) with placeholders - for chat history, retrieved documents, and customer profile information - that are filled in at this step.
+    
+
+=== "3. **Generate** Response"
+
+    !!! info "The chat model is invoked with this prompt, generating a grounded response as the returned result."
+
+    This enhanced prompt is now sent to the Large Language "chat" model (e.g., Azure OpenAI `gpt-35-turbo` or `gpt-4o`) which sees the enhanced prompt (retrieved documents, customer profile data, chat history) as _grounding_ context for generating the final response, improving the quality (e.g., relevance, groundedness) of results returned from Contoso Chat.

@@ -1,8 +1,8 @@
-# 3️⃣ | Explore App Infrastructure
+# C. Validate Setup
 
 !!! success "Let's Review where we are right now"
 
-    ![Dev Workflow](./../img/workshop-developer-flow.png)
+    ![Dev Workflow](./../../img/workshop-developer-flow.png)
 
     Looking at our end-to-end developer workflow, we completed the `PROVISION` and `SETUP` stages. Before we dive into the `IDEATE` stage, let's take a minute to validate that we are ready to begin development.
 
@@ -15,7 +15,7 @@
 
 _In this section, we'll take a minute to understand what our Azure infrastructure looks like, and validate that the resources are deployed and initialized correctly. Here's a reminder of the Azure Application Architecure showing the key resources used. Let's dive in._
 
-![ACA Architecture](./../img/aca-architecture.png)
+![ACA Architecture](./../../img/aca-architecture.png)
 
 ## Step 1: Validate Azure Cosmos DB is populated
 

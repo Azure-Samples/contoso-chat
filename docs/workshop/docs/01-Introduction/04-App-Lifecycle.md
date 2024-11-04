@@ -8,4 +8,4 @@ Building generative AI applications requires an iterative process of refinement 
 
 ![GenAIOps](./../img/gen-ai-ops.png)
 
-In our workshop, you willl see the development workflow organized into sections that mimic this lifecycle - giving you a more intuitive sense for how you can iteratively go from promt to production, code-first, with Azure AI.
+In the next section, we'll map this app lifeycle to a simplified development workflow that identifies the core developer task at each stage, and highlights a key developer tool that streamlines its execution.
