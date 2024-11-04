@@ -14,7 +14,7 @@ You may have completed this step in-venue, with instructor guidance. If not, ple
 - [X] The Skillable countdown timer visible, with start time of 1h 15 mins.
 - [X] The instruction guide open, with this section in focus.
 
-??? info "Browser Tab 1️ - Skillable VM"
+??? example "Step 1.1 Launch Skillable VM"
 
     The lab instructor should have shared a Skillable Lab link (URL or QR Code).
 
@@ -39,12 +39,65 @@ You may have completed this step in-venue, with instructor guidance. If not, ple
 
 Our development environment uses a Visual Studio Code editor with a Python runtime. The Contoso Chat sample repository is instrumented with a [dev container](https://containers.dev) which specifies all required tools and dependencies. At the end of this step you should have:
 
-- [X] Forked the sample repo to your personal GitHub profile.
 - [X] Launched GitHub Codespaces to get the pre-built dev environment.
+- [X] Fork the sample repo to your personal GitHub profile.
 
-??? info "Browser Tab 2 - GitHub Codespaces"
+### 2.1 Navigate to GitHub & Login
 
-    ### 2.1 Open GitHub in Tab 1️⃣
+1. Open a browser tab (T1) and navigate to the link below.
+        ``` title="Tip: Click the icon at far right to copy link"
+        https://aka.ms/contoso-chat/prebuild
+        ```
+1. You will be prompted to log into GitHub. **Login now**
+
+### 2.2 Launch GitHub Codespaces
+
+1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
+    - Check that the Branch is `msignite-LAB401`
+    - Click dropdown for **2-core** and verify it is `Prebuild ready`
+
+    !!! tip "Using the pre-build makes the GitHub Codespaces load up faster."
+
+1. Click the green "Create codespace" button
+    - You should see a new browser tab open to a link ending in `*.github.dev`
+    - You should see a Visual Studio Code editor view loading (takes a few mins)
+    - When ready, you should see the README for the "Contoso Chat" repository
+    
+    !!! warning "Do NOT Follow those README instructions. Continue with this workshop guide!"
+
+### 2.3 Fork Repo To Your Profile
+
+The Codespaces is running on the original Azure Samples repo. Let's create a fork from Codespaces, so we have a personal copy to modify. For convenience, we'll follow [this process](https://docs.github.com/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template#publishing-to-a-repository-on-github) which streamlines the process once you make any edit.
+
+1. Lets create an empty file from the VS Code Terminal.
+
+    ``` title="Tip: Click the icon at far right to copy command"
+    touch .workshop-notes.md
+    ```
+1. This triggers a notification (blue "1") in Source Control icon on sidebar
+1. Click the notification to start the Commit flow 
+1. Enter a commit message like this, then click the green "Commit" button
+    ``` title="Tip: Click the icon at far right to copy text"
+    forking sample to my profile
+    ```
+1. 
+
+
+1.  ✅ **Congratulations!** - You launched the GitHub Codespaces prebuild!
+
+
+
+!!! info "Step 1.2 Launch GitHub Codespaces"
+
+    ### 2.1 Log into GitHub
+
+    1. Open a new browser tab (T1)
+    1. Navigate to the link below to create a Codespace
+        ``` title="Tip: Click the files icon at right to copy the link"
+        https://aka.ms/aitour/contoso-chat
+        ```
+    1. Sign into GitHub (if you are not already logged in)
+    1. 
 
     The source code for the application used in this workshop is available on GitHub. Let's log into GitHub and copy a fork of the source code to your GitHub account.
 
@@ -69,6 +122,8 @@ Our development environment uses a Visual Studio Code editor with a Python runti
         * You now have a copy (known as a fork) of this workshop repository in your own GitHub account! Feel free to play with it, you won't break anything.
 
     **✅ | CONGRATULATIONS!** - Your have a personal copy of the sample to explore!
+
+??? info "Browser Tab 3 - GitHub Codespaces"
 
     ### 2.2: Launch Codespaces in Tab 2️⃣
 
