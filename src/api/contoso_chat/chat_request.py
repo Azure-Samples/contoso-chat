@@ -41,7 +41,7 @@ def get_customer(customerId: str) -> str:
         return None
 
 @trace
-def get_response(customerId: str, question: str, chat_history: str) -> dict:
+def get_response(customerId: str, question: str, chat_history: list) -> dict:
 
     print("getting customer...")
     customer = get_customer(customerId)

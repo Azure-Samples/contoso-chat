@@ -96,14 +96,46 @@ def trace_span(name: str):
     with tracer.start_as_current_span(name, attributes={"task": name}) as span:        
         def verbose_trace(key, value):            
             if isinstance(value, dict):             
-                for k, v in value.items():                  
-                    verbose_trace(f"{key}.{k}", v)        
+                for k, v in value.items():
+                    # switch on key names to set attributes
+                    if "result.model.api" in k:
+                        span.set_attribute("gen_ai.operation.name", v)
+                    elif "result.object" in k:
+                        span.set_attribute("gen_ai.operation.name", v)
+                    elif "result.model.api.config.azure_deployment" in k:
+                        span.set_attribute("gen_ai.request.modelfile", v)
+                    elif "inputs.prompt.model.configuration.type" in k:
+                        span.set_attribute("gen_ai.system", v)
+                    elif "result.model" in k:
+                        span.set_attribute("gen_ai.response.model", v)
+                    elif "result.usage.total_tokens" in k:
+                        span.set_attribute("gen_ai.usage.input_tokens", v)
+                    elif "result.usage.completion_tokens" in k:
+                        span.set_attribute("gen_ai.usage.output_tokens", v)
+                    elif "result.usage.prompt_tokens:" in k:
+                        span.set_attribute("gen_ai.usage.prompt_tokens:", v)
+                    elif "inputs.data.id" in k:
+                        span.set_attribute("gen_ai.request.id", v)
+                    elif "result.id" in k:
+                        span.set_attribute("gen_ai.response.id", v)
+                    # elif "evaluation" in key:
+                    #      span.set_attribute("gen_ai.evaluation", value)
+                    elif "result.id" in k:
+                        span.set_attribute("gen_ai.response.id", v)
+                    else:          
+                        verbose_trace(f"{key}.{k}", v)        
             elif isinstance(value, (list, tuple)):
                 for index, item in enumerate(value):
-                    span.set_attribute(f"{index}", str(item))  
+                    if "create.attributes.0" in key:
+                       span.set_attribute("gen_ai.choice", value)
+                    else:
+                       span.set_attribute(f"{index}", str(item))
+
             else:
                 # switch on key names to set attributes
                 if "result.model.api" in key:
+                    span.set_attribute("gen_ai.operation.name", value)
+                elif "result.object" in key:
                     span.set_attribute("gen_ai.operation.name", value)
                 elif "result.model.api.config.azure_deployment" in key:
                     span.set_attribute("gen_ai.request.modelfile", value)
@@ -115,14 +147,16 @@ def trace_span(name: str):
                     span.set_attribute("gen_ai.usage.input_tokens", value)
                 elif "result.usage.completion_tokens" in key:
                     span.set_attribute("gen_ai.usage.output_tokens", value)
-                elif key == "run" and isinstance(value, (list, tuple)) and len(value) > 0:
-                        span.set_attribute("gen_ai.choice", value[0])
-                # elif "gen_ai.event.content" in key:
-                #     span.set_attribute("gen_ai.event.content", value)
-                # elif "gen_ai.evaluation" in key:
-                #     span.set_attribute("gen_ai.evaluation", value)
-                # elif "gen_ai.response.id" in key:
-                #     span.set_attribute("gen_ai.response.id", value)
+                elif "result.usage.prompt_tokens:" in key:
+                    span.set_attribute("gen_ai.usage.prompt_tokens:", value)
+                elif "inputs.data.id" in key:
+                    span.set_attribute("gen_ai.request.id", value)
+                elif "result.id" in key:
+                    span.set_attribute("gen_ai.response.id", value)
+                # elif "evaluation" in key:
+                #      span.set_attribute("gen_ai.evaluation", value)
+                elif "result.id" in key:
+                     span.set_attribute("gen_ai.response.id", value)
                 else:
                     span.set_attribute(f"{key}", value)  
         yield verbose_trace
