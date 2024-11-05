@@ -43,7 +43,7 @@ jobs:
       OPENAI_TYPE: ${{ vars.OPENAI_TYPE }}
       SERVICE_ACA_IMAGE_NAME: ${{ vars.SERVICE_ACA_IMAGE_NAME }}
       SERVICE_ACA_NAME: ${{ vars.SERVICE_ACA_NAME }}
-      SERVICE_ACA_URI: ${{ vars.SERVICE_ACA_URI }}
+      API_SERVICE_ACA_URI: ${{ vars.API_SERVICE_ACA_URI }}
 
     steps:
       - name: checkout repo content

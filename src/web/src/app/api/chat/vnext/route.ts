@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     log("Request body: ", request_body);
     log("Request body jsonify: ", JSON.stringify(request_body));
 
-    const response = await fetch(`${endpoint}/api/create_response`, {
+    const response = await fetch(`${endpoint()}/api/create_response`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify(request_body),

@@ -34,6 +34,9 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # set version
 ENV NEXT_PUBLIC_VERSION $GIT_VERSION_TAG
 
+# run npx update-browserslist-db@latest
+RUN npx update-browserslist-db@latest
+
 # run build
 RUN npm run build
 
@@ -41,7 +44,7 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV .env.production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 

@@ -53,7 +53,7 @@ export const sendChatMessage = async (
 
   console.log(body);
   
-  let response =  await fetch(`${endpoint}/api/create_response`, {
+  let response =  await fetch(`${endpoint()}/api/create_response`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -20,7 +20,7 @@ module webapp '../core/host/container-app-upsert.bicep' = {
     containerRegistryName: containerRegistryName
     env: [
       {
-        name: 'CONTOSO_CHAT_API_ENDPOINT'
+        name: 'API_SERVICE_ACA_URI'
         value: contosochatapiendpoint
       }      
     ]

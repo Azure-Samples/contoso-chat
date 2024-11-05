@@ -13,7 +13,7 @@ services:
     language: js
     host: containerapp
     docker:
-      remoteBuild: true
+      remoteBuild: false
 hooks:
   postprovision:
     posix:
@@ -54,7 +54,7 @@ pipeline:
     - OPENAI_TYPE
     - SERVICE_ACA_IMAGE_NAME
     - SERVICE_ACA_NAME
-    - SERVICE_ACA_URI
+    - API_SERVICE_ACA_URI
 
   secrets:
     - BING_SEARCH_KEY

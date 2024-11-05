@@ -233,7 +233,7 @@ module web 'app/web.bicep' = {
     identityName: managedIdentity.outputs.managedIdentityName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    contosochatapiendpoint: api.outputs.SERVICE_ACA_URI
+    contosochatapiendpoint: api.outputs.API_SERVICE_ACA_URI
   }
   dependsOn: [api]
 }
@@ -331,7 +331,7 @@ output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.locatio
 output SERVICE_ACA_NAME string = api.outputs.SERVICE_ACA_NAME
 output WEBAPP_ACA_NAME string = web.outputs.WEBAPP_ACA_NAME
 output WEBAPP_ACA_URI string = web.outputs.WEBAPP_ACA_URI
-output SERVICE_ACA_URI string = api.outputs.SERVICE_ACA_URI
+output API_SERVICE_ACA_URI string = api.outputs.API_SERVICE_ACA_URI
 output SERVICE_ACA_IMAGE_NAME string = api.outputs.SERVICE_ACA_IMAGE_NAME
 
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName

@@ -101,8 +101,30 @@ def trace_span(name: str):
             elif isinstance(value, (list, tuple)):
                 for index, item in enumerate(value):
                     span.set_attribute(f"{index}", str(item))  
-            else:                
-                span.set_attribute(f"{key}", value)   
+            else:
+                # switch on key names to set attributes
+                if "result.model.api" in key:
+                    span.set_attribute("gen_ai.operation.name", value)
+                elif "result.model.api.config.azure_deployment" in key:
+                    span.set_attribute("gen_ai.request.modelfile", value)
+                elif "inputs.prompt.model.configuration.type" in key:
+                    span.set_attribute("gen_ai.system", value)
+                elif "result.model" in key:
+                    span.set_attribute("gen_ai.response.model", value)
+                elif "result.usage.total_tokens" in key:
+                    span.set_attribute("gen_ai.usage.input_tokens", value)
+                elif "result.usage.completion_tokens" in key:
+                    span.set_attribute("gen_ai.usage.output_tokens", value)
+                elif key == "run" and isinstance(value, (list, tuple)) and len(value) > 0:
+                        span.set_attribute("gen_ai.choice", value[0])
+                # elif "gen_ai.event.content" in key:
+                #     span.set_attribute("gen_ai.event.content", value)
+                # elif "gen_ai.evaluation" in key:
+                #     span.set_attribute("gen_ai.evaluation", value)
+                # elif "gen_ai.response.id" in key:
+                #     span.set_attribute("gen_ai.response.id", value)
+                else:
+                    span.set_attribute(f"{key}", value)  
         yield verbose_trace
 
 def setup_telemetry(app: FastAPI):

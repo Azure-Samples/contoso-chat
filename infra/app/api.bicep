@@ -85,5 +85,5 @@ module app '../core/host/container-app-upsert.bicep' = {
 }
 
 output SERVICE_ACA_NAME string = app.outputs.name
-output SERVICE_ACA_URI string = app.outputs.uri
+output API_SERVICE_ACA_URI string = app.outputs.uri
 output SERVICE_ACA_IMAGE_NAME string = app.outputs.imageName

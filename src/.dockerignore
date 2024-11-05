@@ -2,9 +2,11 @@
 .venv/
 **/*.pyc
 node_modules
+.next
 dist
 # from web
 **/.devcontainer
 **/build
 **/node_modules
 README.md
+**/.next
