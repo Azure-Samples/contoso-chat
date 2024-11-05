@@ -11,13 +11,17 @@
     1. We connected our dev environment to our infra (Auth & Env Vars)
     1. We used SDK and CLI tools to push updates to infra (Data & App)
 
+It's time to organize our development environment and verify we are ready for ideation!
+
 ---
 
-
-
-## 3. Validate Provisioning
-
 ### 3.1 Azure Portal Tab
+
+!!! tip "The Azure Portal helps us view the resources provisioned on Azure and check that they are setup correctly"
+
+Here's a reminder of the Azure Application Architecure - let's check our provisioned Resource Group to make sure these resources were created.
+
+![ACA Architecture](./../../img/aca-architecture.png)
 
 1. Open a new browser tab and navigate to the link below:
     ``` title="Tip: Click the icon at far right to copy text"
@@ -34,6 +38,8 @@
 ---
 
 ### 3.2 Azure AI Studio Tab
+
+!!! tip "The Azure AI Studio lets us view and manage the Azure AI project for our app."
 
 1. Open a new browser tab = Tab 4️⃣
 1. Navigate to the [Azure AI Studio](https://ai.azure.com?feature.customportal=false#home):
@@ -61,6 +67,8 @@
 
 ### 3.3 Azure Container App Tab
 
+!!! tip "The Azure Container App provides the hosting environment for our copilot (API endpoint)"
+
 [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) will host the endpoint used to serve the Contoso Chat application on the Contoso Outdoors website. The Azure provisioning should have deployed a default Azure Container App to this endpoint.
 
 1. Return to the Azure Portal, Tab 3️⃣
@@ -74,10 +82,6 @@
 
 
 ---
-
-_In this section, we'll take a minute to understand what our Azure infrastructure looks like, and validate that the resources are deployed and initialized correctly. Here's a reminder of the Azure Application Architecure showing the key resources used. Let's dive in._
-
-![ACA Architecture](./../../img/aca-architecture.png)
 
 ## 1.1. Check Azure Cosmos DB
 
@@ -138,7 +142,7 @@ You will get a response body with `question`, `answer` and `context` components.
 ---
 
 
-## 1.4. Let's Connect The Dots ..
+## 1.4. Let's Connect The Dots 💡
 
 !!! info "Recall that the [Retrieval Augmented Generation](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation#how-does-rag-work) works by *retrieving* relevant knowledge from your data stores, and _augmenting_ the user query with it to create an enhanced prompt - which _generates_ the final response."
 
@@ -159,4 +163,4 @@ In this section, we verified these steps and checked off the first two items on 
 
 _Now you understand the application architecture, and have a sense for the retail copilot API, it's time to dig into the codebase and understand the three stages of our GenAIOps workflow - ideation, evaluation, and operationalization_.
 
-!!! example "Next → [Let's Ideate Apps With Prompty!](./04-ideation.md) and learn about prompt engineering!"
+!!! example "Next → [Let's Ideate Apps With Prompty!](./../../03-Ideate/index.md) and learn about prompt engineering!"
