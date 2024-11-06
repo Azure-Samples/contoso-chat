@@ -48,3 +48,5 @@ sandbox/*
 docs/workshop/docs/.DS_Store
 
 src/web/package-lock.json
+
+.env.production
