@@ -1,38 +1,119 @@
-site_name: "Contoso Chat Workshop"
+# -----------------------------
+# Material Theme Configuration
+# ------------------------------
+# red, pink, purple, deep purple, indigo, 
+# blue, light blue, cyan, teal, green, light green, 
+# lime, yellow, amber, orange, deep orange, brown, 
+# grey, blue grey , black, white
+#    primary: pink # teal
+#    accent: indigo
+#
+# *** FONT ***
+# Guide: https://squidfunk.github.io/mkdocs-material/setup/changing-the-fonts/?h=fonts
+# Google Fonts Supported: https://fonts.google.com/
+#
+# *** BLOG ***
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
+# ---------------------------------
+
+
+
+# Project information .........................................
+site_name: "Contoso Chat: Workshop Guide"
+site_url: https://nitya.github.io/contoso-chat 
+site_author: Nitya Narasimhan
+site_description: >-
+  Build a custom RAG-based retail copilot code-first on Azure AI.
+
+# Repository ..................................................
+repo_name: Azure-Samples/contoso-chat
+repo_url: https://github.com/Azure-Samples/contoso-chat
+
+# Copyright ...................................................
+copyright: >
+  Copyright &copy; 2023 - present Microsoft
+
+# Configuration ...............................................
 theme:
   name: material
-
-  # Change Font: https://squidfunk.github.io/mkdocs-material/setup/changing-the-fonts/?h=fonts
-  # Google Fonts Supported By Default: https://fonts.google.com/
   font:
-    code: Roboto Mono #Monospaced
-    text: Roboto #Regular
+    code: Roboto Mono  #Monospaced
+    text: Roboto       #Regular
   logo: img/logo.svg
-  palette: 
-    - scheme: default  # Light Mode
-      primary: blue # black
+  language: en
+
+  # Theme Modes ...............................................
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      primary: blue
       accent: pink
       toggle:
         icon: material/brightness-2
         name: Switch to dark mode
-    - scheme: slate # Dark Mode
-      primary: amber # amber
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: amber
       accent: cyan
       toggle:
-        icon: material/brightness-7
-        name: Switch to light mode
+        icon: material/brightness-4
+        name: Switch to system preference 
   
+  # Theme Features ...............................................
   features:
-    - content.code.copy
-#    - navigation.tabs
+    - navigation.instant
+    - navigation.expand             # sidebar collapsible sections open
+    - navigation.instant.progress   # load progress indicator
+    - navigation.tracking           # tracks anchor tags in URL
+    - navigation.tabs               # tabbed on desktop, single in mobile    
+    - navigation.tabs.sticky        # tabs stick when scrolling downtheme:
+    - navigation.path               # add breadcrumbs
+    - navigation.indexes            # default index.md in folder is section page
+    - navigation.top
+    - toc.follow
+    - navigation.footer
+    - content.code.copy             # allow copy-paste from codeblocks
+    - content.tabs.link             # Ensures site-wide switch to same tab name
 
+# Extras  ...............................................
+extra:
+  generator: false
+
+# Plugins  ...............................................
+plugins:
+  - search
+
+# Extensions  ...............................................
 markdown_extensions:
+  - abbr
   - admonition
+  - attr_list
+  - toc:
+      permalink: true
+      toc_depth: 3
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true
-  - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      auto_title: true
+      linenums: true
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+# Navigation  ...............................................
+nav:
