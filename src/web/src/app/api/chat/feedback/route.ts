@@ -1,6 +1,6 @@
 import { log } from "console";
 import { type NextRequest } from "next/server";
-import { endpoint } from "../../../../constants";
+const api_endpoint = process.env.API_SERVICE_ACA_URI!;
 
 export async function POST(req: NextRequest) {
     const request_body = await req.json();
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     log("Request body: ", request_body);
     log("Request body jsonify: ", JSON.stringify(request_body));
 
-    const response = await fetch(`${endpoint()}/api/give_feedback`, {
+    const response = await fetch(`${api_endpoint}/api/give_feedback`, {    
         method: "POST",
         headers: headers,
         body: JSON.stringify(request_body),

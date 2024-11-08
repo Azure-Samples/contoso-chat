@@ -1,5 +1,4 @@
 import { ChatTurn, GroundedMessage } from "./types";
-import { endpoint } from "../constants";
 
 export const sendGroundedMessage = async (
   turn: ChatTurn
@@ -31,7 +30,7 @@ export const sendGroundedMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data?.responseId,
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };
@@ -53,7 +52,7 @@ export const sendChatMessage = async (
 
   console.log(body);
   
-  let response =  await fetch(`${endpoint()}/api/create_response`, {
+  let response = await fetch("/api/chat/vnext", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -82,7 +81,7 @@ export const sendChatMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data?.responseId,
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };
@@ -132,7 +131,7 @@ export const sendVisualMessage = async (
     session_id: null,
     status: "done",
     type: "assistant",
-    responseId: data?.responseId,
+    responseId: data.responseId,
     avatar: "",
     image: null,
   };

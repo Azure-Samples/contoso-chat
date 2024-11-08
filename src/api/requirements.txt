@@ -24,3 +24,5 @@ opentelemetry-instrumentation
 opentelemetry-exporter-otlp-proto-grpc
 azure-ai-evaluation
 azure-monitor-query
+opentelemetry-instrumentation-openai-v2
+azure-ai-projects

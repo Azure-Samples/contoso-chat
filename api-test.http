@@ -1,4 +1,4 @@
-post http://127.0.0.1:8000/api/create_response HTTP/1.1
+post http://127.0.0.1:8000/api/create_response HTTP/2
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-post http://127.0.0.1:8000/api/give_feedback HTTP/1.1
+post http://127.0.0.1:8000/api/give_feedback HTTP/2
 Content-Type: application/json
 
 {
