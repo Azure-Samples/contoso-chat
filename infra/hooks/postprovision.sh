@@ -21,6 +21,9 @@ azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
 azd env set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED false
 azd env set LOCAL_TRACING_ENABLED false
 azd env set OTEL_EXPORTER_OTLP_ENDPOINT http://localhost:4317
+azd env set OTEL_SERVICE_NAME contosochat
+azd env set OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT true
+
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values >.env

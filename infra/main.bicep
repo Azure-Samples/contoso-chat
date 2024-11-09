@@ -327,6 +327,7 @@ output AZURE_OPENAI_ENDPOINT string = ai.outputs.openAiEndpoint
 output AZURE_OPENAI_NAME string = ai.outputs.openAiName
 output AZURE_OPENAI_RESOURCE_GROUP string = openAiResourceGroup.name
 output AZURE_OPENAI_RESOURCE_GROUP_LOCATION string = openAiResourceGroup.location
+output AZURE_AI_PROJECT_NAME string = ai.outputs.projectName
 
 output SERVICE_ACA_NAME string = api.outputs.SERVICE_ACA_NAME
 output WEBAPP_ACA_NAME string = web.outputs.WEBAPP_ACA_NAME
