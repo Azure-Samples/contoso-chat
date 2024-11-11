@@ -32,10 +32,11 @@
       "module": "uvicorn",
       "args": [
         "main:app",
-        "--reload"
+        "--reload"        
       ],
       "cwd": "${workspaceFolder}/src/api",
-      "jinja": true
+      "jinja": true,
+      "justMyCode": false // Allow debugging into library code
     },
     {
       "name": "Next.js: Contoso Web",

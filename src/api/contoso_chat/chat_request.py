@@ -18,13 +18,6 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-# add console and json tracer:
-# this only has to be done once
-# at application startup
-Tracer.add("console", console_tracer)
-json_tracer = PromptyTracer()
-Tracer.add("PromptyTracer", json_tracer.tracer)
-
 @trace
 def get_customer(customerId: str) -> str:
     try:

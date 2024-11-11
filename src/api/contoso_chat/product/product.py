@@ -69,6 +69,11 @@ def retrieve_products(items: List[Dict[str, any]], index_name: str) -> str:
             }
             for doc in results
         ]
+         
+        # TODO: get trace from context and set attribute 
+        # span = trace.Tracer.get_current_span()        
+        # span.set_attribute("retrieved.documents",json.dumps(docs))
+
 
         # Remove duplicates
         products.extend([i for i in docs if i["id"] not in [x["id"] for x in products]])

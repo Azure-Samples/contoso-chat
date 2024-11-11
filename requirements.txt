@@ -18,3 +18,5 @@ opentelemetry-exporter-otlp-proto-grpc
 azure-ai-evaluation
 azure-monitor-query
 uvicorn
+opentelemetry-instrumentation-openai-v2
+azure-ai-projects
