@@ -1,4 +1,4 @@
-# C. Validate Setup
+# Validate Your Setup
 
 !!! success "Let's Review where we are right now"
 

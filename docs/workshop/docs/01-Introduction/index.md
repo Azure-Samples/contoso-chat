@@ -1,20 +1,19 @@
 # Introduction
 
-!!! warning "In-Venue Attendees: You have less than 75 mins to complete the lab! [Jump to Provision & Setup!](./../02-Setup/1-Provision-And-Setup/02-Skillable.md)"   
+## Learning Objectives
 
 The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI. By the end of the workshop, you will learn to:
 
-- Use the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) to responses your own data.
-- Use [Prompty](https://prompty.ai) with [Azure AI Studio](https://ai.azure.com) for code-first development (prompt to prototype)
-- Use [Azure Container Apps](https://aka.ms/azcontainerapps) for deployment (hosted endpoint on Azure)
-- Use [Dev Containers](https://containers.dev) for pre-defined dev environments (& launch in GitHub Codespaces)
-- Use [Azure Developer CLI](https://aka.ms/azd) to provision & deploy the app (configured as a `azd-template`)
+- Use the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) (to ground responses in your own data).
+- Use [Prompty](https://prompty.ai) with [Azure AI Studio](https://ai.azure.com) for code-first development (to take your copilot from prompt to production)
+- Use [Azure Container Apps](https://aka.ms/azcontainerapps) for deployment (to get a hosted API endpoint for real-world use).
+- Use [Dev Containers](https://containers.dev) with GitHub Codespaces (to get a consistent, reproducible environment across teams)
+- Use [Azure Developer CLI](https://aka.ms/azd) with AI Application Templates (to provision & deploy apps consistently across teams)
 
+## Learning Resources
 
-!!! info "LEARNING RESOURCES: For deeper dives into relevant tools & techniques"
-
-    1. **Prompty** | [Documentation](https://prompty.ai) · [Specification](https://github.com/microsoft/prompty/blob/main/Prompty.yaml)  · [Tooling](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.prompty) · [SDK](https://pypi.org/project/prompty/)
-    1. **Azure AI Studio**  | [Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/)  · [Architecture](https://learn.microsoft.com/azure/ai-studio/concepts/architecture) · [SDKs](https://learn.microsoft.com/azure/ai-studio/how-to/develop/sdk-overview) ·  [Evaluation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
-    1. **Azure AI Search** | [Documentation](https://learn.microsoft.com/azure/search/)  · [Semantic Ranking](https://learn.microsoft.com/azure/search/semantic-search-overview) 
-    1. **Azure Container Apps**  | [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/)  · [Deploy from code](https://learn.microsoft.com/en-us/azure/container-apps/quickstart-repo-to-cloud?tabs=bash%2Ccsharp&pivots=with-dockerfile)
-    1. **Responsible AI**  | [Overview](https://www.microsoft.com/ai/responsible-ai)  · [With AI Services](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext)  · [Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/)
+1. **Prompty** | [Documentation](https://prompty.ai) · [Specification](https://github.com/microsoft/prompty/blob/main/Prompty.yaml)  · [Tooling](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.prompty) · [SDK](https://pypi.org/project/prompty/)
+1. **Azure AI Studio**  | [Documentation](https://learn.microsoft.com/en-us/azure/ai-studio/)  · [Architecture](https://learn.microsoft.com/azure/ai-studio/concepts/architecture) · [SDKs](https://learn.microsoft.com/azure/ai-studio/how-to/develop/sdk-overview) ·  [Evaluation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+1. **Azure AI Search** | [Documentation](https://learn.microsoft.com/azure/search/)  · [Semantic Ranking](https://learn.microsoft.com/azure/search/semantic-search-overview) 
+1. **Azure Container Apps**  | [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/)  · [Deploy from code](https://learn.microsoft.com/en-us/azure/container-apps/quickstart-repo-to-cloud?tabs=bash%2Ccsharp&pivots=with-dockerfile)
+1. **Responsible AI**  | [Overview](https://www.microsoft.com/ai/responsible-ai)  · [With AI Services](https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview?context=%2Fazure%2Fai-studio%2Fcontext%2Fcontext)  · [Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/)
