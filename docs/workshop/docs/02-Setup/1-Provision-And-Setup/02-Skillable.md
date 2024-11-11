@@ -25,19 +25,19 @@ To continue with Skillable-based Setup, you will need the **Lab Launch URL** (li
     - Click the **Launch** button - _wait till the page completes loading_.
         - (Left) You will see a login screen - _we can ignore this for now_
         - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
-        - (Right) You should see an instruction pane - _we'll validate this, next_
+        - (Below that) You will see a **Deploy** button - we will use this, next.
+        - (Right) You should see an instruction pane - we'll validate this, after.
+    - Click the **Deploy** button - _wait till the loading progress icon stops_.
+        - This triggers a background task to deploy our application to Azure
+        - This step can take a few minutes to complete
+        - When done, you should see a "Success" dialog below the button.
+        - **Note: The dialog may use a red background to alert you - this does not imply failure!**.
     - Review the instruction pane details:
-        - Check the lab title - should be _Build a Retail Copilot Code-First on Auzre AI_
+        - Check the lab title - should be _Build a Retail Copilot Code-First on Azure AI_
         - Check the Azure subscription - should have _username & password_ details filled in
         - Check the Workshop guide link - should open to a hosted version of this guide.
      
     **Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
-
-
-
-    ---
-
-    ✅ **CONGRATULATIONS!** | You setup the Skillable VM tab!
 
 ---
 

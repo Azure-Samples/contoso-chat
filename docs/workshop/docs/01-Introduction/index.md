@@ -4,11 +4,11 @@
 
 The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI. By the end of the workshop, you will learn to:
 
-- Use the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) (to ground responses in your own data).
-- Use [Prompty](https://prompty.ai) with [Azure AI Studio](https://ai.azure.com) for code-first development (to take your copilot from prompt to production)
-- Use [Azure Container Apps](https://aka.ms/azcontainerapps) for deployment (to get a hosted API endpoint for real-world use).
-- Use [Dev Containers](https://containers.dev) with GitHub Codespaces (to get a consistent, reproducible environment across teams)
-- Use [Azure Developer CLI](https://aka.ms/azd) with AI Application Templates (to provision & deploy apps consistently across teams)
+- Use the [Retrieval Augmented Generation (RAG) pattern](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation) <br/> (to ground responses in your own data).
+- Use [Prompty](https://prompty.ai) with [Azure AI Studio](https://ai.azure.com) for code-first development <br/> (to take your copilot from prompt to production)
+- Use [Azure Container Apps](https://aka.ms/azcontainerapps) <br/> for deployment (to get a hosted API endpoint for real-world use).
+- Use [Dev Containers](https://containers.dev) with GitHub Codespaces <br/> (to get a consistent, reproducible environment across teams)
+- Use [Azure Developer CLI](https://aka.ms/azd) with AI Application Templates <br/> (to provision & deploy apps consistently across teams)
 
 ## Learning Resources
 
