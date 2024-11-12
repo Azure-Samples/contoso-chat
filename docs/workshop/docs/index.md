@@ -6,7 +6,7 @@ You can complete it as a **self-guided** workshop at home. Or you can register f
 
 <br/>
 
-!!! warning "CHOOSE THE TAB FOR YOUR SESSION - This sets the default context site-wide."
+!!! task "CHOOSE THE TAB FOR YOUR SESSION - This becomes the default context site-wide."
 
 === "Self-Guided"
 
@@ -24,6 +24,8 @@ You can complete it as a **self-guided** workshop at home. Or you can register f
     - [ ] Requires you to use **your own laptop** - keep it charged for the session duration
     - [ ] You have 75 minutes for the entire session - assume 60 mins for the lab alone
 
+    !!! question "Are you currently in a Microsoft AI Tour session? [Go directly to Provision & Setup!](./02-Setup/1-Provision-And-Setup/02-Skillable.md)"      
+    
 === "Microsoft Ignite"
 
     - [ ] Requires you to use **your own GitHub account** - you can [get one for free](https://github.com/signup)
@@ -31,3 +33,6 @@ You can complete it as a **self-guided** workshop at home. Or you can register f
     - [X] Uses the **pre-provisioned infrastructure** from Skillable - you save setup time
     - [X] Uses the **in-venue workstations** setup for event - just find an open seat to use
     - [ ] You have 75 minutes for the entire session - assume 60 mins for the lab alone
+    
+    !!! question "Are you currently in a Microsoft Ignite session? [Go directly to Provision & Setup!](./02-Setup/1-Provision-And-Setup/02-Skillable.md)"      
+      

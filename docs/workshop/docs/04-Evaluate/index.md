@@ -14,10 +14,12 @@ In this section, we'll learn to assess the **quality** of our application respon
 1. Our application processes these inputs, storing the results (in `evaluators/results.jsonl`)
 1. Our evaluators grade results for 4 quality metrics (in `evaluators/eval_results.jsonl`)
 
+---
+
 !!! info "Connect The Dots: How does AI-Assisted Evaluation Work? 💡 "
 
-    **During the ideation phase, we use a single test input (sample) to evaluate our chat AI.** We do this by _manually_ checking the copilot response to that test input, then iterating our prompt asset till the response is satisfactory. But this approach does not scale to the diverse set of possible test inputs that may happen in the real world.
+**During the ideation phase, we use a single test input (sample) to evaluate our chat AI.** We do this by _manually_ checking the copilot response to that test input, then iterating our prompt asset till the response is satisfactory. But this approach does not scale to the diverse set of possible test inputs that may happen in the real world.
 
-    **In the evaluation phase, we use a second AI to evaluate the first one.** We do this by _instructing_ a second generative AI model (the evaluator AI) to "grade" the chat AI (copilot) using a set of custom scoring criteria that we provide. The evaluator AI takes `{question, response}` pairs as inputs and grades them to return a `score` in the 1-5 range, **for the specific metric** being evaluated.
+**In the evaluation phase, we use a second AI to evaluate the first one.** We do this by _instructing_ a second generative AI model (the evaluator AI) to "grade" the chat AI (copilot) using a set of custom scoring criteria that we provide. The evaluator AI takes `{question, response}` pairs as inputs and grades them to return a `score` in the 1-5 range, **for the specific metric** being evaluated.
 
-    **We can build prompt-based custom evaluators** forquality assessments with Prompty. Let's see this in action.
+**We can build prompt-based custom evaluators** forquality assessments with Prompty. Let's see this in action.
