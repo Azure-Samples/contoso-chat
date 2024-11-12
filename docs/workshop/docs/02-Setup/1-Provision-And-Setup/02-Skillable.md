@@ -21,18 +21,18 @@ To continue with Skillable-based Setup, you will need the **Lab Launch URL** (li
 
     The lab instructor should have shared a Skillable Lab link (URL or QR Code).
 
-    - Open the browser and navigate to the link - _verify the lab title is right_.
-    - Click the **Launch** button - _wait till the page completes loading_.
+    - Open the browser and navigate to the link - _locate LAB401 in the page_.
+    - Click the **Launch** button - _wait till the launched page completes loading_.
         - (Left) You will see a login screen - _we can ignore this for now_
         - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
         - (Below that) You will see a **Deploy** button - we will use this, next.
-        - (Right) You should see an instruction pane - we'll validate this, after.
+        - (Below That) You should see the instructions panel - we'll validate this, after.
     - Click the **Deploy** button - _wait till the loading progress icon stops_.
         - This triggers a background task to deploy our application to Azure
-        - This step can take a few minutes to complete
+        - **This step can take a few minutes to complete**
         - When done, you should see a "Success" dialog below the button.
-        - **Note: The dialog may use a red background to alert you - this does not imply failure!**.
-    - Review the instruction pane details:
+        - *Note: The dialog may use a red background to alert you - this does not imply failure!*
+    - Review other **Instructions Panel** details:
         - Check the lab title - should be _Build a Retail Copilot Code-First on Azure AI_
         - Check the Azure subscription - should have _username & password_ details filled in
         - Check the Workshop guide link - should open to a hosted version of this guide.
@@ -220,7 +220,7 @@ To build code-first solutions, we will need to use the Azure SDK from our develo
 
 _We can now use these configured tools and SDK to perform some post-provisioning tasks. This includes populating data in Azure AI Search (product indexes) and Azure Cosmos DB (customer data), and deploying the initial version of our application to Azure Container Apps_.
 
-From the Terminal pane in Tab 2️⃣:
+Return to the Visual Studio Code Terminal above:
 
 1. Run the command below. (This will take a few minutes to complete.)
 
@@ -228,7 +228,7 @@ From the Terminal pane in Tab 2️⃣:
     bash ./docs/workshop/src/0-setup/azd-update-roles.sh
     ```
 
-    !!! info "This updates the security profile for the provisioned Cosmos DB database so you can add data to it. This step isn't needed when you deploy Cosmos DB yourself."
+    !!! info "We pre-provisioned the Azure resources for you using a service principal. In this step, we update the resource roles to allow user access so you can populate data in Azure AI Search and Azure Cosmos DB from code. This step is not required in self-guided mode where you provision all resources yourself."
 
 1. Once complete, run the command below. It will take a few minutes to complete.
 
@@ -236,7 +236,8 @@ From the Terminal pane in Tab 2️⃣:
     azd hooks run postprovision
     ```
 
-    !!! info "This populates Azure Search and Cosmos DB with product and customer data. If you're curious, the code to do this is in Jupyter Notebooks in the relevant `data/` subfolders."
+    !!! info "This step runs the Jupyter Notebooks found in the relevant `data/` subfolders, populating the Azure AI Search and Azure CosmosDB resources with product catalog (index) and customer profile (orders)."
+This step should take just a few minutes to complete from the commandline.
 
 ---
 

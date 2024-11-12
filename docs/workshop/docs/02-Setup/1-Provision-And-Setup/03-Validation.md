@@ -23,18 +23,18 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ![ACA Architecture](./../../img/aca-architecture.png)
 
-1. Open a new browser tab and navigate to the link below:
+1. Open a new browser tab and navigate to the link below. You will be prompted to login.
     ``` title=""
-    https://portal.azure.com
+    https://portal.azure.com/#browse/resourcegroups
     ```
 
-1. **Sign in** → Use the `Username` and `Password` seen under "Azure Credentials" in your Skillable Lab window (launched during Setup).
-1. You will be presented with a "Welcome to Microsoft Azure" screen. Click **Cancel** (to dismiss it) or click **Get Started** (to take an introductory tour of the Azure Portal).
-1. In the Navigate section → **Click** `Resource Groups`.
+1. **Sign in** → Use the `Username` and `Password` from the "Azure Credentials" section in your Skillable Lab instructions panel.
+1. You may be presented with a "Welcome to Microsoft Azure" screen. Click **Cancel** (to dismiss it) or click **Get Started** (to take an introductory tour of the Azure Portal).
+1. You should be taken directly to the Resource Groups page for your subscription.
     - You should see an `rg-AITOUR` resource. This was created for you and contains all the resources needed to build and deploy your RAG-based copilot. 
-1. **Click** `rg-AITOUR` to visit the Resource Group page.
-    - **Check:** Deployments (under "Essentials") - You should see: **35 succeeded**. 
-    - **Check:** Resources (in Overview) - You should see: **15 resources**.
+1. **Click** `rg-AITOUR` to visit the Resource Group overview page.
+    - **Check:** Deployments (under "Essentials") - You should see: *35 succeeded*. 
+    - **Check:** Resources (in Overview) - You should see: *15 resources*.
 
 !!! task "Leave the Azure Portal open on this tab. We'll revisit it later."
 
@@ -75,7 +75,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 1. Visit the `rg-AITOUR` Resource group page
 1. Click the `Container App` resource to display the Overview page
 1. Look for `Application Url` (at top right), and click it to launch in new tab 
-1. You should see: A "Hello World" message on the screen (confirming app was deployed)
+1. You should see: A `Hello World` message on the screen (confirming app was deployed)
 
 
 !!! info "Azure Container Apps (ACA) is used to host our chat AI application. The application server is implemented using FastAPI and exposes a `/create_request` API endpoint to make requests to our copilot."
@@ -85,7 +85,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 The Azure CosmosDB resource holds the customer data for our application. It is a noSQL database that contains JSON data for each customer, and the prior purchases they made.
 
-1. Switch to the **Azure Portal** (Tab 3️⃣) and display the `rg-AITOUR` resource group Overview
+1. Switch to the **Azure Portal** tab and display the `rg-AITOUR` resource group Overview
 1. **Click** the `Azure Cosmos DB account` resource name to visit its details page
 1. **Click** `Data Explorer` in the top-nav menu 
     - dismiss the popup dialog to skip the movie
@@ -98,14 +98,15 @@ The Azure CosmosDB resource holds the customer data for our application. It is a
 
 The Azure AI Search resources contains the product index for our retailer's product catalog. It is the information **retrieval** service for **R**AG solutions, using sentence similarity and semantic ranking to return the most relevant results for a given customer query.
 
-1. Switch to the Azure Portal (Tab 3️⃣) and display the  `rg-AITOUR` resource group Overview
+1. Switch to the Azure Portal tab and display the  `rg-AITOUR` resource group Overview
 1. Click the `Search service` resource name to visit its details page
 1. Click `Search Explorer` in the top-nav menu  
     - see Search explorer with default index `contoso-products`
     - **click** "Search" with no other input
     - you will see: Results dialog filled with index data for the entire product database.
 1. Enter `sleeping bag` in the text box, and click Search
-    - Verify that the first result returned relates to a sleeping bag from the catalog
+    - Verify that the first result returned relates to a sleeping bag from the catalog       
+    !!! tip "Look under the 'answers' section of the response to see if the results match." 
 1. Enter `something to make food with` in the text box, and click Search       
     - Verify that the first result returned relates to a camping stove
 
@@ -126,7 +127,7 @@ The Azure AI Search resources contains the product index for our retailer's prod
   
 The FastAPI server exposes a `Swagger API` endpoint that we can use for manual testing in both local (Codespaces) and cloud (Container Apps). Let's try it out now!
 
-1. Return to your deployed Azure Container App in Tab 5️⃣ 
+1. Return to your deployed Azure Container App tab
 1. Add a `/docs` suffix to the URL and browse to that path - you will see: **FastAPI** page
 1. Expand the `POST` section by clicking the arrow
     - click `Try it out` to make inputs editable
