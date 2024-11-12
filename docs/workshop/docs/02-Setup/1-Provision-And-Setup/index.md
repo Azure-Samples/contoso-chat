@@ -12,12 +12,12 @@ To get started building our custom copilot, we need to:
 
 === "Self-Guided"
 
-    !!! warning "You will provision the infrastructure yourself, using your Azure subscription! [Let's Get Started!](./01-Self-Guided.md)"  
+    !!! info "You need to provision the infrastructure yourself! [Jump to the Self-Guided Section](./01-Self-Guided.md) now!"  
 
 === "Microsoft AI Tour"
 
-    !!! info "You will use a Skillable VM with pre-provisioned infrastructure! [Let's Get Started!](./02-Skillable.md)"   
+    !!! info "You will use a pre-provisioned VM from Skillable! [Jump ahead to the Skillable-Based Section.](./02-Skillable.md)"  
 
 === "Microsoft Ignite"
 
-    !!! info "You will use a Skillable VM with pre-provisioned infrastructure! [Let's Get Started!](./02-Skillable.md)"  
+    !!! info "You will use a pre-provisioned VM from Skillable! [Jump ahead to the Skillable-Based Section.](./02-Skillable.md)"  
