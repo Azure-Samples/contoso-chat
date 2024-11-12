@@ -13,6 +13,8 @@ RUN sudo apt-get update && sudo apt-get install -y \
     && sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/*
 
+# COPY packages folder
+COPY packages packages
 # Copy requirements.txt and install the Python packages
 # Install keyring-related and IPython packages in the same layer to reduce the image size and build time
 COPY requirements.txt .

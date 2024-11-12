@@ -26,5 +26,5 @@ azure-ai-evaluation
 azure-monitor-query
 opentelemetry-instrumentation-openai-v2
 #azure-ai-projects
-packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.whl
-packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl
+./packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.whl
+./packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl
