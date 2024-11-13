@@ -23,7 +23,7 @@ opentelemetry-instrumentation
 opentelemetry-exporter-otlp-proto-grpc
 azure-ai-evaluation
 azure-monitor-query
-opentelemetry-instrumentation-openai-
+opentelemetry-instrumentation-openai-v2
 # azure-ai-inference[opentelemetry]  ./packages/whl packages
 # azure-ai-projects is not available in PyPI install it from the ./packages/whl packages
 ./packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl
