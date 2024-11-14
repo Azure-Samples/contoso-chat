@@ -2,6 +2,9 @@ FROM  python:3.11-slim
 
 WORKDIR /app
 
+# copy packages folder
+COPY packages /app/packages
+
 COPY requirements.txt .
 COPY ../../packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl ./packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl
 COPY ../../packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.whl ./packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.whl

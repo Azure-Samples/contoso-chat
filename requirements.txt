@@ -1,13 +1,20 @@
+fastapi
+fastapi[standard]
+requests
+gunicorn==21.2.0
 azure-cosmos
-azure-ai-ml
-azure-ai-resources
 azure-search-documents==11.4.0
-azure-identity==1.17.1
+azure-keyvault-secrets
+azure-monitor-opentelemetry-exporter
+aiohttp==3.9.5
 python-dotenv==1.0.1
+azure-cognitiveservices-speech==1.37.0
+prompty[azure]==0.1.24
 jsonlines
-prompty
-prompty[azure]
 nbconvert
+pandas
+azure-identity==1.17.1
+jupyter
 Jinja2==3.1.4
 opentelemetry-sdk 
 azure-monitor-opentelemetry
@@ -21,4 +28,4 @@ opentelemetry-instrumentation-openai-v2
 # azure-ai-inference[opentelemetry]  ./packages/whl packages
 # azure-ai-projects is not available in PyPI install it from the ./packages/whl packages
 ./packages/whl-packages/azure_ai_inference-1.0.0b6-py3-none-any.whl
-./packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.whl
+./packages/whl-packages/azure_ai_projects-1.0.0b1-py3-none-any.wh

@@ -5,7 +5,7 @@ FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 ARG GIT_VERSION_TAG=unspecified
 RUN echo $GIT_VERSION_TAG
-RUN echo "NEXT_PUBLIC_VERSION=$GIT_VERSION_TAG" > .env.production
+RUN echo "NEXT_PUBLIC_VERSION=$GIT_VERSION_TAG" > .env
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -44,7 +44,7 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV .env.production
+ENV NODE_ENV .env
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 

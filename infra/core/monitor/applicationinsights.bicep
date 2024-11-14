@@ -36,8 +36,8 @@ resource genAiInsightsWorkbook 'Microsoft.Insights/workbooks@2023-06-01' = {
   properties: {
     sourceId: 'Azure Monitor'
     category: 'workbook'
-    description: 'Gen-AI-Insights-Workbook'
-    displayName: 'Gen-AI-Insights'
+    description: 'Gen-AI-Insights-Workbook-Chat'
+    displayName: 'Gen-AI-Insights-Chat'
     serializedData: workbookJson
     version: 'Notebook/1.0'
   }

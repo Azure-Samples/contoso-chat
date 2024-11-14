@@ -13,7 +13,7 @@ services:
     language: js
     host: containerapp
     docker:
-      remoteBuild: false
+      remoteBuild: true
 hooks:
   postprovision:
     posix:
