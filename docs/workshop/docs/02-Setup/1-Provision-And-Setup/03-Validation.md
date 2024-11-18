@@ -53,9 +53,9 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
     - **Check:** You should see a Project and a Hub listed.
 
-        !!! info "The [AI Studio hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects AI resources that can be shared between AI projects. The [AI Studio project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) helps you organize your work when building applications."
+        !!! info "The [Azure AI hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects AI resources that can be shared between AI projects. The [Azure AI project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) helps you organize your work when building applications."
 
-    - Click on the Hub resource name → it may be something like _ai-hub-45556973_
+    - Click on the Hub resource name → it should be in the form _ai-hub-XXXXXXXX_
     - **Check:** There is 1 project listed under `Projects` for this hub.
     - Click "Connected Resources" in the left pane,
     - **Check:** You see Hub connections to OpenAI endpoints, Azure AI Search & Storage.
@@ -106,7 +106,7 @@ The Azure AI Search resources contains the product index for our retailer's prod
     - you will see: Results dialog filled with index data for the entire product database.
 1. Enter `sleeping bag` in the text box, and click Search
     - Verify that the first result returned relates to a sleeping bag from the catalog       
-    !!! tip "Look under the 'answers' section of the response to see if the results match." 
+    !!! tip "Check the 'value' section of the response for semantically-ranked results." 
 1. Enter `something to make food with` in the text box, and click Search       
     - Verify that the first result returned relates to a camping stove
 
