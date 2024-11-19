@@ -15,38 +15,40 @@ This is a 75-minute instructor-led workshop at Microsoft Ignite 2024 where you l
 
 **Instructions Link:** ++https://aka.ms/aitour/contoso-chat/workshop++
 
-To get started with this workshop:
-1. Open a new incognito (private) browser window on your workstation
-1. Copy the link above into the browser address bar and navigate to it.
-1. Select the **Microsoft Ignite** tab in "Before You Begin"
-1. Follow instructions in that tab to keep going.
+Open a new private browser in your workstation. 
+
+1. Copy the instructions link to the browser and navigate to it.
+1. In the "Before You Begin" section, **Select the Microsoft Ignite tab**
+1. Leave this browser open and follow the instructions for the lab.
 
 ## 2. Azure Credentials
 
-You will use a temporary Azure subscription assigned to this lab. You will need its credentials (below) for the workshop setup steps. Verify that the _Username_ and _Password_ below are not empty.
+You will be assigned a temporary Azure subscription for this lab. Verify that the _Username_ and _Password_ credentials are not empty below. We will use them during setup.
 
 - **Username:** ++@lab.CloudPortalCredential(User1).Username++
 - **Password:** ++@lab.CloudPortalCredential(User1).Password++
 
-## 3. Skillable VM
+## 3. Skillable VM Credentials
 
-The Skillable VM login screen (left) should **NOT** be needed for this lab. However, it may be useful for troubleshooting issues with proctor help. If needed, login to the VM with the password below (`admin` will be the default username):
+The Skillable VM has a login screen (left) that we do **NOT** need to use today. However, we may need it for troubleshooting (with proctor help). The credentials below will be useful for logging in then.
 
 - +++@lab.VirtualMachine(WRK550-Win11(NEW)).Username+++
 - +++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
 
 ## 4. Time Tracking
 
-The instruction panel has a _countdown timer_ at the top (with "Hours Remaining" for lab completion).
-- It should have **at least** _1h 15 min_ at the start.
-- When it nears expirty, you will be notified with options.
-- When timer expires, the VM will terminate automatically.
+This Skillable page has a countdown timer (top right) that will show **Hours Remaining** for lab completion. Use this to track time left and decide if you want to do optional steps accordingly. 
 
-## 5. Revisit At Home
+- You should start with at least 1h 15min on the clock.
+- You will be notified when there are 10 mins left
+- When timer expires, the VM will terminate automatically!
+ 
+## 5. Revisiting Lab at Home
 
-By the end of this workshop, you will have a copy of the sample app in your GitHub profile.
+By the end of this workshop, you will have a copy of the sample app in your personal GitHub profile. Revisit it at home to explore and complete sections at your own pace. 
 
-
-You will walk away with a copy of the application in your GitHub profile. You can revisit that at home, with the _Self-Guided_ workshop option, to complete the workshop at your own pace, with your Azure subscription.
+1. You will need your own Azure subscription for this.
+1. You will need to set the "Before You Begin" tab to **Self-Guided** 
+1. Then continue working through the lab steps there.
 
 ---
