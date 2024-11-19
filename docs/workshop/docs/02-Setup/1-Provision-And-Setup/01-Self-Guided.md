@@ -22,7 +22,7 @@ Our development environment uses a Visual Studio Code editor with a Python runti
 ### 2.1 Navigate to GitHub & Login
 
 1. Open a browser tab (T1) and navigate to the link below.
-        ``` title="Tip: Click the icon at far right to copy link"
+        ``` title=""
         https://aka.ms/contoso-chat/prebuild
         ```
 1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
@@ -52,7 +52,7 @@ The Codespaces is running on the original Azure Samples repo. Let's create a for
 
 1. Lets create an empty file from the VS Code Terminal.
 
-    ``` title="Tip: Click the icon at far right to copy command"
+    ``` title=""
     touch .workshop-notes.md
     ```
 
