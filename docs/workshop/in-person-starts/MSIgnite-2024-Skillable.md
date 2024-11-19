@@ -5,12 +5,9 @@ This file is dynamically retrieved and used by the Skillable VM as the Instructi
 
 # LAB 401: Build a Retail Copilot Code-First on Azure AI Studio
 
-This is a 75-minute instructor-led workshop session at Microsoft Ignite 2024. You must [register](https://ignite.microsoft.com/sessions/LAB401?source=sessions) for an available session, to attend in person.
+This is a 75-minute instructor-led workshop at Microsoft Ignite 2024 where you learn to build, evaluate, and deploy, a RAG-based retail copilot on Azure AI.
 
-_You will learn to build, evaluate, and deploy, a custom retail copilot code-first on Azure AI - using the Retrieval Augmented Generation (RAG) design pattern to ground copilot responses in retailer data_.
-
-
-**‼️ -- DO NOT CLOSE THIS WINDOW -- ‼️** <br/> Closing this window will end your lab prematurely. It is ok to minimize this window so you can return to it later when required.
+**‼️ -- DO NOT CLOSE THIS WINDOW -- ‼️** <br/> Closing this window will end your lab prematurely. Instead, minimize this window so you can return to it later when required.
 
 ---
 
@@ -18,33 +15,40 @@ _You will learn to build, evaluate, and deploy, a custom retail copilot code-fir
 
 **Instructions Link:** ++https://aka.ms/aitour/contoso-chat/workshop++
 
-The lab instructions are available at the link above. To get started:
-1. Open a new incognito (private) browser window on your workstation
-1. Copy the link above into the browser address bar and navigate to it.
-1. Start from the **Setup** section to make best use of your time.
+Open a new private browser in your workstation. 
+
+1. Copy the instructions link to the browser and navigate to it.
+1. In the "Before You Begin" section, **Select the Microsoft Ignite tab**
+1. Leave this browser open and follow the instructions for the lab.
 
 ## 2. Azure Credentials
 
-You will make use of a temporary Azure subscription assigned to this lab instance, with the credentials below. You will need these for the setup stage of the workshop. Verify that you see both _Username_ and _Password_ values below.
+You will be assigned a temporary Azure subscription for this lab. Verify that the _Username_ and _Password_ credentials are not empty below. We will use them during setup.
 
 - **Username:** ++@lab.CloudPortalCredential(User1).Username++
 - **Password:** ++@lab.CloudPortalCredential(User1).Password++
 
-## 3. Skillable VM
+## 3. Skillable VM Credentials
 
-The login screen to the left corresponds to the Skillable Windows VM for your lab instance. You should **NOT** need to use it for this lab - but it may prove helpful for troubleshooting issues with proctor help.
-
-Use these credentials to login (username may be preset):
+The Skillable VM has a login screen (left) that we do **NOT** need to use today. However, we may need it for troubleshooting (with proctor help). The credentials below will be useful for logging in then.
 
 - +++@lab.VirtualMachine(WRK550-Win11(NEW)).Username+++
 - +++@lab.VirtualMachine(WRK550-Win11(NEW)).Password+++
 
 ## 4. Time Tracking
 
-This instruction panel has a _Countdown Timer_ (at the top) showing _"Hours Remaining"_ for lab completion  (with _1h 15 min_ to start).
- - When the timer expires, the VM will terminate automatically
- - When it nears expiry, you will be notified so you can cleanup
+This Skillable page has a countdown timer (top right) that will show **Hours Remaining** for lab completion. Use this to track time left and decide if you want to do optional steps accordingly. 
 
-You will walk away with a copy of the application in your GitHub profile. You can revisit that at home, with the _Self-Guided_ workshop option, to complete the workshop at your own pace, with your Azure subscription.
+- You should start with at least 1h 15min on the clock.
+- You will be notified when there are 10 mins left
+- When timer expires, the VM will terminate automatically!
+ 
+## 5. Revisiting Lab at Home
+
+By the end of this workshop, you will have a copy of the sample app in your personal GitHub profile. Revisit it at home to explore and complete sections at your own pace. 
+
+1. You will need your own Azure subscription for this.
+1. You will need to set the "Before You Begin" tab to **Self-Guided** 
+1. Then continue working through the lab steps there.
 
 ---
