@@ -23,17 +23,17 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ![ACA Architecture](./../../img/aca-architecture.png)
 
-1. Open a new browser tab and navigate to the link below. You will be prompted to login.
+1. Open a new browser tab and navigate to the link below. You may be prompted to login.
     ``` title=""
     https://portal.azure.com/#browse/resourcegroups
     ```
 
-1. **Sign in** → Use the `Username` and `Password` from the "Azure Credentials" section in your Skillable Lab instructions panel.
+1. **Sign in** → If prompted, use the `Username` and `Password` from the "Azure Credentials" section in your Skillable Lab instructions panel.
 1. You may be presented with a "Welcome to Microsoft Azure" screen. Click **Cancel** (to dismiss it) or click **Get Started** (to take an introductory tour of the Azure Portal).
 1. You should be taken directly to the Resource Groups page for your subscription.
     - You should see an `rg-AITOUR` resource. This was created for you and contains all the resources needed to build and deploy your RAG-based copilot. 
 1. **Click** `rg-AITOUR` to visit the Resource Group overview page.
-    - **Check:** Deployments (under "Essentials") - You should see: *35 succeeded*. 
+    - **Check:** Deployments (look under "Essentials") - You should see: *35 succeeded*. 
     - **Check:** Resources (in Overview) - You should see: *15 resources*.
 
 !!! task "Leave the Azure Portal open on this tab. We'll revisit it later."
@@ -51,14 +51,16 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 1. **Click `Sign in`** → you will auto-login with the Azure credentials used to sign into the portal.
 
-    - **Check:** You should see a Project and a Hub listed.
+    - **Check:** You should see a Hub resource (with a name like _ai-hub-XXXXXXXX_)
+    - **Check:** You should see a Project resource (with a name like _ai-project-XXXXXXXX_)
 
         !!! info "The [Azure AI hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects AI resources that can be shared between AI projects. The [Azure AI project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) helps you organize your work when building applications."
 
-    - Click on the Hub resource name → it should be in the form _ai-hub-XXXXXXXX_
-    - **Check:** There is 1 project listed under `Projects` for this hub.
+    - Click the Project link. You will be taken to a Project details page.
     - Click "Connected Resources" in the left pane,
-    - **Check:** You see Hub connections to OpenAI endpoints, Azure AI Search & Storage.
+    - **Check:** You should see Hub connections to OpenAI endpoints, Azure AI Search & Storage.
+    - Click "Models + endpoints" in the left pane.
+    - **Check:** You should see deployed models for this project.
 
         !!! info "For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
 
