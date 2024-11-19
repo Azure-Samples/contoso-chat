@@ -25,7 +25,7 @@ Our development environment uses a Visual Studio Code editor with a Python runti
         ``` title="Tip: Click the icon at far right to copy link"
         https://aka.ms/contoso-chat/prebuild
         ```
-1. You will be prompted to log into GitHub. **Login now**
+1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
 
 ---
 

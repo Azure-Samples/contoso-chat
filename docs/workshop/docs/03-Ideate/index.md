@@ -9,7 +9,7 @@
     1. Skillable VM tag - showing the countdown timer & launch page
     1. GitHub Codespaces tab - showing the Visual Studio Code IDE.
     1. Azure Portal tab - showing your `rg-AITOUR` resource group.
-    1. Azire AI Studio tab - showing your AI project page.
+    1. Azure AI Studio tab - showing your AI project page.
     1. Azure Container Apps - showing your deployed application.
     
     We completed the setup, validated the infrastructure and verified that the application was deployed correctly. 

@@ -62,12 +62,13 @@ At the end of this step you should have:
     https://aka.ms/contoso-chat/prebuild
     ```
 
-1. You will be prompted to log into GitHub. **Login now**
+1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
 
 ### 2.2 Setup GitHub Codespaces
 
 1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
-    - Check that the Branch is `msignite-LAB401`
+    - Check branch is `msignite-LAB401` 
+    - Check dev container config is `Contoso Chat (v2)` and region is `US East`
     - Click dropdown for **2-core** and verify it is `Prebuild ready`
 
     !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster."
@@ -137,25 +138,25 @@ Your GitHub Codespaces is running on the _original_ Azure Samples repo for this 
 
 ### 2.4 Check Tools Installed
 
-Use the following commands in the VS Code terminal to verify these tools are installed. This step is optional but gives you a sense for the command-line tools we will use in this lab.
+The workshop uses the following tools and commands: `python`, `fastapi`, `prompty`, `az`, `azd`. These are pre-installed for you, but you can optionally verify these to get a sense for their current versions.
 
-```bash title=""
-python --version
-```
-```bash title=""
-fastapi --version
-```
-```bash title=""
-prompty --version
-```
-```bash title=""
-az version
-```
-```bash title=""
-azd version
-```
+??? task "(Optional: Expand to view details) Verify intalled tools." 
 
-!!! success "CONGRATULATIONS. You setup your GitHub Codespaces with your fork of the repo!"
+    ```bash title=""
+    python --version
+    ```
+    ```bash title=""
+    fastapi --version
+    ```
+    ```bash title=""
+    prompty --version
+    ```
+    ```bash title=""
+    az version
+    ```
+    ```bash title=""
+    azd version
+    ```
 
 
 ## 3. Authenticate with Azure
