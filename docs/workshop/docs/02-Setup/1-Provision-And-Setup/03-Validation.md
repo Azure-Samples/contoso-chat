@@ -40,9 +40,9 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ---
 
-### 3.2 Azure AI Studio
+### 3.2 Azure AI Foundry
 
-!!! tip "The Azure AI Studio portal lets us view and manage the Azure AI project for our app."
+!!! tip "The Azure AI Foundry portal lets us view and manage the Azure AI project for our app."
 
 1. Open a new browser tab and [navigate to this page](https://ai.azure.com?feature.customportal=false#home):
     ``` title=""
@@ -57,8 +57,6 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
         !!! info "The [Azure AI hub](https://learn.microsoft.com/azure/ai-studio/concepts/ai-resources) collects AI resources that can be shared between AI projects. The [Azure AI project](https://learn.microsoft.com/azure/ai-studio/how-to/create-projects?tabs=ai-studio) helps you organize your work when building applications."
 
     - Click the Project link. You will be taken to a Project details page.
-    - Click "Connected Resources" in the left pane,
-    - **Check:** You should see Hub connections to OpenAI endpoints, Azure AI Search & Storage.
     - Click "Models + endpoints" in the left pane.
     - **Check:** You should see deployed models for this project.
 
