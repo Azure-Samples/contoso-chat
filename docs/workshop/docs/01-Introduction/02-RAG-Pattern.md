@@ -25,19 +25,19 @@ Let's learn how this design pattern works in the context of our Contoso Chat app
 
 === "3. **Retrieve** Matches"
 
-    !!! info "The retrieval service uses the vectorized query to return matching results based on similarity"
+    !!! info "The retrieval service uses vectorized query to return matching results by similarity"
 
     The information retrieval service maintains a search index for relevant information (here, for our product catalog). In this step, we use the vectorized query from the previous step to find and return _matching product results_ based on vector similarity. The information retrieval service can also use features like _semantic ranking_ to order the returned results.
 
 === "4. **Augment** Query"
 
-    !!! info "The copilot **augments** the question with this knowledge for an enhanced _model prompt_."
+    !!! info "The copilot augments user prompt with retrieved knowledge in request to model"
 
     The Contoso Chat application combines the user's original _question_ with returned "documents" from the information retrieval service, to create an enhanced _model prompt_. This is made easier using prompt template technologies (e.g., Prompty) with placeholders - for chat history, retrieved documents, and customer profile information - that are filled in at this step.
     
 
-=== "3. **Generate** Response"
+=== "5. **Generate** Response"
 
-    !!! info "The chat model is invoked with this prompt, generating a grounded response as the returned result."
+    !!! info "The chat model uses prompt to generate a grounded response to user question."
 
     This enhanced prompt is now sent to the Large Language "chat" model (e.g., Azure OpenAI `gpt-35-turbo` or `gpt-4o`) which sees the enhanced prompt (retrieved documents, customer profile data, chat history) as _grounding_ context for generating the final response, improving the quality (e.g., relevance, groundedness) of results returned from Contoso Chat.

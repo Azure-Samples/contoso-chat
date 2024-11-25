@@ -41,6 +41,7 @@ theme:
     text: Roboto       #Regular
   logo: img/logo.svg
   language: en
+  custom_dir: overrides #Add custom header scripts
 
   # Theme Modes ...............................................
   palette:

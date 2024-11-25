@@ -4,14 +4,14 @@
 
     ![Dev Workflow](./../img/workshop-developer-flow.png)
 
-    We currently have these 5 tabs open in our development environment.
+    We should have organized our browser into these 5 tabs, for development:
 
-    1. Github Repo - starting tab 1️⃣
-    1. GitHub Codespaces 2️⃣
-    1. Azure Portal 3️⃣
-    1. Azure AI Studio 4️⃣
-    1. Azure Container Apps 5️⃣
+    1. Skillable VM tag - showing the countdown timer & launch page
+    1. GitHub Codespaces tab - showing the Visual Studio Code IDE.
+    1. Azure Portal tab - showing your `rg-AITOUR` resource group.
+    1. Azure AI Studio tab - showing your AI project page.
+    1. Azure Container Apps - showing your deployed application.
+    
+    We completed the setup, validated the infrastructure and verified that the application was deployed correctly. 
 
-    We also have a fully-provisioned Azure infrastructure (backend), successfully deployed the first version of our application - and tested it manually, with a single input. **It's time to move into the `IDEATE` phase of our workflow.**
-
-_Now it's time to understand how that application was developed - and specifically, understand how we can go from "prompt to prototype" in the **Ideation** phase of our developer workflow_.
+_Now we can deconstruct the sample to learn how it works. Let's do this by understanding how we go from prompt to prototytpe in the **Ideate** stage, next._

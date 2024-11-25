@@ -1,12 +1,14 @@
-# A. Self-Guided 
+# A. Self-Guided Setup
 
-!!! warning "If you are are currently in an in-venue instructor-led session, use the [Skillable Setup](./02-Skillable.md) instead!"
+!!! info "Welcome to the Self-Guided Lab Track! · Want the In-Venue Skillable Track instead? [Go here](./02-Skillable.md)"
 
 ---
 
-## 1. Pre-Requisites
+## 1. Review Pre-Requisites
 
-If you have not already done so, review the [Pre-Requisites](./../0-PreRequisites/index.md) for Self-Guided workshops and make sure you have a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models before you begin. Note that the main difference with this flow is that you will need to _provision your own infrastructure_ for the project.
+You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](/contoso-chat/02-Setup/0-PreRequisites#self-guided) section if you need more details.
+
+---
 
 ## 2. Launch GitHub Codespaces
 
@@ -15,13 +17,17 @@ Our development environment uses a Visual Studio Code editor with a Python runti
 - [X] Launched GitHub Codespaces to get the pre-built dev environment.
 - [X] Fork the sample repo to your personal GitHub profile.
 
+---
+
 ### 2.1 Navigate to GitHub & Login
 
 1. Open a browser tab (T1) and navigate to the link below.
         ``` title="Tip: Click the icon at far right to copy link"
         https://aka.ms/contoso-chat/prebuild
         ```
-1. You will be prompted to log into GitHub. **Login now**
+1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
+
+---
 
 ### 2.2 Setup GitHub Codespaces
 
@@ -37,6 +43,8 @@ Our development environment uses a Visual Studio Code editor with a Python runti
     - When ready, you should see the README for the "Contoso Chat" repository
     
     !!! warning "Do NOT Follow those README instructions. Continue with this workshop guide!"
+
+---
 
 ### 2.3 Fork Repo To Your Profile
 
@@ -57,6 +65,8 @@ The Codespaces is running on the original Azure Samples repo. Let's create a for
 1. This will create a fork of the repository in your profile
     - It also updates the GitHub Codespaces to use your fork for commits
     - You are now ready to move to the next step!
+
+---
 
 ### 2.4 Verify Dependencies
 
@@ -80,10 +90,58 @@ azd version
 
 You are now ready to connect your VS Code environment to Azure.
 
-### 2.5 Authenticate With Azure 🚨
+---
 
-### 2.6 Provision & Deploy App 🚨
+## 3. Authenticate With Azure 
+
+To access our Azure resources, we need to be authenticated from VS Code. Return to the GitHub Codespaces tab, and open up a VS Code terminal. Then, complete these two steps:
+
+!!! task "Step 1: Authenticate with `az` for post-provisioning tasks"
+
+1. Log into the Azure CLI `az` using the command below. 
+
+    ```
+    az login --use-device-code
+    ```
+
+1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
+
+1. Select the account with the Username shown in the Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab
+
+1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
+
+
+!!! task "Step 2: Authenticate with `azd` for provisioning & managing resources"
+
+1. Log into the Azure Developer CLI using the command below. 
+
+    ```
+    azd auth login --use-device-code
+    ```
+
+1. Follow the same process as before - copy code, paste it when prompted, select account.
+1. Note: you won't need to enter the password again. Just select the Skillable lab account.
 
 ---
 
-## Next: Go To [Validate Setup](./03-Validation.md)
+## 4. Provision & Deploy App
+
+_This project is an `azd-template`! It defines infrastructure-as-code assets that are used by the Azure Developer CLI to provision and manage your solution infrastructure resources_.
+
+
+1. Provision & deploy the solution with one command: ```azd up```
+
+1. You will be prompted for various inputs:
+
+    - Subscription - specify your own active Azure subscription ID
+    - Environment name for resource group - we recommend using `AITOUR` 
+    - Location for deployment - we recommend using `francecentral`
+
+        !!! tip "Refer to [Region Availability](#region-availability) guidance and pick the option with desired models and quota available."
+
+1. Wait for the process to complete. It may take 15-20 minutes or more.
+1. On successful completion you will see a **`SUCCESS: ...`** message on the console.
+
+---
+
+## Next → [Validate Setup](./03-Validation.md)

@@ -1,203 +1,245 @@
-# B. Skillable-Based 
+# B. Skillable-Based Setup
 
-!!! warning "If you are are NOT in an instructor-led session, use the [Self-Guided Setup](./01-Self-Guided.md) instead!"
+This is the start of the _instructor-guided_ track for this workshop. We use the [Skillable VM](https://skillable.com) - a _lab-on-demand_ platform with a built-in Azure subscription and pre-provisioned resources - to give you a fast start. 
+
+!!! question "WERE YOU LOOKING FOR THE SELF-GUIDED OPTION INSTEAD? [You can find that here.](./01-Self-Guided.md)"
 
 ---
 
-The instructor-led sessions use [Skillable](https://skillable.com), a _lab-on-demand_ platform with a built-in Azure subscription, that pre-provisions the infrastructure for the lab to save you time. Your instructor should provide you a link or QR code for the Skillable Lab at the start of your session.
-
 ## 1. Launch Skillable VM
 
-You may have completed this step in-venue, with instructor guidance. If not, please expand the section below to complete the task now. At the end of this step you should have:
+To continue with Skillable-based Setup, you will need the **Lab Launch URL** (link or QR Code) given to you by your instructor at the start of the session. On completing this step, you should have:
 
 - [X] The Skillable VM tab open, with the Azure subscription details shown.
-- [X] The Skillable countdown timer visible, with start time of 1h 15 mins.
-- [X] The instruction guide open, with this section in focus.
+- [X] The Skillable countdown timer visible, with _at least 1h 15 mins_ remaining.
+- [X] The `Deploy` button clicked, and showing a _Successful_ completion message.
+- [X] This instruction guide open, with this section in focus.
 
-??? example "Step 1.1 Launch Skillable VM"
+**If you already completed these steps in-venue with instructor help, then skip ahead to [Step 2](#2-launch-github-codespaces)**. Otherwise, expand the section below to complete the task now.
+
+??? task "GET STARTED: Launch Skillable VM, Click Deploy Button, Open Workshop Guide"
 
     The lab instructor should have shared a Skillable Lab link (URL or QR Code).
 
-    - Open the browser and navigate to the link - _verify the lab title is right_.
-    - Click the **Launch** button - _wait till the page completes loading_.
+    - Open the browser and navigate to the link - _locate LAB401 in the page_.
+    - Click the **Launch** button - _wait till the launched page completes loading_.
         - (Left) You will see a login screen - _we can ignore this for now_
         - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
-        - (Right) You should see an instruction pane - _we'll validate this, next_
-    - Review the instruction pane details:
-        - Check the lab title - should be _Build a Retail Copilot Code-First on Auzre AI_
+        - (Below that) You will see a **Deploy** button - we will use this, next.
+        - (Below That) You should see the instructions panel - we'll validate this, after.
+    - Click the **Deploy** button - _wait till the loading progress icon stops_.
+        - This triggers a background task to deploy our application to Azure
+        - **This step can take a few minutes to complete**
+        - When done, you should see a "Success" dialog below the button.
+        - *Note: The dialog may use a red background to alert you - this does not imply failure!*
+    - Review other **Instructions Panel** details:
+        - Check the lab title - should be _Build a Retail Copilot Code-First on Azure AI_
         - Check the Azure subscription - should have _username & password_ details filled in
         - Check the Workshop guide link - should open to a hosted version of this guide.
      
     **Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
 
-    ---
-
-    ✅ **CONGRATULATIONS!** | You setup the Skillable VM tab!
-
 ---
 
 ## 2. Launch GitHub Codespaces
 
-Our development environment uses a Visual Studio Code editor with a Python runtime. The Contoso Chat sample repository is instrumented with a [dev container](https://containers.dev) which specifies all required tools and dependencies. At the end of this step you should have:
+The Contoso Chat sample repository is instrumented with a [dev container](https://containers.dev) which specifies required tools and dependencies. Simply launch this from GitHub Codespaces to get a pre-built development environment with a Visual Studio Code editor and Python runtime ready to go.
+
+At the end of this step you should have:
 
 - [X] Launched GitHub Codespaces to get the pre-built dev environment.
-- [X] Fork the sample repo to your personal GitHub profile.
+- [X] Forked the sample repo to your personal GitHub profile.
+- [X] Verified that required command-line tools were installed.
 
 ### 2.1 Navigate to GitHub & Login
 
+
 1. Open a browser tab (T1) and navigate to the link below.
-        ``` title="Tip: Click the icon at far right to copy link"
-        https://aka.ms/contoso-chat/prebuild
-        ```
-1. You will be prompted to log into GitHub. **Login now**
+
+    !!! tip "In codeblocks like this, click the icon (far right) to copy text to clipboard!"
+
+    ``` title=""
+    https://aka.ms/contoso-chat/prebuild
+    ```
+
+1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
 
 ### 2.2 Setup GitHub Codespaces
 
 1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
-    - Check that the Branch is `msignite-LAB401`
+    - Check branch is `msignite-LAB401` 
+    - Check dev container config is `Contoso Chat (v2)` and region is `US East`
     - Click dropdown for **2-core** and verify it is `Prebuild ready`
 
-    !!! tip "Using the pre-build makes the GitHub Codespaces load up faster."
+    !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster."
 
 1. Click the green "Create codespace" button
     - You should see a new browser tab open to a link ending in `*.github.dev`
     - You should see a Visual Studio Code editor view loading (takes a few mins)
     - When ready, you should see the README for the "Contoso Chat" repository
     
-    !!! warning "Do NOT Follow those README instructions. Continue with this workshop guide!"
+    !!! warning "The README is for information only. Please continue to follow _this_ guide for the workshop."
 
 ### 2.3 Fork Repo To Your Profile
 
-!!! tip "(OPTIONAL) You can also do this step using the GitHub CLI. Check out [this gist](https://gist.github.com/nitya/94dab67522f379e895a124ee32f5a5d3) for guidance."
+Your GitHub Codespaces is running on the _original_ Azure Samples repo for this sample. Let's fork this now, so we have a personal copy to modify and reviist. We will use the GitHub CLI to complete this in just a few quick steps!
 
 
-The Codespaces is running on the original Azure Samples repo. Let's create a fork from Codespaces, so we have a personal copy to modify. 
+1. Open the VS Code terminal and run this command to verify the GitHub CLI is installed.
 
-!!! tip "We'll follow [this GitHub process](https://docs.github.com/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template#publishing-to-a-repository-on-github) triggered by repo edits. Check out [this gist](https://gist.github.com/nitya/97cf4c757c21e76f24ad9d51a85fb8ea) for guidance with screenshots"
+    ```bash title=""
+    gh --version
+    ```
+    
+1. Next, run this command to authenticate with GitHub, with scope set to allow fork actions.
 
-1. Lets create an empty file from the VS Code Terminal.
-
-    ``` title="Tip: Click the icon at far right to copy command"
-    touch .workshop-notes.md
+    ```bash title=""
+    GITHUB_TOKEN="" gh auth login --hostname github.com --git-protocol https --web --scopes workflow 
     ```
 
-1. This triggers a notification (blue "1") in Source Control icon on sidebar
-1. Click the notification to start the Commit workflow 
-1. Enter a commit message ("Forking Contoso Chat") and click "Commit"
-1. You will now be prompted to "Publish Branch" 
-    - You should see 2 options (remote = original repo, origin = your fork)
-    - Select the `origin` option (verify that the URL is to your profile)
-1. This will create a fork of the repository in your profile
-    - It also updates the GitHub Codespaces to use your fork for commits
-    - You are now ready to move to the next step!
+    The command ensures we complete the auth workflow from the web browser using the Git protocol over a secure HTTPS connection, and scope limited to workflow actions. Using an empty GITHUB_TOKEN ensure we don't use an existing token with broader scope. 
+
+1. Follow the prompts to complete auth flow. (Expand the sections below for an example)
+
+    ??? task "1. Complete Device Activation flow"
+
+        - Say "Yes" when prompted to authenticate with GitHub credentials
+        - Copy the one-time code provided in the console
+        - Press "Enter" to open the Device Activation window
+        - Copy the code into that window as shown below
+
+            Here is an example of what that looks like:
+
+            ![Activation](./../../img/gh-cli-activation.png)
+
+    ??? task "2. Confirm GitHub authorization scope"
+
+        - You should see this authorization dialog on activation
+        - Click the green "Authorize github" button to continue
+        - This gives the GitHub CLI (this session) permission to do the fork
+
+            ![Activation](./../../img/gh-cli-confirmation'.png)
+
+    ??? task "3. Verify you are Logged in."
+
+        - The console log should show you are logged in successfully
+
+            ![Activation](./../../img//gh-cli-authflow.png)
+
+1. Now, run this command to fork the repo.
+
+    ``` title=""
+    GITHUB_TOKEN="" gh repo fork --remote
+    ```
+
+    You should see a `Created fork..` followed by an `Added remote origin ..` message. On completion, you should have a fork of the repo in your personal profile _and_ your local Codespaces environment will now be setup to commit changes to your fork.
+
+1. **Optional**. Visit your GitHub profile and check that the fork was created. It should be at the location in the form `https://github.com/<username>/contoso-chat` where `<username>` should be replaces by your GitHub profile.
 
 ### 2.4 Check Tools Installed
 
-Use the following commands in the VS Code terminal to verify these tools are installed.
+The workshop uses the following tools and commands: `python`, `fastapi`, `prompty`, `az`, `azd`. These are pre-installed for you, but you can optionally verify these to get a sense for their current versions.
 
-```bash title="Tip: Click the icon at far right to copy command"
-python --version
-```
-```bash title="Tip: Click the icon at far right to copy command"
-fastapi --version
-```
-```bash title="Tip: Click the icon at far right to copy command"
-prompty --version
-```
-```bash title="Tip: Click the icon at far right to copy command"
-az version
-```
-```bash title="Tip: Click the icon at far right to copy command"
-azd version
-```
+??? task "(Optional: Expand to view details) Verify intalled tools." 
 
-
-### 2.5 Authenticate with Azure
-
-To access our Azure resources, we need to be authenticated from VS Code. Return to the GitHub Codespaces tab, and open up a VS Code terminal. Then, complete these two steps:
-
-!!! task "Step 1: Authenticate with `az` for post-provisioning tasks"
-
-1. Log into the Azure CLI `az` using the command below. 
-
+    ```bash title=""
+    python --version
     ```
-    az login --use-device-code
+    ```bash title=""
+    fastapi --version
+    ```
+    ```bash title=""
+    prompty --version
+    ```
+    ```bash title=""
+    az version
+    ```
+    ```bash title=""
+    azd version
     ```
 
-1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
 
-1. Select the account with the Username shown in the Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab
+## 3. Authenticate with Azure
 
-1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
+To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, complete both the steps below (click each to expland for instructions).
+
+??? task "1. Authenticate with `az` for post-provisioning tasks"
+
+    1. Log into the Azure CLI `az` using the command below. 
+
+        ``` title=""
+        az login --use-device-code
+        ```
+
+    1. Copy the 8-character code shown to your clipboard, then control-click the link to visit [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in a new browser tab.
+
+    1. Select the account with the Username shown in the Skillable Lab window. Click "Continue" at the `are you sure?` prompt, and then close the tab
+
+    1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
 
 
-!!! task "Step 2: Authenticate with `azd` for provisioning & managing resources"
+??? task "2. Authenticate with `azd` for provisioning & managing resources"
 
-1. Log into the Azure Developer CLI using the command below. 
+    1. Log into the Azure Developer CLI using the command below. 
 
-    ```
-    azd auth login --use-device-code
-    ```
+        ``` title=""
+        azd auth login --use-device-code
+        ```
 
-1. Follow the same process as before - copy code, paste it when prompted, select account.
-1. Note: you won't need to enter the password again. Just select the Skillable lab account.
+    1. Follow the same process as before - copy code, paste it when prompted, select account.
+    1. Note: you won't need to enter the password again. Just select the Skillable lab account.
 
-!!! success "You are now logged into Azure CLI and Azure Developer CLI"
+!!! success "CONGRATULATIONS. You are logged in from Azure CLI and Azure Developer CLI"
 
-### 2.6 Configure Env Variables
+## 4. Configure Env Variables
 
 To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've already provisioned for you in the `francecentral` region. Let's retrieve those now.
 
-From the Terminal pane in Tab 2️⃣:
+1. Run the commands below in the same Visual Studio Code terminal.
 
-1. Run the commands below
+    ``` title=""
+    azd env set AZURE_LOCATION francecentral -e AITOUR --no-prompt
+    ```
+    ``` title=""
+    azd env refresh -e AITOUR 
+    ```
 
-```
-azd env set AZURE_LOCATION francecentral -e AITOUR --no-prompt
-```
-```
-azd env refresh -e AITOUR 
-```
+    (Press ENTER to select the default Azure subscription presented). 
 
-(Press ENTER to select the default Azure subscription presented). 
+2. Verify the environment variables were refreshed.
 
-The file `.azure/AITOUR/.env` has been updated in our filesystem with information needed to build our app: connection strings, endpoint URLs, resource names and much more. You can open the file to see the values retrieved, or display them with this command:
+    The above commands will have created a `.azure/AITOUR/.env` file in your GitHub Codespaces environment with all the configuration information we will need to build our app. You can open the file from the VS Code file explorer **or** you can run the command below to view the values in the terminal:
 
-```
-azd env get-values
-```
+    ``` title=""
+    azd env get-values
+    ```
 
-!!! info "No passwords or other secrets are included in the `.env` file. Authentication is controlled using [managed identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) as a security best practice." 
+    !!! tip "Note that the `.env` file does not contain any secrets (passwords or keys). Instead, we use  [Azure Managed Identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for keyless authentication as a _security best practice_" 
 
 
-### 2.7 Do Post-Provisioning
+## 5. Do Post-Provisioning
 
 _We can now use these configured tools and SDK to perform some post-provisioning tasks. This includes populating data in Azure AI Search (product indexes) and Azure Cosmos DB (customer data), and deploying the initial version of our application to Azure Container Apps_.
 
-From the Terminal pane in Tab 2️⃣:
+Return to the Visual Studio Code Terminal above:
 
 1. Run the command below. (This will take a few minutes to complete.)
 
-    ```
+    ``` title=""
     bash ./docs/workshop/src/0-setup/azd-update-roles.sh
     ```
 
-    !!! info "This updates the security profile for the provisioned Cosmos DB database so you can add data to it. This step isn't needed when you deploy Cosmos DB yourself."
+    !!! info "We pre-provisioned the Azure resources for you using a service principal. In this step, we update the resource roles to allow user access so you can populate data in Azure AI Search and Azure Cosmos DB from code. This step is not required in self-guided mode where you provision all resources yourself."
 
-1. Once complete, run the command below:
+1. Once complete, run the command below. It will take a few minutes to complete.
 
-    ```
+    ``` title=""
     azd hooks run postprovision
     ```
 
-    This command populates Azure Search and Cosmos DB with product and customer data from Contoso Outdoors. It also builds and deploys a shell endpoint to the container app, which we will update in the next section. This will take a few minutes.
-
-    !!! info "If you're curious, the code to populate the databases is found in Python Notebooks in `data` folder of the repository."
-
-1. Refresh the Container App in tab 5️⃣ - it will update to say "Hello world" ✅
-
-_We are ready to start the development workflow segment of our workshop. But let's first check that all these setup operations were successful!_.
+    !!! info "This step runs the Jupyter Notebooks found in the relevant `data/` subfolders, populating the Azure AI Search and Azure CosmosDB resources with product catalog (index) and customer profile (orders)."
+This step should take just a few minutes to complete from the commandline.
 
 ---
 
-## Next Step: [Validate Setup](./03-Validation.md)
+!!! success "CONGRATULATIONS. Your Skillable-based Setup is Complete! We'll Validate this, next!"
