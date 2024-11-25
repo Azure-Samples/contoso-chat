@@ -8,7 +8,7 @@ deployments:
       version: "0613"
     sku:
       name: Standard
-      capacity: 20
+      capacity: 14
   - name: text-embedding-ada-002
     model:
       format: OpenAI
