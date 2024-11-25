@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from typing import Dict, List
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from prompty.tracer import trace
@@ -87,7 +88,10 @@ def find_products(context: str) -> Dict[str, any]:
         configuration=model_config,
         inputs={"context":context}
         )
-    qs = json.loads(queries)
+    if queries.startswith("```"):
+        queries = re.sub(r"^```(?:json)?\n|\n```$", "", queries.strip(), flags=re.MULTILINE)
+    qs = json.loads(queries.strip())  
+
     # Generate embeddings
     items = generate_embeddings(qs)
     # Retrieve products
