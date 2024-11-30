@@ -12,32 +12,47 @@ To continue with Skillable-based Setup, you will need the **Lab Launch URL** (li
 
 - [X] The Skillable VM tab open, with the Azure subscription details shown.
 - [X] The Skillable countdown timer visible, with _at least 1h 15 mins_ remaining.
-- [X] The `Deploy` button clicked, and showing a _Successful_ completion message.
 - [X] This instruction guide open, with this section in focus.
+- [X] (Optional) A Deploy button that was clicked, and shows _Successful_ completion.
 
 **If you already completed these steps in-venue with instructor help, then skip ahead to [Step 2](#2-launch-github-codespaces)**. Otherwise, expand the section below to complete the task now.
 
-??? task "GET STARTED: Launch Skillable VM, Click Deploy Button, Open Workshop Guide"
+??? task "GET STARTED: Launch Skillable VM and Open Workshop Guide"
 
     The lab instructor should have shared a Skillable Lab link (URL or QR Code).
 
-    - Open the browser and navigate to the link - _locate LAB401 in the page_.
+    - Open the browser and navigate to the link - _locate WRK 550 in the page_.
     - Click the **Launch** button - _wait till the launched page completes loading_.
         - (Left) You will see a login screen - _we can ignore this for now_
         - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
-        - (Below that) You will see a **Deploy** button - we will use this, next.
+        - (Below that) You **MAY** see a **Deploy** button - we will use this, next.
         - (Below That) You should see the instructions panel - we'll validate this, after.
-    - Click the **Deploy** button - _wait till the loading progress icon stops_.
-        - This triggers a background task to deploy our application to Azure
-        - **This step can take a few minutes to complete**
-        - When done, you should see a "Success" dialog below the button.
-        - *Note: The dialog may use a red background to alert you - this does not imply failure!*
     - Review other **Instructions Panel** details:
         - Check the lab title - should be _Build a Retail Copilot Code-First on Azure AI_
         - Check the Azure subscription - should have _username & password_ details filled in
         - Check the Workshop guide link - should open to a hosted version of this guide.
+
+
+    Skillable pre-provisions resources for the application, including an Azure Container Apps resources with a default endpoint. During setup, we want to update this endpoint with an initial version of our Contoso App.
+
+    !!! tip "TO DEPLOY ACA: Pick the option that reflects your SKillable VM setup"
+
+    === "With Deploy Button"
+
+        Some Skillable VMs may be setup to show you a _Deploy_ button in the Instructions Panel. If you see this option in your VM follow these steps:
+
+        - Click the button to start Azure Container Apps deployment
+        - Wait for active progress indicator to complete. Takes ~2 minutes.
+        - Wait for _Successful_ status message. This indicates deployment worked.
+        - If you see an _Error_ message - wait a minute, then click Deploy again.
+        - If you do not succeed after a second retry, then ask a Proctor to help. 
+
+    === "Without Deploy Button"
+
+        If you Skillable VM was not setup with a _Deploy_ button, that's okay. It just means you will complete this step **manually** using the commandline in the [4. Configure Env Variables](#4-configure-env-variables) section. The process takes the same amount of time but will provide feedback via the terminal. We'll remind you of this step at that time.
+
+**Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
      
-    **Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
 
 ---
 
@@ -71,7 +86,7 @@ At the end of this step you should have:
     - Check dev container config is `Contoso Chat (v2)` and region is `US East`
     - Click dropdown for **2-core** and verify it is `Prebuild ready`
 
-    !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster."
+    !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster. We will use the `msignite-LAB401` prebuild since that has the latest version of the codebase and instructions for this workshop."
 
 1. Click the green "Create codespace" button
     - You should see a new browser tab open to a link ending in `*.github.dev`
@@ -82,24 +97,15 @@ At the end of this step you should have:
 
 ### 2.3 Fork Repo To Your Profile
 
-Your GitHub Codespaces is running on the _original_ Azure Samples repo for this sample. Let's fork this now, so we have a personal copy to modify and reviist. We will use the GitHub CLI to complete this in just a few quick steps!
+Your GitHub Codespaces is running on the _original_ Azure Samples repo for this sample. We'll fork this to get a personal copy we can modify and revisit later. Let's use the GitHub CLI to do this!
 
-
-1. Open the VS Code terminal and run this command to verify the GitHub CLI is installed.
-
-    ```bash title=""
-    gh --version
-    ```
-    
-1. Next, run this command to authenticate with GitHub, with scope set to allow fork actions.
+1. Run this command in the terminal to authenticate using the GitHub CLI. 
 
     ```bash title=""
     GITHUB_TOKEN="" gh auth login --hostname github.com --git-protocol https --web --scopes workflow 
     ```
+    The command ensures we complete auth flow from a web broaser using the Git protocol over a secure HTTPS connection with scope limited to workflow actions. By using an empty GITHUB_TOKEN, we ensure that we don't accidentally use an existing token with broader scope. Expand the sections below to see screenshots from each step, for reference.
 
-    The command ensures we complete the auth workflow from the web browser using the Git protocol over a secure HTTPS connection, and scope limited to workflow actions. Using an empty GITHUB_TOKEN ensure we don't use an existing token with broader scope. 
-
-1. Follow the prompts to complete auth flow. (Expand the sections below for an example)
 
     ??? task "1. Complete Device Activation flow"
 
@@ -126,21 +132,19 @@ Your GitHub Codespaces is running on the _original_ Azure Samples repo for this 
 
             ![Activation](./../../img//gh-cli-authflow.png)
 
-1. Now, run this command to fork the repo.
+1. Run this command next, to fork the repo to your personal profile.
 
     ``` title=""
     GITHUB_TOKEN="" gh repo fork --remote
     ```
 
-    You should see a `Created fork..` followed by an `Added remote origin ..` message. On completion, you should have a fork of the repo in your personal profile _and_ your local Codespaces environment will now be setup to commit changes to your fork.
+    You should see: a `Created fork..` message followed by `Added remote origin ..`. On completion, you should have a fork of the repo in your personal profile _and_ your local Codespaces environment will now be setup to commit changes to your fork. Verify this by visiting your GitHub profile page - you should see a `contoso-chat` repository listed.
 
-1. **Optional**. Visit your GitHub profile and check that the fork was created. It should be at the location in the form `https://github.com/<username>/contoso-chat` where `<username>` should be replaces by your GitHub profile.
+### 2.4 (Optional) Validate Tools
 
-### 2.4 Check Tools Installed
+The workshop uses the following tools and commands: `python`, `fastapi`, `prompty`, `az`, `azd`. These are pre-installed in the devcontainer, but you can verify this at commandline if needed.
 
-The workshop uses the following tools and commands: `python`, `fastapi`, `prompty`, `az`, `azd`. These are pre-installed for you, but you can optionally verify these to get a sense for their current versions.
-
-??? task "(Optional: Expand to view details) Verify intalled tools." 
+??? quote "OPTIONAL: Use these commands to verify required tools are installed" 
 
     ```bash title=""
     python --version
@@ -161,7 +165,7 @@ The workshop uses the following tools and commands: `python`, `fastapi`, `prompt
 
 ## 3. Authenticate with Azure
 
-To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, complete both the steps below (click each to expland for instructions).
+To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, **complete both steps** below (click each to expand for instructions).
 
 ??? task "1. Authenticate with `az` for post-provisioning tasks"
 
@@ -206,7 +210,7 @@ To build code-first solutions, we will need to use the Azure SDK from our develo
 
     (Press ENTER to select the default Azure subscription presented). 
 
-2. Verify the environment variables were refreshed.
+1. Verify the environment variables were refreshed.
 
     The above commands will have created a `.azure/AITOUR/.env` file in your GitHub Codespaces environment with all the configuration information we will need to build our app. You can open the file from the VS Code file explorer **or** you can run the command below to view the values in the terminal:
 
@@ -215,6 +219,21 @@ To build code-first solutions, we will need to use the Azure SDK from our develo
     ```
 
     !!! tip "Note that the `.env` file does not contain any secrets (passwords or keys). Instead, we use  [Azure Managed Identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for keyless authentication as a _security best practice_" 
+
+
+1. Update the Azure Container Apps instance to show the `Hello World` version.
+
+
+    !!! tip "Skip this step if you had previously clicked a `Deploy` button as part of the [1. Launch Skillable VM](#1-launch-skillable-vm) setup phase of the workshop. If you did _not_ see the button or complete that step, you can do so now."
+
+    If you clicked a `Deploy` button during setup, you effectively pushed an initial version of the Contoso Chat application to the provisioned Azure Container Apps resource for our project. If you did _not_ do so then, you can fix that now with this command:
+
+    ``` title=""
+    azd deploy
+    ```
+    
+    Wait till the command completes - this may take a couple of minutes but you should see progress updates in the terminal. Wait till you get the "Success" message.
+
 
 
 ## 5. Do Post-Provisioning

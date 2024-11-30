@@ -5,7 +5,7 @@ This file is dynamically retrieved and used by the Skillable VM as the Instructi
 
 # WRK-550: Build a Retail Copilot Code-First on Azure AI Foundry
 
-This is a 75-minute instructor-led workshop at Microsoft Ignite 2024 where you learn to build, evaluate, and deploy, a RAG-based retail copilot on Azure AI.
+This is a 75-minute instructor-led workshop at Microsoft AI Tour 2024-25 where you learn to build, evaluate, and deploy, a RAG-based retail copilot on Azure AI.
 
 **‼️ -- DO NOT CLOSE THIS WINDOW -- ‼️** <br/> Closing this window will end your lab prematurely. Instead, minimize this window so you can return to it later when required.
 
@@ -18,7 +18,7 @@ This is a 75-minute instructor-led workshop at Microsoft Ignite 2024 where you l
 Open a new private browser in your workstation. 
 
 1. Copy the instructions link to the browser and navigate to it.
-1. In the "Before You Begin" section, **Select the Microsoft Ignite tab**
+1. In the "Before You Begin" section, **Select the Microsoft AI Tour tab**
 1. Leave this browser open and follow the instructions for the lab.
 
 ## 2. Azure Credentials
