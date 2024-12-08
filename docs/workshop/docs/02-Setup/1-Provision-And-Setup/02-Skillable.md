@@ -167,7 +167,9 @@ The workshop uses the following tools and commands: `python`, `fastapi`, `prompt
 
 To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, **complete both steps** below (click each to expand for instructions).
 
-??? task "1. Authenticate with `az` for post-provisioning tasks"
+!!! warning "REMINDER: Use the Skillable-provided Azure Subscription for this step. Do **NOT** use a personal subscription!"
+
+!!! task "1. Authenticate with `az` for post-provisioning tasks"
 
     1. Log into the Azure CLI `az` using the command below. 
 
@@ -182,7 +184,7 @@ To access our Azure resources, we need to be authenticated from VS Code. Make su
     1. Back in the Terminal, press Enter to select the default presented subscription and tenant.
 
 
-??? task "2. Authenticate with `azd` for provisioning & managing resources"
+!!! task "2. Authenticate with `azd` for provisioning & managing resources"
 
     1. Log into the Azure Developer CLI using the command below. 
 
@@ -223,10 +225,7 @@ To build code-first solutions, we will need to use the Azure SDK from our develo
 
 1. Update the Azure Container Apps instance to show the `Hello World` version.
 
-
-    !!! tip "Skip this step if you had previously clicked a `Deploy` button as part of the [1. Launch Skillable VM](#1-launch-skillable-vm) setup phase of the workshop. If you did _not_ see the button or complete that step, you can do so now."
-
-    If you clicked a `Deploy` button during setup, you effectively pushed an initial version of the Contoso Chat application to the provisioned Azure Container Apps resource for our project. If you did _not_ do so then, you can fix that now with this command:
+    The pre-provisioned Skillable subscription has an Azure Container apps resource with a default endpoint setup. In this step, we push the initial version of the Contosot Chat application to the resource and update that endpoint by running this command:
 
     ``` title=""
     azd deploy
