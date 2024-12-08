@@ -1,4 +1,5 @@
 param location string = resourceGroup().location
+param searchLocation string = 'westeurope'
 param tags object = {}
 
 @description('Name of the key vault')
@@ -139,7 +140,7 @@ module searchService '../search/search-services.bicep' = {
     name: 'search'
     params: {
       name: searchServiceName
-      location: location
+      locationAISearch: searchLocation
       semanticSearch: 'standard'
       disableLocalAuth: true
     }

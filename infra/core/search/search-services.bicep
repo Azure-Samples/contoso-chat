@@ -1,6 +1,6 @@
 metadata description = 'Creates an Azure AI Search instance.'
 param name string
-param location string = resourceGroup().location
+param locationAISearch string = 'westeurope'
 param tags object = {}
 
 param sku object = {
@@ -42,7 +42,7 @@ var searchIdentityProvider = (sku.name == 'free') ? null : {
 
 resource search 'Microsoft.Search/searchServices@2021-04-01-preview' = {
   name: name
-  location: location
+  location: locationAISearch
   tags: tags
   // The free tier does not support managed identity
   identity: searchIdentityProvider
