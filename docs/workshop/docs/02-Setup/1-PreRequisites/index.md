@@ -1,4 +1,4 @@
-# Pre-Requisites
+# 1. Pre-Requisites
 
 You **must** have a GitHub account to get started. Take a minute to [sign up for a free account](https://github.com/signup) if you don't currently have one. Then check your workshop tab below for additional details.
 
@@ -42,12 +42,12 @@ You **must** have a GitHub account to get started. Take a minute to [sign up for
         
 === "Microsoft AI Tour"
 
-    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md) to get started!"  
+    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../2-Provision-And-Setup/02-Skillable.md) to get started!"  
 
-    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../1-Provision-And-Setup/01-Self-Guided.md) instead_.
+    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../2-Provision-And-Setup/01-Self-Guided.md) instead_.
 
 === "Microsoft Ignite"
 
-    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md) to get started!"   
+    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../2-Provision-And-Setup/02-Skillable.md) to get started!"   
 
-    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../1-Provision-And-Setup/01-Self-Guided.md) instead_.
+    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../2-Provision-And-Setup/01-Self-Guided.md) instead_.

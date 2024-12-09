@@ -1,4 +1,4 @@
-# A. Self-Guided Setup
+# Self-Guided Setup
 
 !!! info "Welcome to the Self-Guided Lab Track! · Want the In-Venue Skillable Track instead? [Go here](./02-Skillable.md)"
 
@@ -33,7 +33,7 @@ Our development environment uses a Visual Studio Code editor with a Python runti
 
 1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
     - Check that the Branch is `msignite-LAB401`
-    - Click dropdown for **2-core** and verify it is `Prebuild ready`
+    - Click dropdown for **2-core** and verify it shows `Prebuild ready`
 
     !!! tip "Using the pre-build makes the GitHub Codespaces load up faster."
 
@@ -144,4 +144,4 @@ _This project is an `azd-template`! It defines infrastructure-as-code assets tha
 
 ---
 
-## Next → [Validate Setup](./03-Validation.md)
+## Next → [Validate Setup](./../3-Validation/index.md)

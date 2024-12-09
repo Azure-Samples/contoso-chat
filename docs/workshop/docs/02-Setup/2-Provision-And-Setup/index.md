@@ -1,4 +1,4 @@
-# 1. Provision & Setup
+# 2. Provision & Setup
 
 ![Dev Workflow](./../../img/workshop-developer-flow.png)
 

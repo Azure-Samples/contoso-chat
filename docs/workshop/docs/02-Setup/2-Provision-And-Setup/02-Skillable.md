@@ -1,4 +1,4 @@
-# B. Skillable-Based Setup
+# Skillable-Based Setup
 
 This is the start of the _instructor-guided_ track for this workshop. We use the [Skillable VM](https://skillable.com) - a _lab-on-demand_ platform with a built-in Azure subscription and pre-provisioned resources - to give you a fast start. 
 
@@ -83,8 +83,8 @@ At the end of this step you should have:
 
 1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
     - Check branch is `msignite-LAB401` 
-    - Check dev container config is `Contoso Chat (v2)` and region is `US East`
-    - Click dropdown for **2-core** and verify it is `Prebuild ready`
+    - Check dev container config is `Contoso Chat (v2)` 
+    - Click dropdown for **2-core** and verify it shows `Prebuild ready`
 
     !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster. We will use the `msignite-LAB401` prebuild since that has the latest version of the codebase and instructions for this workshop."
 
