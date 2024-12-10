@@ -165,7 +165,7 @@ The workshop uses the following tools and commands: `python`, `fastapi`, `prompt
 
 ## 3. Authenticate with Azure
 
-To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, **complete both steps** below (click each to expand for instructions).
+To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, **complete both steps** below.
 
 !!! warning "REMINDER: Use the Skillable-provided Azure Subscription for this step. Do **NOT** use a personal subscription!"
 

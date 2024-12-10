@@ -6,7 +6,7 @@
 
 ## 1. Review Pre-Requisites
 
-You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](/contoso-chat/02-Setup/0-PreRequisites#self-guided) section if you need more details.
+You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](../1-PreRequisites/index.md) section if you need more details.
 
 ---
 
@@ -137,7 +137,7 @@ _This project is an `azd-template`! It defines infrastructure-as-code assets tha
     - Environment name for resource group - we recommend using `AITOUR` 
     - Location for deployment - we recommend using `francecentral`
 
-        !!! tip "Refer to [Region Availability](#region-availability) guidance and pick the option with desired models and quota available."
+        !!! tip "Refer to [Region Availability](https://github.com/Azure-Samples/contoso-chat?tab=readme-ov-file#region-availability) guidance and pick the option with desired models and quota available."
 
 1. Wait for the process to complete. It may take 15-20 minutes or more.
 1. On successful completion you will see a **`SUCCESS: ...`** message on the console.
