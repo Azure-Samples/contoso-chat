@@ -1,35 +1,25 @@
-# yaml-language-server: $schema=ai.yaml.json
-
 deployments:
-  - name: gpt-35-turbo
+  - name: gpt-35-turbo-primary
     model:
       format: OpenAI
       name: gpt-35-turbo
-      version: "0613"
+      version: "0613"  # Supported version
     sku:
-      name: Standard
-      capacity: 20
+      name: Standard  # Correct SKU
+      capacity: 8     # Match your available quota
   - name: text-embedding-ada-002
     model:
       format: OpenAI
       name: text-embedding-ada-002
       version: "2"
     sku:
-      name: "Standard"
-      capacity: 20
-  - name: gpt-4
-    model:
-      format: OpenAI
-      name: gpt-4o
-      version: "2024-05-13"
-    sku:
-      name: "GlobalStandard"
-      capacity: 20
+      name: Standard  # Correct SKU
+      capacity: 8
   - name: gpt-4-evals
     model:
       format: OpenAI
       name: gpt-4
-      version: "1106-Preview"
+      version: "0613"
     sku:
-      name: "Standard"
+      name: Standard  # Correct SKU
       capacity: 8
