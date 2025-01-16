@@ -101,7 +101,7 @@ To deploy and explore the sample, you will need:
 1. An active Azure subscription - [Signup for a free account here](https://azure.microsoft.com/free/)
 1. An active GitHub account - [Signup for a free account here](https://github.com/signup)
 1. Access to Azure OpenAI Services - [Learn about Limited Access here](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
-1. Access to Azure AI Search - [With Semantic Ranker](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview) (premiun feature)
+1. Access to Azure AI Search - [With Semantic Ranker](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview) (premium feature)
 1. Available Quota for: `text-embedding-ada-002`, `gpt-35-turbo`. and `gpt-4`
 
 We recommend deployments to `swedencentral` or `francecentral` as regions that can support all these models. In addition to the above, you will also need the ability to:
