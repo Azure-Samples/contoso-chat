@@ -1,4 +1,4 @@
-# Pre-Requisites
+# 1. Pre-Requisites
 
 You **must** have a GitHub account to get started. Take a minute to [sign up for a free account](https://github.com/signup) if you don't currently have one. Then check your workshop tab below for additional details.
 
@@ -38,16 +38,16 @@ You **must** have a GitHub account to get started. Take a minute to [sign up for
         On completing this workshop, you will have:
         
         1. A personal copy of the [Contoso Chat](https://aka.ms/aitour/contoso-chat) repository in your GitHub profile. This contains all the materials you need to reproduce the workshop on your own later (e.g., as a _Self-Guided_ session).
-        1. Hands-on understanding of the [Azure AI Studio](https://ai.azure.com) platform and relevant developer tools (e.g., Azure Developer CLI, Prompty, Fast API) to streamline end-to-end development workflows for your own AI apps.
+        1. Hands-on understanding of the [Azure AI Foundry](https://ai.azure.com) platform and relevant developer tools (e.g., Azure Developer CLI, Prompty, Fast API) to streamline end-to-end development workflows for your own AI apps.
         
 === "Microsoft AI Tour"
 
-    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md) to get started!"  
+    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../2-Provision-And-Setup/02-Skillable.md) to get started!"  
 
-    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../1-Provision-And-Setup/01-Self-Guided.md) instead_.
+    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../2-Provision-And-Setup/01-Self-Guided.md) instead_.
 
 === "Microsoft Ignite"
 
-    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../1-Provision-And-Setup/02-Skillable.md) to get started!"   
+    !!! info "ARE YOU CURRENTLY IN THE LAB SESSION? Jump to [Provision & Setup!](./../2-Provision-And-Setup/02-Skillable.md) to get started!"   
 
-    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../1-Provision-And-Setup/01-Self-Guided.md) instead_.
+    The instructor-guided labs are setup with everything you need to get started. To get the most from this session, you should have some familiarity with Python, Jupyter Notebooks and Visual Studio Code. _If you revisit the workshop later at home, use the [Self-Guided version](./../2-Provision-And-Setup/01-Self-Guided.md) instead_.

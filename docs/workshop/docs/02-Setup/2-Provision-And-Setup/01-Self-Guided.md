@@ -1,4 +1,4 @@
-# A. Self-Guided Setup
+# Self-Guided Setup
 
 !!! info "Welcome to the Self-Guided Lab Track! · Want the In-Venue Skillable Track instead? [Go here](./02-Skillable.md)"
 
@@ -6,7 +6,7 @@
 
 ## 1. Review Pre-Requisites
 
-You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](/contoso-chat/02-Setup/0-PreRequisites#self-guided) section if you need more details.
+You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](../1-PreRequisites/index.md) section if you need more details.
 
 ---
 
@@ -22,7 +22,7 @@ Our development environment uses a Visual Studio Code editor with a Python runti
 ### 2.1 Navigate to GitHub & Login
 
 1. Open a browser tab (T1) and navigate to the link below.
-        ``` title="Tip: Click the icon at far right to copy link"
+        ``` title=""
         https://aka.ms/contoso-chat/prebuild
         ```
 1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
@@ -33,7 +33,7 @@ Our development environment uses a Visual Studio Code editor with a Python runti
 
 1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
     - Check that the Branch is `msignite-LAB401`
-    - Click dropdown for **2-core** and verify it is `Prebuild ready`
+    - Click dropdown for **2-core** and verify it shows `Prebuild ready`
 
     !!! tip "Using the pre-build makes the GitHub Codespaces load up faster."
 
@@ -52,7 +52,7 @@ The Codespaces is running on the original Azure Samples repo. Let's create a for
 
 1. Lets create an empty file from the VS Code Terminal.
 
-    ``` title="Tip: Click the icon at far right to copy command"
+    ``` title=""
     touch .workshop-notes.md
     ```
 
@@ -137,11 +137,11 @@ _This project is an `azd-template`! It defines infrastructure-as-code assets tha
     - Environment name for resource group - we recommend using `AITOUR` 
     - Location for deployment - we recommend using `francecentral`
 
-        !!! tip "Refer to [Region Availability](#region-availability) guidance and pick the option with desired models and quota available."
+        !!! tip "Refer to [Region Availability](https://github.com/Azure-Samples/contoso-chat?tab=readme-ov-file#region-availability) guidance and pick the option with desired models and quota available."
 
 1. Wait for the process to complete. It may take 15-20 minutes or more.
 1. On successful completion you will see a **`SUCCESS: ...`** message on the console.
 
 ---
 
-## Next → [Validate Setup](./03-Validation.md)
+## Next → [Validate Setup](./../3-Validation/index.md)
