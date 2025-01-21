@@ -2,7 +2,7 @@
 
 The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI - using the _Retrieval Augmented Generation_ (RAG) design pattern to make sure that our copilot responses are grounded in the (private) data maintained by the enterprise, for this application.
 
-![RAG](./../img/rag-design-pattern.png)
+![RAG](./../../img/rag-design-pattern.png)
  
 
 Let's learn how this design pattern works in the context of our Contoso Chat application. Click on the tabs in order, to understand the sequence of events shown in the figure above.

@@ -19,7 +19,7 @@
       "value": "${AZURE_EMBEDDING_NAME=text-embedding-ada-002}"
     },
     "openAiDeploymentName": {
-      "value": "${AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-35-turbo}"
+      "value": "${AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini}"
     },
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"

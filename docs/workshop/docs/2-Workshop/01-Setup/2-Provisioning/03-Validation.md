@@ -1,4 +1,4 @@
-# Validate Your Setup
+# 2.3 Validate Your Setup
 
 !!! success "SETUP IS COMPLETE: Let's Review where we are right now"
 

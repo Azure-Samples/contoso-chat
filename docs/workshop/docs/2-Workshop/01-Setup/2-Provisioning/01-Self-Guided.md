@@ -1,6 +1,8 @@
-# A. Self-Guided Setup
+# 2.1 Self-Guided Setup
 
-!!! info "Welcome to the Self-Guided Lab Track! · Want the In-Venue Skillable Track instead? [Go here](./02-Skillable.md)"
+
+!!! info "CURRENTLY IN AN AI TOUR SESSION? → [JUMP TO SKILLABLE-BASED SETUP](./../2-Provisioning/02-Skillable.md) INSTEAD"  
+
 
 ---
 

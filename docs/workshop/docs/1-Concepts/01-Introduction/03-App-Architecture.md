@@ -2,7 +2,7 @@
 
 The workshop teaches you to **build, evaluate, and deploy a retail copilot** code-first on Azure AI - using this application architecture for our Contoso Chat implementation.
 
-![ACA Architecture](./../img/aca-architecture.png)
+![ACA Architecture](./../../img/aca-architecture.png)
 
 Click on each tab to understand the archtiecture components and processing workflow.
 

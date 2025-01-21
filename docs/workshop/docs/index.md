@@ -6,7 +6,7 @@ You can complete it as a **self-guided** workshop at home. Or you can register f
 
 <a class="github-button" href="https://github.com/Azure-Samples/contoso-chat" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Star Azure-Samples/contoso-chat on GitHub"> Give Contoso Chat a Star!</a>
 
-<br/>
+---
 
 !!! task "CHOOSE THE TAB FOR YOUR SESSION - This becomes the default context site-wide."
 
@@ -26,15 +26,4 @@ You can complete it as a **self-guided** workshop at home. Or you can register f
     - [ ] Requires you to use **your own laptop** - keep it charged for the session duration
     - [ ] You have 75 minutes for the entire session - assume 60 mins for the lab alone
 
-    !!! question "Are you currently in a Microsoft AI Tour session? [Go directly to Provision & Setup!](./02-Setup/1-Provision-And-Setup/02-Skillable.md)"      
-    
-=== "Microsoft Ignite"
-
-    - [ ] Requires you to use **your own GitHub account** - you can [get one for free](https://github.com/signup)
-    - [X] Uses the **built-in Azure subscription** from Skillable - you get auth credentials
-    - [X] Uses the **pre-provisioned infrastructure** from Skillable - you save setup time
-    - [X] Uses the **in-venue workstations** setup for event - just find an open seat to use
-    - [ ] You have 75 minutes for the entire session - assume 60 mins for the lab alone
-    
-    !!! question "Are you currently in a Microsoft Ignite session? [Go directly to Provision & Setup!](./02-Setup/1-Provision-And-Setup/02-Skillable.md)"      
-      
+    !!! info "CURRENTLY IN AN AI TOUR SESSION? → [JUMP TO SKILLABLE-BASED SETUP](./2-Workshop/01-Setup/2-Provisioning/02-Skillable.md) DIRECTLY"  

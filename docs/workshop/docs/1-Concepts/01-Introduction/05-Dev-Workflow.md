@@ -2,7 +2,7 @@
 
 In the previous section, we saw the GenAIOps lifecycle: **Ideation, Evaluation, Operationalization**. Let's map those stages into the developer workflow shown below. Explore the [Learning Resources](./../01-Introduction/index.md) for deeper dives into the tools and responsible AI considerations involved. 
 
-![Dev Workflow](./../img/dev-workflow.png)
+![Dev Workflow](./../../img/dev-workflow.png)
 
 !!! info "Click on the tabs below to understand the task to be completed at each stage."
 

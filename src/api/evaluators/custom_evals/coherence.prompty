@@ -5,7 +5,7 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    azure_deployment: gpt-4-evals
+    azure_deployment: gpt-4o-evals
     api_version: 2023-07-01-preview
   parameters:
     max_tokens: 128

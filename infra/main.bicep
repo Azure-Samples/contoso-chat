@@ -204,7 +204,7 @@ module aca 'app/aca.bicep' = {
     identityId: managedIdentity.outputs.managedIdentityClientId
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-35-turbo'
+    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-4o-mini'
     openAiEmbeddingDeploymentName: openAiEmbeddingDeploymentName
     openAiEndpoint: ai.outputs.openAiEndpoint
     openAiType: openAiType

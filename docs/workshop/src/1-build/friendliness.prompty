@@ -8,7 +8,7 @@ model:
   configuration:
     type: azure_openai
     api_version: 2023-07-01-preview
-    azure_deployment: gpt-4-evals
+    azure_deployment: gpt-4o-evals
   parameters:
     max_tokens: 3000
     temperature: 0.1

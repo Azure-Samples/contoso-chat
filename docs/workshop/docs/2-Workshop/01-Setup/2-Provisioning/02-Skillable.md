@@ -1,4 +1,4 @@
-# B. Skillable-Based Setup
+# 2.2 Skillable-Based Setup
 
 This is the start of the _instructor-guided_ track for this workshop. We use the [Skillable VM](https://skillable.com) - a _lab-on-demand_ platform with a built-in Azure subscription and pre-provisioned resources - to give you a fast start. 
 

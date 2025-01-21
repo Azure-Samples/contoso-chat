@@ -8,7 +8,7 @@ model:
   configuration:
     type: azure_openai
     azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
-    azure_deployment: gpt-35-turbo
+    azure_deployment: gpt-40-mini
   parameters:
     max_tokens: 3000
 sample:
