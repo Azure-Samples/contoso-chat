@@ -1,3 +1,4 @@
 {
-  "python.terminal.activateEnvironment": true
+  "python.terminal.activateEnvironment": true,
+  "prompty.currentModelConfiguration": "default"
 }

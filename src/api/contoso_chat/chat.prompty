@@ -10,7 +10,7 @@ model:
     type: azure_openai
     azure_deployment: gpt-4o-mini
     azure_endpoint: ${ENV:AZURE_OPENAI_ENDPOINT}
-    api_version: 2024-07-18
+    api_version: 2024-08-01-preview
   parameters:
     max_tokens: 128
     temperature: 0.2
