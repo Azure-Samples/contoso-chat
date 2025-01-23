@@ -1,86 +1,89 @@
 # 2.2 Skillable-Based Setup
 
-This is the start of the _instructor-guided_ track for this workshop. We use the [Skillable VM](https://skillable.com) - a _lab-on-demand_ platform with a built-in Azure subscription and pre-provisioned resources - to give you a fast start. 
+This is the start of the instructor-led workshop track for Microsoft AI Tour attendees.
 
-!!! question "WERE YOU LOOKING FOR THE SELF-GUIDED OPTION INSTEAD? [You can find that here.](./01-Self-Guided.md)"
-
----
-
-## 1. Launch Skillable VM
-
-To continue with Skillable-based Setup, you will need the **Lab Launch URL** (link or QR Code) given to you by your instructor at the start of the session. On completing this step, you should have:
-
-- [X] The Skillable VM tab open, with the Azure subscription details shown.
-- [X] The Skillable countdown timer visible, with _at least 1h 15 mins_ remaining.
-- [X] The `Deploy` button clicked, and showing a _Successful_ completion message.
-- [X] This instruction guide open, with this section in focus.
-
-**If you already completed these steps in-venue with instructor help, then skip ahead to [Step 2](#2-launch-github-codespaces)**. Otherwise, expand the section below to complete the task now.
-
-??? task "GET STARTED: Launch Skillable VM, Click Deploy Button, Open Workshop Guide"
-
-    The lab instructor should have shared a Skillable Lab link (URL or QR Code).
-
-    - Open the browser and navigate to the link - _locate LAB401 in the page_.
-    - Click the **Launch** button - _wait till the launched page completes loading_.
-        - (Left) You will see a login screen - _we can ignore this for now_
-        - (Top Right) You will see a countdown timer - it should start at 1hr 15 mins. 
-        - (Below that) You will see a **Deploy** button - we will use this, next.
-        - (Below That) You should see the instructions panel - we'll validate this, after.
-    - Click the **Deploy** button - _wait till the loading progress icon stops_.
-        - This triggers a background task to deploy our application to Azure
-        - **This step can take a few minutes to complete**
-        - When done, you should see a "Success" dialog below the button.
-        - *Note: The dialog may use a red background to alert you - this does not imply failure!*
-    - Review other **Instructions Panel** details:
-        - Check the lab title - should be _Build a Retail Copilot Code-First on Azure AI_
-        - Check the Azure subscription - should have _username & password_ details filled in
-        - Check the Workshop guide link - should open to a hosted version of this guide.
-     
-    **Leave the Skillable tab open in your browser**. We'll use the Azure credentials in the next step. And we'll revisit this tab at the end, to complete lab teardown. You can also track remaining lab time in the countdown timer.
+!!! quote "ARE YOU REVISITING THE LAB AT HOME AFTER AITOUR? → [JUMP TO SELF-GUIDED SETUP](./../2-Provisioning/01-Self-Guided.md) instead"  
 
 ---
 
-## 2. Launch GitHub Codespaces
+## 1. Review Pre-Requisites
 
-The Contoso Chat sample repository is instrumented with a [dev container](https://containers.dev) which specifies required tools and dependencies. Simply launch this from GitHub Codespaces to get a pre-built development environment with a Visual Studio Code editor and Python runtime ready to go.
+Need a refresher on the pre-requisites for the workshop? [Review them here](./../1-Pre-Requisites/index.md#microsoft-ai-tour).
 
-At the end of this step you should have:
+---
 
-- [X] Launched GitHub Codespaces to get the pre-built dev environment.
-- [X] Forked the sample repo to your personal GitHub profile.
-- [X] Verified that required command-line tools were installed.
+## 2. Launch Skillable VM
 
-### 2.1 Navigate to GitHub & Login
+To continue with Skillable-based Setup, you will need the **Lab Launch URL** (link or QR Code) given to you by your instructor at the start of the session. 
+
+!!! quote "On completing this step, you should have the following:"
+
+    - [X] The Skillable VM tab open, with the Azure subscription details shown.
+    - [X] The Skillable countdown timer visible, with _at least 1h 15 mins_ remaining.
+    - [X] This instruction guide open, with this section in focus.
+
+**If you already completed this stage, [move directly to Step 2](#2-launch-github-codespaces)**. Otherwise, expand the section below to get detailed instructions, and complete the task now.
+
+??? task "LAUNCH SKILLABLE LAB → Check subscription status, open instruction manual "
+    1. **Get Skillable Lab Link**. The lab code is `WRK550`. The Lab instructor in-venue will share a link (URL or QR Code) to the Skillable lab at the start of the in-venue session. _Ask a proctor if you don't have that handy._
+    1. Open the browser and navigate to the link - _verify it says WRK550_.
+    1. Click the **Launch** button - _this may take a few minutes to complete_.
+        - When ready, you should see a new browser tab or window.
+        - You will see a `Login` screen at left - **do NOT log in. We won't use it**.
+        - You will see a countdown timer at top right - **verify it has at least 1hr 15 minutes**
+        - You will see an instructions panel at right - **we'll review this next**
+    1. Review the **Instructions Panel** and verify it has the following:
+        - Lab Title - should be _Build a Retail Copilot Code-First on Azure AI_
+        - Azure subscription - should have _username & password_ details filled in
+        - Workshop guide - should open to a hosted version of this page.
+    1. **IMPORTANT**: Leave this Skillable Session tab open in your browser!
+        - We will refer to the Azure credentials in the next step
+        - You can track the remaining time for the session in this tab.
+        - You will return to this at the end to "End Session" cleanly.
+
+---
+
+## 3. Launch GitHub Codespaces
+
+The Contoso Chat sample repository has a [dev container](https://containers.dev) defined. We can activate this in GitHub Codespaces to get a prebuilt development environment with all required tools and depenencies installed. Let's do that now.
+
+!!! quote "On completing this step, you should have the following:"
+    - [X] Launched GitHub Codespaces to get the pre-built dev environment.
+    - [X] Forked the sample repo to your personal GitHub profile.
+    - [X] Verified that required command-line tools were installed.
+
+!!! info "**TIP**: Use `Copy to clipboard` feature to copy commands and reduce errors"
+    In the following sections, you will encounter _codeblocks_ that have commands you will need to run in the VS Code terminal. 
+    Hover over the codeblock to get a _Copy to clipboard_ icon for quick copy-paste operations.
+
+### 3.1 Navigate to GitHub & Login
 
 
-1. Open a browser tab (T1) and navigate to the link below.
+1. Open a new browser tab. Navigate to the link below.
 
-    !!! tip "In codeblocks like this, click the icon (far right) to copy text to clipboard!"
 
     ``` title=""
     https://aka.ms/contoso-chat/prebuild
     ```
 
-1. You will be prompted to log into GitHub. **Login now with your GitHub profile.**
+1. You will be prompted to log into GitHub. **Login with your GitHub profile.**
 
-### 2.2 Setup GitHub Codespaces
+### 3.2 Setup GitHub Codespaces
 
-1. You will see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
-    - Check branch is `msignite-LAB401` 
-    - Check dev container config is `Contoso Chat (v2)` and region is `US East`
+1. You see a page titled **"Create codespace for Azure-Samples/contoso-chat"**
+    - Check branch is `contoso-chat-v4` 
     - Click dropdown for **2-core** and verify it is `Prebuild ready`
 
-    !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster."
+        !!! tip "Using the pre-build option makes your GitHub Codespaces load up faster."
 
 1. Click the green "Create codespace" button
     - You should see a new browser tab open to a link ending in `*.github.dev`
     - You should see a Visual Studio Code editor view loading (takes a few mins)
     - When ready, you should see the README for the "Contoso Chat" repository
     
-    !!! warning "The README is for information only. Please continue to follow _this_ guide for the workshop."
+        !!! warning "**CLOSE THE README TAB.** We will not be using those instructions today."
 
-### 2.3 Fork Repo To Your Profile
+### 3.3 Fork Repo To Your Profile
 
 Your GitHub Codespaces is running on the _original_ Azure Samples repo for this sample. Let's fork this now, so we have a personal copy to modify and reviist. We will use the GitHub CLI to complete this in just a few quick steps!
 
@@ -136,7 +139,7 @@ Your GitHub Codespaces is running on the _original_ Azure Samples repo for this 
 
 1. **Optional**. Visit your GitHub profile and check that the fork was created. It should be at the location in the form `https://github.com/<username>/contoso-chat` where `<username>` should be replaces by your GitHub profile.
 
-### 2.4 Check Tools Installed
+### 3.4 Check Tools Installed
 
 The workshop uses the following tools and commands: `python`, `fastapi`, `prompty`, `az`, `azd`. These are pre-installed for you, but you can optionally verify these to get a sense for their current versions.
 
@@ -159,7 +162,7 @@ The workshop uses the following tools and commands: `python`, `fastapi`, `prompt
     ```
 
 
-## 3. Authenticate with Azure
+## 4. Authenticate with Azure
 
 To access our Azure resources, we need to be authenticated from VS Code. Make sure the Terminal pane is active in the GitHub Codespaces tab. Then, complete both the steps below (click each to expland for instructions).
 
@@ -191,7 +194,7 @@ To access our Azure resources, we need to be authenticated from VS Code. Make su
 
 !!! success "CONGRATULATIONS. You are logged in from Azure CLI and Azure Developer CLI"
 
-## 4. Configure Env Variables
+## 5. Configure Env Variables
 
 To build code-first solutions, we will need to use the Azure SDK from our development environment. This requires configuration information for the various resources we've already provisioned for you in the `francecentral` region. Let's retrieve those now.
 
@@ -217,7 +220,7 @@ To build code-first solutions, we will need to use the Azure SDK from our develo
     !!! tip "Note that the `.env` file does not contain any secrets (passwords or keys). Instead, we use  [Azure Managed Identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for keyless authentication as a _security best practice_" 
 
 
-## 5. Do Post-Provisioning
+## 6. Do Post-Provisioning
 
 _We can now use these configured tools and SDK to perform some post-provisioning tasks. This includes populating data in Azure AI Search (product indexes) and Azure Cosmos DB (customer data), and deploying the initial version of our application to Azure Container Apps_.
 

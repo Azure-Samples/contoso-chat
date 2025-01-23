@@ -1,14 +1,15 @@
 # 2.1 Self-Guided Setup
 
+This is the start of the self-guided workshop track using your own Azure subscription.
 
-!!! info "CURRENTLY IN AN AI TOUR SESSION? → [JUMP TO SKILLABLE-BASED SETUP](./../2-Provisioning/02-Skillable.md) INSTEAD"  
+!!! quote "ARE YOU CURRENTLY AT AN AITOUR SESSION? → [JUMP TO SKILLABLE-BASED SETUP](./../2-Provisioning/02-Skillable.md) instead"  
 
 
 ---
 
 ## 1. Review Pre-Requisites
 
-You need a valid Azure subscription, GitHub account, and access to relevant Azure OpenAI models, to complete this lab on your own. You'll need to provision the infrastructure yourself, as described below. Review the [Pre-Requisites](/contoso-chat/02-Setup/0-PreRequisites#self-guided) section if you need more details.
+Need a refresher on the pre-requisites for the workshop? [Review them here](./../1-Pre-Requisites/index.md#self-guided).
 
 ---
 
