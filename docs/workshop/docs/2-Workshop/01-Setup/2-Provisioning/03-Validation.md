@@ -1,27 +1,27 @@
 # 2.3 Validate Your Setup
 
-!!! success "SETUP IS COMPLETE: Let's Review where we are right now"
+!!! quote "LET'S REVIEW: We have completed the Provision & Setup stages"
 
-    ![Dev Workflow](./../../img/workshop-developer-flow.png)
+    ![Dev Workflow](./../../../img/workshop-developer-flow.png)
 
-    We just completed the **PROVISION** and **SETUP** stages of the end-to-end workflow. 
+    At this time, we should have done the following:
 
     - [X] We launched GitHub Codespaces and forked the sample repo
     - [X] We have provisioned infrastructure resources on Azure
     - [X] We authenticated with Azure and refreshed our local env vars
     - [X] We completed post-provisioning tasks to populate data
 
-In this section, we'll validate our setup quickly, and organize our development environment into browser tabs before we move to the **IDEATE** phase of development. 
+**This section is optional**. It is meant to help you understand your infrastructure setup and troubleshoot any issues that occur in setup. [**Move directly to IDEATE**](./../../02-Ideate/01.md) if time is limited.
 
 ---
 
-### 3.1 Azure Portal Tab
+### 3.1 Explore Azure Portal
 
-!!! tip "The Azure Portal helps us view the resources provisioned on Azure and check that they are setup correctly"
+!!! info "The Azure Portal helps us view the resources provisioned on Azure and check that they are setup correctly"
 
 Here's a reminder of the Azure Application Architecture - let's check our provisioned Resource Group to make sure these resources were created.
 
-![ACA Architecture](./../../img/aca-architecture.png)
+![ACA Architecture](./../../../img/aca-architecture.png)
 
 1. Open a new browser tab and navigate to the link below. You may be prompted to login.
     ``` title=""
@@ -40,7 +40,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ---
 
-### 3.2 Azure AI Studio
+### 3.2 Explore Azure AI Foundry
 
 !!! tip "The Azure AI Studio portal lets us view and manage the Azure AI project for our app."
 

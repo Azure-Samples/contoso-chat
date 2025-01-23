@@ -2,7 +2,7 @@
 
 !!! success "Let's Review where we are right now"
 
-    ![Dev Workflow](./../img/workshop-developer-flow.png)
+    ![Dev Workflow](./../../img/workshop-developer-flow.png)
 
     We should have organized our browser into these 5 tabs, for development:
 

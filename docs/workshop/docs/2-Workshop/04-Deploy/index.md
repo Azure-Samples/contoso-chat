@@ -2,7 +2,7 @@
 
 !!! success "Let's Review where we are right now"
 
-    ![Dev Workflow](./../img/workshop-developer-flow.png)
+    ![Dev Workflow](./../../img/workshop-developer-flow.png)
 
     In the previous step, we evaluated our application for quality using 4 key metrics and a larger test inputs dataset. After getting acceptable results, it's time to deploy the protoype to production. **But how can we go from Prompty prototype to hosted API endpoint?** Let's build a FastAPI app and serve it with Azure Container Apps.
 
