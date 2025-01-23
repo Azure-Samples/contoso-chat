@@ -11,6 +11,9 @@ import pandas as pd
 from prompty.tracer import trace
 from tracing import init_tracing
 from contoso_chat.chat_request import get_response
+from azure.ai.evaluation import RelevanceEvaluator, FluencyEvaluator, CoherenceEvaluator, GroundednessEvaluator
+from azure.ai.evaluation import ContentSafetyEvaluator
+from azure.ai.evaluation import evaluate
 
 # %% [markdown]
 # ## Get output from data and save to results jsonl file
@@ -90,6 +93,28 @@ def evaluate():
     df.head()
     
     return df
+# %%
+@trace
+def evaluate_using_sdk():
+    # Evaluate results from results file
+    results_path = 'result.jsonl'
+    model_config = {
+            "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
+            "api_version": os.environ["AZURE_OPENAI_API_VERSION"],
+    }
+    result = evaluate(
+        data=results_path,
+        evaluators={"relevance": RelevanceEvaluator(model_config),
+                     "fluency": FluencyEvaluator(model_config),
+                     "coherence": CoherenceEvaluator(model_config),
+                     "groundedness": GroundednessEvaluator(model_config),
+                     "content_safety": ContentSafetyEvaluator(model_config)
+                     },
+    )
+    result_df = pd.DataFrame(result["rows"])
+    result_df.to_json('eval_results.jsonl')
+    result_df.head()
+    return result_df 
 
 # %%
 @trace
@@ -113,7 +138,7 @@ if __name__ == "__main__":
    tracer = init_tracing(local_tracing=True)
    test_data_df = load_data()
    response_results = create_response_data(test_data_df)
-   result_evaluated = evaluate()
+   result_evaluated = evaluate_using_sdk()
    create_summary(result_evaluated)
 
 
