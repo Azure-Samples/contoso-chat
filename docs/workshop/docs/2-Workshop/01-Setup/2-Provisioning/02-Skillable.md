@@ -197,6 +197,16 @@ We will be using the Azure SDK for code-first implementation in our development 
 
         !!! note  "Observe that the `.env` file does not have any secrets (passwords or keys). Instead, we use  [Azure Managed Identities](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for keyless authentication as a _security best practice_" 
 
+3. Update the Azure Container Apps instance to show the `Hello World` version.
+
+    The pre-provisioned Skillable subscription has an Azure Container apps resource with a default endpoint setup. In this step, we push the initial version of the Contosot Chat application to the resource and update that endpoint by running this command:
+
+    ``` title=""
+    azd deploy
+    ```
+    
+    Wait till the command completes - this may take a couple of minutes but you should see progress updates in the terminal. Wait till you get the "Success" message.
+
 !!! success "CONGRATULATIONS. Your development environment is configured for your Azure AI project!"
 
 ---
