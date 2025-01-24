@@ -2,7 +2,7 @@
 
 !!! success "Let's Review where we are right now"
 
-    ![Dev Workflow](./../img/workshop-developer-flow.png)
+    ![Dev Workflow](./../../img/workshop-developer-flow.png)
 
     In the previous step, we learned to prototype our application iteratively using Prompty assets and tooling. And we tested each iteration manually, _with a single sample input_. In this stage, we assess the prototype for production readiness by testing it with a **larger dataset of test inputs**. 
     

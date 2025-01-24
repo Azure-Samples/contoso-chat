@@ -7,17 +7,13 @@
         "context": ".."
     },
     "features": {
-        "ghcr.io/devcontainers/features/azure-cli:1": {
-            "installBicep": true,
-            "extensions": "ml"
-        },
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/azure/azure-dev/azd:latest": {},
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         "ghcr.io/devcontainers/features/github-cli:1": {},
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "22.8.0"
-        }
+        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/azure/azure-dev/azd:0": {}
     },
     "customizations": {
         "vscode": {

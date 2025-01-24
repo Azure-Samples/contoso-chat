@@ -7,8 +7,8 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    azure_deployment: gpt-35-turbo
-    api_version: 2023-07-01-preview
+    azure_deployment: gpt-4o-mini
+    api_version: 2024-08-01-preview
     azure_endpoint: ${ENV:AZURE_OPENAI_ENDPOINT}
   parameters:
     max_tokens: 1500
