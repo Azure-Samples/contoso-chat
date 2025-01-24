@@ -1,5 +1,9 @@
 # 2.3 Validate Your Setup
 
+
+**THIS SECTION IS OPTIONAL!**. It is meant to help you understand your infrastructure setup and troubleshoot any issues that occur in setup. [**Move directly to IDEATE if time is limited**](./../../02-Ideate/01.md).
+
+
 !!! quote "LET'S REVIEW: We have completed the Provision & Setup stages"
 
     ![Dev Workflow](./../../../img/workshop-developer-flow.png)
@@ -11,11 +15,9 @@
     - [X] We authenticated with Azure and refreshed our local env vars
     - [X] We completed post-provisioning tasks to populate data
 
-**This section is optional**. It is meant to help you understand your infrastructure setup and troubleshoot any issues that occur in setup. [**Move directly to IDEATE**](./../../02-Ideate/01.md) if time is limited.
-
 ---
 
-### 3.1 Explore Azure Portal
+### 3.1 Visit Azure AI Portal
 
 !!! info "The Azure Portal helps us view the resources provisioned on Azure and check that they are setup correctly"
 
@@ -40,7 +42,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ---
 
-### 3.2 Explore Azure AI Foundry
+### 3.2 Visit Azure AI Foundry
 
 !!! tip "The Azure AI Studio portal lets us view and manage the Azure AI project for our app."
 

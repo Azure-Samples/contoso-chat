@@ -164,4 +164,10 @@ This repository is an [AI Application Template](https://aka.ms/ai-apps) that can
 1. Wait for the process to complete. It may take 15-20 minutes or more.
 1. On successful completion you will see a **`SUCCESS: ...`** message on the console.
 
+
+!!! success "CONGRATULATIONS. You've completed the SELF-GUIDED Setup!"
+
+!!! alert "NEXT STEPS:[VALIDATE YOUR SETUP](./03-Validation.md) AND CHECK YOUR DEPLOYMENT1"
+
+
 ---
