@@ -5,10 +5,11 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    azure_deployment: gpt-4o-mini
-    api_version: 2024-08-01-preview
+    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
+    azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
+    api_version: ${env:AZURE_OPENAI_API_VERSION}
   parameters:
-    max_tokens: 128
+    max_tokens: 3000
     temperature: 0.2
 inputs:
   question:
