@@ -214,7 +214,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 <details>
 <summary> 3️⃣ | Validate the Infrastructure </summary>
 
-1. Visit the [Azure Portal](https://portal.azure.con) - look for the `rg-ENVNAME` resource group created above
+1. Visit the [Azure Portal](https://portal.azure.com) - look for the `rg-ENVNAME` resource group created above
 1. Click the `Deployments` link in the **Essentials** section - wait till all are completed.
 1. Return to `Overview` page - you should see: **35** deployments, **15** resources
 1. Click on the `Azure CosmosDB resource` in the list
