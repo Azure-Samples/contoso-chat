@@ -158,7 +158,7 @@ A related option is to use VS Code Dev Containers, which will open the project i
     - Create a new folder `contoso-chat` and `cd` into it
     - Run this command to download project template. Note that this command will initialize a git repository, so you do not need to clone this repository.
         ```bash
-        azd init -t contoso-chat-openai-prompty
+        azd init -t contoso-chat
         ```
 1. **Install dependencies** for the project, manually. Note that this is done for you automatically if you use the dev container options above.
     ```bash
