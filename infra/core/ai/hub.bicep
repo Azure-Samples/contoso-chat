@@ -34,7 +34,7 @@ param location string = resourceGroup().location
 param tags object = {}
 
 // NN:TODO resource hub 'Microsoft.MachineLearningServices/workspaces@2024-01-01-preview' = {
-resource hub 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
+resource hub 'Microsoft.MachineLearningServices/workspaces@2024-07-01-preview' = {
   name: name
   location: location
   tags: tags
@@ -79,16 +79,16 @@ resource hub 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   The ApiVersion specified in the metadata is for the Azure Cognitive Services version (that wraps the OpenAPI call)
  */
 
-  resource openAiConnection 'connections@2024-04-01-preview' = { // NN:TODO Add @version to ensure resource is correctly versioned
+  resource openAiConnection 'connections' = { // NN:TODO Add @version to ensure resource is correctly versioned
     name: 'aoai-connection'
     properties: {
-      category: 'AzureOpenAI'
+      category: 'AIServices'
       authType: 'ApiKey'
       isSharedToAll: true
-      target: openAi.properties.endpoints['OpenAI Language Model Instance API']
+      target: openAi.properties.endpoint
       metadata: {
-        //ApiVersion: '2023-07-01-preview'
-        ApiVersion: '2024-02-01'
+        ApiVersion: '2023-07-01-preview'
+        //ApiVersion: '2024-02-01'
         ApiType: 'azure'
         ResourceId: openAi.id
       }

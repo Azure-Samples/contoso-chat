@@ -7,11 +7,7 @@
     },
     "location": {
       "value": "${AZURE_LOCATION}"
-    },
-    "openAiResourceName": {
-      "value": "${AZURE_OPENAI_RESOURCE_NAME}"
-    },
-  
+    },  
     "openAiApiVersion": {
       "value": "${AZURE_OPENAI_API_VERSION=2023-07-01-preview}"
     },
@@ -19,7 +15,7 @@
       "value": "${AZURE_EMBEDDING_NAME=text-embedding-ada-002}"
     },
     "openAiDeploymentName": {
-      "value": "${AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-35-turbo}"
+      "value": "${AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini}"
     },
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
@@ -29,6 +25,15 @@
     },
     "runningOnAdo": {
       "value": "${TF_BUILD}"
+    },
+    "useContainerRegistry": {
+      "value": "${USE_CONTAINER_REGISTRY=true}"
+    },
+    "useApplicationInsights": {
+      "value": "${USE_APPLICATION_INSIGHTS=true}"
+    },
+    "useSearch":{
+      "value": "${USE_SEARCH=true}"
     }
   }
 }

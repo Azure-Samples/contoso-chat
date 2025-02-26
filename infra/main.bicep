@@ -12,30 +12,32 @@ param environmentName string
     type: 'location'
   }
 })
+// Limited to locations where AI foundry is available (https://learn.microsoft.com/azure/ai-studio/reference/region-support)
+// Then limited to locations where semantic ranker is available (https://learn.microsoft.com/azure/search/search-region-support)
+// Then limited to content safety availability (https://learn.microsoft.com/azure/ai-services/content-safety/overview)
+// Look for desired models on the availability table:
+// https://learn.microsoft.com/azure/ai-services/openai/concepts/models#global-standard-model-availability
+@allowed([
+  'uksouth'
+  'germanywestcentral'
+  'francecentral'
+  'eastus'
+  'canadaeast'
+  'eastus2'
+  'japaneast'
+  'koreacentral'
+  'northcentralus'
+  'australiaeast'
+  'southcentralus'
+  'switzerlandnorth'
+  'westeurope'
+  'westus'
+  'westus3'
+])
 param location string
 
 @description('The name of the resource group for the OpenAI resource')
 param openAiResourceGroupName string = ''
-
-@description('Location for the OpenAI resource')
-@allowed([
-  'canadaeast'
-  'eastus'
-  'eastus2'
-  'francecentral'
-  'switzerlandnorth'
-  'uksouth'
-  'japaneast'
-  'northcentralus'
-  'australiaeast'
-  'swedencentral'
-])
-@metadata({
-  azd: {
-    type: 'location'
-  }
-})
-param openAiResourceLocation string
 
 param containerRegistryName string = ''
 param aiHubName string = ''
@@ -204,7 +206,7 @@ module aca 'app/aca.bicep' = {
     identityId: managedIdentity.outputs.managedIdentityClientId
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-35-turbo'
+    openAiDeploymentName: !empty(openAiDeploymentName) ? openAiDeploymentName : 'gpt-4o-mini'
     openAiEmbeddingDeploymentName: openAiEmbeddingDeploymentName
     openAiEndpoint: ai.outputs.openAiEndpoint
     openAiType: openAiType
