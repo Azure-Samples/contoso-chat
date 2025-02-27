@@ -12,18 +12,18 @@ products:
 - azure-cognitive-search
 - azure-cosmos-db
 urlFragment: contoso-chat
-name: Contoso Chat - Retail RAG Copilot with Azure AI Studio and Prompty (Python Implementation)
+name: Contoso Chat - Retail RAG Copilot with Azure AI Foundry and Prompty (Python Implementation)
 description: Build, evaluate, and deploy, a RAG-based retail copilot that responds to customer questions with responses grounded in the retailer's product and customer data.
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
 > [!WARNING]  
-> **This sample is being actively updated at present and make have breaking changes**. We are refactoring the code to use new Azure AI platform features and moving deployment from Azure AI Studio to Azure Container Apps. We will remove this notice once the migration is complete. Till then, please pause on submitting new issues as codebase is changing.
+> **This sample is being actively updated at present and make have breaking changes**. We are refactoring the code to use new Azure AI platform features and moving deployment from Azure AI Foundry to Azure Container Apps. We will remove this notice once the migration is complete. Till then, please pause on submitting new issues as codebase is changing.
 >
 > **Some of the features used in this repository are in preview.** Preview versions are provided without a service level agreement, and they are not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/).**
 
 
-# Contoso Chat: Retail RAG Copilot with Azure AI Studio and Prompty
+# Contoso Chat: Retail RAG Copilot with Azure AI Foundry and Prompty
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
@@ -220,7 +220,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 <details>
 <summary> 3️⃣ | Validate the Infrastructure </summary>
 
-1. Visit the [Azure Portal](https://portal.azure.con) - look for the `rg-ENVNAME` resource group created above
+1. Visit the [Azure Portal](https://portal.azure.com) - look for the `rg-ENVNAME` resource group created above
 1. Click the `Deployments` link in the **Essentials** section - wait till all are completed.
 1. Return to `Overview` page - you should see: **35** deployments, **15** resources
 1. Click on the `Azure CosmosDB resource` in the list
@@ -232,7 +232,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 1. Click on the `Azure Container Apps` resource in the list
     - Visit the resource detail page - click `Application Url`
     - Verify that you see a hosted endpoint with a `Hello World` message on page
-1. Next, visit the [Azure AI Studio](https://ai.azure.com) portal
+1. Next, visit the [Azure AI Foundry](https://ai.azure.com) portal
     - Sign in - you should be auto-logged in with existing Azure credential
     - Click on `All Resources` - you should see an `AIServices` and `Hub` resources
     - Click the hub resource - you should see an `AI Project` resource listed
@@ -358,7 +358,7 @@ Have issues or questions about the workshop? Submit [a new issue](https://github
 ## Resources
 
 1. [Prompty Documentation](https://prompty.ai)
-1. [Azure AI Studio Documentation](https://aka.ms/aistudio)
+1. [Azure AI Foundry Documentation](https://aka.ms/aistudio)
 1. [Azure AI Templates with Azure Developer CLI](https://aka.ms/ai-studio/azd-templates)
 
 

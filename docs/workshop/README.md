@@ -7,7 +7,7 @@
 
 ## About Contoso Chat
 
-The Contoso Chat repository provides a reference sample for an Azure AI Architecture and workflow to build a custom RAG-based copilot **code-first** on Azure AI Studio. The sample has been actively used to skill up developers in core Azure AI tools, services, and practices, since its creation in 2023.
+The Contoso Chat repository provides a reference sample for an Azure AI Architecture and workflow to build a custom RAG-based copilot **code-first** on Azure AI Foundry. The sample has been actively used to skill up developers in core Azure AI tools, services, and practices, since its creation in 2023.
 
 **The current version (v3) of the sample follows this architecture**.
 
