@@ -40,4 +40,4 @@ Let's learn how this design pattern works in the context of our Contoso Chat app
 
     !!! info "The chat model uses prompt to generate a grounded response to user question."
 
-    This enhanced prompt is now sent to the Large Language "chat" model (e.g., Azure OpenAI `gpt-35-turbo` or `gpt-4o`) which sees the enhanced prompt (retrieved documents, customer profile data, chat history) as _grounding_ context for generating the final response, improving the quality (e.g., relevance, groundedness) of results returned from Contoso Chat.
+    This enhanced prompt is now sent to the Large Language "chat" model (e.g., Azure OpenAI `gpt-4` or `gpt-4o-mini`) which sees the enhanced prompt (retrieved documents, customer profile data, chat history) as _grounding_ context for generating the final response, improving the quality (e.g., relevance, groundedness) of results returned from Contoso Chat.

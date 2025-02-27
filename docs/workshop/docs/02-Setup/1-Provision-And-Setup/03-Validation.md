@@ -62,7 +62,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
     - Click "Models + endpoints" in the left pane.
     - **Check:** You should see deployed models for this project.
 
-        !!! info "For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
+        !!! info "For this application, we will use the chat completion models `gpt-4` and `gpt-4o-mini`, and the embedding model `text-embedding-ada-002`." 
 
 
 ---

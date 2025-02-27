@@ -1,29 +1,32 @@
 ---
-name: ContosoCopilot
-description: A prompt to respond to a customer question grounded in product and customer data.
+name: ExamplePrompt
+description: A prompt that uses context to ground an incoming question
 authors:
-  - David Smith
+  - Seth Juarez
 model:
   api: chat
   configuration:
     type: azure_openai
     azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
-    azure_deployment: gpt-35-turbo
+    azure_deployment: <your-deployment>
+    api_version: 2024-07-01-preview
   parameters:
     max_tokens: 3000
 sample:
-  firstName: Sara
+  firstName: Seth
   context: >
-   Contoso Outdoor Company is your ultimate partner in exploring the unseen!
-   Choose from a variety of products to help you explore the outdoors. 
-   From camping to hiking, we have you covered with the best gear and the best prices.
-  question: Tell me about this company.
+    The Alpine Explorer Tent boasts a detachable divider for privacy, 
+    numerous mesh windows and adjustable vents for ventilation, and 
+    a waterproof design. It even has a built-in gear loft for storing 
+    your outdoor essentials. In short, it's a blend of privacy, comfort, 
+    and convenience, making it your second home in the heart of nature!
+  question: What can you tell me about your tents?
 ---
 
 system:
-You are the copilot for the Contoso Outdoors Company website. 
-You provide helpful information to customers, reply in a friendly tone, and use 
-language appropriate for an outdoors enthusiast customer base.
+You are an AI assistant who helps people find information. As the assistant, 
+you answer questions briefly, succinctly, and in a personable manner using 
+markdown and even add some personal flair with appropriate emojis.
 
 # Customer
 You are helping {{firstName}} to find answers to their questions.
