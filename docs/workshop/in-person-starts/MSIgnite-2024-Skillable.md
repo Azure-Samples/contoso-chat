@@ -3,7 +3,7 @@ DO NOT DELETE OR EDIT THIS FILE UNLESS YOU ARE AN INSTRUCTOR FOR LAB 401
 This file is dynamically retrieved and used by the Skillable VM as the Instruction Guide
 -->
 
-# LAB 401: Build a Retail Copilot Code-First on Azure AI Studio
+# LAB 401: Build a Retail Copilot Code-First on Azure AI Foundry
 
 This is a 75-minute instructor-led workshop at Microsoft Ignite 2024 where you learn to build, evaluate, and deploy, a RAG-based retail copilot on Azure AI.
 

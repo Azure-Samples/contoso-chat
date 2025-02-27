@@ -40,9 +40,9 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
 
 ---
 
-### 3.2 Azure AI Studio
+### 3.2 Azure AI Foundry
 
-!!! tip "The Azure AI Studio portal lets us view and manage the Azure AI project for our app."
+!!! tip "The Azure AI Foundry portal lets us view and manage the Azure AI project for our app."
 
 1. Open a new browser tab and [navigate to this page](https://ai.azure.com?feature.customportal=false#home):
     ``` title=""
@@ -62,7 +62,7 @@ Here's a reminder of the Azure Application Architecture - let's check our provis
     - Click "Models + endpoints" in the left pane.
     - **Check:** You should see deployed models for this project.
 
-        !!! info "For this application, we will use the chat completion models `gpt-4` and `gpt-35-turbo`, and the embedding model `text-embedding-ada-002`." 
+        !!! info "For this application, we will use the chat completion models `gpt-4` and `gpt-4o-mini`, and the embedding model `text-embedding-ada-002`." 
 
 
 ---

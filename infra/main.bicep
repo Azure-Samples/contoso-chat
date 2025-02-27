@@ -41,7 +41,7 @@ param openAiResourceGroupName string = ''
 
 param containerRegistryName string = ''
 param aiHubName string = ''
-@description('The Azure AI Studio project name. If ommited will be generated')
+@description('The Azure AI Foundry project name. If ommited will be generated')
 param aiProjectName string = ''
 @description('The application insights resource name. If ommited will be generated')
 param applicationInsightsName string = ''

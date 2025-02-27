@@ -7,11 +7,11 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
-    azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
-    api_version: 2024-07-01-preview
+    azure_deployment: gpt-4o-mini
+    azure_endpoint: ${ENV:AZURE_OPENAI_ENDPOINT}
+    api_version: 2024-08-01-preview
   parameters:
-    max_tokens: 128
+    max_tokens: 3000
 sample:
   firstName: Nitya
   question: What can you tell me about your tents?

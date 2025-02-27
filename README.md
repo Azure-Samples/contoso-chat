@@ -12,13 +12,13 @@ products:
 - azure-cognitive-search
 - azure-cosmos-db
 urlFragment: contoso-chat
-name: Contoso Chat - Retail RAG Copilot with Azure AI Studio and Prompty (Python Implementation)
+name: Contoso Chat - Retail RAG Copilot with Azure AI Foundry and Prompty (Python Implementation)
 description: Build, evaluate, and deploy, a RAG-based retail copilot that responds to customer questions with responses grounded in the retailer's product and customer data.
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
 
-# Contoso Chat: Retail RAG Copilot with Azure AI Studio and Prompty
+# Contoso Chat: Retail RAG Copilot with Azure AI Foundry and Prompty
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&machine=basicLinux32gb&repo=725257907&ref=main&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=UsEast)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/contoso-chat)
@@ -102,9 +102,9 @@ To deploy and explore the sample, you will need:
 1. An active GitHub account - [Signup for a free account here](https://github.com/signup)
 1. Access to Azure OpenAI Services - [Learn about Limited Access here](https://learn.microsoft.com/legal/cognitive-services/openai/limited-access)
 1. Access to Azure AI Search - [With Semantic Ranker](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview) (premium feature)
-1. Available Quota for: `text-embedding-ada-002`, `gpt-35-turbo`. and `gpt-4`
+1. Available Quota for: `text-embedding-ada-002`, `gpt-4o-mini`. and `gpt-4`
 
-We recommend deployments to `swedencentral` or `francecentral` as regions that can support all these models. In addition to the above, you will also need the ability to:
+We recommend deployments to `eastus2` or `francecentral` as regions that can support all these models. In addition to the above, you will also need the ability to:
  - provision Azure Monitor (free tier)
  - provision Azure Container Apps (free tier)
  - provision Azure CosmosDB for noSQL (free tier)
@@ -214,7 +214,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 <details>
 <summary> 3️⃣ | Validate the Infrastructure </summary>
 
-1. Visit the [Azure Portal](https://portal.azure.con) - look for the `rg-ENVNAME` resource group created above
+1. Visit the [Azure Portal](https://portal.azure.com) - look for the `rg-ENVNAME` resource group created above
 1. Click the `Deployments` link in the **Essentials** section - wait till all are completed.
 1. Return to `Overview` page - you should see: **35** deployments, **15** resources
 1. Click on the `Azure CosmosDB resource` in the list
@@ -226,7 +226,7 @@ We can now proceed with next steps - click to expand for detailed instructions.
 1. Click on the `Azure Container Apps` resource in the list
     - Visit the resource detail page - click `Application Url`
     - Verify that you see a hosted endpoint with a `Hello World` message on page
-1. Next, visit the [Azure AI Studio](https://ai.azure.com) portal
+1. Next, visit the [Azure AI Foundry](https://ai.azure.com) portal
     - Sign in - you should be auto-logged in with existing Azure credential
     - Click on `All Resources` - you should see an `AIServices` and `Hub` resources
     - Click the hub resource - you should see an `AI Project` resource listed
@@ -316,7 +316,7 @@ This template currently uses the following models: `gpt35-turbo`, `gpt-4` and `t
 
 Pricing for services may vary by region and usage and exact costs are hard to determine. You can _estimate_ the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/) with these services:
 
-- Azure OpenAI - Standard tier, GPT-35-turbo and Ada models. [See Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
+- Azure OpenAI - Standard tier, gpt-4, gpt-4o-mini and text-embedding-ada-002 models. [See Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 - Azure AI Search - Basic tier, Semantic Ranker enabled. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/search/)
 - Azure Cosmos DB for NoSQL - Serverless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/autoscale-provisioned/#pricing)
 - Azure Monitor - Serverless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)
@@ -350,7 +350,7 @@ Have issues or questions about the workshop? Submit [a new issue](https://github
 ## Resources
 
 1. [Prompty Documentation](https://prompty.ai)
-1. [Azure AI Studio Documentation](https://aka.ms/aistudio)
+1. [Azure AI Foundry Documentation](https://aka.ms/aistudio)
 1. [Develop AI Apps using Azure AI Services](https://aka.ms/ai-apps-docs)
 1. [Azure AI Templates with Azure Developer CLI](https://aka.ms/ai-studio/azd-templates)
 
