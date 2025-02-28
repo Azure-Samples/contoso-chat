@@ -12,14 +12,25 @@ hooks:
   postprovision:
     posix:
       shell: sh
-      continueOnError: false
+      continueOnError: true
       interactive: true
       run: infra/hooks/postprovision.sh
     windows:
       shell: pwsh
-      continueOnError: false
+      continueOnError: true
       interactive: true
       run: infra/hooks/postprovision.ps1
+  postdeploy:
+    posix:
+      shell: sh
+      continueOnError: true
+      interactive: true
+      run: infra/hooks/postdeploy.sh
+    windows:
+      shell: pwsh
+      continueOnError: true
+      interactive: true
+      run: infra/hooks/postdeploy.ps1
 infra:
     provider: "bicep"
 

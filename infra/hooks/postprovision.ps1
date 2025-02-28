@@ -1,6 +1,9 @@
 #!/usr/bin/env pwsh
 
-Write-Host "Starting postprovisioning..."
+Write-Host "--- ☑️ 1. Starting postprovisioning ---"
+
+# -----------------------------------------------------------
+# Retrieve service names, resource group name, and other values from environment variables
 
 # Retrieve service names, resource group name, and other values from environment variables
 $resourceGroupName = $env:AZURE_RESOURCE_GROUP
@@ -23,25 +26,24 @@ Write-Host "azureSearchEndpoint: $azureSearchEndpoint"
 
 # Ensure all required environment variables are set
 if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($openAiService) -or [string]::IsNullOrEmpty($subscriptionId)) {
-    Write-Host "One or more required environment variables are not set."
+    Write-Host "🅇 One or more required environment variables are not set."
     Write-Host "Ensure that AZURE_RESOURCE_GROUP, AZURE_OPENAI_NAME, AZURE_SUBSCRIPTION_ID are set."
     exit 1
 }
 
-# Set additional environment variables expected by app 
-# --- Removed these since they are already set in azd env refresh ---
-# azd env set AZURE_OPENAI_API_VERSION $AZURE_OPENAI_API_VERSION # 2023-03-15-preview
-# azd env set AZURE_OPENAI_CHAT_DEPLOYMENT AZURE_OPENAI_API_VERSION # gpt-35-turbo
-# azd env set AZURE_SEARCH_ENDPOINT $AZURE_SEARCH_ENDPOINT
-
 # Output environment variables to .env file using azd env get-values
 azd env get-values > .env
-Write-Host "Script execution completed successfully."
+#Write-Host "--- ✅ 2. Set environment variables ---"
 
-Write-Host 'Installing dependencies from "requirements.txt"'
-python -m pip install -r ./src/api/requirements.txt > $null
+# -----------------------------------------------------------
+# Setup to run notebooks
+#python -m pip install -r ./src/api/requirements.txt > $null
+#Write-Host "---- ✅ 3. Installed required dependencies ---"
 
-# populate data
-Write-Host "Populating data ...."
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > $null
-jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > $null
+# -----------------------------------------------------------
+# Run notebooks to populate data
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/customer_info/create-cosmos-db.ipynb > $null
+#jupyter nbconvert --execute --to python --ExecutePreprocessor.timeout=-1 data/product_info/create-azure-search.ipynb > $null
+#Write-Host "---- ✅ 4. Completed populating data ---"
+
+Write-Host "--- ✅ Completed postprovisioning ---"
