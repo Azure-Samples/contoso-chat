@@ -81,7 +81,7 @@ The sample illustrates the end-to-end workflow (GenAIOps) for building a RAG-bas
 The project template provides the following features:
 
 - [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) for embeddings, chat, and evaluation models
-- [Prompty](https://prompty.ai) for creating and managing prompts for rapid ideati
+- [Prompty](https://prompty.ai) for creating and managing prompts for rapid iteration
 - [Azure AI Search](https://azure.microsoft.com/products/ai-services/ai-search) for performing semantic similarity search
 - [Azure CosmosDB](https://learn.microsoft.com/azure/cosmos-db/) for storing customer orders in a noSQL database 
 - [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) for hosting the chat AI endpoint on Azure
