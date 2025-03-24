@@ -34,8 +34,7 @@
                         },
                         "required": [
                             "format",
-                            "name",
-                            "version"
+                            "name"
                         ]
                     },
                     "sku": {

@@ -5,7 +5,6 @@ deployments:
     model:
       format: OpenAI
       name: gpt-4o-mini
-      version: "2024-07-18"
     sku:
       name: GlobalStandard
       capacity: 30
@@ -13,7 +12,6 @@ deployments:
     model:
       format: OpenAI
       name: text-embedding-ada-002
-      version: "2"
     sku:
       name: "Standard"
       capacity: 30
@@ -21,7 +19,6 @@ deployments:
     model:
       format: OpenAI
       name: gpt-4o
-      version: "2024-05-13"
     sku:
       name: "GlobalStandard"
       capacity: 20
