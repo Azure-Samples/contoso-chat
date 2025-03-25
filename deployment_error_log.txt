@@ -1,0 +1,25 @@
+Initialize bicep provider
+
+Packaging services (azd package)
+
+Packaging service aca
+  (✓) Done: Packaging service aca
+
+
+Provisioning Azure resources (azd provision)
+Provisioning Azure resources can take some time.
+
+Initialize bicep provider
+Reading subscription and location from environment...
+Subscription: AGS_subscriptions (e9eef2ca-9572-49ec-8272-f0cc211ae04e)
+Location: East US 2
+
+Comparing deployment state
+
+ERROR: error executing step command 'provision': deployment failed: error deploying infrastructure: validating deployment to subscription:
+
+Validation Error Details:
+InvalidTemplateDeployment: The template deployment 'AITOUR-1741756843' is not valid according to the validation procedure. The tracking id is 'f0eed224-2224-4f90-a5b0-4538da0cf7b9'. See inner errors for details.
+InsufficientQuota: This operation require 20 new capacity in quota Tokens Per Minute (thousands) - GPT-4-Turbo - GlobalStandard, which is bigger than the current available capacity 8. The current quota usage is 0 and the quota limit is 8 for quota Tokens Per Minute (thousands) - GPT-4-Turbo - GlobalStandard.
+
+TraceID: eee0318f5e0ec507d54767e29941bca8
