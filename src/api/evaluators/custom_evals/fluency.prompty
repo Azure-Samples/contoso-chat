@@ -5,9 +5,9 @@ model:
   api: chat
   configuration:
     type: azure_openai
-    "api_version": "2024-02-15-preview"
-    "azure_endpoint": "https://anish-solutions.openai.azure.com/"
-    "azure_deployment": "gpt-4o"
+    azure_endpoint: ${env:AZURE_OPENAI_ENDPOINT}
+    azure_deployment: ${env:AZURE_OPENAI_CHAT_DEPLOYMENT}
+    api_version: ${env:AZURE_OPENAI_API_VERSION}
   parameters:
     max_tokens: 3000
     temperature: 0.2
