@@ -163,6 +163,8 @@ A related option is to use VS Code Dev Containers, which will open the project i
 1. **Install dependencies** for the project, manually. Note that this is done for you automatically if you use the dev container options above.
     ```bash
         cd src/api
+        python -m venv .venv # Create python virtual environment
+        .venv/Scripts/activate # Activate the virtual environment
         pip install -r requirements.txt
     ```
 
