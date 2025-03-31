@@ -322,6 +322,7 @@ Pricing for services may vary by region and usage and exact costs are hard to de
 - Azure Monitor - Serverless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)
 - Azure Container Apps - Severless, Free Tier. [See Pricing](https://azure.microsoft.com/en-us/pricing/details/container-apps/)
 
+⚠️ To avoid unnecessary costs, remember to take down your app if it's no longer in use, either by deleting the resource group in the Portal or running azd down.
 
 ### Security
 
@@ -346,6 +347,14 @@ The sample has a `docs/workshop` folder with step-by-step guidance for developer
 
 Have issues or questions about the workshop? Submit [a new issue](https://github.com/Azure-Samples/contoso-chat/issues/new) with a `documentation` tag.
 
+## Clean up
+To clean up all the resources created by this sample:
+
+1. On the terminal, run `azd down`.
+2. When asked if you are sure you want to continue, enter "y"
+3. When asked if you want to permanently delete the resources, enter "y"
+
+The resource group and all its resources will be deleted.
 
 ## Resources
 
